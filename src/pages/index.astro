@@ -13,9 +13,9 @@ import vergisting from '../assets/foto/bp-gisting.jpg';
 import molen from '../assets/foto/bp-roerkuip.jpg';
 import overzicht from '../assets/brouwproces/overzicht.jpg';
 import toog from '../assets/foto/oerbar-toog.jpg';
-import oerbar from '../assets/foto/oerbar-interieur.jpg';
-import parasols from '../assets/foto/terras-parasols.jpg';
-import taps from '../assets/foto/taphandles.jpg';
+import tap from '../assets/foto/oerbar-tap.jpg';
+import proostBar from '../assets/foto/oerbar-proost.jpg';
+import kaarten from '../assets/foto/oerbar-kaarten.jpg';
 import gevel from '../assets/foto/brouwerij-gevel.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
 import truien from '../assets/foto/shop-truien.jpg';
@@ -238,9 +238,9 @@ const affiches = [
       <div class="visit-grid">
         <div class="wall">
           <Polaroid src={toog} alt="De toog van de Oerbar met de koperen tapkranen" tilt={-2} ratio="3 / 4" class="w1" />
-          <Polaroid src={oerbar} alt="Het interieur van de Oerbar" tilt={2} ratio="4 / 3" class="w2" />
-          <Polaroid src={taps} alt="Tapkranen in de Oerbar" tilt={-1.5} ratio="1 / 1" class="w3" />
-          <Polaroid src={parasols} alt="Het terras met gele parasols" tilt={2.5} ratio="1 / 1" class="w4" />
+          <Polaroid src={tap} alt="De barman tapt een glas in de Oerbar" tilt={2} ratio="4 / 3" class="w2" />
+          <Polaroid src={proostBar} alt="Een vrouw die lachend haar glas heft in de Oerbar" tilt={-1.5} ratio="4 / 5" class="w3" />
+          <Polaroid src={kaarten} alt="Vrienden die kaarten aan een tafel in de Oerbar" tilt={2.5} ratio="4 / 5" class="w4" />
         </div>
         <div class="ticket">
           <div class="ticket-top">
@@ -621,7 +621,7 @@ const affiches = [
   }
   .wall {
     display: grid;
-    grid-template-columns: 1.15fr 1fr 1fr;
+    grid-template-columns: 1.4fr 1fr 1fr;
     gap: 22px;
     align-items: start;
   }
