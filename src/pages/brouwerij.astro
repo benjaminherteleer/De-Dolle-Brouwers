@@ -24,6 +24,14 @@ import bord from '../assets/foto/vrijdag-bord.jpg';
 import volk from '../assets/foto/vrijdag-volk.jpg';
 import barman from '../assets/foto/vrijdag-barman.jpg';
 import mascot from '../assets/logo/logo-full.png';
+import arRoerkuip from '../assets/archief/roerkuip-toen.jpg';
+import arBrouwer from '../assets/archief/brouwer-jaren80.jpg';
+import arKrant from '../assets/archief/krant-1990.jpg';
+import arGevel from '../assets/archief/gevel-toen.jpg';
+import arTractor from '../assets/archief/mout-tractor.jpg';
+import arKinderen from '../assets/archief/kinderen-roerkuip.jpg';
+import arBak from '../assets/archief/oerbierbak.jpg';
+import arBezoek from '../assets/archief/bezoek-toen.jpg';
 
 const route = 'https://www.google.com/maps/dir/?api=1&destination=De+Dolle+Brouwers,+Roeselarestraat+12B,+8600+Esen';
 
@@ -228,6 +236,32 @@ const history = [
         <Polaroid src={signs} alt="Oude metalen uithangborden in de brouwerij" caption="De originele uithangborden" tilt={2} ratio="3 / 4" />
         <Polaroid src={rodeDeur} alt="Rode deur in een witte muur met hop" tilt={-2} ratio="3 / 4" />
         <Polaroid src={ketel} alt="Oude brouwketel op het terras" tilt={3} ratio="3 / 4" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOTOALBUM -->
+  <section class="section album">
+    <div class="wrap">
+      <div class="head">
+        <h2>Uit het fotoalbum.</h2>
+        <p class="hand">Oude foto's uit de brouwerij</p>
+      </div>
+      <div class="album-grid">
+        {
+          [
+            { src: arRoerkuip, alt: 'Zwart-witfoto van brouwers bij roerkuip nr. 1', caption: 'Aan de roerkuip, jaren geleden', tilt: -2, r: '4 / 3' },
+            { src: arBrouwer, alt: 'Een jonge brouwer aan het werk in de brouwerij', caption: 'Aan het werk, begin jaren 80', tilt: 2, r: '3 / 4' },
+            { src: arKrant, alt: 'Krantenknipsel van 20 april 1990 met een baby en een fles Oerbier', caption: 'De krant, 20 april 1990', tilt: -1.5, r: '3 / 4' },
+            { src: arGevel, alt: 'De gevel met het smiley-mannetje, jaren geleden', caption: 'Het mannetje stond er toen ook al', tilt: 1.5, r: '4 / 3' },
+            { src: arTractor, alt: 'Mout wordt van een tractor in de brouwerij gelost', caption: 'Mout leveren', tilt: -2.5, r: '3 / 4' },
+            { src: arKinderen, alt: 'Kinderen in Oerbier-shirts roeren in de roerkuip', caption: 'Jong geleerd', tilt: 2, r: '4 / 3' },
+            { src: arBak, alt: 'Een vrouw met een bak Oerbier voor een huis', caption: 'Een bak Oerbier', tilt: -1, r: '3 / 4' },
+            { src: arBezoek, alt: 'Bezoekers aan de rode deur van de brouwerij', caption: 'Volk aan de deur', tilt: 2.5, r: '4 / 3' },
+          ].map((p) => (
+            <Polaroid src={p.src} alt={p.alt} caption={p.caption} tilt={p.tilt} ratio={p.r} width={600} />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -553,6 +587,25 @@ const history = [
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 26px;
+  }
+
+  /* ALBUM */
+  .album {
+    background: #2a2118 var(--grain);
+    color: var(--paper);
+  }
+  .album .hand {
+    color: var(--yellow);
+    background: none;
+    padding: 0;
+  }
+  .album-grid {
+    columns: 4 220px;
+    column-gap: 26px;
+  }
+  .album-grid :global(.polaroid) {
+    break-inside: avoid;
+    margin-bottom: 30px;
   }
 
   /* BELIEFS */

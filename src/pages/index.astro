@@ -23,6 +23,16 @@ import hoodie from '../assets/foto/shop-hoodie.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
 
+import handtekening from '../assets/kris/handtekening.png';
+import aqToren from '../assets/kris/aquarel-toren.jpg';
+import aqStraat from '../assets/kris/aquarel-straat.jpg';
+import brugge from '../assets/kris/brugge.jpg';
+import vrBar from '../assets/foto/vrijdag-bar.jpg';
+import vrVolk from '../assets/foto/vrijdag-volk.jpg';
+import vrTappen from '../assets/foto/vrijdag-tappen.jpg';
+import oerbarTap from '../assets/foto/oerbar-tap.jpg';
+import flesHop from '../assets/foto/fles-hop.jpg';
+import krant from '../assets/archief/krant-1990.jpg';
 import affOerbier from '../assets/affiches/oerbier.jpg';
 import affArabier from '../assets/affiches/arabier.jpg';
 import affBoskeun from '../assets/affiches/boskeun.jpg';
@@ -265,12 +275,24 @@ const affiches = [
   <!-- AFFICHES -->
   <section class="section posters">
     <div class="wrap">
-      <div class="posters-head">
-        <h2>Alles met de hand getekend.</h2>
-        <p class="lead">
-          Etiketten, affiches, mannetjes: Kris Herteleer tekent ze sinds het begin zelf. Daarom herken je een De Dolle Brouwers-biertje van ver.
-        </p>
+      <div class="kris">
+        <div class="kris-copy">
+          <p class="hero-kicker">Brouwer en tekenaar</p>
+          <h2>Kris Herteleer.</h2>
+          <Image src={handtekening} alt="Handtekening van Kris Herteleer" width={420} class="kris-sig" />
+          <p class="lead">
+            Brouwt mee sinds 1980 en tekent alles wat je van ons ziet: de etiketten, de affiches, het Oerbier-mannetje en de
+            rest van de bende. Op zondag geeft hij zelf de rondleiding.
+          </p>
+          <p>Tussen twee brouwsels door schildert hij steden, gebouwen en mensen.</p>
+        </div>
+        <div class="kris-art">
+          <Polaroid src={aqToren} alt="Aquarel van Kris Herteleer: een stad met een toren" tilt={-3} ratio="4 / 3" width={600} class="ka1" />
+          <Polaroid src={aqStraat} alt="Aquarel van Kris Herteleer: een straat met gevels" tilt={2.5} ratio="3 / 4" width={500} class="ka2" />
+          <Polaroid src={brugge} alt="Pentekening van Kris Herteleer: Brugge" tilt={-1.5} ratio="4 / 3" width={600} class="ka3" />
+        </div>
       </div>
+      <p class="posters-intro">En natuurlijk: elk bier zijn eigen affiche.</p>
       <div class="poster-row">
         {
           affiches.map((a) => (
@@ -310,6 +332,36 @@ const affiches = [
           <figcaption><b>Hoodie met goudopdruk</b><span>in de Oerbar</span></figcaption>
         </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- VOLG DE BENDE -->
+  <section class="section social">
+    <div class="wrap">
+      <div class="social-head">
+        <h2>Volg de bende.</h2>
+        <a class="handle" href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener">@dedollebrouwers ↗</a>
+      </div>
+      <div class="social-grid">
+        {
+          [
+            { src: vrBar, alt: 'De gele tapbar op een Dolle Vrijdag' },
+            { src: krant, alt: 'Krantenknipsel uit 1990 met een baby en een fles Oerbier' },
+            { src: oerbarTap, alt: 'Een glas wordt getapt in de Oerbar' },
+            { src: flesHop, alt: 'Een fles Oerbier tussen verse hop' },
+            { src: vrVolk, alt: 'Volle koer op een Dolle Vrijdag' },
+            { src: vrTappen, alt: 'Tappen op de koer' },
+          ].map((p) => (
+            <a href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener" class="social-tile">
+              <Image src={p.src} alt={p.alt} width={400} />
+            </a>
+          ))
+        }
+      </div>
+      <p class="social-more">
+        Ook op <a href="https://www.tiktok.com/@dedollebrouwers" target="_blank" rel="noopener">TikTok</a> en
+        <a href="https://www.facebook.com/dedollebrouwers" target="_blank" rel="noopener">Facebook</a>.
+      </p>
     </div>
   </section>
 
@@ -628,6 +680,84 @@ const affiches = [
     margin-top: 44px;
   }
 
+  /* KRIS */
+  .kris {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+    margin-bottom: 80px;
+  }
+  .kris h2 {
+    font-size: clamp(2.8rem, 6vw, 4.8rem);
+  }
+  .kris :global(.kris-sig) {
+    width: min(280px, 70%);
+    margin: 6px 0 22px -8px;
+    mix-blend-mode: multiply;
+    transform: rotate(-4deg);
+  }
+  .kris-art {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .kris-art :global(.ka2) {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    margin-top: 40px;
+  }
+  .posters-intro {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 34px;
+  }
+
+  /* VOLG DE BENDE */
+  .social-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .handle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.4rem;
+    text-decoration: none;
+    background: linear-gradient(transparent 60%, var(--yellow) 60%, var(--yellow) 92%, transparent 92%);
+  }
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+  .social-tile {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+  }
+  .social-tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  .social-tile:hover :global(img) {
+    transform: scale(1.06);
+  }
+  .social-more {
+    margin-top: 18px;
+    color: var(--ink-soft);
+  }
+
   /* OERBAR */
   .oerbar {
     background: var(--yellow) var(--grain);
@@ -836,6 +966,14 @@ const affiches = [
     }
     .shop-grid {
       grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 980px) {
+    .kris {
+      grid-template-columns: 1fr;
+    }
+    .social-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
   @media (max-width: 560px) {
