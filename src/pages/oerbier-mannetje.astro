@@ -12,46 +12,95 @@ const gallery = Object.entries(examples)
     tilt: [-2.5, 2, -1, 3, -3, 1.5][i % 6],
   }));
 
-const colors = [
-  { id: 'geel', label: 'Oerbier-geel', hex: '#f6bf1c' },
-  { id: 'wit', label: 'Wit', hex: '#f7f6f1' },
-  { id: 'roze', label: 'Roze', hex: '#f3a7c3' },
-  { id: 'rood', label: 'Rood', hex: '#d93a2b' },
-  { id: 'oranje', label: 'Oranje', hex: '#f28c28' },
-  { id: 'blauw', label: 'Blauw', hex: '#3d7bd4' },
-  { id: 'groen', label: 'Groen', hex: '#2f7f45' },
-  { id: 'paars', label: 'Paars', hex: '#8a6bc8' },
-  { id: 'zwart', label: 'Zwart', hex: '#1f1b17' },
-  { id: 'zilver', label: 'Zilver', hex: '#c4c8ce' },
-  { id: 'brons', label: 'Brons', hex: '#a86a2c' },
+const palette = [
+  ['Oerbier-geel', '#f6bf1c'],
+  ['Citroengeel', '#fbe14a'],
+  ['Oranje', '#f28c28'],
+  ['Rood', '#d93a2b'],
+  ['Bordeaux', '#7d1f2b'],
+  ['Roze', '#f3a7c3'],
+  ['Fuchsia', '#d6337f'],
+  ['Lila', '#c9b3e8'],
+  ['Paars', '#8a6bc8'],
+  ['Donkerblauw', '#1f3c88'],
+  ['Blauw', '#3d7bd4'],
+  ['Hemelsblauw', '#8fc3ec'],
+  ['Turkoois', '#2bb3a8'],
+  ['Groen', '#2f7f45'],
+  ['Lichtgroen', '#8cc84b'],
+  ['Kaki', '#8a8a4a'],
+  ['Bruin', '#6b4226'],
+  ['Beige', '#e3cfa6'],
+  ['Wit', '#f7f6f1'],
+  ['Grijs', '#8c8c8c'],
+  ['Zwart', '#1f1b17'],
+  ['Zilver', '#c4c8ce'],
+  ['Goud', '#c9a13b'],
+  ['Brons', '#a86a2c'],
 ];
-const patterns = [
-  { id: 'effen', label: 'Effen' },
-  { id: 'strepen', label: 'Strepen' },
-  { id: 'stippen', label: 'Stippen' },
-  { id: 'hartjes', label: 'Hartjes' },
-  { id: 'bloemen', label: 'Bloemetjes' },
-  { id: 'camo', label: 'Camo' },
-  { id: 'belgie', label: 'België' },
+
+const parts = [
+  { id: 'alles', label: 'Alles' },
+  { id: 'hoofd', label: 'Hoofd' },
+  { id: 'lichaam', label: 'Lichaam' },
+  { id: 'armen', label: 'Armen' },
+  { id: 'voeten', label: 'Voetjes' },
+  { id: 'glas', label: 'Glas' },
+  { id: 'sjaal', label: 'Sjaal' },
 ];
-const extras = [
-  { id: 'geen', label: 'Niets' },
-  { id: 'pet', label: 'Petje' },
-  { id: 'kroon', label: 'Kroontje' },
-  { id: 'strik', label: 'Strikje' },
-  { id: 'bril', label: 'Zonnebril' },
+
+const flags = [
+  { id: 'be', label: 'België' },
+  { id: 'nl', label: 'Nederland' },
+  { id: 'fr', label: 'Frankrijk' },
+  { id: 'de', label: 'Duitsland' },
+  { id: 'it', label: 'Italië' },
+  { id: 'es', label: 'Spanje' },
+  { id: 'pt', label: 'Portugal' },
+  { id: 'ie', label: 'Ierland' },
+  { id: 'gb', label: 'Verenigd Koninkrijk' },
+  { id: 'at', label: 'Oostenrijk' },
+  { id: 'dk', label: 'Denemarken' },
+  { id: 'se', label: 'Zweden' },
+  { id: 'no', label: 'Noorwegen' },
+  { id: 'us', label: 'Verenigde Staten' },
+  { id: 'jp', label: 'Japan' },
 ];
-const sashes = [
-  { id: 'wit', label: 'Wit', hex: '#fbfaf5', ink: '#21170c' },
-  { id: 'zwart', label: 'Zwart', hex: '#1f1b17', ink: '#fbfaf5' },
-  { id: 'geel', label: 'Geel', hex: '#f7b500', ink: '#21170c' },
-  { id: 'rood', label: 'Rood', hex: '#d93a2b', ink: '#fbfaf5' },
-];
+
+// Flag artwork in a 256 x 208 box that covers the body and arms
+const W = 256;
+const H = 208;
+const v3 = (a: string, b: string, c: string) =>
+  `<rect width="${W / 3 + 1}" height="${H}" fill="${a}"/><rect x="${W / 3}" width="${W / 3 + 1}" height="${H}" fill="${b}"/><rect x="${(2 * W) / 3}" width="${W / 3}" height="${H}" fill="${c}"/>`;
+const h3 = (a: string, b: string, c: string) =>
+  `<rect width="${W}" height="${H / 3 + 1}" fill="${a}"/><rect y="${H / 3}" width="${W}" height="${H / 3 + 1}" fill="${b}"/><rect y="${(2 * H) / 3}" width="${W}" height="${H / 3}" fill="${c}"/>`;
+const nordic = (bg: string, cross: string, inner?: string) =>
+  `<rect width="${W}" height="${H}" fill="${bg}"/><rect x="74" width="44" height="${H}" fill="${cross}"/><rect y="82" width="${W}" height="44" fill="${cross}"/>` +
+  (inner ? `<rect x="85" width="22" height="${H}" fill="${inner}"/><rect y="93" width="${W}" height="22" fill="${inner}"/>` : '');
+const usStripes = Array.from({ length: 13 }, (_, i) => `<rect y="${i * 16}" width="${W}" height="16" fill="${i % 2 ? '#fff' : '#b22234'}"/>`).join('');
+const usStars = Array.from({ length: 30 }, (_, i) => `<circle cx="${12 + (i % 6) * 18 + (Math.floor(i / 6) % 2) * 9}" cy="${12 + Math.floor(i / 6) * 20}" r="3.2" fill="#fff"/>`).join('');
+const flagArt: Record<string, string> = {
+  be: v3('#1f1b17', '#f7cf1c', '#d93a2b'),
+  fr: v3('#1f4ea3', '#ffffff', '#d93a2b'),
+  it: v3('#1d8a46', '#ffffff', '#d93a2b'),
+  ie: v3('#1d8a46', '#ffffff', '#f28c28'),
+  nl: h3('#ae1c28', '#ffffff', '#21468b'),
+  de: h3('#1f1b17', '#d93a2b', '#f7cf1c'),
+  at: h3('#d93a2b', '#ffffff', '#d93a2b'),
+  es: `<rect width="${W}" height="${H}" fill="#c60b1e"/><rect y="52" width="${W}" height="104" fill="#ffc400"/>`,
+  pt: `<rect width="${W}" height="${H}" fill="#d93a2b"/><rect width="102" height="${H}" fill="#1d6b2e"/><circle cx="102" cy="104" r="30" fill="#f7cf1c"/>`,
+  se: nordic('#1f5fa8', '#f7cf1c'),
+  dk: nordic('#c8102e', '#ffffff'),
+  no: nordic('#ba0c2f', '#ffffff', '#00205b'),
+  jp: `<rect width="${W}" height="${H}" fill="#ffffff"/><circle cx="140" cy="200" r="52" fill="#bc002d"/>`,
+  us: `${usStripes}<rect width="118" height="112" fill="#3c3b6e"/>${usStars}`,
+  gb: `<rect width="${W}" height="${H}" fill="#012169"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#fff" stroke-width="40"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#c8102e" stroke-width="13"/><rect x="104" width="48" height="${H}" fill="#fff"/><rect y="80" width="${W}" height="48" fill="#fff"/><rect x="113" width="30" height="${H}" fill="#c8102e"/><rect y="89" width="${W}" height="30" fill="#c8102e"/>`,
+};
 ---
 
 <Base
   title="Jouw eigen Oerbier-mannetje | De Dolle Brouwers"
-  description="Stel je eigen Oerbier-mannetje samen: kies een kleur, een patroon, een accessoire en wat er op de sjerp staat. Met de hand beschilderd, €90. Het gewone gele mannetje kost €60."
+  description="Stel je eigen Oerbier-mannetje samen: kleur per lichaamsdeel, een vlag, je eigen logo en tekst op de sjaal. Met de hand beschilderd, €90. Het gewone gele mannetje kost €60."
 >
   <Fragment slot="head">
     <link rel="canonical" href="https://www.oerbier.be/oerbier-mannetje" />
@@ -64,8 +113,8 @@ const sashes = [
       <a class="back" href="/#shop">← Oershop</a>
       <h1>Jouw eigen<br /><em>Oerbier-mannetje.</em></h1>
       <p class="lead">
-        Elk mannetje wordt met de hand beschilderd. Kies een kleur, een patroon, iets op zijn hoofd en wat er op de sjerp
-        moet staan. Of verzin zelf iets: we hebben al vlaggen, voetbalshirts, namen, trouwdata en kroontjes gedaan.
+        Elk mannetje wordt met de hand beschilderd. Geef elk stukje een eigen kleur, zet er een vlag of je logo op en kies
+        wat er op de sjaal staat. Of verzin zelf iets: we hebben al voetbalshirts, namen, trouwdata en clublogo's gedaan.
       </p>
       <ul class="prices">
         <li><strong>€60</strong> het gewone gele</li>
@@ -79,82 +128,52 @@ const sashes = [
       <div class="preview">
         <svg viewBox="0 0 320 340" role="img" aria-label="Voorbeeld van jouw Oerbier-mannetje" id="man">
           <defs>
-            <clipPath id="body-clip">
+            <clipPath id="clip-body">
+              <ellipse cx="160" cy="215" rx="92" ry="86"></ellipse>
+            </clipPath>
+            <clipPath id="clip-all">
               <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)"></ellipse>
               <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)"></ellipse>
               <ellipse cx="160" cy="215" rx="92" ry="86"></ellipse>
               <circle cx="160" cy="110" r="58"></circle>
             </clipPath>
-            <pattern id="p-strepen" width="24" height="24" patternUnits="userSpaceOnUse">
+            <pattern id="pat-strepen" width="24" height="24" patternUnits="userSpaceOnUse">
               <rect width="24" height="11" fill="#fbfaf5"></rect>
             </pattern>
-            <pattern id="p-stippen" width="26" height="26" patternUnits="userSpaceOnUse">
-              <circle cx="6" cy="6" r="4.5" fill="#fbfaf5"></circle>
-              <circle cx="19" cy="19" r="4.5" fill="#fbfaf5"></circle>
-            </pattern>
-            <pattern id="p-hartjes" width="34" height="30" patternUnits="userSpaceOnUse">
-              <path d="M9 10 c0-4 6-5 6 0 c0-5 6-4 6 0 c0 4-6 7-6 9 c0-2-6-5-6-9z" fill="#d93a2b"></path>
-              <path d="M26 25 c0-3 5-4 5 0 c0-4 5-3 5 0 c0 3-5 6-5 7 c0-1-5-4-5-7z" fill="#fbfaf5"></path>
-            </pattern>
-            <pattern id="p-bloemen" width="40" height="40" patternUnits="userSpaceOnUse">
-              <g fill="#fbfaf5">
-                <circle cx="10" cy="6" r="4"></circle><circle cx="14" cy="10" r="4"></circle><circle cx="10" cy="14" r="4"></circle><circle
-                  cx="6"
-                  cy="10"
-                  r="4"></circle>
-              </g>
-              <circle cx="10" cy="10" r="3" fill="#f7b500"></circle>
-              <g fill="#f3a7c3">
-                <circle cx="30" cy="26" r="3.5"></circle><circle cx="34" cy="30" r="3.5"></circle><circle cx="30" cy="34" r="3.5"></circle><circle
-                  cx="26"
-                  cy="30"
-                  r="3.5"></circle>
-              </g>
-              <circle cx="30" cy="30" r="2.5" fill="#f7b500"></circle>
-            </pattern>
-            <pattern id="p-camo" width="90" height="90" patternUnits="userSpaceOnUse">
+            <pattern id="pat-camo" width="90" height="90" patternUnits="userSpaceOnUse">
               <path d="M5 12 q12-14 26-2 t22 6 q4 14-14 12 t-22 4 q-16-6-12-20z" fill="rgba(0,0,0,.28)"></path>
               <path d="M52 50 q14-10 26 0 t6 18 q-12 10-24 2 t-8-20z" fill="rgba(255,255,255,.35)"></path>
               <path d="M8 62 q10-8 20 2 q6 12-8 14 q-16-2-12-16z" fill="rgba(0,0,0,.2)"></path>
               <path d="M60 4 q10 2 12 12 q-6 8-16 2z" fill="rgba(255,255,255,.3)"></path>
             </pattern>
-            <linearGradient id="p-belgie" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stop-color="#1f1b17"></stop><stop offset=".333" stop-color="#1f1b17"></stop>
-              <stop offset=".333" stop-color="#f7cf1c"></stop><stop offset=".666" stop-color="#f7cf1c"></stop>
-              <stop offset=".666" stop-color="#d93a2b"></stop><stop offset="1" stop-color="#d93a2b"></stop>
-            </linearGradient>
+            {
+              flags.map((f) => (
+                <pattern id={`pat-${f.id}`} x="18" y="96" width={W} height={H} patternUnits="userSpaceOnUse"><Fragment set:html={flagArt[f.id]} /></pattern>
+              ))
+            }
             <path id="sash-line" d="M92 150 L244 274"></path>
           </defs>
 
           <ellipse cx="160" cy="322" rx="110" ry="12" fill="rgba(33,23,12,.12)"></ellipse>
 
-          <!-- feet -->
-          <g class="feet" stroke="#21170c" stroke-width="3">
-            <ellipse cx="122" cy="296" rx="34" ry="27" class="foot"></ellipse>
-            <ellipse cx="198" cy="296" rx="34" ry="27" class="foot"></ellipse>
-          </g>
-
-          <!-- body: base colour, then pattern on top, clipped to the body -->
           <g stroke="#21170c" stroke-width="3">
-            <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)" class="skin"></ellipse>
-            <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)" class="skin"></ellipse>
-            <ellipse cx="160" cy="215" rx="92" ry="86" class="skin"></ellipse>
-            <circle cx="160" cy="110" r="58" class="skin"></circle>
+            <ellipse cx="122" cy="296" rx="34" ry="27" data-part="voeten"></ellipse>
+            <ellipse cx="198" cy="296" rx="34" ry="27" data-part="voeten"></ellipse>
+            <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)" data-part="armen"></ellipse>
+            <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)" data-part="armen"></ellipse>
+            <ellipse cx="160" cy="215" rx="92" ry="86" data-part="lichaam"></ellipse>
           </g>
-          <rect x="0" y="0" width="320" height="340" clip-path="url(#body-clip)" class="pattern" fill="none"></rect>
-          <g fill="none" stroke="#21170c" stroke-width="3">
-            <circle cx="160" cy="110" r="58"></circle>
-          </g>
+          <rect x="0" y="0" width="320" height="340" clip-path="url(#clip-body)" class="pattern" fill="none"></rect>
+          <image class="logo" x="96" y="214" width="62" height="62" preserveAspectRatio="xMidYMid meet" clip-path="url(#clip-body)"></image>
+          <circle cx="160" cy="110" r="58" stroke="#21170c" stroke-width="3" data-part="hoofd"></circle>
           <ellipse cx="138" cy="76" rx="18" ry="10" fill="rgba(255,255,255,.4)" transform="rotate(-30 138 76)"></ellipse>
 
-          <!-- glass -->
           <g stroke="#21170c" stroke-width="3" stroke-linejoin="round">
-            <path d="M226 36 H296 Q294 98 261 102 Q228 98 226 36 Z" fill="#c8241c"></path>
+            <path d="M226 36 H296 Q294 98 261 102 Q228 98 226 36 Z" data-part="glas"></path>
             <path d="M226 36 H296 L294 50 H228 Z" fill="#fbfaf5"></path>
           </g>
 
-          <!-- face -->
-          <g class="face">
+          <g>
             <ellipse cx="142" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
             <ellipse cx="178" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
             <circle cx="147" cy="104" r="7.5" fill="#21170c"></circle>
@@ -162,37 +181,24 @@ const sashes = [
             <path d="M138 128 Q160 150 182 128" fill="none" stroke="#21170c" stroke-width="3.5" stroke-linecap="round"></path>
           </g>
 
-          <!-- sash -->
-          <g clip-path="url(#body-clip)">
-            <path d="M76 168 L104 136 L262 260 L234 292 Z" class="sash" stroke="#21170c" stroke-width="3"></path>
+          <g class="extra extra-bril" stroke="#21170c" stroke-width="3">
+            <rect x="122" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
+            <rect x="164" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
+            <path d="M156 98 H164" fill="none"></path>
+            <path d="M126 92 L136 92" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round"></path>
+          </g>
+
+          <g clip-path="url(#clip-all)">
+            <path d="M76 168 L104 136 L262 260 L234 292 Z" data-part="sjaal" stroke="#21170c" stroke-width="3"></path>
           </g>
           <text class="sash-text" font-size="24" dy="8">
             <textPath href="#sash-line" startOffset="50%" text-anchor="middle" id="sash-text">oerbier</textPath>
           </text>
 
-          <!-- extras -->
-          <g class="extra extra-pet" stroke="#21170c" stroke-width="3" stroke-linejoin="round">
-            <path d="M104 92 Q106 44 160 42 Q214 44 216 92 Q160 76 104 92 Z" fill="#c8241c"></path>
-            <path d="M206 86 L256 94 Q254 106 244 108 L204 100 Z" fill="#c8241c"></path>
-            <circle cx="160" cy="44" r="5" fill="#c8241c"></circle>
-          </g>
-          <g class="extra extra-kroon" stroke="#21170c" stroke-width="3" stroke-linejoin="round">
-            <path d="M126 64 L132 26 L148 48 L160 18 L172 48 L188 26 L194 64 Z" fill="#f28c28"></path>
-            <circle cx="132" cy="24" r="5" fill="#f28c28"></circle><circle cx="160" cy="16" r="5" fill="#f28c28"></circle><circle
-              cx="188"
-              cy="24"
-              r="5"
-              fill="#f28c28"></circle>
-          </g>
           <g class="extra extra-strik" stroke="#21170c" stroke-width="3" stroke-linejoin="round">
-            <path d="M160 168 L128 152 L128 186 Z" fill="#c8241c"></path>
-            <path d="M160 168 L192 152 L192 186 Z" fill="#c8241c"></path>
-            <circle cx="160" cy="168" r="7" fill="#c8241c"></circle>
-          </g>
-          <g class="extra extra-bril" stroke="#21170c" stroke-width="3">
-            <rect x="122" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
-            <rect x="164" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
-            <path d="M156 98 H164" fill="none"></path>
+            <path d="M160 168 L128 152 L128 186 Z" class="strik"></path>
+            <path d="M160 168 L192 152 L192 186 Z" class="strik"></path>
+            <circle cx="160" cy="168" r="7" class="strik"></circle>
           </g>
         </svg>
         <p class="price-tag"><span id="price">€60</span> <small id="price-note">het gewone gele</small></p>
@@ -200,75 +206,84 @@ const sashes = [
 
       <form class="controls" id="maker">
         <fieldset>
-          <legend>1. Kleur</legend>
-          <div class="chips">
+          <legend>1. Kleuren</legend>
+          <p class="hint">Kies eerst wat je kleurt, daarna de kleur.</p>
+          <div class="pills parts">
             {
-              colors.map((c, i) => (
-                <label class="swatch" title={c.label}>
-                  <input type="radio" name="kleur" value={c.id} data-hex={c.hex} checked={i === 0} />
-                  <span style={`--c:${c.hex}`} />
-                  <em>{c.label}</em>
-                </label>
-              ))
-            }
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>2. Patroon</legend>
-          <div class="pills">
-            {
-              patterns.map((p, i) => (
+              parts.map((p, i) => (
                 <label>
-                  <input type="radio" name="patroon" value={p.id} checked={i === 0} />
-                  <span>{p.label}</span>
-                </label>
-              ))
-            }
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>3. Iets extra</legend>
-          <div class="pills">
-            {
-              extras.map((p, i) => (
-                <label>
-                  <input type="radio" name="extra" value={p.id} checked={i === 0} />
-                  <span>{p.label}</span>
-                </label>
-              ))
-            }
-          </div>
-          <label class="check"><input type="checkbox" name="goud" /> Gouden voetjes</label>
-        </fieldset>
-
-        <fieldset>
-          <legend>4. De sjerp</legend>
-          <label class="field">
-            Wat staat erop?
-            <input type="text" name="tekst" value="oerbier" maxlength="16" autocomplete="off" />
-          </label>
-          <div class="pills sash-colors">
-            {
-              sashes.map((s, i) => (
-                <label>
-                  <input type="radio" name="sjerp" value={s.id} data-hex={s.hex} data-ink={s.ink} checked={i === 0} />
+                  <input type="radio" name="deel" value={p.id} checked={i === 0} />
                   <span>
-                    <i style={`background:${s.hex}`} />
-                    {s.label}
+                    {p.id !== 'alles' && <i data-dot={p.id} />}
+                    {p.label}
                   </span>
                 </label>
               ))
             }
           </div>
+          <div class="swatches">
+            {palette.map(([name, hex]) => <button type="button" class="sw" data-hex={hex} title={name} aria-label={name} style={`--c:${hex}`} />)}
+            <label class="sw custom" title="Eigen kleur">
+              <input type="color" id="eigen" value="#4aa3a0" aria-label="Eigen kleur kiezen" />
+              <span>+</span>
+            </label>
+          </div>
         </fieldset>
 
         <fieldset>
-          <legend>5. Nog een idee?</legend>
+          <legend>2. Op het lijf</legend>
+          <div class="pills">
+            <label><input type="radio" name="patroon" value="effen" checked /><span>Effen</span></label>
+            <label><input type="radio" name="patroon" value="strepen" /><span>Strepen</span></label>
+            <label><input type="radio" name="patroon" value="camo" /><span>Camo</span></label>
+          </div>
+          <p class="sub">Of een vlag</p>
+          <div class="pills flags">
+            {
+              flags.map((f) => (
+                <label>
+                  <input type="radio" name="patroon" value={f.id} />
+                  <span>{f.label}</span>
+                </label>
+              ))
+            }
+          </div>
+          <p class="hint">Ander land? Zet het bij je idee onderaan.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Logo</legend>
+          <label class="upload">
+            <input type="file" id="logo" accept="image/*" />
+            <span class="btn light">Logo kiezen</span>
+            <em id="logo-name">Nog geen logo</em>
+          </label>
+          <button type="button" class="link" id="logo-weg" hidden>Logo weghalen</button>
+          <p class="hint">Je logo komt op de buik. Stuur het bestand mee als bijlage in de mail.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Extra</legend>
+          <div class="pills">
+            <label><input type="checkbox" name="bril" /><span>Zonnebril</span></label>
+            <label><input type="checkbox" name="strik" /><span>Strikje</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>5. De sjaal</legend>
           <label class="field">
-            Een vlag, een logo, een datum, een voetbalshirt… Beschrijf het hier.
-            <textarea name="idee" rows="3" placeholder="Bv. in de kleuren van mijn voetbalclub, met 'Proficiat Jan' op de sjerp"></textarea>
+            Wat staat erop?
+            <input type="text" name="tekst" value="oerbier" maxlength="16" autocomplete="off" />
+          </label>
+          <p class="hint">De kleur van de sjaal kies je bij 1. Kleuren.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>6. Nog een idee?</legend>
+          <label class="field">
+            Een ander land, een clubshirt, een datum… Beschrijf het hier.
+            <textarea name="idee" rows="3" placeholder="Bv. in de kleuren van mijn voetbalclub, met 'Proficiat Jan' op de sjaal"></textarea>
           </label>
         </fieldset>
 
@@ -292,64 +307,114 @@ const sashes = [
   </section>
 </Base>
 
-<script>
-  const form = document.getElementById('maker') as HTMLFormElement;
-  const svg = document.getElementById('man') as unknown as SVGSVGElement;
-  const sashText = document.getElementById('sash-text')!;
-  const price = document.getElementById('price')!;
-  const priceNote = document.getElementById('price-note')!;
-  const value = (name: string) => (form.elements.namedItem(name) as RadioNodeList).value;
-  const checked = (name: string) => form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)!;
+<script define:vars={{ palette }}>
+  const form = document.getElementById('maker');
+  const svg = document.getElementById('man');
+  const sashText = document.getElementById('sash-text');
+  const price = document.getElementById('price');
+  const priceNote = document.getElementById('price-note');
+  const logoImg = svg.querySelector('.logo');
+  const logoInput = document.getElementById('logo');
+  const logoName = document.getElementById('logo-name');
+  const logoWeg = document.getElementById('logo-weg');
+
+  const DEFAULTS = { hoofd: '#f6bf1c', lichaam: '#f6bf1c', armen: '#f6bf1c', voeten: '#f6bf1c', glas: '#c8241c', sjaal: '#fbfaf5' };
+  const colors = { ...DEFAULTS };
+  let logo = null;
+
+  const nameOf = (hex) => (palette.find(([, h]) => h === hex) || [hex])[0];
+  const ink = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    const l = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
+    return l > 150 ? '#21170c' : '#fbfaf5';
+  };
+  const value = (name) => form.elements.namedItem(name).value;
+  const on = (name) => form.elements.namedItem(name).checked;
+
+  const paint = (hex) => {
+    const deel = value('deel');
+    const targets = deel === 'alles' ? ['hoofd', 'lichaam', 'armen', 'voeten'] : [deel];
+    targets.forEach((t) => (colors[t] = hex));
+    render();
+  };
 
   const render = () => {
-    const kleur = checked('kleur').dataset.hex!;
-    svg.querySelectorAll<SVGElement>('.skin').forEach((el) => el.setAttribute('fill', kleur));
-    const gold = (form.elements.namedItem('goud') as HTMLInputElement).checked;
-    svg.querySelectorAll<SVGElement>('.foot').forEach((el) => el.setAttribute('fill', gold ? '#c9a13b' : kleur));
+    Object.entries(colors).forEach(([part, hex]) => {
+      svg.querySelectorAll(`[data-part="${part}"]`).forEach((el) => el.setAttribute('fill', hex));
+      const dot = form.querySelector(`[data-dot="${part}"]`);
+      if (dot) dot.style.background = hex;
+    });
+    svg.querySelector('.sash-text').setAttribute('fill', ink(colors.sjaal));
+    svg.querySelectorAll('.strik').forEach((el) => el.setAttribute('fill', colors.sjaal === '#fbfaf5' ? '#c8241c' : colors.sjaal));
 
     const patroon = value('patroon');
-    const pat = svg.querySelector<SVGElement>('.pattern')!;
-    pat.setAttribute('fill', patroon === 'effen' ? 'none' : `url(#p-${patroon})`);
-    if (patroon === 'belgie') {
-      pat.setAttribute('x', '60');
-      pat.setAttribute('width', '200');
-    } else {
-      pat.setAttribute('x', '0');
-      pat.setAttribute('width', '320');
-    }
+    svg.querySelector('.pattern').setAttribute('fill', patroon === 'effen' ? 'none' : `url(#pat-${patroon})`);
 
-    const extra = value('extra');
-    svg.querySelectorAll<SVGElement>('.extra').forEach((el) => el.classList.toggle('on', el.classList.contains(`extra-${extra}`)));
+    svg.querySelector('.extra-bril').classList.toggle('on', on('bril'));
+    svg.querySelector('.extra-strik').classList.toggle('on', on('strik'));
 
-    const sjerp = checked('sjerp');
-    svg.querySelector('.sash')!.setAttribute('fill', sjerp.dataset.hex!);
-    svg.querySelector('.sash-text')!.setAttribute('fill', sjerp.dataset.ink!);
-    const tekst = (form.elements.namedItem('tekst') as HTMLInputElement).value.trim() || ' ';
-    sashText.textContent = tekst;
+    const tekst = form.elements.namedItem('tekst').value.trim();
+    sashText.textContent = tekst || ' ';
 
-    const idee = (form.elements.namedItem('idee') as HTMLTextAreaElement).value.trim();
+    const idee = form.elements.namedItem('idee').value.trim();
     const plain =
-      value('kleur') === 'geel' && patroon === 'effen' && extra === 'geen' && !gold && value('sjerp') === 'wit' && tekst.toLowerCase() === 'oerbier' && !idee;
+      Object.keys(DEFAULTS).every((k) => colors[k] === DEFAULTS[k]) &&
+      patroon === 'effen' &&
+      !on('bril') &&
+      !on('strik') &&
+      !logo &&
+      tekst.toLowerCase() === 'oerbier' &&
+      !idee;
     price.textContent = plain ? '€60' : '€90';
     priceNote.textContent = plain ? 'het gewone gele' : 'gepersonaliseerd';
   };
 
+  form.querySelectorAll('.sw[data-hex]').forEach((b) => b.addEventListener('click', () => paint(b.dataset.hex)));
+  document.getElementById('eigen').addEventListener('input', (e) => paint(e.target.value));
   form.addEventListener('input', render);
   form.addEventListener('change', render);
+
+  logoInput.addEventListener('change', () => {
+    const file = logoInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      logo = file.name;
+      logoImg.setAttribute('href', reader.result);
+      logoName.textContent = file.name;
+      logoWeg.hidden = false;
+      render();
+    };
+    reader.readAsDataURL(file);
+  });
+  logoWeg.addEventListener('click', () => {
+    logo = null;
+    logoInput.value = '';
+    logoImg.removeAttribute('href');
+    logoName.textContent = 'Nog geen logo';
+    logoWeg.hidden = true;
+    render();
+  });
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const label = (name: string) => checked(name).closest('label')!.textContent!.trim();
+    const patroon = form.querySelector('input[name="patroon"]:checked').closest('label').textContent.trim();
+    const extra = [on('bril') && 'zonnebril', on('strik') && 'strikje'].filter(Boolean).join(', ') || 'geen';
     const lines = [
       'Hallo,',
       '',
       'Ik wil graag dit Oerbier-mannetje bestellen:',
       '',
-      `Kleur: ${label('kleur')}`,
-      `Patroon: ${label('patroon')}`,
-      `Extra: ${label('extra')}`,
-      `Gouden voetjes: ${(form.elements.namedItem('goud') as HTMLInputElement).checked ? 'ja' : 'nee'}`,
-      `Sjerp: ${label('sjerp')}, met de tekst "${(form.elements.namedItem('tekst') as HTMLInputElement).value}"`,
-      `Idee: ${(form.elements.namedItem('idee') as HTMLTextAreaElement).value || '-'}`,
+      `Hoofd: ${nameOf(colors.hoofd)}`,
+      `Lichaam: ${nameOf(colors.lichaam)}`,
+      `Armen: ${nameOf(colors.armen)}`,
+      `Voetjes: ${nameOf(colors.voeten)}`,
+      `Glas: ${nameOf(colors.glas)}`,
+      `Sjaal: ${nameOf(colors.sjaal)}, met de tekst "${form.elements.namedItem('tekst').value}"`,
+      `Op het lijf: ${patroon}`,
+      `Extra: ${extra}`,
+      `Logo: ${logo ? logo + ' (zit als bijlage bij deze mail)' : 'geen'}`,
+      `Idee: ${form.elements.namedItem('idee').value || '-'}`,
       '',
       `Prijs: ${price.textContent}`,
       '',
@@ -357,6 +422,7 @@ const sashes = [
     ];
     location.href = `mailto:boniface@dedollebrouwers.be?subject=${encodeURIComponent('Oerbier-mannetje bestellen')}&body=${encodeURIComponent(lines.join('\n'))}`;
   });
+
   render();
 </script>
 
@@ -466,45 +532,24 @@ const sashes = [
     font-size: 1.15rem;
     padding: 0 8px;
   }
-  input[type='radio'] {
+  .hint {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 10px 0 0;
+  }
+  fieldset > .hint:first-of-type {
+    margin: 0 0 10px;
+  }
+  .sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    margin: 14px 0 8px;
+  }
+  input[type='radio'],
+  .pills input[type='checkbox'] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .swatch {
-    position: relative;
-    cursor: pointer;
-  }
-  .swatch span {
-    display: block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--c);
-    border: 2.5px solid var(--ink);
-    transition: transform 0.15s;
-  }
-  .swatch em {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
-  .swatch input:checked + span {
-    box-shadow:
-      0 0 0 3px var(--paper-light),
-      0 0 0 6px var(--ink);
-    transform: scale(1.05);
-  }
-  .swatch input:focus-visible + span {
-    outline: 3px solid var(--yellow);
-    outline-offset: 6px;
   }
   .pills {
     display: flex;
@@ -527,6 +572,10 @@ const sashes = [
     background: var(--paper);
     transition: background 0.15s;
   }
+  .flags span {
+    padding: 5px 11px;
+    font-size: 0.85rem;
+  }
   .pills span i {
     width: 14px;
     height: 14px;
@@ -541,18 +590,80 @@ const sashes = [
     outline: 3px solid var(--yellow);
     outline-offset: 2px;
   }
-  .check {
-    display: inline-flex;
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    align-items: center;
-    margin-top: 12px;
-    font-weight: 600;
+    margin-top: 14px;
+  }
+  .sw {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2.5px solid var(--ink);
+    background: var(--c);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.12s;
+  }
+  .sw:hover,
+  .sw:focus-visible {
+    transform: scale(1.15);
+    outline: none;
+  }
+  .sw.custom {
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(#d93a2b, #f6bf1c, #2f7f45, #3d7bd4, #8a6bc8, #d93a2b);
+    overflow: hidden;
+  }
+  .sw.custom span {
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 3px #000;
+    pointer-events: none;
+  }
+  .sw.custom input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
     cursor: pointer;
   }
-  .check input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--ink);
+  .upload {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+  .upload input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .upload .btn {
+    font-size: 0.95rem;
+    padding: 0.5em 1em;
+  }
+  .upload em {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .upload input:focus-visible + .btn {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .link {
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-top: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
   }
   .field {
     display: grid;
@@ -574,10 +685,7 @@ const sashes = [
     outline: 3px solid var(--yellow);
     outline-offset: 1px;
   }
-  .sash-colors {
-    margin-top: 12px;
-  }
-  .controls .btn {
+  .controls > .btn {
     justify-self: start;
     font-size: 1.1rem;
   }
@@ -601,15 +709,24 @@ const sashes = [
       grid-template-columns: 1fr;
     }
     .preview {
-      position: static;
-      max-width: 420px;
+      position: sticky;
+      top: 70px;
+      z-index: 5;
+      max-width: 360px;
       margin: 0 auto;
+      padding: 14px 18px 8px;
     }
     .inspo-grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
   @media (max-width: 560px) {
+    .preview {
+      max-width: 240px;
+    }
+    .price-tag span {
+      font-size: 1.4rem;
+    }
     .inspo-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
