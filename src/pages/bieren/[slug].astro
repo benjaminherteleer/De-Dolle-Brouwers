@@ -1,0 +1,451 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Polaroid from '../../components/Polaroid.astro';
+import Stamp from '../../components/Stamp.astro';
+import BeerFx from '../../components/BeerFx.astro';
+import { bieren, abv, short, type Bier } from '../../lib/bieren';
+import vaten from '../../assets/foto/vaten-rij.jpg';
+
+export function getStaticPaths() {
+  return bieren.map((b) => ({ params: { slug: b.slug }, props: { b } }));
+}
+
+const { b } = Astro.props as { b: Bier };
+
+const assets = import.meta.glob<{ default: ImageMetadata }>('../../assets/bieren/*', { eager: true });
+const storyFile: Record<string, string> = { 'lichtervelds-blond': 'lichtervelds-label.png' };
+const story = b.story && {
+  ...b.story,
+  img: assets[`../../assets/bieren/${storyFile[b.slug] ?? b.story.image.split('/').pop()}`]?.default,
+};
+
+const others = bieren.filter((x) => x.slug !== b.slug && x.reserva === b.reserva).slice(0, 4);
+const back = b.reserva ? '/#reserva' : '/#bieren';
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: b.name,
+  description: b.description,
+  brand: { '@type': 'Brand', name: 'De Dolle Brouwers' },
+  additionalProperty: { '@type': 'PropertyValue', name: 'Alcoholpercentage', value: abv(b) },
+  category: short(b),
+};
+---
+
+<Base title={b.title} description={b.description}>
+  <Fragment slot="head">
+    <link rel="canonical" href={`https://www.oerbier.be/bieren/${b.slug}`} />
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content={`${b.name} | De Dolle Brouwers`} />
+    <meta property="og:description" content={b.description} />
+    <meta property="og:locale" content="nl_BE" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(ld)} />
+  </Fragment>
+
+  <section class="hero" style={`--c:${b.color}; --on:${b.onColor}`}>
+    <div class="wrap">
+      <a class="back" href={back}>← Alle bieren</a>
+      <div class="hero-grid">
+        <div class="art">
+          <div class="art-frame" style={`background:${b.reserva ? 'var(--paper-light)' : b.color}`}>
+            {!b.reserva && <BeerFx slug={b.slug} live />}
+            <Image src={b.art} alt={b.alt ?? `${b.name} personage`} width={640} loading="eager" />
+          </div>
+          <Stamp class="abv" ring={`${b.name} · De Dolle Brouwers · `} center={abv(b)} size={128} />
+        </div>
+        <div class="copy">
+          <p class="kicker">{b.kicker}</p>
+          <h1>{b.name}</h1>
+          <ul class="facts">
+            {b.meta.map((m) => <li class="pill">{m.value}</li>)}
+          </ul>
+          <p class="lead" set:html={b.intro} />
+          {b.badge && <p class="tag badge">{b.badge}</p>}
+        </div>
+      </div>
+    </div>
+    <div class="edge-bottom"></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="sr">Proefnotities</h2>
+      <div class="notes">
+        {
+          b.notes.map((n, i) => (
+            <div class="card note" style={`--tilt:${[-1.2, 0.8, -0.5][i]}deg`}>
+              <p class="hand label">{n.label}</p>
+              <p set:html={n.text} />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class:list={['serve', { 'with-poster': b.poster }]}>
+        {b.poster && <Polaroid src={b.poster} alt={`Affiche van ${b.name}`} caption="De affiche" tilt={-3} ratio="5 / 7" width={600} taped />}
+        <div class="serve-cards">
+          {
+            b.info.map((n) => (
+              <div class="serve-item">
+                <h3>{n.label}</h3>
+                <p set:html={n.text} />
+              </div>
+            ))
+          }
+          {
+            b.weetjes.length > 0 && (
+              <div class="weetjes">
+                <h3 class="hand">Wist je dat...</h3>
+                <ul>
+                  {b.weetjes.map((w) => (
+                    <li set:html={w} />
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    story && story.img && (
+      <section class="section story">
+        <div class="edge-top" />
+        <div class="wrap story-grid">
+          <Polaroid src={story.img} alt={story.alt} tilt={2} ratio="auto" width={700} />
+          <div>
+            <h2>{story.title}</h2>
+            <p class="lead" set:html={story.text} />
+          </div>
+        </div>
+        <div class="edge-bottom" />
+      </section>
+    )
+  }
+
+  {
+    b.barrel && (
+      <section class="section barrel">
+        <div class="edge-top" />
+        <div class="wrap story-grid">
+          <Polaroid src={vaten} alt="Eiken wijnvaten in de kelder" caption="Minstens twaalf maanden op hout" tilt={-2} ratio="4 / 5" taped />
+          <div>
+            <h2>{b.barrel.title}</h2>
+            <p class="lead" set:html={b.barrel.text} />
+          </div>
+        </div>
+        <div class="edge-bottom" />
+      </section>
+    )
+  }
+
+  <section class="section more">
+    <div class="wrap">
+      <h2>{b.reserva ? 'Nog meer Reserva' : 'Meer van de bende'}</h2>
+      <ul class="more-grid">
+        {
+          others.map((o, i) => (
+            <li style={`--c:${o.color}; --tilt:${[-2, 1.5, -1, 2][i]}deg`}>
+              <a href={`/bieren/${o.slug}`}>
+                <span class="more-art">
+                  <Image src={o.art} alt="" width={300} />
+                </span>
+                <span class="more-name">{o.name}</span>
+                <span class="more-abv">{abv(o)}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="more-cta">
+        <a class="btn" href="/verkooppunten-kaart">Waar kan ik dit drinken?</a>
+        <a class="btn light" href="/brouwerij">Of kom proeven in Esen</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: var(--c) var(--grain);
+    color: var(--on);
+    position: relative;
+    padding: 28px 0 90px;
+    z-index: 2;
+  }
+  .back {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 24px;
+    opacity: 0.85;
+  }
+  .back:hover {
+    opacity: 1;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+  }
+  .art {
+    position: relative;
+  }
+  .art-frame {
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 50% 46% 52% 44% / 48% 52% 46% 50%;
+    box-shadow: 8px 8px 0 var(--ink);
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+  }
+  .art-frame :global(img) {
+    z-index: 1;
+    position: absolute;
+    inset: 12%;
+    width: 76%;
+    height: 76%;
+    object-fit: contain;
+    animation: bob 5s ease-in-out infinite;
+  }
+  @keyframes bob {
+    50% {
+      transform: translateY(-6px) rotate(-2deg);
+    }
+  }
+  .art :global(.abv) {
+    position: absolute;
+    right: -10px;
+    bottom: 6%;
+  }
+  .kicker {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kicker::before {
+    content: '';
+    width: 36px;
+    border-top: 2px solid currentColor;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    margin-bottom: 22px;
+  }
+  .facts {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+  .facts .pill {
+    color: var(--ink);
+  }
+  .facts .pill:not(:first-child) {
+    background: var(--paper-light);
+  }
+  .badge {
+    margin-top: 6px;
+  }
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    margin-bottom: clamp(60px, 8vw, 100px);
+  }
+  .note {
+    transform: rotate(var(--tilt));
+  }
+  .label {
+    margin-bottom: 10px;
+  }
+  .note p:last-child {
+    margin: 0;
+  }
+
+  .serve {
+    display: grid;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: start;
+  }
+  .serve.with-poster {
+    grid-template-columns: 0.75fr 1.25fr;
+  }
+  .serve-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 34px;
+  }
+  .serve-item h3 {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--yellow);
+    width: fit-content;
+  }
+  .weetjes {
+    grid-column: 1 / -1;
+    background: var(--paper-light)
+      repeating-linear-gradient(transparent 0 33px, rgba(33, 23, 12, 0.08) 33px 34px);
+    border: var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 26px 32px;
+    transform: rotate(-0.6deg);
+  }
+  .weetjes h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  .weetjes ul {
+    margin: 0;
+    padding-left: 1.2em;
+    display: grid;
+    gap: 8px;
+  }
+  .weetjes li::marker {
+    content: '—  ';
+    color: var(--yellow-deep);
+  }
+
+  .story,
+  .barrel {
+    background: var(--paper-deep) var(--grain);
+  }
+  .barrel {
+    background: #1d1812 var(--grain);
+    color: var(--paper);
+  }
+  .barrel h2 {
+    color: var(--yellow);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+  }
+  .story-grid h2 {
+    margin-bottom: 18px;
+  }
+  .story :global(.polaroid img) {
+    aspect-ratio: auto;
+  }
+
+  .more h2 {
+    margin-bottom: 36px;
+  }
+  .more-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .more-grid a {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 14px;
+    align-items: center;
+    text-decoration: none;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 10px;
+    transform: rotate(var(--tilt));
+    transition: transform 0.2s;
+  }
+  .more-grid a:hover {
+    transform: rotate(0) translateY(-4px);
+  }
+  .more-art {
+    grid-row: 1 / 3;
+    background: var(--c);
+    border-radius: 10px;
+    border: 2px solid var(--ink);
+    aspect-ratio: 1;
+    position: relative;
+  }
+  .more-art :global(img) {
+    position: absolute;
+    inset: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    object-fit: contain;
+  }
+  .more-name {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.15rem;
+    line-height: 1.1;
+    align-self: end;
+  }
+  .more-abv {
+    font-family: var(--font-hand);
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--rust);
+    align-self: start;
+  }
+  .more-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .serve.with-poster,
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+    .art {
+      max-width: 420px;
+    }
+    .notes {
+      grid-template-columns: 1fr;
+    }
+    .serve :global(.polaroid) {
+      max-width: 360px;
+    }
+    .more-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .serve-cards {
+      grid-template-columns: 1fr;
+    }
+    .more-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

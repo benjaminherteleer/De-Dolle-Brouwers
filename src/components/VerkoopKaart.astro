@@ -1,0 +1,559 @@
+---
+import { geoNaturalEarth1, geoPath, geoGraticule10 } from 'd3-geo';
+import { feature } from 'topojson-client';
+import type { Topology, GeometryCollection } from 'topojson-specification';
+import type { FeatureCollection, Geometry } from 'geojson';
+import { getImage } from 'astro:assets';
+import world from 'world-atlas/countries-50m.json';
+import worldLight from 'world-atlas/countries-110m.json';
+import { geoCentroid } from 'd3-geo';
+import places from '../data/verkooppunten.json';
+import mascot from '../assets/logo/logo-full.png';
+
+const W = 1200;
+const H = 640;
+const ESEN: [number, number] = [2.9032, 51.0279];
+
+// Frame the map around where our beer actually is: west coast US to the Baltics.
+const frame = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'MultiPoint',
+    coordinates: [
+      [-128, 28],
+      [32, 28],
+      [-128, 64],
+      [32, 64],
+    ],
+  },
+} as const;
+
+const projection = geoNaturalEarth1()
+  .rotate([45, 0])
+  .fitExtent(
+    [
+      [20, 20],
+      [W - 20, H - 20],
+    ],
+    frame as never,
+  );
+projection.clipExtent([
+  [-200, -200],
+  [W + 200, H + 200],
+]);
+const path = geoPath(projection).digits(1);
+
+type World = Topology<{ countries: GeometryCollection }>;
+const load = (t: unknown) => (feature(t as World, (t as World).objects.countries) as FeatureCollection<Geometry, { name: string }>).features;
+// Fine borders where people zoom in (Europe), light ones for the rest of the world.
+const inEurope = (c: (ReturnType<typeof load>)[number]) => {
+  const [lng, lat] = geoCentroid(c);
+  return lng > -25 && lng < 45 && lat > 34 && lat < 72;
+};
+const countries = [...load(world).filter(inEurope), ...load(worldLight).filter((c) => !inEurope(c))];
+const withBeer = new Set(['Belgium', 'Netherlands', 'United Kingdom', 'Italy', 'Germany', 'Sweden', 'Norway', 'Lithuania', 'United States of America', 'Canada']);
+
+const shapes = countries
+  .map((c) => ({ d: path(c) ?? '', name: c.properties.name, home: c.properties.name === 'Belgium', beer: withBeer.has(c.properties.name) }))
+  .filter((c) => c.d);
+const graticule = path(geoGraticule10()) ?? '';
+
+const pins = places.map((p, i) => {
+  const [x, y] = projection([p.lng, p.lat]) ?? [0, 0];
+  return { ...p, i, x: +x.toFixed(1), y: +y.toFixed(1) };
+});
+const [ex, ey] = projection(ESEN) ?? [0, 0];
+
+// Zoom presets as viewBoxes with the map's aspect ratio
+const box = (west: number, south: number, east: number, north: number) => {
+  const [x0, y0] = projection([west, north]) ?? [0, 0];
+  const [x1, y1] = projection([east, south]) ?? [W, H];
+  let w = x1 - x0;
+  let h = y1 - y0;
+  const cx = x0 + w / 2;
+  const cy = y0 + h / 2;
+  if (w / h > W / H) h = (w * H) / W;
+  else w = (h * W) / H;
+  return [cx - w / 2, cy - h / 2, w, h].map((n) => +n.toFixed(1));
+};
+const views = {
+  wereld: [0, 0, W, H],
+  europa: box(-11, 37, 27, 62),
+  benelux: box(2.2, 49.6, 7.2, 53.3),
+};
+
+const byCountry = Object.entries(
+  pins.reduce<Record<string, typeof pins>>((acc, p) => ((acc[p.country] ??= []).push(p), acc), {}),
+).sort((a, b) => b[1].length - a[1].length);
+
+const mascotImg = await getImage({ src: mascot, width: 120 });
+---
+
+<div class="kaart" data-views={JSON.stringify(views)} data-w={W} data-h={H}>
+  <div class="map-frame">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Kaart met de verkooppunten van De Dolle Brouwers" preserveAspectRatio="xMidYMid meet">
+      <rect x="-2000" y="-2000" width={W + 4000} height={H + 4000} class="sea"></rect>
+      <path d={graticule} class="grid"></path>
+      <g class="land">
+        {shapes.map((s) => <path d={s.d} class:list={{ beer: s.beer, home: s.home }} />)}
+      </g>
+      <g class="pins">
+        {
+          pins.map((p) => (
+            <circle cx={p.x} cy={p.y} r="5" data-i={p.i} tabindex="0" aria-label={`${p.name}, ${p.city}`}>
+              <title>{`${p.name} · ${p.city}`}</title>
+            </circle>
+          ))
+        }
+      </g>
+      <g class="home-pin" data-x={ex} data-y={ey}>
+        <circle cx={ex} cy={ey} r="15" class="halo"></circle>
+        <image href={mascotImg.src} x={ex - 30} y={ey - 76} width="60" height="62"></image>
+        <text x={ex + 20} y={ey + 8} class="home-label">Esen</text>
+      </g>
+    </svg>
+
+    <div class="controls">
+      <div class="presets" role="group" aria-label="Inzoomen op">
+        <button type="button" data-view="wereld">Wereld</button>
+        <button type="button" data-view="europa" class="on">Europa</button>
+        <button type="button" data-view="benelux">België &amp; Nederland</button>
+      </div>
+      <div class="zoom">
+        <button type="button" data-zoom="0.6" aria-label="Inzoomen">+</button>
+        <button type="button" data-zoom="1.6" aria-label="Uitzoomen">−</button>
+      </div>
+    </div>
+
+    <div class="card" hidden>
+      <button type="button" class="close" aria-label="Sluiten">×</button>
+      <strong></strong>
+      <span class="where"></span>
+      <a target="_blank" rel="noopener">Route ↗</a>
+    </div>
+  </div>
+
+  <aside class="list">
+    <p class="count"><strong>{pins.length}</strong> adressen in <strong>{byCountry.length}</strong> landen</p>
+    {
+      byCountry.map(([country, list], ci) => (
+        <details open={ci < 2}>
+          <summary>
+            {country} <span>{list.length}</span>
+          </summary>
+          <ul>
+            {list
+              .sort((a, b) => a.city.localeCompare(b.city))
+              .map((p) => (
+                <li>
+                  <button type="button" data-i={p.i}>
+                    <b>{p.name}</b>
+                    <small>{p.city}</small>
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </details>
+      ))
+    }
+  </aside>
+</div>
+
+<script define:vars={{ places }}>
+  const root = document.querySelector('.kaart');
+  const svg = root.querySelector('svg');
+  const frame = root.querySelector('.map-frame');
+  const card = root.querySelector('.card');
+  const views = JSON.parse(root.dataset.views);
+  const W = +root.dataset.w;
+  const pins = [...svg.querySelectorAll('.pins circle')];
+  const home = svg.querySelector('.home-pin');
+  let vb = views.europa.slice();
+  let anim;
+  let active = null;
+
+  const draw = () => {
+    svg.setAttribute('viewBox', vb.join(' '));
+    const k = vb[2] / W;
+    pins.forEach((c) => c.setAttribute('r', String((c === active ? 13 : 9) * k)));
+    svg.style.setProperty('--k', k);
+    const s = k;
+    const x = +home.dataset.x;
+    const y = +home.dataset.y;
+    home.setAttribute('transform', `translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})`);
+    if (active) placeCard();
+  };
+
+  const go = (target, ms = 700) => {
+    cancelAnimationFrame(anim);
+    const from = vb.slice();
+    const t0 = performance.now();
+    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / ms);
+      vb = from.map((v, i) => v + (target[i] - v) * ease(t));
+      draw();
+      if (t < 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  };
+
+  const setPreset = (name) => {
+    root.querySelectorAll('[data-view]').forEach((b) => b.classList.toggle('on', b.dataset.view === name));
+  };
+
+  const placeCard = () => {
+    const r = svg.getBoundingClientRect();
+    const f = frame.getBoundingClientRect();
+    const scale = Math.min(r.width / vb[2], r.height / vb[3]);
+    const offX = (r.width - vb[2] * scale) / 2;
+    const offY = (r.height - vb[3] * scale) / 2;
+    const px = r.left - f.left + offX + (+active.getAttribute('cx') - vb[0]) * scale;
+    const py = r.top - f.top + offY + (+active.getAttribute('cy') - vb[1]) * scale;
+    card.style.left = `${Math.min(Math.max(px, 120), f.width - 120)}px`;
+    card.style.top = `${py}px`;
+    card.classList.toggle('below', py < 140);
+  };
+
+  const open = (i, zoom = true) => {
+    const p = places[i];
+    active?.classList.remove('active');
+    active = pins[i];
+    active.classList.add('active');
+    card.hidden = false;
+    card.querySelector('strong').textContent = p.name;
+    card.querySelector('.where').textContent = `${p.city}, ${p.country}`;
+    card.querySelector('a').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + p.city)}`;
+    root.querySelectorAll('.list button').forEach((b) => b.classList.toggle('on', +b.dataset.i === i));
+    if (zoom) {
+      const w = Math.min(vb[2], views.benelux[2] * 1.4);
+      const h = (w * views.wereld[3]) / views.wereld[2];
+      go([+active.getAttribute('cx') - w / 2, +active.getAttribute('cy') - h / 2, w, h]);
+      setPreset(null);
+    } else {
+      placeCard();
+    }
+  };
+
+  const close = () => {
+    card.hidden = true;
+    active?.classList.remove('active');
+    active = null;
+    root.querySelectorAll('.list button.on').forEach((b) => b.classList.remove('on'));
+    draw();
+  };
+
+  root.querySelectorAll('[data-view]').forEach((b) =>
+    b.addEventListener('click', () => {
+      close();
+      setPreset(b.dataset.view);
+      go(views[b.dataset.view]);
+    }),
+  );
+  root.querySelectorAll('[data-zoom]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const f = +b.dataset.zoom;
+      const [x, y, w, h] = vb;
+      const nw = Math.min(views.wereld[2] * 1.2, Math.max(25, w * f));
+      const nh = (nw * h) / w;
+      setPreset(null);
+      go([x + (w - nw) / 2, y + (h - nh) / 2, nw, nh], 400);
+    }),
+  );
+  pins.forEach((c, i) => {
+    c.addEventListener('click', () => open(i, false));
+    c.addEventListener('keydown', (e) => e.key === 'Enter' && open(i, false));
+  });
+  root.querySelectorAll('.list button').forEach((b) => b.addEventListener('click', () => open(+b.dataset.i)));
+  card.querySelector('.close').addEventListener('click', close);
+
+  // drag to pan
+  let drag = null;
+  svg.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.pins')) return;
+    drag = { x: e.clientX, y: e.clientY, vb: vb.slice() };
+    svg.setPointerCapture(e.pointerId);
+    svg.classList.add('dragging');
+  });
+  svg.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const r = svg.getBoundingClientRect();
+    const scale = Math.min(r.width / vb[2], r.height / vb[3]);
+    vb[0] = drag.vb[0] - (e.clientX - drag.x) / scale;
+    vb[1] = drag.vb[1] - (e.clientY - drag.y) / scale;
+    setPreset(null);
+    draw();
+  });
+  const end = () => {
+    drag = null;
+    svg.classList.remove('dragging');
+  };
+  svg.addEventListener('pointerup', end);
+  svg.addEventListener('pointercancel', end);
+  window.addEventListener('resize', () => active && placeCard());
+
+  draw();
+</script>
+
+<style>
+  .kaart {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    align-items: start;
+  }
+  .map-frame {
+    position: relative;
+    border: var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    background: #dfe7e4;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 640;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  svg.dragging {
+    cursor: grabbing;
+  }
+  .sea {
+    fill: #d9e4e1;
+  }
+  .grid {
+    fill: none;
+    stroke: #c3d2ce;
+    stroke-width: calc(0.8px * var(--k, 1));
+  }
+  .land path {
+    fill: var(--paper-light);
+    stroke: #8b7c66;
+    stroke-width: calc(0.6px * var(--k, 1));
+    stroke-linejoin: round;
+  }
+  .land path.beer {
+    fill: #fbe3a0;
+  }
+  .land path.home {
+    fill: var(--yellow);
+    stroke: var(--ink);
+  }
+  .pins circle {
+    fill: var(--yellow);
+    stroke: var(--ink);
+    stroke-width: calc(2.2px * var(--k, 1));
+    cursor: pointer;
+    transition: fill 0.15s;
+  }
+  .pins circle:hover,
+  .pins circle:focus,
+  .pins circle.active {
+    fill: var(--ink);
+    stroke: var(--yellow);
+    outline: none;
+  }
+  .home-pin .halo {
+    fill: rgba(247, 181, 0, 0.35);
+    stroke: var(--ink);
+    stroke-width: 1.2;
+  }
+  .home-label {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 24px;
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--paper-light);
+    stroke-width: 4px;
+  }
+
+  .controls {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .controls > * {
+    pointer-events: auto;
+  }
+  .presets,
+  .zoom {
+    display: flex;
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .controls button {
+    font: inherit;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 0;
+    background: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .zoom button {
+    width: 34px;
+    padding: 4px 0;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  .controls button.on,
+  .controls button:hover {
+    background: var(--yellow);
+  }
+
+  .card {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 18px));
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 4px 4px 0 var(--ink);
+    padding: 14px 34px 12px 16px;
+    min-width: 200px;
+    max-width: 260px;
+    display: grid;
+    gap: 2px;
+    z-index: 3;
+  }
+  .card[hidden] {
+    display: none;
+  }
+  .card.below {
+    transform: translate(-50%, 18px);
+  }
+  .card strong {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.1rem;
+    line-height: 1.15;
+  }
+  .card .where {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .card a {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .close {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    border: 0;
+    background: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .list {
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 18px 18px 8px;
+    max-height: 640px;
+    overflow: auto;
+  }
+  .count {
+    font-size: 0.95rem;
+    margin: 0 0 12px;
+  }
+  details {
+    border-top: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 2px;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.15rem;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary span {
+    font-size: 0.8rem;
+    background: var(--yellow);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    min-width: 28px;
+    text-align: center;
+    padding: 1px 8px;
+  }
+  details ul {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+  details button {
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: none;
+    padding: 7px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    display: grid;
+    color: var(--ink);
+  }
+  details button b {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.25;
+  }
+  details button small {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  details button:hover,
+  details button.on {
+    background: var(--yellow-soft);
+  }
+
+  @media (max-width: 960px) {
+    .kaart {
+      grid-template-columns: 1fr;
+    }
+    .list {
+      max-height: none;
+    }
+    svg {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  @media (max-width: 560px) {
+    .controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .controls button {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+  }
+</style>

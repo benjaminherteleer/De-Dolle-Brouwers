@@ -1,222 +1,408 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+
+import overzicht from '../assets/brouwproces/overzicht.jpg';
+import proost from '../assets/brouwproces/proost.jpg';
+import molen from '../assets/foto/moutmolen.jpg';
+import mout from '../assets/foto/bp-mout.jpg';
+import roerkuip from '../assets/foto/bp-roerkuip.jpg';
+import koelschip from '../assets/foto/bp-koelschip-wort.jpg';
+import koeler from '../assets/foto/bp-koeler.jpg';
+import vergisting from '../assets/foto/bp-gisting.jpg';
+import vaten from '../assets/foto/vaten-rij.jpg';
+
+const art = import.meta.glob<{ default: ImageMetadata }>('../assets/brouwproces/stap-*.jpg', { eager: true });
+const stepArt = (n: number) => art[`../assets/brouwproces/stap-${String(n).padStart(2, '0')}.jpg`].default;
+
+type Step = {
+  title: string;
+  tag?: string;
+  text: string;
+  photo?: { src: ImageMetadata; alt: string; caption: string };
+};
+
+const steps: Step[] = [
+  {
+    title: 'Mout',
+    tag: '+ mout',
+    text: 'Alles begint met gemoute gerst. Zak per zak gaat de mout in de trechter, op weg naar de molen.',
+    photo: { src: mout, alt: 'Mout die door de rode trechter naar binnen stroomt', caption: 'De mout gaat naar binnen' },
+  },
+  {
+    title: 'Malen',
+    text: 'Onze oude moutmolen kraakt de korrels open, zodat het zetmeel binnenin zijn werk kan doen. Die trouwe machine draait hier al tientallen jaren.',
+    photo: { src: molen, alt: 'De oude moutmolen in de brouwerij', caption: 'De echte, nog altijd in dienst' },
+  },
+  {
+    title: 'Maischen',
+    tag: '+ water',
+    text: 'De gemalen mout gaat met water uit onze eigen bronnen de roerkuip in. We laten het rusten op 63 °C en daarna op 73 °C, zodat de enzymen het zetmeel omzetten in suikers. Dan filteren we het zoete <em>wort</em> eraf.',
+    photo: { src: roerkuip, alt: 'Roerkuip nr. 1 in het brouwhuis', caption: 'Roerkuip nr. 1' },
+  },
+  {
+    title: 'Koken',
+    tag: '+ Belgische hopbellen',
+    text: 'Het wort komt aan de kook in de brouwketel. Daar gaan de Belgische hopbellen in: voor bitterheid, aroma en natuurlijke bescherming.',
+  },
+  {
+    title: 'Het koelschip',
+    tag: '90°',
+    text: 'Het hete wort, nog zo’n 90 °C, stroomt in ons <em>koelschip</em>: een brede, open koperen bak. Koper, net als onze gistkuipen. Hier rust het terwijl het bezinksel zakt.',
+    photo: { src: koelschip, alt: 'Dampend wort met schuimeilandjes in het koelschip', caption: 'Wort in het koelschip' },
+  },
+  {
+    title: 'De koeler',
+    tag: '↓ 25°',
+    text: 'Daarna loopt het over buizen met koud stromend water en zakt het naar zo’n 25 °C. Precies goed voor de gist.',
+    photo: { src: koeler, alt: 'De koeler met buizen en schuim, met een bordje niet aanraken', caption: 'De koeler (niet aanraken!)' },
+  },
+  {
+    title: 'Gisting',
+    tag: '+ gist',
+    text: 'In onze open koperen kuipen gaat onze eigen huisgist aan het werk. Die zet de suikers om in alcohol en CO₂. Een groot deel van wat een De Dolle Brouwers-bier zo eigen maakt.',
+    photo: { src: vergisting, alt: 'Gistschuim in een open koperen gistkuip', caption: 'Open gisting, in het echt' },
+  },
+  {
+    title: 'Rijpen',
+    tag: '4° · 2 maanden',
+    text: 'Na de gisting rust het bier minstens twee maanden in de lagertanks, op 4 °C. We nemen onze tijd: daar ronden de smaken af.',
+  },
+  {
+    title: 'Bottelen',
+    tag: '+ suiker & gist',
+    text: 'Voor het bottelen voegen we nog wat suiker en verse gist toe. Dan wordt elke fles gevuld en gekroonkurkt.',
+  },
+  {
+    title: 'De warme kamer',
+    text: 'De bakken gaan naar de warme kamer, waar het bier hergist op de fles. Zo krijgt elk De Dolle Brouwers-biertje zijn natuurlijke prik.',
+  },
+];
 ---
 
-<Base title={'Brouwproces — Van mout tot fles | De Dolle Brouwers'} description={'Hoe De Dolle Brouwers hun bier brouwen: van malt en hop, over open vergisting en het koelschip, tot rijping op fles en op vat.'}>
-<Fragment slot="head">
+<Base
+  title="Brouwproces | Van graan tot fles bij De Dolle Brouwers"
+  description="Zo brouwen we in Esen, al sinds 1980: van mout en molen over het koelschip en open koperen gistkuipen tot hergisting op de fles. Tien stappen, met het Oerbier-mannetje als gids."
+>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://www.oerbier.be/brouwproces" />
+    <meta property="og:title" content="Brouwproces | De Dolle Brouwers" />
+    <meta property="og:description" content="Van graan tot fles in tien stappen, zoals we het al sinds 1980 doen." />
+    <meta property="og:locale" content="nl_BE" />
+  </Fragment>
 
-</Fragment>
+  <section class="intro">
+    <div class="wrap intro-grid">
+      <div>
+        <p class="hand note">Het Oerbier-mannetje legt uit ↘</p>
+        <h1>Zo brouwen we.<br /><span>Al sinds 1980.</span></h1>
+        <p class="lead">
+          Tien stappen van graan tot fles. Niets gefilterd, niets gepasteuriseerd, en op een paar plaatsen nog net zoals
+          vroeger: met een koelschip en open koperen gistkuipen.
+        </p>
+        <a class="btn dark" href="#stap-1">Start bij stap 1 ↓</a>
+      </div>
+      <div class="map">
+        <Image src={overzicht} alt="Getekende kaart van de tien brouwstappen" width={900} loading="eager" />
+      </div>
+    </div>
+  </section>
 
-<header class="page-hero">
-  <div class="wrap">
-    <span class="tag">Brouwproces</span>
-    <h1>Van mout tot fles.</h1>
-    <p>Tien stappen die bij ons nog steeds op ambachtelijke, trage wijze gebeuren — zonder filtering, zonder pasteurisatie, met veel geduld.</p>
+  <nav class="progress" aria-label="Brouwstappen">
+    <ol>
+      {
+        steps.map((s, i) => (
+          <li>
+            <a href={`#stap-${i + 1}`} data-step={i + 1}>
+              <span class="num">{i + 1}</span>
+              <span class="lbl">{s.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="steps">
+    {
+      steps.map((s, i) => (
+        <article class:list={['step', { flip: i % 2 === 1 }]} id={`stap-${i + 1}`} data-step={i + 1}>
+          <div class="wrap step-grid">
+            <div class="step-art">
+              <Image src={stepArt(i + 1)} alt={`Tekening: het Oerbier-mannetje bij stap ${i + 1}, ${s.title.toLowerCase()}`} width={900} />
+            </div>
+            <div class="step-copy">
+              <div class="step-head">
+                <span class="pill">Stap {i + 1}</span>
+                {s.tag && <span class="tag">{s.tag}</span>}
+              </div>
+              <h2>{s.title}</h2>
+              <p class="lead" set:html={s.text} />
+              {s.photo && (
+                <Polaroid src={s.photo.src} alt={s.photo.alt} caption={s.photo.caption} tilt={i % 2 ? 3 : -3} ratio="4 / 3" width={560} taped class="real" />
+              )}
+            </div>
+          </div>
+          {i < steps.length - 1 && <div class="pipe" aria-hidden="true" />}
+        </article>
+      ))
+    }
   </div>
-</header>
 
-<section style="padding-bottom:0;">
-  <div class="wrap">
-    <img src="/images/brewprocess.png" alt="Infographic: het volledige brouwproces van De Dolle Brouwers, van mout tot fles" style="width:100%; max-width:520px; display:block; margin:0 auto 20px;">
-    <p style="text-align:center; max-width:480px; margin:0 auto; font-size:14px; color:#6b5a3a;">Het volledige proces in één beeld — hieronder lichten we elke stap toe.</p>
-  </div>
-</section>
-
-<section style="padding-bottom:0;">
-  <div class="wrap">
-
-    <div class="step-compact">
-      <div class="step-badge">1</div>
+  <section class="section reserva">
+    <div class="edge-top"></div>
+    <div class="wrap res-grid">
+      <Polaroid src={vaten} alt="Eiken wijnvaten in de kelder" caption="Wie wacht, krijgt Reserva" tilt={-3} ratio="4 / 5" taped />
       <div>
-        <h3>Malt aanvoer</h3>
-        <p>Elke brouwsel begint met zakken mout die het brouwhuis worden binnengedragen — de basis van elk bier in ons gamma.</p>
+        <span class="tag">Extra stap, soms</span>
+        <h2>En dan nog een jaar op vat.</h2>
+        <p class="lead">
+          Af en toe gaat een brouwsel Oerbier, Dulle Teve of Stille Nacht na de gisting niet naar de fles maar naar oude
+          rode wijnvaten. Daar ligt het minstens een jaar, soms veel langer. Het begon in 1998, toen Kris het eerste
+          Oerbier te slapen legde in oude sherryvaten.
+        </p>
+        <a class="btn" href="/#reserva">Naar de Reserva's</a>
       </div>
     </div>
+    <div class="edge-bottom"></div>
+  </section>
 
-    <div class="process-step">
+  <section class="section cheers">
+    <div class="wrap cheers-grid">
       <div>
-        <span class="step-num">Stap 2</span>
-        <h2>Malen</h2>
-        <p>De mout gaat door de molen, die de korrels breekt zodat het zetmeel vrijkomt en toegankelijk wordt voor de volgende stap.</p>
+        <h2>Proost!</h2>
+        <p class="lead">Liever zelf zien hoe het gaat? Kris neemt je elke zondag mee door de brouwerij, met drie proevertjes van het vat.</p>
+        <div class="times">
+          <span class="pill">14u Engels</span>
+          <span class="pill">15u Nederlands</span>
+        </div>
+        <a class="btn dark" href="/rondleiding-boeken">Boek een rondleiding</a>
       </div>
-      <div class="split-img">
-        <img src="/images/moutmolen.jpg" alt="De moutmolen in de brouwerij van De Dolle Brouwers">
-      </div>
+      <Image src={proost} alt="Het Oerbier-mannetje met een bak vol flessen in de warme kamer" width={900} class="cheers-art" />
     </div>
-
-    <div class="step-compact">
-      <div class="step-badge">3</div>
-      <div>
-        <h3>Roerkuip — water toevoegen</h3>
-        <p>De gebroken mout mengt met warm water in de roerkuip. Daar zet het zetmeel om in vergistbare suikers.</p>
-      </div>
-    </div>
-
-    <div class="step-compact">
-      <div class="step-badge">4</div>
-      <div>
-        <h3>Koken met verse hop</h3>
-        <p>Het mengsel kookt met verse hop, voor bitterheid en aroma — elk bier krijgt hier zijn eigen karakter mee.</p>
-      </div>
-    </div>
-
-    <div class="process-step reverse">
-      <div>
-        <span class="step-num">Stap 5 — 90°</span>
-        <h2>Het koelschip</h2>
-        <p>Het hete wort koelt een nacht af in het koelschip, een brede, ondiepe bak boven in de brouwerij. Daar komt het in contact met de lokale lucht van Esen — en met de wilde gisten en bacteriën die er van nature aanwezig zijn. Bij Oerbier is dat mee de bron van de lichte, herkenbare zurigheid.</p>
-      </div>
-      <div class="split-img">
-        <img src="/images/koelschip-stoom.jpg" alt="Koelschip met opstijgende stoom in de brouwerij van De Dolle Brouwers">
-      </div>
-    </div>
-
-    <div class="step-compact">
-      <div class="step-badge">6</div>
-      <div>
-        <h3>Verder afkoelen</h3>
-        <p>Voor het gist erbij gaat, koelt het wort nog verder af tot precies de juiste temperatuur voor een gezonde vergisting.</p>
-      </div>
-    </div>
-
-    <div class="process-step">
-      <div>
-        <span class="step-num">Stap 7</span>
-        <h2>Gist toevoegen</h2>
-        <p>Vers gist gaat in de open gistkuip. In tegenstelling tot de gesloten tanks van veel grote brouwerijen, laten wij de gisting bewust in open vaten gebeuren — zo behoudt het bier een deel van zijn ruwe, ongepolijste karakter, typisch voor hoog gegist bier.</p>
-      </div>
-      <div class="split-img">
-        <img src="/images/open-vergisting.jpg" alt="Open gistkuip met schuimende gisting bij De Dolle Brouwers">
-      </div>
-    </div>
-
-    <div class="step-compact">
-      <div class="step-badge">8</div>
-      <div>
-        <h3>Rijping — 4°</h3>
-        <p>Het jonge bier rijpt wekenlang in tanks bij lage temperatuur, tot de smaak rond en in balans is.</p>
-      </div>
-    </div>
-
-    <div class="step-compact">
-      <div class="step-badge">9</div>
-      <div>
-        <h3>Suiker en gist voor de fles</h3>
-        <p>Voor het bottelen krijgt elk bier een beetje extra suiker en gist mee, voor de natuurlijke hergisting en koolzuur in de fles.</p>
-      </div>
-    </div>
-
-    <div class="process-step reverse" style="border-bottom:none;">
-      <div>
-        <span class="step-num">Stap 10</span>
-        <h2>Bottelen — en op vat voor de Reserva</h2>
-        <p>De flessen worden gevuld, geëtiketteerd en in kratten geladen, klaar om de brouwerij te verlaten. Sinds Kris in 1998 de allereerste Reserva op rode wijnvat zette — daarmee een pionier van vatgerijpt bier in België — gaat af en toe een geselecteerd brouwsel Oerbier, Dulle Teve of Stille Nacht in plaats daarvan nog minstens twaalf maanden op oude rode wijnvaten, voor de Reserva-lijn.</p>
-        <a class="link" href="/#reserva">Ontdek de Reserva-bieren</a>
-      </div>
-      <div class="split-img">
-        <img src="/images/vaten-rij.jpg" alt="Rij eiken vaten voor de Reserva-lijn van De Dolle Brouwers" style="object-fit:cover; height:100%;">
-      </div>
-    </div>
-
-  </div>
-</section>
+  </section>
 </Base>
 
-<style is:global>
-  :root{
-    --yellow:#F7B500; --yellow-deep:#E0A200; --yellow-pale:#FDE9AE;
-    --ink:#201607; --moss:#1C130A; --moss-deep:#120C05; --rust:#B5451B;
-    --cream:#FBF6E9; --white:#FFFDF7;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Public Sans', sans-serif; font-size:16px; line-height:1.6;}
-  h1,h2,h3{font-family:'Fraunces', serif; font-weight:700; margin:0; color:var(--ink);}
-  a{color:inherit;}
-  .wrap{max-width:1100px; margin:0 auto; padding:0 32px;}
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('.progress a');
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const n = (e.target as HTMLElement).dataset.step;
+        links.forEach((a) => {
+          a.classList.toggle('on', Number(a.dataset.step) <= Number(n));
+          a.classList.toggle('cur', a.dataset.step === n);
+        });
+        const cur = document.querySelector<HTMLElement>(`.progress a[data-step="${n}"]`);
+        cur?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  document.querySelectorAll('.step').forEach((s) => io.observe(s));
+</script>
 
-  nav{position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:2px solid var(--ink);}
-  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 32px; flex-wrap:wrap; gap:14px;}
-  .brandmark{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:700; font-size:19px; text-decoration:none; color:var(--ink);}
-  .brandmark .glyph{width:40px; height:40px; display:flex; align-items:center; justify-content:center;}
-  .brandmark .glyph img{width:100%; height:100%; object-fit:contain;}
-  .brandmark .wordmark{height:36px; width:auto; display:block;}
-  nav ul{list-style:none; display:flex; gap:22px; margin:0; padding:0;}
-  .nav-toggle{display:none;}
-  .nav-burger{display:none; flex-direction:column; gap:5px; cursor:pointer; width:28px; padding:4px; background:none; border:none;}
-  .nav-burger span{display:block; height:3px; background:var(--ink); border-radius:2px;}
-  .nav-menu{display:flex; align-items:center; gap:22px;}
-  @media(max-width:860px){
-    nav .wrap{position:relative;}
-    .nav-burger{display:flex;}
-    .nav-menu{
-      display:none; position:absolute; top:100%; left:0; right:0; background:var(--cream);
-      flex-direction:column; align-items:flex-start; padding:20px 32px 26px; border-bottom:2px solid var(--ink);
-      gap:6px; z-index:100;
+<style>
+  .intro {
+    padding: clamp(40px, 6vw, 80px) 0 40px;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .note {
+    transform: rotate(-3deg);
+    width: fit-content;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: clamp(3rem, 7.5vw, 6.2rem);
+    margin-bottom: 24px;
+  }
+  h1 span {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .intro .btn {
+    margin-top: 8px;
+  }
+  .map :global(img),
+  .step-art :global(img),
+  .cheers :global(.cheers-art) {
+    width: 100%;
+    border: var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    background: #f4e9d7;
+  }
+  .map :global(img) {
+    transform: rotate(1.5deg);
+  }
+
+  /* sticky step bar, like the dashes on our slides */
+  .progress {
+    position: sticky;
+    top: 69px;
+    z-index: 50;
+    background: var(--paper) var(--grain);
+    border-block: var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .progress ol {
+    list-style: none;
+    margin: 0 auto;
+    padding: 10px var(--gutter);
+    display: flex;
+    gap: 6px;
+    max-width: 1320px;
+    justify-content: space-between;
+  }
+  .progress a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .progress .num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    background: var(--paper-light);
+    transition: background 0.2s;
+  }
+  .progress a.on .num {
+    background: var(--yellow);
+  }
+  .progress a:hover {
+    background: var(--paper-deep);
+  }
+
+  .step {
+    padding: clamp(50px, 7vw, 90px) 0 0;
+    position: relative;
+    scroll-margin-top: 130px;
+  }
+  .step-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(24px, 5vw, 70px);
+    align-items: center;
+  }
+  .flip .step-art {
+    order: 2;
+  }
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .step-head .tag {
+    transform: rotate(2deg);
+  }
+  .step-copy h2 {
+    margin-bottom: 16px;
+  }
+  .step-copy :global(em) {
+    font-style: italic;
+    font-weight: 700;
+  }
+  .step-copy :global(.real) {
+    width: min(300px, 80%);
+    margin-top: 26px;
+  }
+  .pipe {
+    width: 160px;
+    height: 150px;
+    margin: 18px auto -46px;
+    position: relative;
+    z-index: 3;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 150'%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%2321170c' stroke-width='17' stroke-linecap='round'/%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%23e3b25a' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%23f6d78f' stroke-width='3' stroke-linecap='round' stroke-dasharray='10 14' transform='translate(-2 -1)'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  .flip .pipe {
+    transform: scaleX(-1);
+  }
+
+  .reserva {
+    margin-top: clamp(80px, 10vw, 130px);
+    background: #1d1812 var(--grain);
+    color: var(--paper);
+  }
+  .res-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+  }
+  .reserva h2 {
+    color: var(--yellow);
+    margin: 18px 0;
+  }
+  .reserva .tag {
+    background: var(--yellow);
+    color: var(--ink);
+  }
+
+  .cheers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .cheers h2 {
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    margin-bottom: 18px;
+  }
+  .times {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 4px 0 26px;
+  }
+
+  @media (max-width: 900px) {
+    .intro-grid,
+    .step-grid,
+    .res-grid,
+    .cheers-grid {
+      grid-template-columns: 1fr;
     }
-    .nav-menu ul{flex-direction:column; align-items:flex-start; gap:4px; width:100%;}
-    .nav-menu ul li{width:100%;}
-    .nav-menu .nav-link{display:block; padding:10px 0; width:100%;}
-    .nav-toggle:checked ~ .nav-menu{display:flex;}
+    .flip .step-art {
+      order: 0;
+    }
+    .progress {
+      top: 65px;
+    }
+    .progress .lbl {
+      display: none;
+    }
+    .progress a {
+      padding: 2px;
+    }
+    .progress a.cur .lbl {
+      display: inline;
+    }
+    .progress a.cur {
+      padding-right: 10px;
+    }
   }
-  nav a.nav-link{text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:600;}
-  nav a.nav-link:hover{color:var(--rust);}
-
-  header.page-hero{background:var(--yellow); padding:64px 0;}
-  header.page-hero .tag{font-size:13.5px; font-weight:700; color:var(--ink); display:block; margin-bottom:12px;}
-  header.page-hero h1{font-size:clamp(36px,5vw,58px); max-width:680px;}
-  header.page-hero p{font-size:16.5px; max-width:560px; margin-top:18px; color:#3a2c10;}
-
-  section{padding:76px 0;}
-  .section-tag{font-size:13.5px; font-weight:700; color:var(--rust); display:block; margin-bottom:12px;}
-  section h2{font-size:clamp(26px,3.2vw,38px); max-width:640px; margin-bottom:18px;}
-  section p{font-size:15.5px; color:#413623; max-width:640px;}
-  .split{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
-  .split img{width:100%; border-radius:20px; display:block;}
-  @media(max-width:800px){.split{grid-template-columns:1fr;}}
-
-  .timeline{border-left:1.5px solid var(--yellow-deep); margin-left:6px; padding-left:40px;}
-  .tl-item{position:relative; padding-bottom:44px;}
-  .tl-item:last-child{padding-bottom:0;}
-  .tl-item::before{content:""; position:absolute; left:-46px; top:4px; width:11px; height:11px; border-radius:50%; background:var(--rust); border:2px solid var(--cream); outline:1.5px solid var(--yellow-deep);}
-  .tl-year{font-family:'Fraunces', serif; font-style:italic; font-size:20px; color:var(--ink); margin-bottom:6px; display:block;}
-  .tl-item p{max-width:560px; font-size:15px; color:#3f3225; margin:0;}
-
-  .value-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:12px;}
-  .value-card{background:var(--white); border-radius:16px; padding:30px;}
-  .value-card h3{font-size:18px; margin-bottom:10px;}
-  .value-card p{font-size:14.5px; color:#413623; margin:0;}
-  @media(max-width:800px){.value-grid{grid-template-columns:1fr;}}
-
-  .process-step{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:60px 0; border-bottom:1px solid rgba(32,22,7,0.12);}
-  .process-step:last-child{border-bottom:none;}
-  .process-step.reverse .split-img{order:2;}
-  .process-step .split-img img{width:100%; border-radius:20px;}
-  .process-step .step-num{font-family:'Fraunces',serif; font-style:italic; color:var(--rust); font-size:15px; margin-bottom:10px; display:block;}
-  @media(max-width:800px){.process-step{grid-template-columns:1fr; gap:24px; padding:36px 0;} .process-step.reverse .split-img{order:0;}}
-
-  .step-compact{display:grid; grid-template-columns:64px 1fr; gap:24px; padding:34px 0; border-bottom:1px solid rgba(32,22,7,0.12);}
-  .step-compact:last-child{border-bottom:none;}
-  .step-compact .step-badge{width:52px; height:52px; border-radius:50%; background:var(--yellow); border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-weight:700; font-size:20px;}
-  .step-compact h3{font-size:19px; margin-bottom:8px;}
-  .step-compact p{font-size:14.5px; color:#413623; margin:0; max-width:600px;}
-
-  details.faq-item{background:var(--white); border-radius:14px; padding:22px 26px; margin-bottom:14px;}
-  details.faq-item summary{font-family:'Fraunces',serif; font-weight:700; font-size:16.5px; cursor:pointer; list-style:none;}
-  details.faq-item summary::-webkit-details-marker{display:none;}
-  details.faq-item summary::after{content:"+"; float:right; font-size:20px; color:var(--rust);}
-  details.faq-item[open] summary::after{content:"–";}
-  details.faq-item p{margin-top:14px; font-size:14.5px; color:#413623;}
-
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  .contact-card{background:var(--white); border-radius:20px; padding:38px;}
-  .contact-card h3{font-size:13.5px; color:var(--rust); font-weight:700; margin-bottom:14px;}
-  .contact-card p{font-size:15px; color:#413623; margin:6px 0;}
-  .contact-card a.big-link{display:block; font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--yellow); padding-bottom:2px; margin-top:10px; width:fit-content;}
-  #contact-map{width:100%; height:320px; border-radius:20px; border:2px solid var(--ink);}
-  @media(max-width:800px){.contact-grid{grid-template-columns:1fr;}}
-
-  .link{display:inline-block; margin-top:6px; font-weight:700; text-decoration:none; color:var(--ink); border-bottom:2px solid var(--yellow);}
-
-  footer{background:var(--moss-deep); color:#e3d6b0; padding:46px 0; margin-top:20px;}
-  footer .wrap{display:flex; justify-content:space-between; font-size:12.5px; color:#7d6f52; flex-wrap:wrap; gap:12px;}
 </style>

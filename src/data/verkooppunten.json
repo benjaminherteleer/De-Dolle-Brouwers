@@ -1,0 +1,310 @@
+[
+  {
+    "name": "OAK Napoli - Wine And Craft Beer",
+    "city": "Napels",
+    "country": "Italië",
+    "lat": 40.8471822,
+    "lng": 14.2503033
+  },
+  {
+    "name": "Station 1280",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2163096,
+    "lng": 4.403731
+  },
+  {
+    "name": "Café Pardaf - Craft Beer Heaven",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2210924,
+    "lng": 4.397253
+  },
+  {
+    "name": "Nüetnigenough",
+    "city": "Brussel",
+    "country": "België",
+    "lat": 50.8458556,
+    "lng": 4.3498444
+  },
+  {
+    "name": "The Glengarry",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0531387,
+    "lng": 3.7254729
+  },
+  {
+    "name": "Brasserie De Pikardijn",
+    "city": "Sint-Lievens-Houtem",
+    "country": "België",
+    "lat": 50.9080682,
+    "lng": 3.853362
+  },
+  {
+    "name": "HERMAN Belgian Bar",
+    "city": "Berlijn",
+    "country": "Duitsland",
+    "lat": 52.5324042,
+    "lng": 13.4121625
+  },
+  {
+    "name": "Dekkera",
+    "city": "Brussel (Vorst)",
+    "country": "België",
+    "lat": 50.8225667,
+    "lng": 4.3292506
+  },
+  {
+    "name": "Moeder Lambic Fontainas",
+    "city": "Brussel",
+    "country": "België",
+    "lat": 50.8451368,
+    "lng": 4.3469668
+  },
+  {
+    "name": "Alsem 1900 J.P. (Houtwijk)",
+    "city": "Den Haag",
+    "country": "Nederland",
+    "lat": 52.0545992,
+    "lng": 4.2498911
+  },
+  {
+    "name": "Alsem 1900 J.P.",
+    "city": "Den Haag",
+    "country": "Nederland",
+    "lat": 52.070708,
+    "lng": 4.283149
+  },
+  {
+    "name": "Apollon Platebar",
+    "city": "Bergen",
+    "country": "Noorwegen",
+    "lat": 60.3895874,
+    "lng": 5.3232465
+  },
+  {
+    "name": "Internationella Pressklubben",
+    "city": "Stockholm",
+    "country": "Zweden",
+    "lat": 59.3344386,
+    "lng": 18.0562107
+  },
+  {
+    "name": "Nisha craft beer bar",
+    "city": "Kaunas",
+    "country": "Litouwen",
+    "lat": 54.8978366,
+    "lng": 23.8913426
+  },
+  {
+    "name": "The Sickle",
+    "city": "Bath",
+    "country": "Verenigd Koninkrijk",
+    "lat": 51.3891526,
+    "lng": -2.3587346
+  },
+  {
+    "name": "The Lucky Anchor",
+    "city": "Londen",
+    "country": "Verenigd Koninkrijk",
+    "lat": 51.4755203,
+    "lng": -0.0257555
+  },
+  {
+    "name": "waterintobeer",
+    "city": "Ramsgate",
+    "country": "Verenigd Koninkrijk",
+    "lat": 51.3346848,
+    "lng": 1.4207374
+  },
+  {
+    "name": "Karreman Biermeesters",
+    "city": "Rotterdam",
+    "country": "Nederland",
+    "lat": 51.9225788,
+    "lng": 4.4931184
+  },
+  {
+    "name": "Café de Koppelpaarden",
+    "city": "Assen",
+    "country": "Nederland",
+    "lat": 52.9937487,
+    "lng": 6.5606692
+  },
+  {
+    "name": "Beerlovers Bar",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.222062,
+    "lng": 4.4207667
+  },
+  {
+    "name": "Dranken Geers NV (Prik & Tik)",
+    "city": "Oostakker (Gent)",
+    "country": "België",
+    "lat": 51.1003608,
+    "lng": 3.7611593
+  },
+  {
+    "name": "De Hopduvel",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0664222,
+    "lng": 3.7329654
+  },
+  {
+    "name": "Trappistenhuis",
+    "city": "Achel (Hamont-Achel)",
+    "country": "België",
+    "lat": 51.2984254,
+    "lng": 5.4884006
+  },
+  {
+    "name": "Café Beermoth · Craft Beer Bar",
+    "city": "Manchester",
+    "country": "Verenigd Koninkrijk",
+    "lat": 53.4813121,
+    "lng": -2.2418715
+  },
+  {
+    "name": "Gainsbar",
+    "city": "Kortrijk",
+    "country": "België",
+    "lat": 50.8257161,
+    "lng": 3.267813
+  },
+  {
+    "name": "De Ware Jacob",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.057458,
+    "lng": 3.7257211
+  },
+  {
+    "name": "Billie's Bier Kafétaria",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2183896,
+    "lng": 4.400223
+  },
+  {
+    "name": "Dr. Beer",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2276794,
+    "lng": 4.4043895
+  },
+  {
+    "name": "Bier Central Antwerpen",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2177747,
+    "lng": 4.4183896
+  },
+  {
+    "name": "Bier Central Gent",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0539228,
+    "lng": 3.7255628
+  },
+  {
+    "name": "Defoo",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0432962,
+    "lng": 3.724612
+  },
+  {
+    "name": "Dulle Griet",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0565719,
+    "lng": 3.7252779
+  },
+  {
+    "name": "Café Botteltje",
+    "city": "Oostende",
+    "country": "België",
+    "lat": 51.2334787,
+    "lng": 2.9170765
+  },
+  {
+    "name": "'t Brugs Beertje",
+    "city": "Brugge",
+    "country": "België",
+    "lat": 51.2068237,
+    "lng": 3.2217179
+  },
+  {
+    "name": "Verkooppunt Portland",
+    "city": "Portland, ME",
+    "country": "VS",
+    "lat": 43.6567355,
+    "lng": -70.2556862
+  },
+  {
+    "name": "Verkooppunt Rome",
+    "city": "Rome",
+    "country": "Italië",
+    "lat": 41.8936532,
+    "lng": 12.5566602
+  },
+  {
+    "name": "Verkooppunt Utrecht",
+    "city": "Utrecht",
+    "country": "Nederland",
+    "lat": 52.0948542,
+    "lng": 5.1195872
+  },
+  {
+    "name": "Ma Che Siete Venuti A Fà",
+    "city": "Rome",
+    "country": "Italië",
+    "lat": 41.8917811,
+    "lng": 12.4692175
+  },
+  {
+    "name": "The Drunken Duck - Spaccisti Birrai",
+    "city": "Bolzano Vicentino",
+    "country": "Italië",
+    "lat": 45.5877456,
+    "lng": 11.6276741
+  },
+  {
+    "name": "Streekbierencafé",
+    "city": "Grimbergen",
+    "country": "België",
+    "lat": 50.9344654,
+    "lng": 4.3692829
+  },
+  {
+    "name": "Threefold Beer & Pizza",
+    "city": "Vancouver",
+    "country": "Canada",
+    "lat": 49.2834076,
+    "lng": -123.073608
+  },
+  {
+    "name": "Blind Lady Ale House",
+    "city": "San Diego",
+    "country": "VS",
+    "lat": 32.7634973,
+    "lng": -117.1202861
+  },
+  {
+    "name": "Nisha Craft Capital",
+    "city": "Vilnius",
+    "country": "Litouwen",
+    "lat": 54.6840878,
+    "lng": 25.2840588
+  },
+  {
+    "name": "Le Trappiste",
+    "city": "Brugge",
+    "country": "België",
+    "lat": 51.210838,
+    "lng": 3.222809
+  }
+]

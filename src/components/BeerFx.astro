@@ -1,0 +1,336 @@
+---
+/**
+ * A little scene behind each beer character, drawn after its label.
+ * Plays while the parent `.fx-host` is hovered, or always with `live`.
+ */
+interface Props {
+  slug: string;
+  live?: boolean;
+}
+
+const { slug, live = false } = Astro.props;
+const kind = slug.replace(/-reserva$/, '');
+
+// deterministic "random" so builds stay stable
+const rnd = (i: number, salt = 1) => {
+  const x = Math.sin(i * 12.9898 + salt * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+};
+const many = (n: number) => Array.from({ length: n }, (_, i) => i);
+
+const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc58f'];
+---
+
+<div class:list={['fx', `fx-${kind}`, { live }]} aria-hidden="true">
+  {
+    kind === 'stille-nacht' &&
+      many(60).map((i) => (
+        <span
+          class="flake"
+          style={`--x:${(rnd(i) * 100).toFixed(1)}%; --s:${(4 + rnd(i, 2) * 8).toFixed(1)}px; --d:${(3 + rnd(i, 3) * 4).toFixed(2)}s; --delay:-${(rnd(i, 4) * 6).toFixed(2)}s; --drift:${(rnd(i, 5) * 30 - 15).toFixed(0)}px`}
+        />
+      ))
+  }
+
+  {
+    kind === 'boskeun' &&
+      many(9).map((i) => (
+        <svg
+          class="egg"
+          viewBox="0 0 30 38"
+          style={`--x:${8 + i * 10.5}%; --delay:-${(rnd(i) * 2.4).toFixed(2)}s; --h:${(30 + rnd(i, 2) * 35).toFixed(0)}cqh; --r:${(rnd(i, 3) * 40 - 20).toFixed(0)}deg`}
+        >
+          <ellipse cx="15" cy="20" rx="13" ry="17" fill={eggColors[i % eggColors.length]} stroke="#21170c" stroke-width="2" />
+          <path d="M3 18 l6 -4 6 4 6 -4 6 4" fill="none" stroke="#21170c" stroke-width="1.6" stroke-linejoin="round" />
+          <circle cx="10" cy="27" r="2" fill="#21170c" /><circle cx="20" cy="27" r="2" fill="#21170c" />
+        </svg>
+      ))
+  }
+
+  {
+    kind === 'oeral' &&
+      many(6).map((i) => (
+        <svg
+          class="cloud"
+          viewBox="0 0 100 50"
+          style={`--y:${(8 + rnd(i) * 70).toFixed(0)}%; --w:${(70 + rnd(i, 2) * 70).toFixed(0)}px; --d:${(5 + rnd(i, 3) * 4).toFixed(1)}s; --delay:-${(rnd(i, 4) * 8).toFixed(1)}s`}
+        >
+          <path
+            d="M18 44 h66 a14 14 0 0 0 0-28 a20 20 0 0 0-37-6 a15 15 0 0 0-27 9 a13 13 0 0 0-2 25z"
+            fill="#fffdf7"
+            stroke="#21170c"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+          />
+        </svg>
+      ))
+  }
+
+  {
+    kind === 'dulle-teve' &&
+      many(6).map((i) => (
+        <svg
+          class="bolt"
+          viewBox="0 0 40 80"
+          style={`--x:${[6, 78, 14, 84, 46, 70][i]}%; --y:${[8, 12, 58, 55, 4, 78][i]}%; --delay:${(i * 0.37).toFixed(2)}s; --r:${[-14, 12, 8, -10, 3, -6][i]}deg; --s:${[1, 0.8, 0.7, 0.9, 0.6, 0.55][i]}`}
+        >
+          <path d="M24 2 L6 44 H20 L12 78 L36 30 H22 L32 2 Z" fill="#f7b500" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
+        </svg>
+      ))
+  }
+
+  {
+    kind === 'oerbier' && (
+      <>
+        <svg class="rays" viewBox="-100 -100 200 200">
+          {many(16).map((i) => (
+            <path d={`M0 0 L${(Math.cos(((i * 22.5 - 5) * Math.PI) / 180) * 150).toFixed(1)} ${(Math.sin(((i * 22.5 - 5) * Math.PI) / 180) * 150).toFixed(1)} L${(Math.cos(((i * 22.5 + 5) * Math.PI) / 180) * 150).toFixed(1)} ${(Math.sin(((i * 22.5 + 5) * Math.PI) / 180) * 150).toFixed(1)}Z`} />
+          ))}
+        </svg>
+        {many(14).map((i) => (
+          <span
+            class="bubble"
+            style={`--x:${(10 + rnd(i) * 80).toFixed(1)}%; --s:${(6 + rnd(i, 2) * 12).toFixed(0)}px; --d:${(2.4 + rnd(i, 3) * 2.4).toFixed(2)}s; --delay:-${(rnd(i, 4) * 4).toFixed(2)}s`}
+          />
+        ))}
+      </>
+    )
+  }
+
+  {
+    kind === 'arabier' &&
+      many(10).map((i) => (
+        <svg
+          class="hop"
+          viewBox="0 0 30 40"
+          style={`--x:${(5 + rnd(i) * 90).toFixed(1)}%; --d:${(3.2 + rnd(i, 3) * 2.5).toFixed(2)}s; --delay:-${(rnd(i, 4) * 5).toFixed(2)}s; --r:${(rnd(i, 5) * 360).toFixed(0)}deg; --sz:${(20 + rnd(i, 2) * 16).toFixed(0)}px`}
+        >
+          <path d="M15 2 v6" stroke="#21170c" stroke-width="2" />
+          <path d="M15 7 C 4 10, 3 26, 15 38 C 27 26, 26 10, 15 7 Z" fill="#9cc95a" stroke="#21170c" stroke-width="2" />
+          <path d="M8 16 Q15 21 22 16 M7 23 Q15 28 23 23 M10 30 Q15 34 20 30" fill="none" stroke="#21170c" stroke-width="1.4" />
+        </svg>
+      ))
+  }
+
+  {
+    kind === 'lichtervelds-blond' && (
+      <div class="sea">
+        {many(3).map((i) => (
+          <svg class="wave" viewBox="0 0 400 40" preserveAspectRatio="none" style={`--i:${i}`}>
+            <path d="M0 20 Q25 0 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20 V40 H0Z" />
+          </svg>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    kind === 'export-stout' &&
+      many(5).map((i) => (
+        <svg class="steam" viewBox="0 0 20 80" style={`--x:${14 + i * 18}%; --delay:-${(i * 0.7).toFixed(1)}s`}>
+          <path d="M10 78 C 0 64, 20 52, 10 40 S 0 16, 10 2" fill="none" stroke="#fffdf7" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      ))
+  }
+</div>
+
+<style>
+  .fx {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .fx * {
+    animation-play-state: paused;
+  }
+  :global(.fx-host:hover) .fx,
+  :global(.fx-host:focus-visible) .fx,
+  .fx.live {
+    opacity: 1;
+  }
+  :global(.fx-host:hover) .fx *,
+  :global(.fx-host:focus-visible) .fx *,
+  .fx.live * {
+    animation-play-state: running;
+  }
+
+  /* Stille Nacht: snow */
+  .flake {
+    position: absolute;
+    top: -10px;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 1.5px rgba(33, 23, 12, 0.35);
+    animation: snow var(--d) linear infinite var(--delay);
+  }
+  @keyframes snow {
+    to {
+      transform: translate(var(--drift), 115cqh);
+    }
+  }
+
+  /* Boskeun: easter eggs hopping up */
+  .egg {
+    position: absolute;
+    bottom: -40px;
+    left: var(--x);
+    width: 30px;
+    animation: hop 2.4s cubic-bezier(0.3, 0.7, 0.4, 1) infinite var(--delay);
+  }
+  @keyframes hop {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+    45% {
+      transform: translateY(calc(var(--h) * -1)) rotate(var(--r));
+    }
+    55% {
+      transform: translateY(calc(var(--h) * -1)) rotate(var(--r));
+    }
+  }
+
+  /* Oeral: flying through clouds */
+  .cloud {
+    position: absolute;
+    top: var(--y);
+    left: 100%;
+    width: var(--w);
+    animation: cloud var(--d) linear infinite var(--delay);
+  }
+  @keyframes cloud {
+    to {
+      transform: translateX(calc(-100cqw - 160px));
+    }
+  }
+
+  /* Dulle Teve: lightning, like the label */
+  .bolt {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: calc(46px * var(--s));
+    transform: rotate(var(--r));
+    animation: flash 1.6s steps(1) infinite var(--delay);
+  }
+  @keyframes flash {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    8%,
+    20% {
+      opacity: 1;
+    }
+    12% {
+      opacity: 0.2;
+    }
+  }
+
+  /* Oerbier: sunburst and bubbles */
+  .rays {
+    position: absolute;
+    inset: -30%;
+    width: 160%;
+    height: 160%;
+    fill: rgba(255, 253, 247, 0.35);
+    animation: spin 18s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .bubble {
+    position: absolute;
+    bottom: -20px;
+    left: var(--x);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    border: 2px solid rgba(33, 23, 12, 0.55);
+    background: rgba(255, 253, 247, 0.5);
+    animation: rise var(--d) ease-in infinite var(--delay);
+  }
+  @keyframes rise {
+    to {
+      transform: translateY(-115cqh);
+    }
+  }
+
+  /* Arabier: dry hopping */
+  .hop {
+    position: absolute;
+    top: -40px;
+    left: var(--x);
+    width: var(--sz);
+    animation: hopfall var(--d) linear infinite var(--delay);
+  }
+  @keyframes hopfall {
+    from {
+      transform: translateY(0) rotate(var(--r));
+    }
+    to {
+      transform: translateY(115cqh) rotate(calc(var(--r) + 220deg));
+    }
+  }
+
+  /* Lichtervelds Blond (De Hoop): waves under the anchor */
+  .sea {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30%;
+  }
+  .wave {
+    position: absolute;
+    left: 0;
+    bottom: calc(var(--i) * -8px);
+    width: 200%;
+    height: 60%;
+    fill: rgba(44, 90, 160, calc(0.25 + var(--i) * 0.2));
+    animation: wave calc(4s + var(--i) * 1.5s) linear infinite;
+  }
+  @keyframes wave {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Export Stout: coffee steam */
+  .steam {
+    position: absolute;
+    bottom: 6%;
+    left: var(--x);
+    width: 18px;
+    opacity: 0;
+    animation: steam 3s ease-in-out infinite var(--delay);
+  }
+  @keyframes steam {
+    0% {
+      transform: translateY(20px) scaleY(0.6);
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(-60%) scaleY(1.1);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fx {
+      display: none;
+    }
+  }
+</style>

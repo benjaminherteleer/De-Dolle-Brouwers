@@ -1,57 +1,196 @@
 ---
+import { Image } from 'astro:assets';
+import mascot from '../assets/logo/logo-full.png';
+import wordmark from '../assets/logo/ddb-wordmark.png';
+
 interface Props {
   back?: { href: string; label: string };
 }
 
 const { back } = Astro.props;
-const isHome = Astro.url.pathname === '/';
+const path = Astro.url.pathname.replace(/\.html$/, '');
 
 const links = [
   { href: '/#bieren', label: 'Bieren' },
-  { href: '/brouwerij', label: 'De Brouwerij' },
+  { href: '/brouwerij', label: 'De brouwerij' },
   { href: '/brouwproces', label: 'Brouwproces' },
-  { href: '/#oerbar', label: 'Bezoek' },
-  { href: '/#nieuws', label: 'Nieuws' },
   { href: '/verkooppunten-kaart', label: 'Verkooppunten' },
   { href: '/contact', label: 'Contact' },
 ];
 ---
 
-<nav>
-  <div class="wrap">
-    <a class="brandmark" href={isHome ? '#' : '/'}
-      ><span class="glyph"><img src="/images/logo.png" alt="De Dolle Brouwers logo" /></span>De Dolle Brouwers</a
-    >
+<header class="site-nav">
+  <div class="bar">
+    <a class="brand" href="/" aria-label="De Dolle Brouwers, naar de homepage">
+      <Image src={mascot} alt="" width={96} class="brand-mascot" loading="eager" />
+      <span class="brand-word"><Image src={wordmark} alt="De Dolle Brouwers" width={200} loading="eager" /></span>
+    </a>
+
     {
       back ? (
-        <a class="nav-link" href={back.href} set:html={back.label} />
+        <a class="back" href={back.href} set:html={back.label} />
       ) : (
         <>
-          <input type="checkbox" id="navToggle" class="nav-toggle" />
-          <label for="navToggle" class="nav-burger" aria-label="Menu">
+          <input type="checkbox" id="navToggle" class="toggle" />
+          <label for="navToggle" class="burger" aria-label="Menu">
             <span />
             <span />
             <span />
           </label>
-          <div class="nav-menu">
+          <nav class="menu" aria-label="Hoofdmenu">
             <ul>
               {links.map((l) => (
                 <li>
-                  <a class="nav-link" href={l.href}>
+                  <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
                     {l.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <a class="nav-link" href="/#shop">
-              Merch
+            <a class="btn cta" href="/rondleiding-boeken">
+              Rondleiding boeken
             </a>
-            <a class="nav-link" href="https://krisherteleer.com" target="_blank" rel="noopener" style="margin-left:18px;">
-              Kris Herteleer ↗
-            </a>
-          </div>
+          </nav>
         </>
       )
     }
   </div>
-</nav>
+</header>
+
+<style>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper) var(--grain);
+    border-bottom: var(--line);
+  }
+  .bar {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 10px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .brand :global(.brand-mascot) {
+    width: 46px;
+    height: auto;
+    transition: transform 0.25s ease;
+  }
+  .brand:hover :global(.brand-mascot) {
+    transform: rotate(-12deg) scale(1.08);
+  }
+  .brand-word {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 4px 8px;
+    transform: rotate(-3deg);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .brand-word :global(img) {
+    width: 92px;
+  }
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .menu ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+  }
+  .menu ul a {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-variation-settings: 'SOFT' 0;
+    font-size: 1.05rem;
+    text-decoration: none;
+    padding: 4px 2px;
+    background: linear-gradient(var(--yellow), var(--yellow)) left bottom / 0 40% no-repeat;
+    transition: background-size 0.2s ease;
+  }
+  .menu ul a:hover,
+  .menu ul a[aria-current='page'] {
+    background-size: 100% 40%;
+  }
+  .cta {
+    font-size: 0.95rem;
+    padding: 0.55em 1.1em;
+  }
+  .back {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .toggle,
+  .burger {
+    display: none;
+  }
+
+  @media (max-width: 560px) {
+    .brand :global(.brand-mascot) {
+      width: 36px;
+    }
+    .brand-word :global(img) {
+      width: 70px;
+    }
+  }
+  @media (max-width: 980px) {
+    .burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border: var(--line);
+      border-radius: 10px;
+      background: var(--yellow);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .burger span {
+      display: block;
+      width: 20px;
+      height: 3px;
+      background: var(--ink);
+      border-radius: 2px;
+    }
+    .menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 24px var(--gutter) 30px;
+      background: var(--paper);
+      border-bottom: var(--line);
+    }
+    .menu ul {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .menu ul a {
+      font-size: 1.6rem;
+    }
+    .toggle:checked ~ .menu {
+      display: flex;
+    }
+  }
+</style>

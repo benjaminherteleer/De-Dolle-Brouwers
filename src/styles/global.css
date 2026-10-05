@@ -1,0 +1,360 @@
+/* De Dolle Brouwers — shared look.
+   Paper, ink and yellow, borrowed from our own Instagram slides:
+   thick ink outlines, hard offset shadows, things stuck on at an angle. */
+
+:root {
+  --paper: #f4e9d7;
+  --paper-deep: #eadabf;
+  --paper-light: #fbf5ea;
+  --ink: #21170c;
+  --ink-soft: #4a3b28;
+  --yellow: #f7b500;
+  --yellow-soft: #fcd66a;
+  --rust: #8a6100; /* mustard-brown accent; we don't use red */
+  --copper: #b8693a;
+  --hop: #6f7d2c;
+  --night: #1d2a47;
+
+  /* aliases kept for older page styles */
+  --cream: var(--paper);
+  --white: var(--paper-light);
+  --moss: var(--ink);
+  --moss-deep: #140d06;
+  --yellow-deep: #e0a200;
+  --yellow-pale: var(--yellow-soft);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Fraunces', Georgia, serif;
+  --font-hand: 'Fraunces', Georgia, serif;
+
+  --line: 2.5px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-lg: 7px 7px 0 var(--ink);
+  --radius: 14px;
+  --wrap: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+
+  /* paper grain, drawn instead of loaded */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .09 0 0 0 0 .05 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper) var(--grain);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-variation-settings: 'SOFT' 0;
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: inherit;
+}
+
+h1 {
+  font-size: clamp(3rem, 9vw, 7.5rem);
+}
+h2 {
+  font-size: clamp(2.3rem, 5.5vw, 4.4rem);
+}
+h3 {
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  line-height: 1.08;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: clamp(64px, 10vw, 128px) 0;
+  position: relative;
+}
+
+.lead {
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  max-width: 38em;
+}
+
+/* Handwritten notes, the way we scribble on boards and labels */
+.hand {
+  font-family: var(--font-hand);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 1.25;
+  color: var(--ink);
+  width: fit-content;
+  padding: 0 0.2em;
+  background: linear-gradient(transparent 58%, var(--yellow) 58%, var(--yellow) 90%, transparent 90%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Buttons and pills: thick outline + hard shadow, like the slide stickers */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0;
+  font-size: 1.05rem;
+  text-decoration: none;
+  padding: 0.75em 1.3em;
+  border: var(--line);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.btn.dark {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 4px 4px 0 var(--yellow);
+}
+.btn.light {
+  background: var(--paper-light);
+}
+
+.pill {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0;
+  font-size: 0.95rem;
+  padding: 0.25em 0.8em;
+  border: var(--line);
+  border-radius: 999px;
+  background: var(--yellow);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-variation-settings: 'SOFT' 0;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  padding: 0.35em 0.75em;
+  background: var(--ink);
+  color: var(--yellow);
+  border-radius: 6px;
+  transform: rotate(-3deg);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.18);
+}
+
+/* Photos stuck on the wall */
+.polaroid {
+  background: var(--paper-light);
+  padding: 10px 10px 0;
+  border: 1.5px solid rgba(33, 23, 12, 0.15);
+  box-shadow:
+    0 1px 2px rgba(33, 23, 12, 0.15),
+    0 14px 30px -12px rgba(33, 23, 12, 0.45);
+  transform: rotate(var(--tilt, -2deg));
+  position: relative;
+  margin: 0;
+}
+.polaroid img {
+  width: 100%;
+  aspect-ratio: var(--ratio, 4 / 5);
+  object-fit: cover;
+}
+.polaroid figcaption {
+  font-family: var(--font-hand);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  padding: 10px 6px 14px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.polaroid.taped::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 96px;
+  height: 28px;
+  transform: translateX(-50%) rotate(3deg);
+  background: rgba(252, 214, 106, 0.75);
+  border-left: 2px dashed rgba(33, 23, 12, 0.12);
+  border-right: 2px dashed rgba(33, 23, 12, 0.12);
+  z-index: 1;
+}
+
+/* Sticker card: paper with an ink outline */
+.card {
+  background: var(--paper-light);
+  border: var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(22px, 3vw, 34px);
+}
+
+/* Torn edges between colored sections */
+.edge-top,
+.edge-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 26px;
+  background: inherit;
+  pointer-events: none;
+}
+.edge-top {
+  top: -25px;
+  -webkit-mask: var(--torn) bottom / 600px 26px repeat-x;
+  mask: var(--torn) bottom / 600px 26px repeat-x;
+}
+.edge-bottom {
+  bottom: -25px;
+  -webkit-mask: var(--torn) top / 600px 26px repeat-x;
+  mask: var(--torn) top / 600px 26px repeat-x;
+  transform: scaleY(-1);
+  z-index: 2;
+}
+:root {
+  --torn: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V14l18-5 22 6 25-9 19 7 30-10 21 8 27-6 18 9 31-11 24 7 20-4 29 8 22-9 26 6 19-7 28 9 23-5 30 7 21-10 27 8 24-6 19 5 28-8 22 9 27-7V26z'/%3E%3C/svg%3E");
+}
+
+/* Round "sinds 1980" stamp */
+.stamp {
+  width: var(--size, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: var(--line);
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+  position: relative;
+  transform: rotate(-10deg);
+}
+.stamp svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 28s linear infinite;
+}
+.stamp text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+.stamp strong {
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  font-size: calc(var(--size, 150px) * var(--center, 0.24));
+  line-height: 1;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Running band of words */
+.ticker {
+  background: var(--ink);
+  color: var(--yellow);
+  overflow: hidden;
+  white-space: nowrap;
+  border-block: var(--line);
+  padding: 14px 0;
+  position: relative;
+  z-index: 3;
+}
+.ticker div {
+  display: inline-flex;
+  gap: 2.2rem;
+  animation: ticker 40s linear infinite;
+  padding-right: 2.2rem;
+}
+.ticker span {
+  font-family: var(--font-hand);
+    font-style: italic;
+  font-size: 1.7rem;
+}
+.ticker span:nth-child(even) {
+  color: var(--paper);
+}
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.squiggle {
+  display: block;
+  width: 140px;
+  height: 18px;
+  color: var(--rust);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

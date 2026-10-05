@@ -1,6 +1,204 @@
-<footer>
+---
+import { Image } from 'astro:assets';
+import lineup from '../assets/logo/mascot-lineup.png';
+---
+
+<footer class="site-footer">
+  <div class="edge-top"></div>
   <div class="wrap">
-    <span>De Dolle Brouwers — Roeselarestraat 12B, 8600 Esen (Diksmuide), West-Vlaanderen — sinds 1980</span>
-    <span>Ontwerpvoorstel · placeholder-content</span>
+    <div class="lineup">
+      <Image src={lineup} alt="De bende van De Dolle Brouwers: Dulle Teve, Stille Nacht, Oerbier, Boskeun en Arabier" width={640} />
+    </div>
+
+    <div class="grid">
+      <div class="col about">
+        <p class="hand big">Nat en straf, sinds 1980.</p>
+        <p>
+          De Dolle Brouwers<br />
+          Roeselarestraat 12B<br />
+          8600 Esen (Diksmuide)
+        </p>
+        <p><a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a></p>
+      </div>
+
+      <div class="col">
+        <h4>Oerbar</h4>
+        <p>Zaterdag &amp; zondag<br />14u – 19u</p>
+        <h4>Rondleiding</h4>
+        <p>Elke zondag<br />14u Engels · 15u Nederlands</p>
+      </div>
+
+      <div class="col">
+        <h4>Verder kijken</h4>
+        <ul>
+          <li><a href="/#bieren">Onze bieren</a></li>
+          <li><a href="/brouwerij">De brouwerij</a></li>
+          <li><a href="/brouwproces">Brouwproces</a></li>
+          <li><a href="/verkooppunten-kaart">Verkooppunten</a></li>
+          <li><a href="/faq">Veelgestelde vragen</a></li>
+          <li><a href="https://krisherteleer.com" target="_blank" rel="noopener">Kris Herteleer ↗</a></li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h4>Nieuwe brouwsels?</h4>
+        <p>Eén mail per seizoen. Geen spam, wel af en toe wat onzin.</p>
+        <form class="news" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="jouw@email.be" aria-label="E-mailadres" />
+          <button class="btn" type="submit">Ja!</button>
+        </form>
+        <div class="socials">
+          <a href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none"
+              ><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="2"></rect><circle
+                cx="12"
+                cy="12"
+                r="4.3"
+                stroke="currentColor"
+                stroke-width="2"></circle><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"></circle></svg
+            >
+          </a>
+          <a href="https://www.facebook.com/dedollebrouwers" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none"
+              ><path
+                d="M14.5 21v-7.2h2.4l.4-2.9h-2.8V9c0-.85.23-1.42 1.45-1.42H17.4V4.98c-.26-.03-1.13-.11-2.15-.11-2.13 0-3.6 1.3-3.6 3.68v2.35H9.2v2.9h2.45V21z"
+                fill="currentColor"></path></svg
+            >
+          </a>
+          <a href="https://www.tiktok.com/@dedollebrouwers" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="none"
+              ><path
+                d="M16.6 3c.4 2.2 1.8 3.6 4 3.8v2.7c-1.4.1-2.7-.3-4-1.1v6.1c0 3-2.4 5.5-5.5 5.5S5.6 17.5 5.6 14.5c0-2.8 2.1-5.1 4.8-5.4v2.8a2.6 2.6 0 1 0 1.9 2.5V3h4.3z"
+                fill="currentColor"></path></svg
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <span>© De Dolle Brouwers, Esen</span>
+      <span>Drink met mate. Of toch met verstand.</span>
+    </div>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px 0 28px;
+    margin-top: 40px;
+  }
+  .lineup {
+    background: var(--paper);
+    border-radius: 18px;
+    padding: 14px 24px;
+    width: min(440px, 100%);
+    margin: -110px auto 56px;
+    border: var(--line);
+    box-shadow: 6px 6px 0 var(--yellow);
+    transform: rotate(-1.5deg);
+  }
+  .lineup :global(img) {
+    width: 100%;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1.3fr;
+    gap: 36px;
+  }
+  h4 {
+    font-size: 1.15rem;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .col p {
+    font-size: 0.98rem;
+    color: #e8dcc6;
+  }
+  .col p.big {
+    font-size: 2.2rem;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+  }
+  ul a,
+  .about a {
+    text-decoration: none;
+    color: #e8dcc6;
+  }
+  ul a:hover,
+  .about a:hover {
+    color: var(--yellow);
+  }
+  .news {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .news input {
+    flex: 1;
+    min-width: 0;
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 0.6em 0.9em;
+    border-radius: 999px;
+    border: 2px solid var(--paper);
+    background: transparent;
+    color: var(--paper);
+  }
+  .news .btn {
+    padding: 0.5em 1em;
+    box-shadow: 3px 3px 0 var(--paper);
+  }
+  .socials {
+    display: flex;
+    gap: 10px;
+  }
+  .socials a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    transition: transform 0.15s ease;
+  }
+  .socials a:hover {
+    transform: rotate(-10deg) scale(1.08);
+  }
+  .socials svg {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom {
+    margin-top: 48px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(244, 233, 215, 0.2);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: #bfb19a;
+  }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

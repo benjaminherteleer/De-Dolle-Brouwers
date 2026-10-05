@@ -1,0 +1,20 @@
+---
+interface Props {
+  ring?: string;
+  center?: string;
+  size?: number;
+  class?: string;
+}
+
+const { ring = 'Esen · West-Vlaanderen · Sinds · ', center = '1980', size = 150, class: cls = '' } = Astro.props;
+const id = `ring-${Math.random().toString(36).slice(2, 8)}`;
+const scale = center.length <= 4 ? 0.24 : 0.15;
+---
+
+<div class:list={['stamp', cls]} style={`--size:${size}px; --center:${scale}`} aria-hidden="true">
+  <svg viewBox="0 0 150 150">
+    <defs><path id={id} d="M75,75 m-56,0 a56,56 0 1,1 112,0 a56,56 0 1,1 -112,0"></path></defs>
+    <text><textPath href={`#${id}`} textLength="350" lengthAdjust="spacing">{ring}</textPath></text>
+  </svg>
+  <strong>{center}</strong>
+</div>
