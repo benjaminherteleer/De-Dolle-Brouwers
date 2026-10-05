@@ -12,15 +12,14 @@ import koelschip from '../assets/foto/bp-koelschip.jpg';
 import vergisting from '../assets/foto/bp-gisting.jpg';
 import molen from '../assets/foto/bp-roerkuip.jpg';
 import overzicht from '../assets/brouwproces/overzicht.jpg';
-import koer from '../assets/foto/vrijdag-koer.jpg';
-import oerbar from '../assets/foto/oerbar-interieur.jpg';
 import parasols from '../assets/foto/terras-parasols.jpg';
-import taps from '../assets/foto/taphandles.jpg';
-import lachen from '../assets/foto/vrijdag-lachen.jpg';
-import gevel from '../assets/foto/brouwerij-gevel.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
-import shirt from '../assets/foto/vrijdag-shirt.jpg';
-import flesHop from '../assets/foto/fles-hop.jpg';
+import toog from '../assets/foto/oerbar-toog.jpg';
+import proostBar from '../assets/foto/oerbar-proost.jpg';
+import kaarten from '../assets/foto/oerbar-kaarten.jpg';
+import truien from '../assets/foto/shop-truien.jpg';
+import tshirt from '../assets/foto/shop-tshirt.jpg';
+import hoodie from '../assets/foto/shop-hoodie.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
 
@@ -88,15 +87,12 @@ const affiches = [
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="hand hero-note">Esen, West-Vlaanderen ↘</p>
+        <p class="hero-kicker">De Dolle Brouwers · Esen · sinds 1980</p>
         <h1>Nat<br />en straf.</h1>
-        <p class="lead">
-          Op 11 november 1980 brouwde een bende vrienden hun eerste Oerbier in een leegstaande brouwerij in Esen. We doen
-          het vandaag nog altijd op dezelfde koppige manier: ongefilterd, hoog gegist en zonder haast.
-        </p>
+        <p class="lead">Bier zoals wij het willen. Ongefilterd, hoog gegist en zonder haast.</p>
         <div class="hero-actions">
-          <a class="btn dark" href="/brouwerij">Kom langs in Esen</a>
-          <a class="btn light" href="#bieren">Ontdek de bende</a>
+          <a class="btn dark" href="/brouwerij">Kom langs →</a>
+          <a class="btn light" href="#bieren">Ontdek de bieren</a>
         </div>
       </div>
 
@@ -226,40 +222,41 @@ const affiches = [
     </div>
   </section>
 
-  <!-- BEZOEK -->
-  <section class="section visit" id="bezoek">
+  <!-- OERBAR -->
+  <section class="section oerbar" id="bezoek">
     <div class="edge-top"></div>
     <div class="wrap">
-      <div class="visit-head">
-        <h2>Kom proeven waar het gebrouwen wordt.</h2>
-        <p class="hand">Roeselarestraat 12B, Esen</p>
-      </div>
-      <div class="visit-grid">
-        <div class="wall">
-          <Polaroid src={koer} alt="De koer van de brouwerij vol mensen" caption="Zomer op de koer" tilt={-3} ratio="4 / 3" class="w1" />
-          <Polaroid src={oerbar} alt="Het interieur van de Oerbar" caption="De Oerbar" tilt={2} ratio="3 / 4" class="w2" />
-          <Polaroid src={taps} alt="Tapkranen in de Oerbar" caption="Oeral? Enkel hier van 't vat" tilt={-2} ratio="3 / 4" class="w3" />
-          <Polaroid src={parasols} alt="Het terras met gele parasols" caption="Terras bij mooi weer" tilt={3} ratio="3 / 4" class="w4" />
-          <Polaroid src={lachen} alt="Twee bezoekers die lachen met een glas in de hand" tilt={-4} ratio="4 / 3" class="w5" />
+      <div class="oerbar-head">
+        <div>
+          <p class="hero-kicker">Naast de brouwerij</p>
+          <h2>De Oerbar.</h2>
         </div>
-        <div class="ticket">
+        <p class="lead">
+          Hier drink je alles wat we brouwen, ook Oeral, dat je enkel hier van het vat krijgt. Een kaartje leggen mag. Haast
+          hebben niet.
+        </p>
+      </div>
+
+      <div class="oerbar-grid">
+        <Polaroid src={toog} alt="De toog van de Oerbar met de koperen tapkranen" caption="De toog" tilt={-2} ratio="3 / 4" class="o1" />
+        <Polaroid src={proostBar} alt="Een vrouw die lachend het glas heft in de Oerbar" tilt={2.5} ratio="4 / 5" class="o2" />
+        <Polaroid src={kaarten} alt="Vrienden die kaarten aan een tafel in de Oerbar" caption="Zondagnamiddag" tilt={-1.5} ratio="4 / 5" class="o3" />
+        <Polaroid src={parasols} alt="Het terras met gele parasols" caption="Het terras, bij mooi weer" tilt={2} ratio="4 / 3" class="o4" />
+
+        <div class="ticket o5">
           <div class="ticket-top">
-            <span class="tag">Elke zondag</span>
-            <h3>Rondleiding met proeverij</h3>
+            <span class="tag">Open</span>
+            <h3>Zaterdag &amp; zondag<br />14u – 19u</h3>
           </div>
           <dl>
-            <div><dt>14u</dt><dd>in het Engels</dd></div>
-            <div><dt>15u</dt><dd>in het Nederlands</dd></div>
-            <div><dt>€10</dt><dd>inclusief drie proevertjes van het vat</dd></div>
+            <div><dt>Zondag</dt><dd>Rondleiding om 14u (Engels) en 15u (Nederlands)</dd></div>
+            <div><dt>€10</dt><dd>Inclusief drie proevertjes van het vat</dd></div>
+            <div><dt>Groep?</dt><dd>Vanaf 20 personen, ook in de week, op afspraak</dd></div>
           </dl>
-          <p>Groepen vanaf 20 personen kunnen ook in de week, op afspraak.</p>
           <div class="ticket-actions">
-            <a class="btn" href="/rondleiding-boeken">Boek je plaats</a>
-            <a class="ticket-link" href="/brouwerij#bezoek">Meer over je bezoek →</a>
+            <a class="btn" href="/brouwerij">Plan je bezoek →</a>
           </div>
-          <div class="ticket-foot">
-            <strong>Oerbar</strong> open op zaterdag en zondag van 14u tot 19u. Gesloten tijdens de kerstvakantie.
-          </div>
+          <div class="ticket-foot">Roeselarestraat 12B, Esen. Gesloten tijdens de kerstvakantie.</div>
         </div>
       </div>
     </div>
@@ -289,28 +286,40 @@ const affiches = [
     </div>
   </section>
 
-  <!-- MERCH + VERKOOPPUNTEN -->
-  <section class="section extra" id="shop">
-    <div class="wrap extra-grid">
-      <div class="card merch">
-        <Polaroid src={shirt} alt="Achterkant van een Dolle Vrijdag T-shirt" tilt={-3} ratio="1 / 1" width={500} class="merch-photo" />
-        <div>
-          <h3>Shirts, glazen &amp; borden</h3>
-          <p>
-            Online afrekenen kan (nog) niet. Mail wat je wil naar{' '}
-            <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a> of pik het op in de Oerbar.
-          </p>
-          <p class="hand price">T-shirt €22 · Glas €6,50 · Trui €38</p>
-        </div>
+  <!-- OERSHOP -->
+  <section class="section shop" id="shop">
+    <div class="wrap">
+      <div class="shop-head">
+        <h2>Oershop.</h2>
+        <p class="lead">
+          Truien, T-shirts, glazen (€6,50) en borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
+          <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>. Een echte webshop is er (nog) niet.
+        </p>
       </div>
-      <div class="card where" id="verkooppunten">
-        <Polaroid src={flesHop} alt="Een fles Oerbier tussen verse hop" tilt={4} ratio="1 / 1" width={500} class="where-photo" />
-        <div>
-          <h3>Ook te vinden ver buiten Esen</h3>
-          <p>Van Café Pardaf in Antwerpen tot een bierbar in Rome. Kijk waar je in de buurt een De Dolle Brouwers-biertje kan drinken.</p>
-          <a class="btn" href="/verkooppunten-kaart">Open de kaart</a>
-        </div>
+      <div class="shop-grid">
+        <figure class="shop-item">
+          <Image src={truien} alt="Zwarte en grijze truien van De Dolle Brouwers aan een groen paneel" width={700} />
+          <figcaption><b>Truien &amp; hoodies</b><span>€38</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={tshirt} alt="Wit T-shirt met de bende van De Dolle Brouwers op de toog" width={700} />
+          <figcaption><b>T-shirt</b><span>€22</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={hoodie} alt="Rugkant van een zwarte hoodie met het De Dolle Brouwers-logo in goud" width={700} />
+          <figcaption><b>Hoodie met goudopdruk</b><span>in de Oerbar</span></figcaption>
+        </figure>
       </div>
+    </div>
+  </section>
+
+  <!-- VERKOOPPUNTEN -->
+  <section class="where-strip" id="verkooppunten">
+    <div class="wrap where-inner">
+      <p>
+        <b>Niet in Esen?</b> Je vindt ons bier in meer dan 40 cafés en winkels, van Antwerpen tot Rome en San Diego.
+      </p>
+      <a class="btn light" href="/verkooppunten-kaart">Bekijk de kaart →</a>
     </div>
   </section>
 </Base>
@@ -579,114 +588,6 @@ const affiches = [
     border-radius: 20px;
   }
 
-  /* VISIT */
-  .visit {
-    background: var(--yellow) var(--grain);
-  }
-  .visit-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 50px;
-  }
-  .visit-head h2 {
-    max-width: 13em;
-  }
-  .visit-head .hand {
-    transform: rotate(-3deg);
-  }
-  .visit-grid {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    gap: clamp(30px, 5vw, 60px);
-    align-items: start;
-  }
-  .wall {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 18px;
-  }
-  .wall :global(.w1) {
-    grid-column: 1 / 5;
-  }
-  .wall :global(.w2) {
-    grid-column: 5 / 7;
-    margin-top: 30px;
-  }
-  .wall :global(.w3) {
-    grid-column: 1 / 3;
-  }
-  .wall :global(.w4) {
-    grid-column: 3 / 5;
-    margin-top: 20px;
-  }
-  .wall :global(.w5) {
-    grid-column: 5 / 7;
-    align-self: center;
-  }
-  .ticket {
-    background: var(--paper-light);
-    border: var(--line);
-    border-radius: 18px;
-    box-shadow: var(--shadow-lg);
-    position: sticky;
-    top: 100px;
-    overflow: hidden;
-  }
-  .ticket-top {
-    padding: 26px 28px 20px;
-    border-bottom: 3px dashed var(--ink);
-  }
-  .ticket-top h3 {
-    font-size: 2rem;
-    margin-top: 14px;
-  }
-  .ticket dl {
-    margin: 0;
-    padding: 20px 28px 4px;
-    display: grid;
-    gap: 10px;
-  }
-  .ticket dl div {
-    display: grid;
-    grid-template-columns: 70px 1fr;
-    align-items: baseline;
-  }
-  .ticket dt {
-    font-family: var(--font-display);
-    font-weight: 650;
-    font-size: 1.6rem;
-  }
-  .ticket dd {
-    margin: 0;
-  }
-  .ticket > p {
-    padding: 8px 28px 0;
-    font-size: 0.95rem;
-    color: var(--ink-soft);
-  }
-  .ticket-actions {
-    padding: 4px 28px 24px;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .ticket-link {
-    font-weight: 600;
-  }
-  .ticket-foot {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 16px 28px;
-    font-size: 0.95rem;
-  }
-  .ticket-foot strong {
-    color: var(--yellow);
-  }
-
   /* POSTERS */
   .posters-head {
     text-align: center;
@@ -727,31 +628,174 @@ const affiches = [
     margin-top: 44px;
   }
 
-  /* EXTRA */
-  .extra {
-    padding-top: 0;
+  /* OERBAR */
+  .oerbar {
+    background: var(--yellow) var(--grain);
   }
-  .extra-grid {
+  .oerbar-head {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 30px 60px;
+    align-items: end;
+    margin-bottom: 56px;
   }
-  .extra .card {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 26px;
-    align-items: center;
+  .oerbar-head h2 {
+    font-size: clamp(3.4rem, 9vw, 7rem);
+    line-height: 0.9;
   }
-  .extra h3 {
-    margin-bottom: 12px;
-  }
-  .price {
-    color: var(--rust);
-    font-size: 1.45rem;
+  .oerbar-head .lead {
     margin: 0;
+  }
+  .oerbar-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 22px;
+    align-items: start;
+  }
+  .oerbar-grid :global(.o1) {
+    grid-column: 1 / 5;
+    grid-row: 1 / 3;
+  }
+  .oerbar-grid :global(.o2) {
+    grid-column: 5 / 8;
+    margin-top: 40px;
+  }
+  .oerbar-grid :global(.o3) {
+    grid-column: 8 / 10;
+    margin-top: 10px;
+  }
+  .oerbar-grid :global(.o4) {
+    grid-column: 5 / 10;
+    margin-top: -10px;
+  }
+  .oerbar-grid .o5 {
+    grid-column: 10 / 13;
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+  .ticket {
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .ticket-top {
+    padding: 22px 22px 16px;
+    border-bottom: 3px dashed var(--ink);
+  }
+  .ticket-top h3 {
+    font-size: 1.6rem;
+    margin-top: 12px;
+  }
+  .ticket dl {
+    margin: 0;
+    padding: 16px 22px 4px;
+    display: grid;
+    gap: 12px;
+  }
+  .ticket dl div {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 8px;
+    font-size: 0.95rem;
+  }
+  .ticket dt {
+    font-family: var(--font-display);
+    font-weight: 650;
+  }
+  .ticket dd {
+    margin: 0;
+  }
+  .ticket-actions {
+    padding: 10px 22px 20px;
+  }
+  .ticket-foot {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 22px;
+    font-size: 0.85rem;
+  }
+
+  /* OERSHOP */
+  .shop-head {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 30px 60px;
+    align-items: end;
+    margin-bottom: 44px;
+  }
+  .shop-head h2 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.9;
+  }
+  .shop-head .lead {
+    margin: 0;
+  }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .shop-item {
+    margin: 0;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .shop-item :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .shop-item:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .shop-item figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+  }
+  .shop-item figcaption span {
+    font-style: italic;
+  }
+
+  /* VERKOOPPUNTEN STRIP */
+  .where-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 34px 0 120px;
+  }
+  .where-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .where-inner p {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .hero-kicker {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
   }
 
   @media (max-width: 980px) {
+    .oerbar-head,
+    .shop-head,
     .hero-grid,
     .trad-grid,
     .res-grid,
@@ -777,7 +821,27 @@ const affiches = [
       position: static;
     }
   }
+  @media (max-width: 980px) {
+    .oerbar-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .oerbar-grid > :global(*),
+    .oerbar-grid .o5 {
+      grid-column: auto !important;
+      grid-row: auto !important;
+      margin-top: 0 !important;
+    }
+    .oerbar-grid .o5 {
+      grid-column: 1 / -1 !important;
+    }
+    .shop-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   @media (max-width: 560px) {
+    .shop-grid {
+      grid-template-columns: 1fr;
+    }
     .beer-grid {
       gap: 20px 14px;
     }
