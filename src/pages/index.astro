@@ -16,6 +16,7 @@ import toog from '../assets/foto/oerbar-toog.jpg';
 import tap from '../assets/foto/oerbar-tap.jpg';
 import proostBar from '../assets/foto/oerbar-proost.jpg';
 import parasols from '../assets/foto/terras-parasols.jpg';
+import oerbar from '../assets/foto/oerbar-interieur.jpg';
 import gevel from '../assets/foto/brouwerij-gevel.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
 import truien from '../assets/foto/shop-truien.jpg';
@@ -241,6 +242,7 @@ const affiches = [
           <Polaroid src={tap} alt="De barman tapt een glas in de Oerbar" tilt={2} ratio="4 / 3" class="w2" />
           <Polaroid src={proostBar} alt="Een vrouw die lachend haar glas heft in de Oerbar" tilt={-1.5} ratio="4 / 5" class="w3" />
           <Polaroid src={parasols} alt="Het terras met gele parasols naast de brouwerij" tilt={2.5} ratio="4 / 5" class="w4" />
+          <Polaroid src={oerbar} alt="De zaal van de Oerbar" tilt={1.5} ratio="4 / 3" class="w5" />
         </div>
         <div class="ticket">
           <div class="ticket-top">
@@ -630,7 +632,7 @@ const affiches = [
   }
   .wall :global(.w1) {
     grid-column: 1;
-    grid-row: 1 / 3;
+    grid-row: 1;
   }
   .wall :global(.w2) {
     grid-column: 2 / 4;
@@ -638,11 +640,16 @@ const affiches = [
   }
   .wall :global(.w3) {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 2 / 4;
   }
   .wall :global(.w4) {
     grid-column: 3;
-    grid-row: 2;
+    grid-row: 2 / 4;
+    margin-top: 24px;
+  }
+  .wall :global(.w5) {
+    grid-column: 1;
+    grid-row: 2 / 4;
   }
   .ticket {
     background: var(--paper-light);
