@@ -22,6 +22,9 @@ import vaten from '../assets/foto/vaten-rij.jpg';
 import truien from '../assets/foto/shop-truien.jpg';
 import tshirt from '../assets/foto/shop-tshirt.jpg';
 import hoodie from '../assets/foto/shop-hoodie.jpg';
+import oerbierman from '../assets/foto/shop-oerbierman.jpg';
+import oerbiermanNaam from '../assets/foto/shop-oerbierman-naam.jpg';
+import borden from '../assets/foto/shop-borden.jpg';
 import flesHop from '../assets/foto/fles-hop.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
@@ -297,7 +300,7 @@ const affiches = [
       <div class="shop-head">
         <h2>Oershop.</h2>
         <p class="lead">
-          Truien, T-shirts, glazen en borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
+          Truien, T-shirts, het Oerbier-mannetje en metalen borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
           <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
         </p>
       </div>
@@ -313,6 +316,21 @@ const affiches = [
         <figure class="shop-item">
           <Image src={hoodie} alt="Rugkant van een zwarte trui met het De Dolle Brouwers-logo in goud" width={700} />
           <figcaption><b>Trui</b><span>€50 · met rits €60</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={oerbierman} alt="Het gele Oerbier-mannetje als beeldje" width={700} />
+          <figcaption><b>Oerbier-mannetje</b><span>€60</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={oerbiermanNaam} alt="Een gepersonaliseerd Oerbier-mannetje met een naam op de sjerp" width={700} />
+          <figcaption><b>Met jouw naam op de sjerp</b><span>€90</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={borden} alt="Metalen borden van Boskeun, Arabier, Stille Nacht, Oerbier en Dulle Teve" width={700} />
+          <figcaption class="signs">
+            <span class="row"><b>Metalen borden</b></span>
+            <span class="list">Oerbier wit · Arabier · Boskeun · Dulle Teve · Stille Nacht · <s>Oerbier zwart</s> uitverkocht</span>
+          </figcaption>
         </figure>
       </div>
     </div>
@@ -798,6 +816,17 @@ const affiches = [
   }
   .shop-item figcaption span {
     font-style: italic;
+  }
+  .shop-item figcaption.signs {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .shop-item .signs .list {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .shop-item .signs s {
+    text-decoration-thickness: 2px;
   }
 
   /* EXTRA */
