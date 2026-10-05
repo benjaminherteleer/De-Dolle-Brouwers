@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "oerbier",
-      "runtimeExecutable": "/Users/benjaminherteleer/.local/node/bin/pnpm",
-      "runtimeArgs": ["dev", "--port", "4322"],
+      "runtimeExecutable": "/Users/benjaminherteleer/.local/node/bin/node",
+      "runtimeArgs": ["/Users/benjaminherteleer/Downloads/Websites/oerbier/node_modules/astro/bin/astro.mjs", "dev", "--root", "/Users/benjaminherteleer/Downloads/Websites/oerbier", "--port", "4322"],
       "port": 4322
     }
   ]
