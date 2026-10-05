@@ -1,0 +1,266 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title={'Boek een rondleiding — De Dolle Brouwers'} description={'Boek een rondleiding bij De Dolle Brouwers in Esen. Elke zondag om 14u (Engels) of 15u (Nederlands), gegeven door brouwer en oprichter Kris Herteleer. €10 per persoon, ter plaatse te betalen.'} back={{ href: '/#oerbar', label: '&larr; Terug naar Bezoek' }}>
+<Fragment slot="head">
+
+</Fragment>
+
+<header class="page-hero">
+  <div class="wrap">
+    <span class="tag">Rondleiding</span>
+    <h1>Boek je zondag bij De Dolle Brouwers.</h1>
+    <p>Drie kwartier door een werkende brouwerij, met Kris Herteleer zelf — brouwer en oprichter — als gids. Nadien proef je drie glaasjes rechtstreeks van het vat. Kies hieronder je datum en taal.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+
+    <div class="info-grid">
+      <div class="info-card"><span class="num">45'</span><h4>Duur</h4><p>Ongeveer drie kwartier, door de volledige brouwerij.</p></div>
+      <div class="info-card"><span class="num">Kris</span><h4>Je gids</h4><p>Gegeven door de brouwer en oprichter zelf.</p></div>
+      <div class="info-card"><span class="num">3×</span><h4>Proeverij</h4><p>Drie tasting-glaasjes, rechtstreeks van het vat.</p></div>
+      <div class="info-card"><span class="num">€10</span><h4>Per persoon</h4><p>Ter plaatse te betalen — nu nog niets afrekenen.</p></div>
+    </div>
+
+    <span class="step-label">Stap 1 — Kies een zondag</span>
+    <p style="font-size:13px; color:#6b5a3a; margin:-8px 0 16px;">Zondagen tijdens onze kerstsluiting (22 december – 18 januari) worden hier niet getoond.</p>
+    <div class="date-grid" id="dateGrid"></div>
+
+    <span class="step-label">Stap 2 — Kies je rondleiding</span>
+    <div class="time-grid">
+      <div class="time-card" data-time="14:00" data-lang="Engels" onclick="selectTime(this)">
+        <span class="flag">🇬🇧</span>
+        <h3>14:00 — Engels</h3>
+        <p>Rondleiding in het Engels, ideaal voor internationale bezoekers.</p>
+      </div>
+      <div class="time-card" data-time="15:00" data-lang="Nederlands" onclick="selectTime(this)">
+        <span class="flag">🇧🇪</span>
+        <h3>15:00 — Nederlands</h3>
+        <p>Rondleiding in het Nederlands, onze standaard zondagse rondleiding.</p>
+      </div>
+    </div>
+
+    <span class="step-label">Stap 3 — Jouw gegevens</span>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="naam">Naam</label>
+        <input type="text" id="naam" placeholder="Voor- en achternaam">
+      </div>
+      <div class="form-field">
+        <label for="email">E-mailadres</label>
+        <input type="email" id="email" placeholder="jij@email.be">
+      </div>
+      <div class="form-field">
+        <label for="aantal">Aantal personen</label>
+        <input type="number" id="aantal" min="1" max="19" value="2">
+      </div>
+      <div class="form-field">
+        <label for="telefoon">Telefoonnummer (optioneel)</label>
+        <input type="tel" id="telefoon" placeholder="04xx xx xx xx">
+      </div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="summary-text" id="summaryText">Kies hierboven eerst een datum en een rondleiding.</div>
+      <div class="price" id="summaryPrice">—</div>
+    </div>
+
+    <button class="book-btn" id="bookBtn" disabled onclick="submitBooking()">Kies eerst een datum en rondleiding</button>
+    <p class="pay-note">Dit reserveert je plaats via e-mail naar de brouwerij — je betaalt pas ter plaatse, in de Oerbar. Groepen vanaf 20 personen: mail rechtstreeks naar <a href="mailto:info@dedollebrouwers.be" style="font-weight:700; border-bottom:1px solid var(--ink);">info@dedollebrouwers.be</a>.</p>
+
+  </div>
+</section>
+
+
+
+<script is:inline>
+  const maanden = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+  const dagen = ["zo","ma","di","wo","do","vr","za"];
+
+  let selectedDate = null;
+  let selectedTime = null;
+  let selectedLang = null;
+
+  function isClosedDate(d){
+    const month = d.getMonth(); // 0 = jan, 11 = dec
+    const day = d.getDate();
+    if(month === 11 && day >= 22) return true; // 22-31 december
+    if(month === 0 && day <= 18) return true;  // 1-18 januari
+    return false;
+  }
+
+  function buildDates(){
+    const grid = document.getElementById('dateGrid');
+    const today = new Date();
+    let count = 0;
+    let d = new Date(today);
+    let safety = 0;
+    while(count < 8 && safety < 400){
+      d.setDate(d.getDate() + 1);
+      safety++;
+      if(d.getDay() === 0 && !isClosedDate(d)){ // Sunday, niet tijdens kerstsluiting
+        const chip = document.createElement('div');
+        chip.className = 'date-chip';
+        chip.innerHTML = `<span class="dow">zondag</span><span class="dom">${d.getDate()}</span><span class="mon">${maanden[d.getMonth()]}</span>`;
+        const dateCopy = new Date(d);
+        chip.onclick = () => selectDate(chip, dateCopy);
+        grid.appendChild(chip);
+        count++;
+      }
+    }
+  }
+
+  function selectDate(chip, dateObj){
+    document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    selectedDate = dateObj;
+    updateSummary();
+  }
+
+  function selectTime(card){
+    document.querySelectorAll('.time-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedTime = card.dataset.time;
+    selectedLang = card.dataset.lang;
+    updateSummary();
+  }
+
+  function formatDate(d){
+    return `zondag ${d.getDate()} ${maanden[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  function updateSummary(){
+    const btn = document.getElementById('bookBtn');
+    const text = document.getElementById('summaryText');
+    const price = document.getElementById('summaryPrice');
+    const aantal = document.getElementById('aantal').value || 1;
+
+    if(selectedDate && selectedTime){
+      text.innerHTML = `Rondleiding op <strong>${formatDate(selectedDate)}</strong> — ${selectedTime} (${selectedLang}), voor ${aantal} perso(o)n(en).`;
+      price.textContent = `€${10 * aantal}`;
+      btn.disabled = false;
+      btn.textContent = 'Bevestig je boeking';
+    } else {
+      text.textContent = 'Kies hierboven eerst een datum en een rondleiding.';
+      price.textContent = '—';
+      btn.disabled = true;
+      btn.textContent = 'Kies eerst een datum en rondleiding';
+    }
+  }
+
+  document.getElementById('aantal').addEventListener('input', updateSummary);
+
+  function submitBooking(){
+    if(!selectedDate || !selectedTime) return;
+    const naam = document.getElementById('naam').value || '(naam niet ingevuld)';
+    const email = document.getElementById('email').value || '(email niet ingevuld)';
+    const aantal = document.getElementById('aantal').value || 1;
+    const telefoon = document.getElementById('telefoon').value || '-';
+
+    const subject = `Boeking rondleiding ${formatDate(selectedDate)} — ${selectedTime}`;
+    const body = `Hallo,%0D%0A%0D%0AIk wil graag een rondleiding boeken:%0D%0A%0D%0ADatum: ${formatDate(selectedDate)}%0D%0AUur: ${selectedTime} (${selectedLang})%0D%0AAantal personen: ${aantal}%0D%0A%0D%0ANaam: ${naam}%0D%0AE-mail: ${email}%0D%0ATelefoon: ${telefoon}%0D%0A%0D%0ATot dan!`;
+
+    window.location.href = `mailto:info@dedollebrouwers.be?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
+
+  buildDates();
+</script>
+</Base>
+
+<style is:global>
+  :root{
+    --yellow:#F7B500; --yellow-deep:#E0A200; --yellow-pale:#FDE9AE;
+    --ink:#201607; --moss:#1C130A; --moss-deep:#120C05; --rust:#B5451B;
+    --cream:#FBF6E9; --white:#FFFDF7;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Public Sans', sans-serif; font-size:16px; line-height:1.6;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:700; margin:0; color:var(--ink);}
+  a{color:inherit;}
+  .wrap{max-width:900px; margin:0 auto; padding:0 32px;}
+
+  nav{position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:2px solid var(--ink);}
+  nav .wrap{max-width:1100px; display:flex; align-items:center; justify-content:space-between; padding:16px 32px; flex-wrap:wrap; gap:14px;}
+  .brandmark{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:700; font-size:19px; text-decoration:none; color:var(--ink);}
+  .brandmark .glyph{width:40px; height:40px; display:flex; align-items:center; justify-content:center;}
+  .brandmark .glyph img{width:100%; height:100%; object-fit:contain;}
+  .brandmark .wordmark{height:36px; width:auto; display:block;}
+  nav a.nav-link{text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:600;}
+  nav a.nav-link:hover{color:var(--rust);}
+
+  header.page-hero{background:var(--yellow); padding:56px 0;}
+  header.page-hero .tag{font-size:13.5px; font-weight:700; color:var(--ink); display:block; margin-bottom:12px;}
+  header.page-hero h1{font-size:clamp(32px,4.5vw,50px); max-width:640px;}
+  header.page-hero p{font-size:16px; max-width:560px; margin-top:16px; color:#3a2c10;}
+
+  section{padding:56px 0;}
+
+  .info-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:56px;}
+  .info-card{background:var(--white); border-radius:16px; padding:24px 20px;}
+  .info-card .num{font-family:'Fraunces',serif; font-style:italic; color:var(--rust); font-size:22px; display:block; margin-bottom:8px;}
+  .info-card h4{font-size:14.5px; margin-bottom:6px;}
+  .info-card p{font-size:13px; color:#6b5a3a; margin:0;}
+  @media(max-width:760px){.info-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .step-label{font-size:13.5px; font-weight:700; color:var(--rust); display:block; margin-bottom:14px;}
+
+  .date-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:48px;}
+  .date-chip{
+    background:var(--white); border:2px solid transparent; border-radius:14px; padding:16px 8px;
+    text-align:center; cursor:pointer; font-family:'Public Sans',sans-serif; transition:border-color .15s ease;
+  }
+  .date-chip .dow{display:block; font-size:12px; font-weight:700; color:#6b5a3a; text-transform:uppercase; letter-spacing:0.4px;}
+  .date-chip .dom{display:block; font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin-top:4px;}
+  .date-chip .mon{display:block; font-size:11.5px; color:#6b5a3a;}
+  .date-chip:hover{border-color:var(--yellow-deep);}
+  .date-chip.selected{background:var(--ink); border-color:var(--ink);}
+  .date-chip.selected .dow, .date-chip.selected .mon{color:#cbbe97;}
+  .date-chip.selected .dom{color:var(--yellow);}
+  @media(max-width:700px){.date-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:460px){.date-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .time-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:48px;}
+  .time-card{
+    background:var(--white); border:2px solid transparent; border-radius:16px; padding:26px; cursor:pointer;
+    transition:border-color .15s ease;
+  }
+  .time-card:hover{border-color:var(--yellow-deep);}
+  .time-card.selected{border-color:var(--ink); background:var(--yellow-pale);}
+  .time-card .flag{font-size:26px; margin-bottom:10px; display:block;}
+  .time-card h3{font-size:20px; margin-bottom:6px;}
+  .time-card p{font-size:13.5px; color:#6b5a3a; margin:0;}
+  @media(max-width:600px){.time-grid{grid-template-columns:1fr;}}
+
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;}
+  .form-field{display:flex; flex-direction:column; gap:6px;}
+  .form-field label{font-size:13px; font-weight:600; color:#6b5a3a;}
+  .form-field input{
+    border:2px solid #e4d9bd; border-radius:10px; padding:12px 14px; font-size:15px;
+    font-family:'Public Sans',sans-serif; background:var(--white); color:var(--ink);
+  }
+  .form-field input:focus{outline:none; border-color:var(--yellow-deep);}
+  .form-field.full{grid-column:1/-1;}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+
+  .summary-bar{
+    background:var(--ink); color:var(--yellow-pale); border-radius:16px; padding:26px 30px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:24px;
+  }
+  .summary-bar .summary-text{font-size:14.5px; line-height:1.5;}
+  .summary-bar .summary-text strong{color:var(--yellow); font-family:'Fraunces',serif; font-size:17px;}
+  .summary-bar .price{font-family:'Fraunces',serif; font-size:26px; font-weight:700; color:var(--yellow); white-space:nowrap;}
+
+  .book-btn{
+    display:inline-block; width:100%; text-align:center; background:var(--rust); color:var(--white);
+    text-decoration:none; padding:17px 30px; border-radius:30px; font-weight:700; font-size:16px;
+    border:none; cursor:pointer; font-family:'Public Sans',sans-serif;
+  }
+  .book-btn:disabled{background:#d8cdae; color:#a99a72; cursor:not-allowed;}
+  .pay-note{text-align:center; font-size:13px; color:#6b5a3a; margin-top:14px;}
+
+  footer{background:var(--moss-deep); color:#e3d6b0; padding:46px 0; margin-top:20px;}
+  footer .wrap{max-width:1100px; display:flex; justify-content:space-between; font-size:12.5px; color:#7d6f52; flex-wrap:wrap; gap:12px;}
+</style>

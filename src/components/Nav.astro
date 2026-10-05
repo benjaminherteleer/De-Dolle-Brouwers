@@ -1,0 +1,57 @@
+---
+interface Props {
+  back?: { href: string; label: string };
+}
+
+const { back } = Astro.props;
+const isHome = Astro.url.pathname === '/';
+
+const links = [
+  { href: '/#bieren', label: 'Bieren' },
+  { href: '/brouwerij', label: 'De Brouwerij' },
+  { href: '/brouwproces', label: 'Brouwproces' },
+  { href: '/#oerbar', label: 'Bezoek' },
+  { href: '/#nieuws', label: 'Nieuws' },
+  { href: '/verkooppunten-kaart', label: 'Verkooppunten' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<nav>
+  <div class="wrap">
+    <a class="brandmark" href={isHome ? '#' : '/'}
+      ><span class="glyph"><img src="/images/logo.png" alt="De Dolle Brouwers logo" /></span>De Dolle Brouwers</a
+    >
+    {
+      back ? (
+        <a class="nav-link" href={back.href} set:html={back.label} />
+      ) : (
+        <>
+          <input type="checkbox" id="navToggle" class="nav-toggle" />
+          <label for="navToggle" class="nav-burger" aria-label="Menu">
+            <span />
+            <span />
+            <span />
+          </label>
+          <div class="nav-menu">
+            <ul>
+              {links.map((l) => (
+                <li>
+                  <a class="nav-link" href={l.href}>
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a class="nav-link" href="/#shop">
+              Merch
+            </a>
+            <a class="nav-link" href="https://krisherteleer.com" target="_blank" rel="noopener" style="margin-left:18px;">
+              Kris Herteleer ↗
+            </a>
+          </div>
+        </>
+      )
+    }
+  </div>
+</nav>

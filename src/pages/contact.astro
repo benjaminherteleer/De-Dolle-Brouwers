@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title={'Contact — De Dolle Brouwers'} description={'Contactgegevens van De Dolle Brouwers in Esen (Diksmuide), West-Vlaanderen: adres, openingsuren en e-mail.'}>
+<Fragment slot="head">
+
+</Fragment>
+
+<header class="page-hero">
+  <div class="wrap">
+    <span class="tag">Contact</span>
+    <h1>Kom langs, of stuur een mail.</h1>
+    <p>Voor rondleidingen, groepsbezoeken, merchandise of gewoon een vraag — we antwoorden zo snel mogelijk.</p>
+  </div>
+</header>
+
+<section style="padding-top:0;">
+  <div class="wrap contact-grid">
+    <div class="contact-card">
+      <h3>Adres</h3>
+      <p>De Dolle Brouwers<br>Roeselarestraat 12B<br>8600 Esen (Diksmuide)<br>West-Vlaanderen, België</p>
+      <h3 style="margin-top:24px;">Openingsuren Oerbar</h3>
+      <p>Zaterdag &amp; zondag: 14u – 19u<br>Rondleiding: zondag 14u (Engels) / 15u (Nederlands) — €10, incl. 3 degustaties<br>Groepen: op afspraak, ook doordeweeks<br>Gesloten tijdens de kerstvakantie (eind december – half januari)</p>
+      <a class="big-link" href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>
+      <div class="social-row">
+        <a href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.3" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor"/></svg>
+        </a>
+        <a href="https://www.facebook.com/dedollebrouwers" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M14.5 21v-7.2h2.4l.4-2.9h-2.8V9c0-.85.23-1.42 1.45-1.42H17.4V4.98c-.26-.03-1.13-.11-2.15-.11-2.13 0-3.6 1.3-3.6 3.68v2.35H9.2v2.9h2.45V21z" fill="currentColor"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@dedollebrouwers" target="_blank" rel="noopener" aria-label="TikTok" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16.6 3c.4 2.2 1.8 3.6 4 3.8v2.7c-1.4.1-2.7-.3-4-1.1v6.1c0 3-2.4 5.5-5.5 5.5S5.6 17.5 5.6 14.5c0-2.8 2.1-5.1 4.8-5.4v2.8a2.6 2.6 0 1 0 1.9 2.5V3h4.3z" fill="currentColor"/></svg>
+        </a>
+      </div>
+    </div>
+    <div id="contact-map"></div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <img src="/images/terras-lucht.jpg" alt="Luchtfoto van het terras van De Dolle Brouwers" style="width:100%; border-radius:20px; display:block;">
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script is:inline>
+  var map = L.map('contact-map', {scrollWheelZoom:false}).setView([51.0279189, 2.9032152], 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(map);
+  var pinIcon = L.divIcon({
+    className: 'ddb-pin',
+    html: '<div style="width:30px;height:30px;border-radius:50% 50% 50% 0;background:#F7B500;border:2px solid #201607;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);overflow:hidden;"><img src="/images/logo.png" style="width:20px;height:20px;object-fit:contain;transform:rotate(45deg);" alt=""></div>',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -28]
+  });
+  L.marker([51.0279189, 2.9032152], {icon: pinIcon}).addTo(map).bindPopup('<b>De Dolle Brouwers</b><br>Roeselarestraat 12B, Esen');
+</script>
+</Base>
+
+<style is:global>
+  :root{
+    --yellow:#F7B500; --yellow-deep:#E0A200; --yellow-pale:#FDE9AE;
+    --ink:#201607; --moss:#1C130A; --moss-deep:#120C05; --rust:#B5451B;
+    --cream:#FBF6E9; --white:#FFFDF7;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Public Sans', sans-serif; font-size:16px; line-height:1.6;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:700; margin:0; color:var(--ink);}
+  a{color:inherit;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 32px;}
+
+  nav{position:sticky; top:0; z-index:50; background:var(--cream); border-bottom:2px solid var(--ink);}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:16px 32px; flex-wrap:wrap; gap:14px;}
+  .brandmark{display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:700; font-size:19px; text-decoration:none; color:var(--ink);}
+  .brandmark .glyph{width:40px; height:40px; display:flex; align-items:center; justify-content:center;}
+  .brandmark .glyph img{width:100%; height:100%; object-fit:contain;}
+  .brandmark .wordmark{height:36px; width:auto; display:block;}
+  nav ul{list-style:none; display:flex; gap:22px; margin:0; padding:0;}
+  .nav-toggle{display:none;}
+  .nav-burger{display:none; flex-direction:column; gap:5px; cursor:pointer; width:28px; padding:4px; background:none; border:none;}
+  .nav-burger span{display:block; height:3px; background:var(--ink); border-radius:2px;}
+  .nav-menu{display:flex; align-items:center; gap:22px;}
+  @media(max-width:860px){
+    nav .wrap{position:relative;}
+    .nav-burger{display:flex;}
+    .nav-menu{
+      display:none; position:absolute; top:100%; left:0; right:0; background:var(--cream);
+      flex-direction:column; align-items:flex-start; padding:20px 32px 26px; border-bottom:2px solid var(--ink);
+      gap:6px; z-index:100;
+    }
+    .nav-menu ul{flex-direction:column; align-items:flex-start; gap:4px; width:100%;}
+    .nav-menu ul li{width:100%;}
+    .nav-menu .nav-link{display:block; padding:10px 0; width:100%;}
+    .nav-toggle:checked ~ .nav-menu{display:flex;}
+  }
+  nav a.nav-link{text-decoration:none; color:var(--ink); font-size:14.5px; font-weight:600;}
+  nav a.nav-link:hover{color:var(--rust);}
+
+  header.page-hero{background:var(--yellow); padding:64px 0;}
+  header.page-hero .tag{font-size:13.5px; font-weight:700; color:var(--ink); display:block; margin-bottom:12px;}
+  header.page-hero h1{font-size:clamp(36px,5vw,58px); max-width:680px;}
+  header.page-hero p{font-size:16.5px; max-width:560px; margin-top:18px; color:#3a2c10;}
+
+  section{padding:76px 0;}
+  .section-tag{font-size:13.5px; font-weight:700; color:var(--rust); display:block; margin-bottom:12px;}
+  section h2{font-size:clamp(26px,3.2vw,38px); max-width:640px; margin-bottom:18px;}
+  section p{font-size:15.5px; color:#413623; max-width:640px;}
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .split img{width:100%; border-radius:20px; display:block;}
+  @media(max-width:800px){.split{grid-template-columns:1fr;}}
+
+  .timeline{border-left:1.5px solid var(--yellow-deep); margin-left:6px; padding-left:40px;}
+  .tl-item{position:relative; padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{content:""; position:absolute; left:-46px; top:4px; width:11px; height:11px; border-radius:50%; background:var(--rust); border:2px solid var(--cream); outline:1.5px solid var(--yellow-deep);}
+  .tl-year{font-family:'Fraunces', serif; font-style:italic; font-size:20px; color:var(--ink); margin-bottom:6px; display:block;}
+  .tl-item p{max-width:560px; font-size:15px; color:#3f3225; margin:0;}
+
+  .value-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:12px;}
+  .value-card{background:var(--white); border-radius:16px; padding:30px;}
+  .value-card h3{font-size:18px; margin-bottom:10px;}
+  .value-card p{font-size:14.5px; color:#413623; margin:0;}
+  @media(max-width:800px){.value-grid{grid-template-columns:1fr;}}
+
+  .process-step{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:60px 0; border-bottom:1px solid rgba(32,22,7,0.12);}
+  .process-step:last-child{border-bottom:none;}
+  .process-step.reverse .split-img{order:2;}
+  .process-step .split-img img{width:100%; border-radius:20px;}
+  .process-step .step-num{font-family:'Fraunces',serif; font-style:italic; color:var(--rust); font-size:15px; margin-bottom:10px; display:block;}
+  @media(max-width:800px){.process-step{grid-template-columns:1fr; gap:24px; padding:36px 0;} .process-step.reverse .split-img{order:0;}}
+
+  details.faq-item{background:var(--white); border-radius:14px; padding:22px 26px; margin-bottom:14px;}
+  details.faq-item summary{font-family:'Fraunces',serif; font-weight:700; font-size:16.5px; cursor:pointer; list-style:none;}
+  details.faq-item summary::-webkit-details-marker{display:none;}
+  details.faq-item summary::after{content:"+"; float:right; font-size:20px; color:var(--rust);}
+  details.faq-item[open] summary::after{content:"–";}
+  details.faq-item p{margin-top:14px; font-size:14.5px; color:#413623;}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .contact-card{background:var(--white); border-radius:20px; padding:38px;}
+  .contact-card h3{font-size:13.5px; color:var(--rust); font-weight:700; margin-bottom:14px;}
+  .contact-card p{font-size:15px; color:#413623; margin:6px 0;}
+  .contact-card a.big-link{display:block; font-family:'Fraunces',serif; font-size:20px; font-weight:700; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--yellow); padding-bottom:2px; margin-top:10px; width:fit-content;}
+  .social-row{display:flex; gap:12px; margin-top:20px;}
+  .social-icon{width:42px; height:42px; border-radius:50%; background:var(--ink); color:var(--yellow); display:flex; align-items:center; justify-content:center; text-decoration:none;}
+  .social-icon svg{width:20px; height:20px;}
+  .social-icon:hover{background:var(--rust);}
+  #contact-map{width:100%; height:320px; border-radius:20px; border:2px solid var(--ink);}
+  @media(max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+
+  .link{display:inline-block; margin-top:6px; font-weight:700; text-decoration:none; color:var(--ink); border-bottom:2px solid var(--yellow);}
+
+  footer{background:var(--moss-deep); color:#e3d6b0; padding:46px 0; margin-top:20px;}
+  footer .wrap{display:flex; justify-content:space-between; font-size:12.5px; color:#7d6f52; flex-wrap:wrap; gap:12px;}
+</style>
