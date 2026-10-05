@@ -20,19 +20,12 @@ import kaarten from '../assets/foto/oerbar-kaarten.jpg';
 import truien from '../assets/foto/shop-truien.jpg';
 import tshirt from '../assets/foto/shop-tshirt.jpg';
 import hoodie from '../assets/foto/shop-hoodie.jpg';
-import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
 
 import handtekening from '../assets/kris/handtekening.png';
 import aqToren from '../assets/kris/aquarel-toren.jpg';
 import aqStraat from '../assets/kris/aquarel-straat.jpg';
 import brugge from '../assets/kris/brugge.jpg';
-import vrBar from '../assets/foto/vrijdag-bar.jpg';
-import vrVolk from '../assets/foto/vrijdag-volk.jpg';
-import vrTappen from '../assets/foto/vrijdag-tappen.jpg';
-import oerbarTap from '../assets/foto/oerbar-tap.jpg';
-import flesHop from '../assets/foto/fles-hop.jpg';
-import krant from '../assets/archief/krant-1990.jpg';
 import affOerbier from '../assets/affiches/oerbier.jpg';
 import affArabier from '../assets/affiches/arabier.jpg';
 import affBoskeun from '../assets/affiches/boskeun.jpg';
@@ -95,40 +88,29 @@ const affiches = [
 
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="hero-kicker">De Dolle Brouwers · Esen · sinds 1980</p>
-        <h1>Nat<br />en straf.</h1>
-        <p class="lead">Bier zoals wij het willen. Ongefilterd, hoog gegist en zonder haast.</p>
-        <div class="hero-actions">
-          <a class="btn dark" href="/brouwerij">Kom langs →</a>
-          <a class="btn light" href="#bieren">Ontdek de bieren</a>
-        </div>
+    <div class="hero-copy">
+      <p class="hero-kicker">De Dolle Brouwers · Esen · sinds 1980</p>
+      <h1>Nat<br />en straf.</h1>
+      <p class="lead">Bier zoals wij het willen. Ongefilterd, hoog gegist en zonder haast.</p>
+      <div class="hero-actions">
+        <a class="btn dark" href="/brouwerij">Kom langs →</a>
+        <a class="btn light" href="#bieren">Ontdek de bieren</a>
       </div>
-
-      <div class="hero-collage">
-        <Polaroid
-          src={toast}
-          alt="Zwart-witfoto van de eerste Dolle Brouwers die klinken met Oerbier"
-          caption="Begin jaren '80"
-          tilt={-4}
-          ratio="7 / 5"
-          taped
-          loading="eager"
-          class="c-toast"
-        />
-        <Polaroid
-          src={klinken}
-          alt="Vrienden die klinken aan tafel in de Oerbar"
-          caption="...en vandaag, in de Oerbar"
-          tilt={3}
-          ratio="3 / 2"
-          loading="eager"
-          class="c-proost"
-        />
-        <Image src={mascot} alt="Het Oerbier-mannetje met brouwersvork en glas" width={360} class="c-mascot" loading="eager" />
-        <Stamp class="c-stamp" size={136} />
-      </div>
+    </div>
+    <div class="hero-photo">
+      <Image src={klinken} alt="Vrienden die klinken aan tafel in de Oerbar" width={1600} class="hero-img" loading="eager" />
+      <Polaroid
+        src={toast}
+        alt="Zwart-witfoto van de eerste Dolle Brouwers die klinken met Oerbier"
+        caption="Zo klonk het begin jaren '80"
+        tilt={-4}
+        ratio="7 / 5"
+        width={600}
+        taped
+        loading="eager"
+        class="hero-pol"
+      />
+      <Stamp class="hero-stamp" size={130} />
     </div>
     <div class="edge-bottom"></div>
   </section>
@@ -277,8 +259,7 @@ const affiches = [
     <div class="wrap">
       <div class="kris">
         <div class="kris-copy">
-          <p class="hero-kicker">Brouwer en tekenaar</p>
-          <h2>Kris Herteleer.</h2>
+          <h2><a href="https://krisherteleer.com" target="_blank" rel="noopener" class="kris-link">Kris Herteleer ↗</a></h2>
           <Image src={handtekening} alt="Handtekening van Kris Herteleer" width={420} class="kris-sig" />
           <p class="lead">
             Brouwt mee sinds 1980 en tekent alles wat je van ons ziet: de etiketten, de affiches, het Oerbier-mannetje en de
@@ -321,47 +302,17 @@ const affiches = [
       <div class="shop-grid">
         <figure class="shop-item">
           <Image src={truien} alt="Zwarte en grijze truien van De Dolle Brouwers aan een groen paneel" width={700} />
-          <figcaption><b>Truien &amp; hoodies</b><span>€38</span></figcaption>
+          <figcaption><b>Crewneck</b><span>€50</span></figcaption>
         </figure>
         <figure class="shop-item">
           <Image src={tshirt} alt="Wit T-shirt met de bende van De Dolle Brouwers op de toog" width={700} />
-          <figcaption><b>T-shirt</b><span>€22</span></figcaption>
+          <figcaption><b>T-shirt</b><span>€20</span></figcaption>
         </figure>
         <figure class="shop-item">
           <Image src={hoodie} alt="Rugkant van een zwarte hoodie met het De Dolle Brouwers-logo in goud" width={700} />
-          <figcaption><b>Hoodie met goudopdruk</b><span>in de Oerbar</span></figcaption>
+          <figcaption><b>Trui</b><span>€50 · met rits €60</span></figcaption>
         </figure>
       </div>
-    </div>
-  </section>
-
-  <!-- VOLG DE BENDE -->
-  <section class="section social">
-    <div class="wrap">
-      <div class="social-head">
-        <h2>Volg de bende.</h2>
-        <a class="handle" href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener">@dedollebrouwers ↗</a>
-      </div>
-      <div class="social-grid">
-        {
-          [
-            { src: vrBar, alt: 'De gele tapbar op een Dolle Vrijdag' },
-            { src: krant, alt: 'Krantenknipsel uit 1990 met een baby en een fles Oerbier' },
-            { src: oerbarTap, alt: 'Een glas wordt getapt in de Oerbar' },
-            { src: flesHop, alt: 'Een fles Oerbier tussen verse hop' },
-            { src: vrVolk, alt: 'Volle koer op een Dolle Vrijdag' },
-            { src: vrTappen, alt: 'Tappen op de koer' },
-          ].map((p) => (
-            <a href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener" class="social-tile">
-              <Image src={p.src} alt={p.alt} width={400} />
-            </a>
-          ))
-        }
-      </div>
-      <p class="social-more">
-        Ook op <a href="https://www.tiktok.com/@dedollebrouwers" target="_blank" rel="noopener">TikTok</a> en
-        <a href="https://www.facebook.com/dedollebrouwers" target="_blank" rel="noopener">Facebook</a>.
-      </p>
     </div>
   </section>
 
@@ -379,29 +330,27 @@ const affiches = [
 <style>
   /* HERO */
   .hero {
-    background: var(--yellow) var(--grain);
     position: relative;
-    padding: clamp(40px, 6vw, 80px) 0 clamp(70px, 8vw, 110px);
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    min-height: min(86vh, 820px);
+    background: var(--yellow) var(--grain);
     z-index: 2;
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: clamp(30px, 5vw, 70px);
-    align-items: center;
-  }
-  .hero-note {
-    margin-bottom: 6px;
-    transform: rotate(-3deg);
-    width: fit-content;
+  .hero-copy {
+    padding: clamp(50px, 7vw, 100px) clamp(24px, 4vw, 60px) clamp(70px, 8vw, 110px)
+      max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter)));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .hero h1 {
-    font-size: clamp(4rem, 12vw, 9.5rem);
+    font-size: clamp(4rem, 11vw, 9rem);
     line-height: 0.86;
     margin-bottom: 26px;
   }
   .hero .lead {
-    max-width: 30em;
+    max-width: 24em;
   }
   .hero-actions {
     display: flex;
@@ -409,41 +358,31 @@ const affiches = [
     gap: 14px;
     margin-top: 26px;
   }
-  .hero-collage {
+  .hero-photo {
     position: relative;
-    min-height: 640px;
+    min-height: 460px;
+    border-left: var(--line);
   }
-  .hero-collage :global(.c-toast) {
+  .hero-photo :global(.hero-img) {
     position: absolute;
-    width: 70%;
-    top: 0;
-    left: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 45% 50%;
   }
-  .hero-collage :global(.c-proost) {
+  .hero-photo :global(.hero-pol) {
     position: absolute;
-    width: 66%;
-    right: 0;
-    top: 46%;
-    z-index: 1;
-  }
-  .hero-collage :global(.c-mascot) {
-    position: absolute;
-    width: 30%;
-    left: 0;
-    bottom: -6%;
+    width: min(330px, 46%);
+    left: -70px;
+    bottom: 70px;
     z-index: 2;
-    filter: drop-shadow(4px 6px 0 rgba(33, 23, 12, 0.25));
-    animation: bob 4s ease-in-out infinite;
   }
-  .hero-collage :global(.c-stamp) {
+  .hero-photo :global(.hero-stamp) {
     position: absolute;
-    right: 4%;
-    top: -14px;
-  }
-  @keyframes bob {
-    50% {
-      transform: translateY(-8px) rotate(2deg);
-    }
+    top: 28px;
+    left: -64px;
+    z-index: 3;
   }
 
   /* TRADITION */
@@ -691,6 +630,12 @@ const affiches = [
   .kris h2 {
     font-size: clamp(2.8rem, 6vw, 4.8rem);
   }
+  .kris-link {
+    text-decoration: none;
+  }
+  .kris-link:hover {
+    background: linear-gradient(transparent 62%, var(--yellow) 62%, var(--yellow) 92%, transparent 92%);
+  }
   .kris :global(.kris-sig) {
     width: min(280px, 70%);
     margin: 6px 0 22px -8px;
@@ -714,48 +659,6 @@ const affiches = [
     font-size: 1.5rem;
     text-align: center;
     margin-bottom: 34px;
-  }
-
-  /* VOLG DE BENDE */
-  .social-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-  }
-  .handle {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 1.4rem;
-    text-decoration: none;
-    background: linear-gradient(transparent 60%, var(--yellow) 60%, var(--yellow) 92%, transparent 92%);
-  }
-  .social-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-  }
-  .social-tile {
-    display: block;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border: 2px solid var(--ink);
-    border-radius: 10px;
-  }
-  .social-tile :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.35s ease;
-  }
-  .social-tile:hover :global(img) {
-    transform: scale(1.06);
-  }
-  .social-more {
-    margin-top: 18px;
-    color: var(--ink-soft);
   }
 
   /* OERBAR */
@@ -934,12 +837,24 @@ const affiches = [
     .extra-grid {
       grid-template-columns: 1fr;
     }
-    .hero-collage {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .hero-photo {
+      border-left: 0;
+      border-top: var(--line);
       min-height: 0;
-      aspect-ratio: 1 / 0.95;
-      max-width: 560px;
-      width: 100%;
-      margin: 0 auto;
+      aspect-ratio: 4 / 3;
+    }
+    .hero-photo :global(.hero-pol) {
+      left: 14px;
+      bottom: 34px;
+      width: 52%;
+    }
+    .hero-photo :global(.hero-stamp) {
+      left: auto;
+      right: 14px;
+      top: -60px;
     }
     .beer-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -971,9 +886,6 @@ const affiches = [
   @media (max-width: 980px) {
     .kris {
       grid-template-columns: 1fr;
-    }
-    .social-grid {
-      grid-template-columns: repeat(3, 1fr);
     }
   }
   @media (max-width: 560px) {

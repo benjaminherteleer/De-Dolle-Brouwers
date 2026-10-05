@@ -16,13 +16,6 @@ import binnenkoer from '../assets/foto/binnenkoer.jpg';
 import toast from '../assets/foto/historische-toast.jpg';
 import signs from '../assets/foto/signs-photo.jpg';
 import ketel from '../assets/foto/terras-ketel.jpg';
-import bar from '../assets/foto/vrijdag-bar.jpg';
-import lachen from '../assets/foto/vrijdag-lachen.jpg';
-import tappen from '../assets/foto/vrijdag-tappen.jpg';
-import tafel from '../assets/foto/vrijdag-tafel.jpg';
-import bord from '../assets/foto/vrijdag-bord.jpg';
-import volk from '../assets/foto/vrijdag-volk.jpg';
-import barman from '../assets/foto/vrijdag-barman.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import arRoerkuip from '../assets/archief/roerkuip-toen.jpg';
 import arBrouwer from '../assets/archief/brouwer-jaren80.jpg';
@@ -178,31 +171,6 @@ const history = [
       </div>
     </div>
     <div class="edge-bottom"></div>
-  </section>
-
-  <!-- ZOMER -->
-  <section class="section summer">
-    <div class="wrap">
-      <div class="head">
-        <h2>En in de zomer: Dolle Vrijdagen.</h2>
-        <p class="lead">
-          Dan wordt de koer een tapkot. Muziek, eten, de hele bende van het vat en heel wat volk uit de streek. De data
-          verschijnen eerst op onze Instagram.
-        </p>
-      </div>
-      <div class="mosaic">
-        <Polaroid src={bar} alt="De gele tapbar op de koer" tilt={-2} ratio="3 / 2" class="m1" />
-        <Polaroid src={bord} alt="Geel bord met De Dolle Brouwers in handgeschreven letters" tilt={3} ratio="3 / 4" class="m2" />
-        <Polaroid src={lachen} alt="Twee bezoekers die lachen" tilt={-3} ratio="3 / 2" class="m3" />
-        <Polaroid src={tappen} alt="Er wordt een glas getapt" tilt={2} ratio="3 / 4" class="m4" />
-        <Polaroid src={tafel} alt="Vrienden aan tafel met een glas" tilt={-1} ratio="3 / 4" class="m5" />
-        <Polaroid src={volk} alt="Volle koer met mensen" tilt={2} ratio="3 / 2" class="m6" />
-        <Polaroid src={barman} alt="Lachende barman" tilt={-3} ratio="3 / 4" class="m7" />
-      </div>
-      <p class="center">
-        <a class="btn dark" href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener">Volg ons op Instagram ↗</a>
-      </p>
-    </div>
   </section>
 
   <!-- VERHAAL -->
@@ -486,51 +454,6 @@ const history = [
     bottom: -8%;
   }
 
-  /* SUMMER */
-  .summer .head {
-    display: block;
-    max-width: 820px;
-  }
-  .summer h2 {
-    margin-bottom: 18px;
-  }
-  .mosaic {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
-    align-items: start;
-  }
-  .mosaic :global(.m1) {
-    grid-column: 1 / 6;
-  }
-  .mosaic :global(.m2) {
-    grid-column: 6 / 9;
-    margin-top: 40px;
-  }
-  .mosaic :global(.m3) {
-    grid-column: 9 / 13;
-    margin-top: 10px;
-  }
-  .mosaic :global(.m4) {
-    grid-column: 1 / 4;
-  }
-  .mosaic :global(.m5) {
-    grid-column: 4 / 7;
-    margin-top: 30px;
-  }
-  .mosaic :global(.m6) {
-    grid-column: 7 / 11;
-    align-self: center;
-  }
-  .mosaic :global(.m7) {
-    grid-column: 11 / 13;
-    margin-top: 60px;
-  }
-  .center {
-    text-align: center;
-    margin-top: 50px;
-  }
-
   /* STORY */
   .story {
     background: var(--paper-deep) var(--grain);
@@ -697,13 +620,6 @@ const history = [
     .prac-photos {
       max-width: 420px;
       margin-left: auto;
-    }
-    .mosaic {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .mosaic :global(.polaroid) {
-      grid-column: auto !important;
-      margin-top: 0 !important;
     }
   }
   @media (max-width: 560px) {
