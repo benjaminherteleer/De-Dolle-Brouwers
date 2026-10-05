@@ -212,6 +212,9 @@ p {
   aspect-ratio: var(--ratio, 4 / 5);
   object-fit: cover;
 }
+.polaroid:not(:has(figcaption)) {
+  padding-bottom: 30px;
+}
 .polaroid figcaption {
   font-family: var(--font-hand);
   font-style: italic;

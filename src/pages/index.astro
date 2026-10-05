@@ -19,7 +19,9 @@ import taps from '../assets/foto/taphandles.jpg';
 import lachen from '../assets/foto/vrijdag-lachen.jpg';
 import gevel from '../assets/foto/brouwerij-gevel.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
-import shirt from '../assets/foto/vrijdag-shirt.jpg';
+import truien from '../assets/foto/shop-truien.jpg';
+import tshirt from '../assets/foto/shop-tshirt.jpg';
+import hoodie from '../assets/foto/shop-hoodie.jpg';
 import flesHop from '../assets/foto/fles-hop.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
@@ -289,21 +291,37 @@ const affiches = [
     </div>
   </section>
 
-  <!-- MERCH + VERKOOPPUNTEN -->
-  <section class="section extra" id="shop">
-    <div class="wrap extra-grid">
-      <div class="card merch">
-        <Polaroid src={shirt} alt="Achterkant van een Dolle Vrijdag T-shirt" tilt={-3} ratio="1 / 1" width={500} class="merch-photo" />
-        <div>
-          <h3>Shirts, glazen &amp; borden</h3>
-          <p>
-            Online afrekenen kan (nog) niet. Mail wat je wil naar{' '}
-            <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a> of pik het op in de Oerbar.
-          </p>
-          <p class="hand price">T-shirt €22 · Glas €6,50 · Trui €38</p>
-        </div>
+  <!-- OERSHOP -->
+  <section class="section shop" id="shop">
+    <div class="wrap">
+      <div class="shop-head">
+        <h2>Oershop.</h2>
+        <p class="lead">
+          Truien, T-shirts, glazen en borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
+          <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
+        </p>
       </div>
-      <div class="card where" id="verkooppunten">
+      <div class="shop-grid">
+        <figure class="shop-item">
+          <Image src={truien} alt="Zwarte en grijze truien van De Dolle Brouwers aan een groen paneel" width={700} />
+          <figcaption><b>Crewneck</b><span>€50</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={tshirt} alt="Wit T-shirt met de bende van De Dolle Brouwers op de toog" width={700} />
+          <figcaption><b>T-shirt</b><span>€20</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={hoodie} alt="Rugkant van een zwarte trui met het De Dolle Brouwers-logo in goud" width={700} />
+          <figcaption><b>Trui</b><span>€50 · met rits €60</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERKOOPPUNTEN -->
+  <section class="section extra" id="verkooppunten">
+    <div class="wrap">
+      <div class="card where">
         <Polaroid src={flesHop} alt="Een fles Oerbier tussen verse hop" tilt={4} ratio="1 / 1" width={500} class="where-photo" />
         <div>
           <h3>Ook te vinden ver buiten Esen</h3>
@@ -727,14 +745,61 @@ const affiches = [
     margin-top: 44px;
   }
 
+  /* OERSHOP */
+  .shop {
+    padding-bottom: 40px;
+  }
+  .shop-head {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 20px 60px;
+    align-items: end;
+    margin-bottom: 40px;
+  }
+  .shop-head .lead {
+    margin: 0;
+  }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .shop-item {
+    margin: 0;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .shop-item :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .shop-item:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .shop-item figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+  }
+  .shop-item figcaption span {
+    font-style: italic;
+  }
+
   /* EXTRA */
   .extra {
     padding-top: 0;
   }
-  .extra-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+  .extra .where {
+    max-width: 760px;
+    margin: 0 auto;
   }
   .extra .card {
     display: grid;
@@ -757,7 +822,7 @@ const affiches = [
     .res-grid,
     .proc-grid,
     .visit-grid,
-    .extra-grid {
+    .shop-head {
       grid-template-columns: 1fr;
     }
     .hero-collage {
@@ -777,7 +842,15 @@ const affiches = [
       position: static;
     }
   }
+  @media (max-width: 980px) {
+    .shop-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   @media (max-width: 560px) {
+    .shop-grid {
+      grid-template-columns: 1fr;
+    }
     .beer-grid {
       gap: 20px 14px;
     }

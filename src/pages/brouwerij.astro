@@ -16,14 +16,21 @@ import binnenkoer from '../assets/foto/binnenkoer.jpg';
 import toast from '../assets/foto/historische-toast.jpg';
 import signs from '../assets/foto/signs-photo.jpg';
 import ketel from '../assets/foto/terras-ketel.jpg';
-import bar from '../assets/foto/vrijdag-bar.jpg';
-import lachen from '../assets/foto/vrijdag-lachen.jpg';
-import tappen from '../assets/foto/vrijdag-tappen.jpg';
-import tafel from '../assets/foto/vrijdag-tafel.jpg';
-import bord from '../assets/foto/vrijdag-bord.jpg';
-import volk from '../assets/foto/vrijdag-volk.jpg';
-import barman from '../assets/foto/vrijdag-barman.jpg';
 import mascot from '../assets/logo/logo-full.png';
+import arGroep from '../assets/archief/groep-proost.jpg';
+import arRoerkuip from '../assets/archief/roerkuip-toen.jpg';
+import arKrant from '../assets/archief/krant-1990.jpg';
+import arKleur from '../assets/archief/roerkuip-kleur.jpg';
+import arBrouwer from '../assets/archief/brouwer-jaren80.jpg';
+import arNatStraf from '../assets/archief/krant-nat-en-straf.jpg';
+import arGevel from '../assets/archief/gevel-toen.jpg';
+import arPlateaus from '../assets/archief/plateaus.jpg';
+import arTractor from '../assets/archief/mout-tractor.jpg';
+import arKinderen from '../assets/archief/kinderen-roerkuip.jpg';
+import arJasje from '../assets/archief/oerbier-jasje.jpg';
+import arKoelschip from '../assets/archief/krant-koelschip.jpg';
+import arBak from '../assets/archief/oerbierbak.jpg';
+import arBezoek from '../assets/archief/bezoek-toen.jpg';
 
 const route = 'https://www.google.com/maps/dir/?api=1&destination=De+Dolle+Brouwers,+Roeselarestraat+12B,+8600+Esen';
 
@@ -172,31 +179,6 @@ const history = [
     <div class="edge-bottom"></div>
   </section>
 
-  <!-- ZOMER -->
-  <section class="section summer">
-    <div class="wrap">
-      <div class="head">
-        <h2>En in de zomer: Dolle Vrijdagen.</h2>
-        <p class="lead">
-          Dan wordt de koer een tapkot. Muziek, eten, de hele bende van het vat en heel wat volk uit de streek. De data
-          verschijnen eerst op onze Instagram.
-        </p>
-      </div>
-      <div class="mosaic">
-        <Polaroid src={bar} alt="De gele tapbar op de koer" tilt={-2} ratio="3 / 2" class="m1" />
-        <Polaroid src={bord} alt="Geel bord met De Dolle Brouwers in handgeschreven letters" tilt={3} ratio="3 / 4" class="m2" />
-        <Polaroid src={lachen} alt="Twee bezoekers die lachen" tilt={-3} ratio="3 / 2" class="m3" />
-        <Polaroid src={tappen} alt="Er wordt een glas getapt" tilt={2} ratio="3 / 4" class="m4" />
-        <Polaroid src={tafel} alt="Vrienden aan tafel met een glas" tilt={-1} ratio="3 / 4" class="m5" />
-        <Polaroid src={volk} alt="Volle koer met mensen" tilt={2} ratio="3 / 2" class="m6" />
-        <Polaroid src={barman} alt="Lachende barman" tilt={-3} ratio="3 / 4" class="m7" />
-      </div>
-      <p class="center">
-        <a class="btn dark" href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener">Volg ons op Instagram ↗</a>
-      </p>
-    </div>
-  </section>
-
   <!-- VERHAAL -->
   <section class="section story" id="verhaal">
     <div class="edge-top"></div>
@@ -228,6 +210,33 @@ const history = [
         <Polaroid src={signs} alt="Oude metalen uithangborden in de brouwerij" caption="De originele uithangborden" tilt={2} ratio="3 / 4" />
         <Polaroid src={rodeDeur} alt="Rode deur in een witte muur met hop" tilt={-2} ratio="3 / 4" />
         <Polaroid src={ketel} alt="Oude brouwketel op het terras" tilt={3} ratio="3 / 4" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOTOALBUM -->
+  <section class="section album">
+    <div class="wrap">
+      <h2>Uit het fotoalbum.</h2>
+      <div class="album-grid">
+        {
+          [
+            { src: arGroep, alt: 'Een volle Oerbar, jaren 80', tilt: -2, r: '4 / 3' },
+            { src: arRoerkuip, alt: 'Brouwers bij de roerkuip, zwart-wit', tilt: 2, r: '4 / 3' },
+            { src: arKrant, alt: 'Krantenknipsel van 20 april 1990 met een baby en een fles Oerbier', caption: '20 april 1990', tilt: -1.5, r: '3 / 4' },
+            { src: arKleur, alt: 'Twee brouwers bij roerkuip nr. 1 van 34,83 hl', tilt: 1.5, r: '4 / 3' },
+            { src: arBrouwer, alt: 'Een jonge brouwer aan het werk in de brouwerij', tilt: -2.5, r: '3 / 4' },
+            { src: arNatStraf, alt: 'Krantenknipsel over het nieuwe bier Nat en Straf', tilt: 2, r: '4 / 3' },
+            { src: arGevel, alt: 'De gevel met het smiley-mannetje, jaren geleden', tilt: -1, r: '4 / 3' },
+            { src: arPlateaus, alt: 'Drie mensen met plateaus vol glazen Oerbier', tilt: 2.5, r: '4 / 3' },
+            { src: arTractor, alt: 'Mout wordt van een tractor in de brouwerij gelost', tilt: -2, r: '3 / 4' },
+            { src: arKinderen, alt: 'Kinderen in Oerbier-shirts aan de roerkuip', tilt: 1.5, r: '4 / 3' },
+            { src: arJasje, alt: 'Een man in een jasje vol Oerbier-opdruk aan de toog', tilt: -1.5, r: '3 / 4' },
+            { src: arKoelschip, alt: 'Krantenknipsel met het koelschip en de roerkuip', tilt: 2, r: '4 / 3' },
+            { src: arBak, alt: 'Een vrouw met een bak Oerbier voor een huis', tilt: -2, r: '3 / 4' },
+            { src: arBezoek, alt: 'Bezoekers aan de rode deur van de brouwerij', tilt: 1, r: '4 / 3' },
+          ].map((p) => <Polaroid src={p.src} alt={p.alt} caption={p.caption} tilt={p.tilt} ratio={p.r} width={600} />)
+        }
       </div>
     </div>
   </section>
@@ -452,51 +461,6 @@ const history = [
     bottom: -8%;
   }
 
-  /* SUMMER */
-  .summer .head {
-    display: block;
-    max-width: 820px;
-  }
-  .summer h2 {
-    margin-bottom: 18px;
-  }
-  .mosaic {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 20px;
-    align-items: start;
-  }
-  .mosaic :global(.m1) {
-    grid-column: 1 / 6;
-  }
-  .mosaic :global(.m2) {
-    grid-column: 6 / 9;
-    margin-top: 40px;
-  }
-  .mosaic :global(.m3) {
-    grid-column: 9 / 13;
-    margin-top: 10px;
-  }
-  .mosaic :global(.m4) {
-    grid-column: 1 / 4;
-  }
-  .mosaic :global(.m5) {
-    grid-column: 4 / 7;
-    margin-top: 30px;
-  }
-  .mosaic :global(.m6) {
-    grid-column: 7 / 11;
-    align-self: center;
-  }
-  .mosaic :global(.m7) {
-    grid-column: 11 / 13;
-    margin-top: 60px;
-  }
-  .center {
-    text-align: center;
-    margin-top: 50px;
-  }
-
   /* STORY */
   .story {
     background: var(--paper-deep) var(--grain);
@@ -553,6 +517,23 @@ const history = [
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 26px;
+  }
+
+  /* ALBUM */
+  .album {
+    background: #2a2118 var(--grain);
+    color: var(--paper);
+  }
+  .album h2 {
+    margin-bottom: 50px;
+  }
+  .album-grid {
+    columns: 4 220px;
+    column-gap: 26px;
+  }
+  .album-grid :global(.polaroid) {
+    break-inside: avoid;
+    margin-bottom: 30px;
   }
 
   /* BELIEFS */
@@ -644,13 +625,6 @@ const history = [
     .prac-photos {
       max-width: 420px;
       margin-left: auto;
-    }
-    .mosaic {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .mosaic :global(.polaroid) {
-      grid-column: auto !important;
-      margin-top: 0 !important;
     }
   }
   @media (max-width: 560px) {
