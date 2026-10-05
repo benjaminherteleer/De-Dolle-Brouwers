@@ -321,14 +321,14 @@ const affiches = [
           <Image src={oerbierman} alt="Het gele Oerbier-mannetje als beeldje" width={700} />
           <figcaption><b>Oerbier-mannetje</b><span>€60</span></figcaption>
         </figure>
-        <figure class="shop-item">
+        <a class="shop-item shop-link" href="/oerbier-mannetje">
           <Image src={oerbiermanNaam} alt="Een gepersonaliseerd Oerbier-mannetje met een naam op de sjerp" width={700} />
-          <figcaption><b>Met jouw naam op de sjerp</b><span>€90</span></figcaption>
-        </figure>
+          <span class="cap"><b>Stel je eigen mannetje samen →</b><span>€90</span></span>
+        </a>
         <figure class="shop-item">
           <Image src={borden} alt="Metalen borden van Boskeun, Arabier, Stille Nacht, Oerbier en Dulle Teve" width={700} />
           <figcaption class="signs">
-            <span class="row"><b>Metalen borden</b></span>
+            <span class="row"><b>Metalen borden</b><span>€20</span></span>
             <span class="list">Oerbier wit · Arabier · Boskeun · Dulle Teve · Stille Nacht · <s>Oerbier zwart</s> uitverkocht</span>
           </figcaption>
         </figure>
@@ -820,6 +820,34 @@ const affiches = [
   .shop-item figcaption.signs {
     flex-direction: column;
     gap: 4px;
+  }
+  .shop-item .signs .row {
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+  }
+  .shop-link {
+    display: block;
+    text-decoration: none;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .shop-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .shop-link .cap {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+    background: var(--yellow);
+  }
+  .shop-link .cap > span {
+    font-style: italic;
   }
   .shop-item .signs .list {
     font-size: 0.85rem;
