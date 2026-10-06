@@ -52,15 +52,26 @@ const countries = new Set(places.map((p) => p.country)).size;
           <h2>Ontbreekt er een café?</h2>
           <p>
             Deze lijst is verre van compleet. We weten zelf niet overal waar onze bieren getapt of verkocht worden. Ken je een
-            plek die er niet bij staat? Laat het ons weten, dan zetten we ze erbij.
+            plek die er niet bij staat? Zoek het hieronder op en stuur het door. We kijken het na en zetten het daarna op de
+            kaart.
           </p>
         </div>
         <form class="suggest-form" id="suggest">
-          <label>Naam van het café of de winkel<input name="naam" placeholder="Bv. Café De Gouden Leeuw" required /></label>
-          <label>Stad &amp; land<input name="plaats" placeholder="Bv. Gent, België" required /></label>
+          <label class="full search">
+            Zoek het café of de winkel
+            <input id="zoek" type="search" placeholder="Bv. Golem Amsterdam" autocomplete="off" aria-controls="zoek-lijst" />
+            <ul id="zoek-lijst" class="results" role="listbox" hidden></ul>
+          </label>
+          <p class="full chosen" id="gekozen" hidden></p>
+          <label>Naam<input name="naam" required placeholder="Wordt ingevuld als je zoekt" /></label>
+          <label>Stad &amp; land<input name="plaats" required placeholder="Bv. Amsterdam, Nederland" /></label>
           <label>Jouw naam <span>(optioneel)</span><input name="jij" /></label>
           <label>Je e-mailadres <span>(optioneel)</span><input name="email" type="email" /></label>
-          <button class="btn" type="submit">Stel dit adres voor</button>
+          <label class="full">Iets om bij te zeggen? <span>(optioneel)</span><textarea name="opmerking" rows="2" placeholder="Bv. ze hebben Oerbier van het vat"></textarea></label>
+          <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="lat" /><input type="hidden" name="lng" /><input type="hidden" name="land" /><input type="hidden" name="stad" />
+          <button class="btn" type="submit">Stuur door</button>
+          <p class="full status" id="status" role="status"></p>
         </form>
       </div>
     </div>
@@ -68,22 +79,128 @@ const countries = new Set(places.map((p) => p.country)).size;
 </Base>
 
 <script>
-  document.getElementById('suggest')?.addEventListener('submit', (e) => {
+  const form = document.getElementById('suggest') as HTMLFormElement;
+  const zoek = document.getElementById('zoek') as HTMLInputElement;
+  const lijst = document.getElementById('zoek-lijst') as HTMLUListElement;
+  const gekozen = document.getElementById('gekozen') as HTMLParagraphElement;
+  const status = document.getElementById('status') as HTMLParagraphElement;
+  const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
+
+  type Place = { name: string; label: string; city: string; country: string; lat: number; lng: number };
+  let timer: number | undefined;
+  let results: Place[] = [];
+
+  const pick = (p: Place) => {
+    field('naam').value = p.name;
+    field('plaats').value = [p.city, p.country].filter(Boolean).join(', ');
+    field('lat').value = p.lat.toFixed(5);
+    field('lng').value = p.lng.toFixed(5);
+    field('stad').value = p.city;
+    field('land').value = p.country;
+    gekozen.hidden = false;
+    gekozen.textContent = `Gekozen: ${p.label}`;
+    lijst.hidden = true;
+    zoek.value = p.name;
+  };
+
+  // Photon (OpenStreetMap data) forgives typos, e.g. "Golem" finds "Gollem"
+  const search = async (q: string) => {
+    const url = `https://photon.komoot.io/api/?limit=6&q=${encodeURIComponent(q)}`;
+    try {
+      const data = await (await fetch(url)).json();
+      results = data.features
+        .filter((f: any) => f.properties.name)
+        .map((f: any) => {
+          const p = f.properties;
+          const city = p.city || p.town || p.village || p.county || '';
+          const street = [p.street, p.housenumber].filter(Boolean).join(' ');
+          return {
+            name: p.name,
+            label: [p.name, street, city, p.country].filter(Boolean).join(', '),
+            city,
+            country: p.country || '',
+            lat: f.geometry.coordinates[1],
+            lng: f.geometry.coordinates[0],
+          };
+        });
+    } catch {
+      results = [];
+    }
+    lijst.innerHTML = '';
+    if (!results.length) {
+      lijst.innerHTML = '<li class="empty">Niets gevonden. Vul de naam en stad hieronder zelf in.</li>';
+    }
+    results.forEach((p, i) => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.tabIndex = 0;
+      li.innerHTML = `<b></b><small></small>`;
+      li.querySelector('b')!.textContent = p.name;
+      li.querySelector('small')!.textContent = p.label;
+      li.addEventListener('click', () => pick(results[i]));
+      li.addEventListener('keydown', (e) => e.key === 'Enter' && (e.preventDefault(), pick(results[i])));
+      lijst.appendChild(li);
+    });
+    lijst.hidden = false;
+  };
+
+  zoek.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = zoek.value.trim();
+    if (q.length < 3) {
+      lijst.hidden = true;
+      return;
+    }
+    timer = window.setTimeout(() => search(q), 450);
+  });
+  zoek.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') e.preventDefault();
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.search')) lijst.hidden = true;
+  });
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const f = new FormData(e.target as HTMLFormElement);
-    const v = (k: string) => String(f.get(k) || '-');
-    const body = [
-      'Hallo,',
-      '',
-      'Ik wil een café of winkel voorstellen voor de verkooppuntenkaart:',
-      '',
-      `Naam: ${v('naam')}`,
-      `Stad & land: ${v('plaats')}`,
-      '',
-      `Mijn naam: ${v('jij')}`,
-      `Mijn e-mail: ${v('email')}`,
-    ].join('\n');
-    location.href = `mailto:info@dedollebrouwers.be?subject=${encodeURIComponent('Verkooppunt-tip: ' + v('naam'))}&body=${encodeURIComponent(body)}`;
+    if (field('_honey').value) return;
+    const v = (n: string) => field(n).value.trim();
+    const [city = '', country = ''] = v('plaats').split(',').map((x) => x.trim());
+    const entry = {
+      name: v('naam'),
+      city: v('stad') || city,
+      country: v('land') || country,
+      lat: +v('lat') || null,
+      lng: +v('lng') || null,
+    };
+    const button = form.querySelector('button')!;
+    button.disabled = true;
+    status.textContent = 'Even versturen…';
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/info@dedollebrouwers.be', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Verkooppunt-tip: ${v('naam')}`,
+          _template: 'table',
+          _captcha: 'false',
+          Cafe: v('naam'),
+          Plaats: v('plaats'),
+          Kaart: entry.lat ? `https://www.openstreetmap.org/?mlat=${entry.lat}&mlon=${entry.lng}#map=18/${entry.lat}/${entry.lng}` : 'geen locatie gekozen',
+          Opmerking: (form.elements.namedItem('opmerking') as HTMLTextAreaElement).value || '-',
+          'Doorgegeven door': v('jij') || '-',
+          email: v('email') || undefined,
+          'Regel voor de kaart (na akkoord)': JSON.stringify(entry),
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      gekozen.hidden = true;
+      status.textContent = 'Bedankt! We kijken het na en zetten het daarna op de kaart.';
+    } catch {
+      status.innerHTML = 'Dat lukte niet. Stuur de naam en stad gerust naar <b>info@dedollebrouwers.be</b>.';
+    } finally {
+      button.disabled = false;
+    }
   });
 </script>
 
@@ -171,6 +288,70 @@ const countries = new Set(places.map((p) => p.country)).size;
   .suggest-form input:focus {
     outline: 3px solid var(--yellow);
     outline-offset: 1px;
+  }
+  .suggest-form .full {
+    grid-column: 1 / -1;
+  }
+  .suggest-form textarea {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.65em 0.9em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .search {
+    position: relative;
+  }
+  .results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 5;
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 6px;
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-height: 300px;
+    overflow: auto;
+  }
+  .results :global(li) {
+    display: grid;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .results :global(li:hover),
+  .results :global(li:focus) {
+    background: var(--yellow-soft);
+    outline: none;
+  }
+  .results :global(small) {
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+  }
+  .results :global(.empty) {
+    cursor: default;
+    color: var(--ink-soft);
+  }
+  .chosen {
+    margin: -4px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .honey {
+    position: absolute;
+    left: -9999px;
+  }
+  .status {
+    margin: 0;
+    font-weight: 600;
   }
   .suggest-form .btn {
     grid-column: 1 / -1;
