@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { getProducts, type Product } from '../../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage } from '../../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, variantPhotos } from '../../lib/shop';
 import maten from '../../data/maten.json';
 
 export async function getStaticPaths() {
@@ -55,7 +55,12 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
           }
         </div>
 
-        <div class="info" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
+        <div
+          class="info"
+          data-product={p.handle}
+          data-variants={JSON.stringify(p.variants.nodes)}
+          data-variant-shots={JSON.stringify(variantPhotos[p.handle] ?? {})}
+        >
           <h1>{p.title}</h1>
           <p class="price" data-price>{priceLabel(p)}</p>
           <p class="lead">{p.description}</p>
@@ -163,12 +168,19 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
   // Thumbnails switch the big photo
   const shots = [...document.querySelectorAll<HTMLElement>('[data-shot]')];
   const thumbs = [...document.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
-  thumbs.forEach((t) =>
-    t.addEventListener('click', () => {
-      shots.forEach((s) => s.classList.toggle('active', s.dataset.shot === t.dataset.thumb));
-      thumbs.forEach((x) => x.classList.toggle('active', x === t));
-    }),
-  );
+  const show = (i: string) => {
+    shots.forEach((s) => s.classList.toggle('active', s.dataset.shot === i));
+    thumbs.forEach((x) => x.classList.toggle('active', x.dataset.thumb === i));
+  };
+  thumbs.forEach((t) => t.addEventListener('click', () => show(t.dataset.thumb!)));
+
+  // Picking a design (e.g. which metal sign) shows its photo
+  const info = document.querySelector<HTMLElement>('.info[data-variant-shots]');
+  const byValue: Record<string, number> = JSON.parse(info?.dataset.variantShots || '{}');
+  info?.addEventListener('change', (e) => {
+    const i = byValue[(e.target as HTMLSelectElement).value];
+    if (i !== undefined && shots[i]) show(String(i));
+  });
 </script>
 
 <style>
