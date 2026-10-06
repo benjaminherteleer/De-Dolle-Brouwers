@@ -1,0 +1,117 @@
+---
+/** Static drawing of an Oerbier figurine, same shapes as the maker on /oerbier-mannetje. */
+interface Props {
+  head?: string;
+  body?: string;
+  arms?: string;
+  feet?: string;
+  glass?: string;
+  scarf?: string;
+  text?: string;
+  flag?: 'be' | 'nl' | 'fr' | 'it';
+  bril?: boolean;
+  strik?: boolean;
+  class?: string;
+}
+
+const {
+  head = '#f6bf1c',
+  body = head,
+  arms = body,
+  feet = body,
+  glass = '#c8241c',
+  scarf = '#fbfaf5',
+  text = 'oerbier',
+  flag,
+  bril = false,
+  strik = false,
+  class: cls = '',
+} = Astro.props;
+
+const uid = Math.random().toString(36).slice(2, 8);
+const n = parseInt(scarf.slice(1), 16);
+const ink = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150 ? '#21170c' : '#fbfaf5';
+const flags = {
+  be: ['#1f1b17', '#f7cf1c', '#d93a2b'],
+  fr: ['#1f4ea3', '#ffffff', '#d93a2b'],
+  it: ['#1d8a46', '#ffffff', '#d93a2b'],
+  nl: ['#ae1c28', '#ffffff', '#21468b'],
+};
+const f = flag ? flags[flag] : null;
+const vertical = flag !== 'nl';
+---
+
+<svg viewBox="0 0 320 340" class={cls} aria-hidden="true">
+  <defs>
+    <clipPath id={`body-${uid}`}><ellipse cx="160" cy="215" rx="92" ry="86"></ellipse></clipPath>
+    <clipPath id={`all-${uid}`}>
+      <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)"></ellipse>
+      <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)"></ellipse>
+      <ellipse cx="160" cy="215" rx="92" ry="86"></ellipse>
+      <circle cx="160" cy="110" r="58"></circle>
+    </clipPath>
+    <path id={`line-${uid}`} d="M92 150 L244 274"></path>
+  </defs>
+  <ellipse cx="160" cy="322" rx="110" ry="12" fill="rgba(33,23,12,.12)"></ellipse>
+  <g stroke="#21170c" stroke-width="3">
+    <ellipse cx="122" cy="296" rx="34" ry="27" fill={feet}></ellipse>
+    <ellipse cx="198" cy="296" rx="34" ry="27" fill={feet}></ellipse>
+    <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)" fill={arms}></ellipse>
+    <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)" fill={arms}></ellipse>
+    <ellipse cx="160" cy="215" rx="92" ry="86" fill={body}></ellipse>
+  </g>
+  {
+    f && (
+      <g clip-path={`url(#body-${uid})`}>
+        {vertical ? (
+          <>
+            <rect x="68" y="129" width="62" height="172" fill={f[0]} />
+            <rect x="129" y="129" width="62" height="172" fill={f[1]} />
+            <rect x="190" y="129" width="62" height="172" fill={f[2]} />
+          </>
+        ) : (
+          <>
+            <rect x="68" y="129" width="184" height="58" fill={f[0]} />
+            <rect x="68" y="186" width="184" height="58" fill={f[1]} />
+            <rect x="68" y="243" width="184" height="58" fill={f[2]} />
+          </>
+        )}
+      </g>
+    )
+  }
+  <circle cx="160" cy="110" r="58" stroke="#21170c" stroke-width="3" fill={head}></circle>
+  <ellipse cx="138" cy="76" rx="18" ry="10" fill="rgba(255,255,255,.4)" transform="rotate(-30 138 76)"></ellipse>
+  <g stroke="#21170c" stroke-width="3" stroke-linejoin="round">
+    <path d="M226 36 H296 Q294 98 261 102 Q228 98 226 36 Z" fill={glass}></path>
+    <path d="M226 36 H296 L294 50 H228 Z" fill="#fbfaf5"></path>
+  </g>
+  <ellipse cx="142" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
+  <ellipse cx="178" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
+  <circle cx="147" cy="104" r="7.5" fill="#21170c"></circle>
+  <circle cx="183" cy="104" r="7.5" fill="#21170c"></circle>
+  <path d="M138 128 Q160 150 182 128" fill="none" stroke="#21170c" stroke-width="3.5" stroke-linecap="round"></path>
+  {
+    bril && (
+      <g stroke="#21170c" stroke-width="3">
+        <rect x="122" y="88" width="34" height="24" rx="9" fill="#21170c" />
+        <rect x="164" y="88" width="34" height="24" rx="9" fill="#21170c" />
+        <path d="M156 98 H164" fill="none" />
+      </g>
+    )
+  }
+  <g clip-path={`url(#all-${uid})`}>
+    <path d="M76 168 L104 136 L262 260 L234 292 Z" fill={scarf} stroke="#21170c" stroke-width="3"></path>
+  </g>
+  <text font-size="24" dy="8" fill={ink} style="font-family: var(--font-display); font-style: italic; font-weight: 700;">
+    <textPath href={`#line-${uid}`} startOffset="50%" text-anchor="middle">{text}</textPath>
+  </text>
+  {
+    strik && (
+      <g stroke="#21170c" stroke-width="3" stroke-linejoin="round" fill="#c8241c">
+        <path d="M160 168 L128 152 L128 186 Z" />
+        <path d="M160 168 L192 152 L192 186 Z" />
+        <circle cx="160" cy="168" r="7" />
+      </g>
+    )
+  }
+</svg>

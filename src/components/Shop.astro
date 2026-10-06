@@ -4,7 +4,7 @@ import truien from '../assets/foto/shop-truien.jpg';
 import tshirt from '../assets/foto/shop-tshirt.jpg';
 import hoodie from '../assets/foto/shop-hoodie.jpg';
 import oerbierman from '../assets/foto/shop-oerbierman.jpg';
-import oerbiermanNaam from '../assets/foto/shop-oerbierman-naam.jpg';
+import MannetjeSvg from './MannetjeSvg.astro';
 import borden from '../assets/foto/shop-borden.jpg';
 
 interface Props {
@@ -41,7 +41,11 @@ const { page = false } = Astro.props;
           <figcaption><b>Oerbier-mannetje</b><span>€60</span></figcaption>
         </figure>
         <a class="shop-item shop-link" href="/oerbier-mannetje">
-          <Image src={oerbiermanNaam} alt="Een gepersonaliseerd Oerbier-mannetje met een naam op de sjerp" width={700} />
+          <span class="maker-art" role="img" aria-label="Drie zelf samengestelde Oerbier-mannetjes in verschillende kleuren">
+            <MannetjeSvg class="m1" head="#f6bf1c" flag="be" text="jouw naam" />
+            <MannetjeSvg class="m2" head="#3d7bd4" arms="#f6bf1c" feet="#1f1b17" glass="#f6bf1c" scarf="#1f1b17" text="Jan 50" bril />
+            <MannetjeSvg class="m3" head="#f3a7c3" body="#f3a7c3" arms="#d6337f" feet="#c9a13b" scarf="#d6337f" text="Greta" strik />
+          </span>
           <span class="cap"><b>Stel je eigen mannetje samen →</b><span>€90</span></span>
         </a>
         <figure class="shop-item">
@@ -123,6 +127,38 @@ const { page = false } = Astro.props;
   .shop-link:hover {
     transform: translate(-2px, -2px);
     box-shadow: 6px 6px 0 var(--ink);
+  }
+  .maker-art {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--yellow-soft) var(--grain);
+    overflow: hidden;
+  }
+  .maker-art :global(svg) {
+    position: absolute;
+    width: 62%;
+    transition: transform 0.3s ease;
+  }
+  .maker-art :global(.m1) {
+    left: 20%;
+    top: 4%;
+    z-index: 2;
+  }
+  .maker-art :global(.m2) {
+    left: -8%;
+    bottom: -2%;
+    width: 52%;
+    transform: rotate(-8deg);
+  }
+  .maker-art :global(.m3) {
+    right: -8%;
+    bottom: -2%;
+    width: 52%;
+    transform: rotate(8deg);
+  }
+  .shop-link:hover .maker-art :global(.m1) {
+    transform: translateY(-6px) rotate(-3deg);
   }
   .shop-link .cap {
     display: flex;
