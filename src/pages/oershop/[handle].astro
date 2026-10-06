@@ -1,0 +1,358 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { getProducts, type Product } from '../../lib/shopify';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage } from '../../lib/shop';
+import maten from '../../data/maten.json';
+
+export async function getStaticPaths() {
+  const products = sortProducts(await getProducts()).filter((p) => p.handle !== CUSTOM);
+  return products.map((product) => ({ params: { handle: product.handle }, props: { product, all: products } }));
+}
+
+const { product: p, all } = Astro.props as { product: Product; all: Product[] };
+const photos = gallery(p.handle);
+const shopifyPhotos = photos.length ? [] : p.featuredImage ? [p.featuredImage] : [];
+const guide = (maten as Record<string, { kolommen: string[]; maten: Record<string, (number | null)[]> }>)[p.handle];
+const guideFilled = guide && Object.values(guide.maten).some((row) => row.some((v) => v !== null));
+const hasSizes = p.options.some((o) => o.name === 'Maat');
+const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
+---
+
+<Base
+  title={`${p.title} | Oershop | De Dolle Brouwers`}
+  description={`${p.title} van De Dolle Brouwers, ${priceLabel(p)}. ${p.description}`.slice(0, 160)}
+>
+  <Fragment slot="head">
+    <link rel="canonical" href={`https://www.oerbier.be/oershop/${p.handle}`} />
+    <meta property="og:title" content={`${p.title} | De Dolle Brouwers`} />
+    <meta property="og:locale" content="nl_BE" />
+  </Fragment>
+
+  <section class="section product">
+    <div class="wrap">
+      <a class="back" href="/oershop">← Oershop</a>
+      <div class="product-grid">
+        <div class="photos">
+          <div class="main">
+            {
+              photos.map((src, i) => (
+                <Image src={src} alt={`${p.title}, foto ${i + 1}`} width={1000} class:list={['shot', { active: i === 0 }]} data-shot={i} loading={i === 0 ? 'eager' : 'lazy'} />
+              ))
+            }
+            {shopifyPhotos.map((img) => <img src={shopifyImage(img.url, 1000)} alt={img.altText ?? p.title} class="shot active" width="1000" height="1250" />)}
+          </div>
+          {
+            photos.length > 1 && (
+              <div class="thumbs" role="list">
+                {photos.map((src, i) => (
+                  <button type="button" class:list={['thumb', { active: i === 0 }]} data-thumb={i} aria-label={`Toon foto ${i + 1}`}>
+                    <Image src={src} alt="" width={180} />
+                  </button>
+                ))}
+              </div>
+            )
+          }
+        </div>
+
+        <div class="info" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
+          <h1>{p.title}</h1>
+          <p class="price" data-price>{priceLabel(p)}</p>
+          <p class="lead">{p.description}</p>
+
+          <div class="buy">
+            {
+              realOptions(p).map((o) => (
+                <label>
+                  {o.name}
+                  <select data-option={o.name}>
+                    {o.optionValues.map((v) => (
+                      <option value={v.name}>{v.name}</option>
+                    ))}
+                  </select>
+                </label>
+              ))
+            }
+            <button type="button" class="btn dark add" data-add disabled={!p.availableForSale}>
+              {p.availableForSale ? 'In mandje' : 'Uitverkocht'}
+            </button>
+          </div>
+
+          {
+            guideFilled && (
+              <details class="guide" open>
+                <summary>Maattabel</summary>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Maat</th>
+                      {guide.kolommen.map((k) => (
+                        <th>{k}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(guide.maten).map(([maat, row]) => (
+                      <tr>
+                        <td>{maat}</td>
+                        {row.map((v) => (
+                          <td>{v ?? '–'} cm</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p>Gemeten plat op tafel: de borst van oksel tot oksel, de lengte van schouder tot onderkant.</p>
+              </details>
+            )
+          }
+          {
+            hasSizes && !guideFilled && (
+              <p class="hint">
+                Twijfel je over je maat? Mail naar <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>, dan meten we
+                het voor je op.
+              </p>
+            )
+          }
+
+          <ul class="facts">
+            <li><b>Afhalen</b> gratis in de Oerbar in Esen</li>
+            <li><b>België</b> €6</li>
+            <li><b>Nederland, Duitsland, Frankrijk, Luxemburg</b> €10</li>
+            <li><b>Rest van de EU</b> €15</li>
+            <li><b>VK, Zwitserland, Noorwegen</b> €18</li>
+            <li><b>VS en Canada</b> €34</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    others.length > 0 && (
+      <section class="section more">
+        <div class="wrap">
+          <h2>Ook in de Oershop.</h2>
+          <div class="more-grid">
+            {others.map((o) => (
+              <a class="card more-card" href={`/oershop/${o.handle}`}>
+                {gallery(o.handle)[0] ? (
+                  <Image src={gallery(o.handle)[0]} alt="" width={500} />
+                ) : (
+                  o.featuredImage && <img src={shopifyImage(o.featuredImage.url, 500)} alt="" width="500" height="625" loading="lazy" />
+                )}
+                <span>
+                  <b>{o.title}</b>
+                  <em>{priceLabel(o)}</em>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<script>
+  import '../../lib/buy';
+
+  // Thumbnails switch the big photo
+  const shots = [...document.querySelectorAll<HTMLElement>('[data-shot]')];
+  const thumbs = [...document.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
+  thumbs.forEach((t) =>
+    t.addEventListener('click', () => {
+      shots.forEach((s) => s.classList.toggle('active', s.dataset.shot === t.dataset.thumb));
+      thumbs.forEach((x) => x.classList.toggle('active', x === t));
+    }),
+  );
+</script>
+
+<style>
+  .product {
+    padding-top: clamp(24px, 4vw, 48px);
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 22px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(28px, 5vw, 70px);
+    align-items: start;
+  }
+  .main {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border: var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--paper-light);
+  }
+  .main :global(.shot) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .main :global(.shot.active) {
+    opacity: 1;
+  }
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .thumb {
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    opacity: 0.7;
+  }
+  .thumb.active,
+  .thumb:hover {
+    border-color: var(--ink);
+    opacity: 1;
+  }
+  .thumb :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .info {
+    position: sticky;
+    top: calc(var(--nav-offset) + 24px);
+    transition: top 0.3s ease;
+  }
+  .info h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .price {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.6rem;
+    margin: 0 0 18px;
+  }
+  .buy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    margin: 24px 0 18px;
+  }
+  .buy label {
+    display: grid;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex: 1 1 140px;
+  }
+  .buy select {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.6em 0.8em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .buy .add {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .buy .add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .guide {
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    background: var(--paper-light);
+  }
+  .guide summary {
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .guide table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.92rem;
+  }
+  .guide th,
+  .guide td {
+    text-align: left;
+    padding: 6px 4px;
+    border-bottom: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  .guide p,
+  .hint {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .facts {
+    list-style: none;
+    padding: 16px 0 0;
+    margin: 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    gap: 6px;
+    font-size: 0.92rem;
+  }
+  .facts b {
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .more h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 24px;
+  }
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .more-card {
+    padding: 0;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .more-card :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .more-card span {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+  }
+  @media (max-width: 860px) {
+    .product-grid,
+    .more-grid {
+      grid-template-columns: 1fr;
+    }
+    .info {
+      position: static;
+    }
+  }
+</style>

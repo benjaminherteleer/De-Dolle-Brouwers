@@ -1,14 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import truien from '../assets/foto/shop-truien.jpg';
-import tshirt from '../assets/foto/shop-tshirt.jpg';
-import hoodie from '../assets/foto/shop-hoodie.jpg';
-import oerbierman from '../assets/foto/shop-oerbierman.jpg';
-import pet from '../assets/foto/shop-pet.jpg';
-import borden from '../assets/foto/shop-borden.jpg';
 import MannetjeSvg from './MannetjeSvg.astro';
-import { getProducts, euro, type Product } from '../lib/shopify';
+import { getProducts, type Product } from '../lib/shopify';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage } from '../lib/shop';
 
 interface Props {
   /** On the shop page itself the heading is the page title. */
@@ -17,29 +11,13 @@ interface Props {
 const { page = false } = Astro.props;
 
 // Products, prices, sizes and stock come from Shopify; our own photos are used where we have them.
-const photos: Record<string, ImageMetadata> = {
-  'trui-zwart': hoodie,
-  'crewneck-grijs': truien,
-  't-shirt-de-bende': tshirt,
-  pet,
-  'oerbier-mannetje': oerbierman,
-  'metalen-bord': borden,
-};
-const CUSTOM = 'oerbier-mannetje-op-maat';
-const order = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord'];
-
 let products: Product[] = [];
 try {
-  products = (await getProducts()).sort((a, b) => (order.indexOf(a.handle) + 99) % 99 - (order.indexOf(b.handle) + 99) % 99);
+  products = sortProducts(await getProducts());
 } catch (e) {
   console.warn('Shopify niet bereikbaar, Oershop zonder producten gebouwd', e);
 }
-const custom = products.find((p) => p.handle === CUSTOM);
-const price = (p: Product) =>
-  p.priceRange.minVariantPrice.amount === p.priceRange.maxVariantPrice.amount
-    ? euro(p.priceRange.minVariantPrice)
-    : `vanaf ${euro(p.priceRange.minVariantPrice)}`;
-const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title' && o.optionValues.length === 1));
+const price = priceLabel;
 ---
 
   <section class="section shop" id="shop">
@@ -76,14 +54,17 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
               </a>
             ) : (
               <figure class="shop-item" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
-                {photos[p.handle] ? (
-                  <Image src={photos[p.handle]} alt={p.featuredImage?.altText ?? p.title} width={700} />
-                ) : p.featuredImage ? (
-                  <img src={`${p.featuredImage.url}&width=700`} alt={p.featuredImage.altText ?? p.title} width="700" height="875" loading="lazy" />
-                ) : null}
+                <a class="photo" href={`/oershop/${p.handle}`} aria-label={`${p.title}: meer foto's en info`}>
+                  {gallery(p.handle)[0] ? (
+                    <Image src={gallery(p.handle)[0]} alt={p.featuredImage?.altText ?? p.title} width={700} />
+                  ) : p.featuredImage ? (
+                    <img src={shopifyImage(p.featuredImage.url, 700)} alt={p.featuredImage.altText ?? p.title} width="700" height="875" loading="lazy" />
+                  ) : null}
+                  {gallery(p.handle).length > 1 && <span class="more">{gallery(p.handle).length} foto's</span>}
+                </a>
                 <figcaption>
                   <span class="row">
-                    <b>{p.title}</b>
+                    <a class="name" href={`/oershop/${p.handle}`}>{p.title}</a>
                     <span class="price" data-price>{price(p)}</span>
                   </span>
                   <span class="buy">
@@ -108,77 +89,7 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
   </section>
 
 <script>
-  import { addToCart, openCart } from '../lib/cart';
-  import { storefront, euro, type Variant } from '../lib/shopify';
-
-  const cards = [...document.querySelectorAll<HTMLElement>('[data-product]')];
-
-  const update = (card: HTMLElement) => {
-    const variants: Variant[] = JSON.parse(card.dataset.variants!);
-    const chosen = Object.fromEntries(
-      [...card.querySelectorAll<HTMLSelectElement>('select[data-option]')].map((s) => [s.dataset.option, s.value]),
-    );
-    const variant = variants.find((v) => v.selectedOptions.every((o) => o.name === 'Title' || chosen[o.name] === o.value));
-    const button = card.querySelector<HTMLButtonElement>('[data-add]')!;
-    button.disabled = !variant?.availableForSale;
-    button.textContent = variant?.availableForSale ? 'In mandje' : 'Uitverkocht';
-    if (variant && card.querySelector('select')) card.querySelector('[data-price]')!.textContent = euro(variant.price);
-    // Mark sold-out values in single-option lists (sizes, designs)
-    card.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((sel) => {
-      [...sel.options].forEach((opt) => {
-        const match = variants.filter((v) =>
-          v.selectedOptions.every((o) => (o.name === sel.dataset.option ? o.value === opt.value : o.name === 'Title' || chosen[o.name] === o.value)),
-        );
-        const out = match.length > 0 && match.every((v) => !v.availableForSale);
-        opt.textContent = out ? `${opt.value} (uitverkocht)` : opt.value;
-      });
-    });
-    return variant;
-  };
-
-  cards.forEach((card) => {
-    // Start on the first size that is still in stock
-    const variants: Variant[] = JSON.parse(card.dataset.variants!);
-    const first = variants.find((v) => v.availableForSale);
-    first?.selectedOptions.forEach((o) => {
-      const sel = card.querySelector<HTMLSelectElement>(`select[data-option="${o.name}"]`);
-      if (sel) sel.value = o.value;
-    });
-    update(card);
-    card.addEventListener('change', () => update(card));
-    card.querySelector('[data-add]')!.addEventListener('click', async (e) => {
-      const button = e.currentTarget as HTMLButtonElement;
-      const variant = update(card);
-      if (!variant?.availableForSale) return;
-      button.disabled = true;
-      button.textContent = 'Even…';
-      try {
-        await addToCart(variant.id);
-        openCart();
-      } catch {
-        alert('Dat lukte niet. Probeer het straks nog eens.');
-      }
-      update(card);
-    });
-  });
-
-  // Stock can change after the site was built: refresh availability live.
-  if (cards.length) {
-    const handles = cards.map((c) => `handle:${c.dataset.product}`).join(' OR ');
-    storefront<{ products: { nodes: { handle: string; variants: { nodes: Variant[] } }[] } }>(
-      `query ($q: String!) { products(first: 50, query: $q) { nodes { handle variants(first: 50) { nodes { id title availableForSale price { amount currencyCode } selectedOptions { name value } } } } } }`,
-      { q: handles },
-    )
-      .then((data) => {
-        data.products.nodes.forEach((p) => {
-          const card = cards.find((c) => c.dataset.product === p.handle);
-          if (!card) return;
-          card.dataset.variants = JSON.stringify(p.variants.nodes);
-          update(card);
-        });
-      })
-      .catch(() => {});
-  }
+  import '../lib/buy';
 </script>
 
 <style>
@@ -209,6 +120,14 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
     box-shadow: var(--shadow);
     overflow: hidden;
   }
+  figure.shop-item {
+    display: flex;
+    flex-direction: column;
+  }
+  figure.shop-item figcaption {
+    flex: 1;
+    align-content: space-between;
+  }
   .shop-item :global(img) {
     width: 100%;
     aspect-ratio: 4 / 5;
@@ -223,6 +142,31 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
     gap: 10px;
     padding: 14px 18px 16px;
     border-top: var(--line);
+  }
+  .shop-item .photo {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+  .shop-item .more {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .shop-item .name {
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .shop-item .name:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--yellow);
+    text-decoration-thickness: 3px;
   }
   .shop-item .row {
     display: flex;
@@ -269,7 +213,8 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
     font-style: normal;
   }
   .shop-link {
-    display: block;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     transition:
       transform 0.15s ease,
@@ -312,6 +257,8 @@ const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title'
     transform: translateY(-6px) rotate(-3deg);
   }
   .shop-link .cap {
+    flex: 1;
+    align-items: flex-start;
     display: flex;
     justify-content: space-between;
     gap: 10px;

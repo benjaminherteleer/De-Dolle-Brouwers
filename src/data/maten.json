@@ -1,0 +1,6 @@
+{
+  "_uitleg": "Maattabellen per product (Shopify-handle). Maten in cm, gemeten plat op tafel. Vul de waarden in; een tabel verschijnt pas op de site als er cijfers staan.",
+  "trui-zwart": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } },
+  "crewneck-grijs": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } },
+  "t-shirt-de-bende": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } }
+}

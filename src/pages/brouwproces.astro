@@ -245,7 +245,8 @@ const steps: Step[] = [
   /* sticky step bar, like the dashes on our slides */
   .progress {
     position: sticky;
-    top: 69px;
+    top: var(--nav-offset);
+    transition: top 0.3s ease;
     z-index: 50;
     background: var(--paper) var(--grain);
     border-block: var(--line);
@@ -295,7 +296,7 @@ const steps: Step[] = [
   .step {
     padding: clamp(50px, 7vw, 90px) 0 0;
     position: relative;
-    scroll-margin-top: 130px;
+    scroll-margin-top: 80px;
   }
   .step-grid {
     display: grid;
@@ -388,7 +389,7 @@ const steps: Step[] = [
       order: 0;
     }
     .progress {
-      top: 65px;
+      top: var(--nav-offset);
     }
     .progress .lbl {
       display: none;

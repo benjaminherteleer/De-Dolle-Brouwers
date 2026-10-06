@@ -538,7 +538,8 @@ const flagArt: Record<string, string> = {
   }
   .preview {
     position: sticky;
-    top: 100px;
+    top: calc(var(--nav-offset) + 24px);
+    transition: top 0.3s ease;
     background: var(--yellow-soft) var(--grain);
     border: var(--line);
     border-radius: 24px;
@@ -774,7 +775,7 @@ const flagArt: Record<string, string> = {
     }
     .preview {
       position: sticky;
-      top: 70px;
+      top: var(--nav-offset);
       z-index: 5;
       max-width: 360px;
       margin: 0 auto;

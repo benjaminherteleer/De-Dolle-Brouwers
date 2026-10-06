@@ -64,11 +64,51 @@ const links = [
   </div>
 </header>
 
+<script>
+  // Slide the bar away while scrolling down, bring it back when scrolling up.
+  // --nav-offset tells other sticky bars (like the brewing steps) where to sit.
+  const nav = document.querySelector<HTMLElement>('.site-nav')!;
+  const root = document.documentElement;
+  const toggle = document.getElementById('navToggle') as HTMLInputElement | null;
+  const setHeight = () => root.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
+  setHeight();
+  addEventListener('resize', setHeight);
+  let last = scrollY;
+  let ticking = false;
+  addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = scrollY;
+        const down = y > last + 4;
+        const up = y < last - 4;
+        if (y < nav.offsetHeight + 20 || up || toggle?.checked) root.classList.remove('nav-up');
+        else if (down) root.classList.add('nav-up');
+        if (down || up) last = y;
+        ticking = false;
+      });
+    },
+    { passive: true },
+  );
+</script>
+
 <style>
+  :global(:root) {
+    --nav-offset: var(--nav-h, 70px);
+  }
+  :global(html.nav-up) {
+    --nav-offset: 0px;
+  }
+  :global(html.nav-up) .site-nav {
+    transform: translateY(-100%);
+  }
   .site-nav {
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: transform 0.3s ease;
     background: var(--paper) var(--grain);
     border-bottom: var(--line);
   }
@@ -85,6 +125,7 @@ const links = [
     align-items: center;
     gap: 10px;
     text-decoration: none;
+    flex-shrink: 0;
   }
   .brand :global(.brand-mascot) {
     width: 46px;
@@ -195,6 +236,21 @@ const links = [
     display: none;
   }
 
+  @media (min-width: 981px) and (max-width: 1240px) {
+    .bar {
+      gap: 16px;
+    }
+    .menu,
+    .menu ul {
+      gap: 14px;
+    }
+    .menu ul a {
+      font-size: 0.95rem;
+    }
+    .kris {
+      display: none;
+    }
+  }
   @media (max-width: 560px) {
     .bar {
       gap: 10px;

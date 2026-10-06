@@ -1,0 +1,71 @@
+<script>
+  // Give headings, text, photos and cards a gentle entrance while scrolling.
+  // Things already on screen at load (and the hero) are left alone, so nothing flickers.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    const BLOCKS = [
+      'main section .lead',
+      'main section p.hand',
+      'main .polaroid',
+      'main .card',
+      'main .beer-grid > li',
+      'main .shop-grid > *',
+      'main .step-art',
+      'main .step-copy',
+      'main .years li',
+      'main .timeline li',
+      'main .more-grid > *',
+    ].join(',');
+    const inHero = (el: Element) => el.closest('.hero, .intro, .site-nav');
+    const onScreen = (el: Element) => el.getBoundingClientRect().top < innerHeight;
+
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target as HTMLElement;
+          el.classList.add('in');
+          io.unobserve(el);
+          // Hand the element back to its own styles (hover transitions etc.) once it has landed
+          if (el.classList.contains('rv'))
+            el.addEventListener('transitionend', () => el.classList.remove('rv', 'in'), { once: true });
+        }),
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+
+    // Section headings: words rise one after the other
+    document.querySelectorAll<HTMLElement>('main section h2').forEach((h) => {
+      if (inHero(h) || onScreen(h)) return;
+      let n = 0;
+      const walk = (node: Node) => {
+        [...node.childNodes].forEach((c) => {
+          if (c.nodeType === Node.TEXT_NODE) {
+            const frag = document.createDocumentFragment();
+            c.textContent!.split(/(\s+)/).forEach((part) => {
+              if (!part) return;
+              if (/^\s+$/.test(part)) return frag.append(part);
+              const w = document.createElement('span');
+              w.className = 'rv-w';
+              w.style.setProperty('--w', String(n++));
+              w.textContent = part;
+              frag.append(w);
+            });
+            c.replaceWith(frag);
+          } else if (c.nodeType === Node.ELEMENT_NODE && (c as Element).tagName !== 'BR') walk(c);
+        });
+      };
+      walk(h);
+      h.classList.add('rv-words');
+      io.observe(h);
+    });
+
+    // Blocks: photos, cards and text fade up, siblings in a grid one after another
+    document.querySelectorAll<HTMLElement>(BLOCKS).forEach((el) => {
+      if (inHero(el) || onScreen(el) || el.closest('.rv')) return;
+      const siblings = el.parentElement ? [...el.parentElement.children].filter((s) => s.matches(BLOCKS)) : [];
+      el.style.setProperty('--rv-i', String(Math.min(siblings.indexOf(el), 3)));
+      el.classList.add('rv');
+      io.observe(el);
+    });
+  }
+</script>
