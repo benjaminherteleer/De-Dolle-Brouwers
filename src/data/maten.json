@@ -1,6 +1,31 @@
 {
-  "_uitleg": "Maattabellen per product (Shopify-handle). Maten in cm, gemeten plat op tafel. Vul de waarden in; een tabel verschijnt pas op de site als er cijfers staan.",
-  "trui-zwart": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } },
-  "crewneck-grijs": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } },
-  "t-shirt-de-bende": { "kolommen": ["Borst (breedte)", "Lengte"], "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] } }
+  "_uitleg": "Maattabellen per product (Shopify-handle), in cm, gemeten plat. Bron: maattabellen van Tigerprint (juni 2026). Een tabel verschijnt pas op de site als er cijfers staan.",
+  "trui-zwart": {
+    "bron": "Best Blanks hoodie en zip hoodie (BBHD001ZW / BBHD002ZW)",
+    "kolommen": ["Halve borst", "Lengte rug", "Mouwlengte"],
+    "maten": {
+      "S": [54, 70, 66],
+      "M": [57, 71, 66],
+      "L": [60, 73, 67],
+      "XL": [64, 75, 68],
+      "XXL": [68, 77, 69],
+      "XXXL": [72, 78.5, 69]
+    }
+  },
+  "crewneck-grijs": {
+    "bron": "AWDis JH030 sweater",
+    "kolommen": ["Halve borst", "Lengte", "Mouwlengte"],
+    "maten": {
+      "S": [52, 68, 65],
+      "M": [56, 71, 66.5],
+      "L": [60, 74, 68],
+      "XL": [64, 77, 69.5],
+      "XXL": [68, 80, 71],
+      "XXXL": [72, 83, 72.5]
+    }
+  },
+  "t-shirt-de-bende": {
+    "kolommen": ["Halve borst", "Lengte"],
+    "maten": { "S": [null, null], "M": [null, null], "L": [null, null], "XL": [null, null], "XXL": [null, null], "XXXL": [null, null] }
+  }
 }

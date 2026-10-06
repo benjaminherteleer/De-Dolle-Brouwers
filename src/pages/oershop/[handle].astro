@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { product: p, all } = Astro.props as { product: Product; all: Product[] };
 const photos = gallery(p.handle);
 const shopifyPhotos = photos.length ? [] : p.featuredImage ? [p.featuredImage] : [];
-const guide = (maten as Record<string, { kolommen: string[]; maten: Record<string, (number | null)[]> }>)[p.handle];
+const guide = (maten as unknown as Record<string, { kolommen: string[]; maten: Record<string, (number | null)[]> }>)[p.handle];
 const guideFilled = guide && Object.values(guide.maten).some((row) => row.some((v) => v !== null));
 const hasSizes = p.options.some((o) => o.name === 'Maat');
 const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
@@ -96,13 +96,16 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
                       <tr>
                         <td>{maat}</td>
                         {row.map((v) => (
-                          <td>{v ?? '–'} cm</td>
+                          <td>{v === null ? '–' : `${String(v).replace('.', ',')} cm`}</td>
                         ))}
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <p>Gemeten plat op tafel: de borst van oksel tot oksel, de lengte van schouder tot onderkant.</p>
+                <p>
+                  Plat gemeten: de halve borst van oksel tot oksel, de lengte van de schouder tot de onderkant. Kleine afwijkingen
+                  (±2 cm) zijn normaal.
+                </p>
               </details>
             )
           }
