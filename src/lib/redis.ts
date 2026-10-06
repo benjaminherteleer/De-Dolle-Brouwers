@@ -29,3 +29,7 @@ export async function readHash<T>(key: string): Promise<T[]> {
   for (let i = 1; i < flat.length; i += 2) out.push(JSON.parse(flat[i]));
   return out;
 }
+
+/** Newsletter sign-ups, keyed by e-mail address. */
+export const NIEUWSBRIEF = 'nieuwsbrief';
+export type Inschrijving = { email: string; at: string };

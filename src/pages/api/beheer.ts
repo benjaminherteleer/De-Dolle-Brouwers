@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { redis, hasRedis, readHash, PENDING, APPROVED, type Tip } from '../../lib/redis';
+import { redis, hasRedis, readHash, PENDING, APPROVED, NIEUWSBRIEF, type Tip, type Inschrijving } from '../../lib/redis';
 
 export const prerender = false;
 
@@ -16,6 +16,7 @@ export const GET: APIRoute = async ({ request }) => {
   return json({
     pending: (await readHash<Tip>(PENDING)).sort(byDate),
     approved: (await readHash<Tip>(APPROVED)).sort(byDate),
+    nieuwsbrief: (await readHash<Inschrijving>(NIEUWSBRIEF)).sort((a, b) => (a.at < b.at ? 1 : -1)),
   });
 };
 
@@ -24,6 +25,10 @@ export const POST: APIRoute = async ({ request }) => {
   if (!hasRedis || !password) return json({ error: 'Nog niet ingesteld' }, 503);
   if (!allowed(request)) return json({ error: 'Fout wachtwoord' }, 401);
   const { id, action, place } = await request.json();
+  if (action === 'uitschrijven') {
+    await redis('HDEL', NIEUWSBRIEF, String(id));
+    return json({ ok: true });
+  }
   const raw = await redis<string | null>('HGET', action === 'verwijder' ? APPROVED : PENDING, id);
   if (!raw) return json({ error: 'Niet gevonden' }, 404);
 

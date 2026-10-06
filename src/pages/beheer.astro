@@ -2,15 +2,15 @@
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title="Beheer | Café-tips">
+<Base title="Beheer | De Dolle Brouwers">
   <Fragment slot="head">
     <meta name="robots" content="noindex, nofollow" />
   </Fragment>
 
   <section class="section">
     <div class="wrap">
-      <h1>Café-tips</h1>
-      <p class="lead">Tips van bezoekers voor de verkooppuntenkaart. Goedgekeurde cafés staan een paar minuten later op de kaart.</p>
+      <h1>Beheer</h1>
+      <p class="lead">Café-tips voor de verkooppuntenkaart en de inschrijvingen voor het Oerbier FAKE news.</p>
 
       <form id="login" class="card login">
         <label>Wachtwoord<input type="password" name="pw" required autocomplete="current-password" /></label>
@@ -24,6 +24,13 @@ import Base from '../layouts/Base.astro';
         <h2>Al goedgekeurd <span id="n-approved"></span></h2>
         <ul id="approved" class="approved"></ul>
         <p class="msg" id="msg" role="status"></p>
+        <h2>Oerbier FAKE news <span id="n-news"></span></h2>
+        <p class="hint">Kopieer alle adressen en plak ze in je mailprogramma (in BCC) of in je nieuwsbriefdienst.</p>
+        <div class="news-acties">
+          <button class="btn" id="kopieer" type="button">Kopieer alle adressen</button>
+          <a class="btn light" id="csv" download="oerbier-fake-news.csv">Download als CSV</a>
+        </div>
+        <ul id="news-lijst" class="approved"></ul>
       </div>
     </div>
   </section>
@@ -41,6 +48,9 @@ import Base from '../layouts/Base.astro';
   const pendingEl = document.getElementById('pending')!;
   const approvedEl = document.getElementById('approved')!;
   const msg = document.getElementById('msg')!;
+  const newsEl = document.getElementById('news-lijst')!;
+  const csv = document.getElementById('csv') as HTMLAnchorElement;
+  let adressen: string[] = [];
 
   let pw = '';
   try {
@@ -87,7 +97,15 @@ import Base from '../layouts/Base.astro';
       loginMsg.textContent = 'De beheerpagina is nog niet ingesteld in Vercel.';
       return;
     }
-    const { pending, approved } = (await res.json()) as { pending: Tip[]; approved: Tip[] };
+    const { pending, approved, nieuwsbrief = [] } = (await res.json()) as { pending: Tip[]; approved: Tip[]; nieuwsbrief?: { email: string; at: string }[] };
+    adressen = nieuwsbrief.map((n) => n.email);
+    document.getElementById('n-news')!.textContent = `(${nieuwsbrief.length})`;
+    newsEl.innerHTML = nieuwsbrief.length
+      ? nieuwsbrief
+          .map((n) => `<li><span><b>${esc(n.email)}</b> · ${date(n.at)}</span><button class="link" data-email="${esc(n.email)}">Uitschrijven</button></li>`)
+          .join('')
+      : '<li class="empty">Nog niemand.</li>';
+    csv.href = URL.createObjectURL(new Blob(['email,ingeschreven\n' + nieuwsbrief.map((n) => `${n.email},${n.at.slice(0, 10)}`).join('\n')], { type: 'text/csv' }));
     login.hidden = true;
     lijsten.hidden = false;
     document.getElementById('n-pending')!.textContent = `(${pending.length})`;
@@ -109,7 +127,7 @@ import Base from '../layouts/Base.astro';
       return;
     }
     msg.textContent =
-      action === 'nee' ? 'Tip geweigerd.' : data.rebuilt ? 'Opgeslagen. De kaart is binnen een paar minuten bijgewerkt.' : 'Opgeslagen. De kaart wordt bijgewerkt bij de volgende update van de site.';
+      action === 'uitschrijven' ? 'Uitgeschreven.' : action === 'nee' ? 'Tip geweigerd.' : data.rebuilt ? 'Opgeslagen. De kaart is binnen een paar minuten bijgewerkt.' : 'Opgeslagen. De kaart wordt bijgewerkt bij de volgende update van de site.';
     load();
   };
 
@@ -128,6 +146,19 @@ import Base from '../layouts/Base.astro';
   approvedEl.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest('button');
     if (btn && confirm('Dit café van de kaart halen?')) act(btn.dataset.id!, 'verwijder');
+  });
+
+  document.getElementById('kopieer')!.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(adressen.join(', '));
+      msg.textContent = `${adressen.length} adressen gekopieerd.`;
+    } catch {
+      msg.textContent = 'Kopiëren lukte niet. Gebruik de CSV.';
+    }
+  });
+  newsEl.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('button');
+    if (btn && confirm(`${btn.dataset.email} uitschrijven?`)) act(btn.dataset.email!, 'uitschrijven');
   });
 
   login.addEventListener('submit', (e) => {
@@ -233,6 +264,16 @@ import Base from '../layouts/Base.astro';
   }
   :global(.empty) {
     color: var(--ink-soft);
+  }
+  .hint {
+    color: var(--ink-soft);
+    margin: -6px 0 14px;
+  }
+  .news-acties {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
   }
   .msg {
     font-weight: 600;

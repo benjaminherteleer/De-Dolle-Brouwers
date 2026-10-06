@@ -44,12 +44,14 @@ import lineup from '../assets/logo/mascot-lineup.png';
       </div>
 
       <div class="col">
-        <h4>Nieuwe brouwsels?</h4>
-        <p>Eén mail per seizoen. Geen spam, wel af en toe wat onzin.</p>
-        <form class="news" onsubmit="event.preventDefault()">
-          <input type="email" placeholder="jouw@email.be" aria-label="E-mailadres" />
+        <h4>Keep in touch!</h4>
+        <p>Schrijf je in voor ons Oerbier FAKE news.</p>
+        <form class="news" id="news">
+          <input type="email" name="email" required placeholder="jouw@email.be" aria-label="E-mailadres" />
+          <input type="text" name="honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <button class="btn" type="submit">Ja!</button>
         </form>
+        <p class="news-status" id="news-status" role="status"></p>
         <div class="socials">
           <a href="https://www.instagram.com/dedollebrouwers" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none"
@@ -158,6 +160,17 @@ import lineup from '../assets/logo/mascot-lineup.png';
     background: transparent;
     color: var(--paper);
   }
+  .honey {
+    position: absolute;
+    left: -9999px;
+  }
+  .news-status {
+    margin: -8px 0 16px;
+    font-size: 0.9rem;
+  }
+  .news-status:empty {
+    display: none;
+  }
   .news .btn {
     padding: 0.5em 1em;
     box-shadow: 3px 3px 0 var(--paper);
@@ -205,3 +218,29 @@ import lineup from '../assets/logo/mascot-lineup.png';
     }
   }
 </style>
+
+<script>
+  // Newsletter sign-up: the address is kept in the site's storage and listed on /beheer.
+  const news = document.getElementById('news') as HTMLFormElement | null;
+  const newsStatus = document.getElementById('news-status');
+  news?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const field = (n: string) => (news.elements.namedItem(n) as HTMLInputElement).value.trim();
+    const button = news.querySelector('button')!;
+    button.disabled = true;
+    try {
+      const res = await fetch('/api/inschrijven', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: field('email'), honey: field('honey') }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      news.reset();
+      if (newsStatus) newsStatus.textContent = 'Proost, je staat erop!';
+    } catch {
+      if (newsStatus) newsStatus.textContent = 'Dat lukte niet. Probeer het later nog eens.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
