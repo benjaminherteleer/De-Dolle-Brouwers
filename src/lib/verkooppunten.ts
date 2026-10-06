@@ -28,8 +28,9 @@ export async function getPlaces(): Promise<Place[]> {
       lat,
       lng,
     }));
-    const known = new Set(base.map((p) => `${p.name}|${p.city}`.toLowerCase()));
-    return [...base, ...extra.filter((p) => !known.has(`${p.name}|${p.city}`.toLowerCase()))];
+    // Skip approved cafés already in the fixed list (within ~100 m).
+    const near = (a: Place, b: Place) => Math.abs(a.lat - b.lat) < 0.001 && Math.abs(a.lng - b.lng) < 0.0015;
+    return [...base, ...extra.filter((p) => !base.some((b) => near(b, p)))];
   } catch {
     return base;
   }

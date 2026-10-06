@@ -306,5 +306,12 @@
     "country": "België",
     "lat": 51.210838,
     "lng": 3.222809
+  },
+  {
+    "name": "Café Gollem",
+    "city": "Amsterdam",
+    "country": "Nederland",
+    "lat": 52.37025,
+    "lng": 4.88872
   }
 ]
