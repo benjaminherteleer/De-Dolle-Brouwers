@@ -1,17 +1,45 @@
 ---
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import truien from '../assets/foto/shop-truien.jpg';
 import tshirt from '../assets/foto/shop-tshirt.jpg';
 import hoodie from '../assets/foto/shop-hoodie.jpg';
 import oerbierman from '../assets/foto/shop-oerbierman.jpg';
-import MannetjeSvg from './MannetjeSvg.astro';
+import pet from '../assets/foto/shop-pet.jpg';
 import borden from '../assets/foto/shop-borden.jpg';
+import MannetjeSvg from './MannetjeSvg.astro';
+import { getProducts, euro, type Product } from '../lib/shopify';
 
 interface Props {
   /** On the shop page itself the heading is the page title. */
   page?: boolean;
 }
 const { page = false } = Astro.props;
+
+// Products, prices, sizes and stock come from Shopify; our own photos are used where we have them.
+const photos: Record<string, ImageMetadata> = {
+  'trui-zwart': hoodie,
+  'crewneck-grijs': truien,
+  't-shirt-de-bende': tshirt,
+  pet,
+  'oerbier-mannetje': oerbierman,
+  'metalen-bord': borden,
+};
+const CUSTOM = 'oerbier-mannetje-op-maat';
+const order = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord'];
+
+let products: Product[] = [];
+try {
+  products = (await getProducts()).sort((a, b) => (order.indexOf(a.handle) + 99) % 99 - (order.indexOf(b.handle) + 99) % 99);
+} catch (e) {
+  console.warn('Shopify niet bereikbaar, Oershop zonder producten gebouwd', e);
+}
+const custom = products.find((p) => p.handle === CUSTOM);
+const price = (p: Product) =>
+  p.priceRange.minVariantPrice.amount === p.priceRange.maxVariantPrice.amount
+    ? euro(p.priceRange.minVariantPrice)
+    : `vanaf ${euro(p.priceRange.minVariantPrice)}`;
+const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title' && o.optionValues.length === 1));
 ---
 
   <section class="section shop" id="shop">
@@ -19,46 +47,139 @@ const { page = false } = Astro.props;
       <div class="shop-head">
         {page ? <h1>Oershop.</h1> : <h2>Oershop.</h2>}
         <p class="lead">
-          Truien, T-shirts, het Oerbier-mannetje en metalen borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
-          <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
+          Truien, T-shirts, een pet, het Oerbier-mannetje en metalen borden met de bende erop. We versturen naar de EU, het VK,
+          Zwitserland, Noorwegen, de VS en Canada, of je haalt het gratis af in de Oerbar.
         </p>
       </div>
+      {
+        products.length === 0 && (
+          <p class="lead">
+            De webshop is even niet bereikbaar. Bestellen kan via{' '}
+            <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
+          </p>
+        )
+      }
       <div class="shop-grid">
-        <figure class="shop-item">
-          <Image src={truien} alt="Zwarte en grijze truien van De Dolle Brouwers aan een groen paneel" width={700} />
-          <figcaption><b>Crewneck</b><span>€50</span></figcaption>
-        </figure>
-        <figure class="shop-item">
-          <Image src={tshirt} alt="Wit T-shirt met de bende van De Dolle Brouwers op de toog" width={700} />
-          <figcaption><b>T-shirt</b><span>€20</span></figcaption>
-        </figure>
-        <figure class="shop-item">
-          <Image src={hoodie} alt="Rugkant van een zwarte trui met het De Dolle Brouwers-logo in goud" width={700} />
-          <figcaption><b>Trui</b><span>€50 · met rits €60</span></figcaption>
-        </figure>
-        <figure class="shop-item">
-          <Image src={oerbierman} alt="Het gele Oerbier-mannetje als beeldje" width={700} />
-          <figcaption><b>Oerbier-mannetje</b><span>€60</span></figcaption>
-        </figure>
-        <a class="shop-item shop-link" href="/oerbier-mannetje">
-          <span class="maker-art" role="img" aria-label="Drie zelf samengestelde Oerbier-mannetjes in verschillende kleuren">
-            <MannetjeSvg class="m1" head="#f6bf1c" flag="be" text="jouw naam" />
-            <MannetjeSvg class="m2" head="#3d7bd4" arms="#f6bf1c" feet="#1f1b17" glass="#f6bf1c" scarf="#1f1b17" text="Jan 50" bril />
-            <MannetjeSvg class="m3" head="#f3a7c3" body="#f3a7c3" arms="#d6337f" feet="#c9a13b" scarf="#d6337f" text="Greta" strik />
-          </span>
-          <span class="cap"><b>Stel je eigen mannetje samen →</b><span>€90</span></span>
-        </a>
-        <figure class="shop-item">
-          <Image src={borden} alt="Metalen borden van Boskeun, Arabier, Stille Nacht, Oerbier en Dulle Teve" width={700} />
-          <figcaption class="signs">
-            <span class="row"><b>Metalen borden</b><span>€20</span></span>
-            <span class="list">Oerbier wit · Arabier · Boskeun · Dulle Teve · Stille Nacht · <s>Oerbier zwart</s> uitverkocht</span>
-          </figcaption>
-        </figure>
+        {
+          products.map((p) =>
+            p.handle === CUSTOM ? (
+              <a class="shop-item shop-link" href="/oerbier-mannetje">
+                <span class="maker-art" role="img" aria-label="Drie zelf samengestelde Oerbier-mannetjes in verschillende kleuren">
+                  <MannetjeSvg class="m1" head="#f6bf1c" flag="be" text="jouw naam" />
+                  <MannetjeSvg class="m2" head="#3d7bd4" arms="#f6bf1c" feet="#1f1b17" glass="#f6bf1c" scarf="#1f1b17" text="Jan 50" bril />
+                  <MannetjeSvg class="m3" head="#f3a7c3" body="#f3a7c3" arms="#d6337f" feet="#c9a13b" scarf="#d6337f" text="Greta" strik />
+                </span>
+                <span class="cap">
+                  <b>Stel je eigen mannetje samen →</b>
+                  <span>{price(p)}</span>
+                </span>
+              </a>
+            ) : (
+              <figure class="shop-item" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
+                {photos[p.handle] ? (
+                  <Image src={photos[p.handle]} alt={p.featuredImage?.altText ?? p.title} width={700} />
+                ) : p.featuredImage ? (
+                  <img src={`${p.featuredImage.url}&width=700`} alt={p.featuredImage.altText ?? p.title} width="700" height="875" loading="lazy" />
+                ) : null}
+                <figcaption>
+                  <span class="row">
+                    <b>{p.title}</b>
+                    <span class="price" data-price>{price(p)}</span>
+                  </span>
+                  <span class="buy">
+                    {realOptions(p).map((o) => (
+                      <select data-option={o.name} aria-label={o.name}>
+                        {o.optionValues.map((v) => (
+                          <option value={v.name}>{v.name}</option>
+                        ))}
+                      </select>
+                    ))}
+                    <button type="button" class="btn add" data-add disabled={!p.availableForSale}>
+                      {p.availableForSale ? 'In mandje' : 'Uitverkocht'}
+                    </button>
+                  </span>
+                </figcaption>
+              </figure>
+            ),
+          )
+        }
       </div>
     </div>
   </section>
 
+<script>
+  import { addToCart, openCart } from '../lib/cart';
+  import { storefront, euro, type Variant } from '../lib/shopify';
+
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-product]')];
+
+  const update = (card: HTMLElement) => {
+    const variants: Variant[] = JSON.parse(card.dataset.variants!);
+    const chosen = Object.fromEntries(
+      [...card.querySelectorAll<HTMLSelectElement>('select[data-option]')].map((s) => [s.dataset.option, s.value]),
+    );
+    const variant = variants.find((v) => v.selectedOptions.every((o) => o.name === 'Title' || chosen[o.name] === o.value));
+    const button = card.querySelector<HTMLButtonElement>('[data-add]')!;
+    button.disabled = !variant?.availableForSale;
+    button.textContent = variant?.availableForSale ? 'In mandje' : 'Uitverkocht';
+    if (variant && card.querySelector('select')) card.querySelector('[data-price]')!.textContent = euro(variant.price);
+    // Mark sold-out values in single-option lists (sizes, designs)
+    card.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((sel) => {
+      [...sel.options].forEach((opt) => {
+        const match = variants.filter((v) =>
+          v.selectedOptions.every((o) => (o.name === sel.dataset.option ? o.value === opt.value : o.name === 'Title' || chosen[o.name] === o.value)),
+        );
+        const out = match.length > 0 && match.every((v) => !v.availableForSale);
+        opt.textContent = out ? `${opt.value} (uitverkocht)` : opt.value;
+      });
+    });
+    return variant;
+  };
+
+  cards.forEach((card) => {
+    // Start on the first size that is still in stock
+    const variants: Variant[] = JSON.parse(card.dataset.variants!);
+    const first = variants.find((v) => v.availableForSale);
+    first?.selectedOptions.forEach((o) => {
+      const sel = card.querySelector<HTMLSelectElement>(`select[data-option="${o.name}"]`);
+      if (sel) sel.value = o.value;
+    });
+    update(card);
+    card.addEventListener('change', () => update(card));
+    card.querySelector('[data-add]')!.addEventListener('click', async (e) => {
+      const button = e.currentTarget as HTMLButtonElement;
+      const variant = update(card);
+      if (!variant?.availableForSale) return;
+      button.disabled = true;
+      button.textContent = 'Even…';
+      try {
+        await addToCart(variant.id);
+        openCart();
+      } catch {
+        alert('Dat lukte niet. Probeer het straks nog eens.');
+      }
+      update(card);
+    });
+  });
+
+  // Stock can change after the site was built: refresh availability live.
+  if (cards.length) {
+    const handles = cards.map((c) => `handle:${c.dataset.product}`).join(' OR ');
+    storefront<{ products: { nodes: { handle: string; variants: { nodes: Variant[] } }[] } }>(
+      `query ($q: String!) { products(first: 50, query: $q) { nodes { handle variants(first: 50) { nodes { id title availableForSale price { amount currencyCode } selectedOptions { name value } } } } } }`,
+      { q: handles },
+    )
+      .then((data) => {
+        data.products.nodes.forEach((p) => {
+          const card = cards.find((c) => c.dataset.product === p.handle);
+          if (!card) return;
+          card.dataset.variants = JSON.stringify(p.variants.nodes);
+          update(card);
+        });
+      })
+      .catch(() => {});
+  }
+</script>
 
 <style>
   /* OERSHOP */
@@ -98,15 +219,45 @@ const { page = false } = Astro.props;
     transform: scale(1.04);
   }
   .shop-item figcaption {
+    display: grid;
+    gap: 10px;
+    padding: 14px 18px 16px;
+    border-top: var(--line);
+  }
+  .shop-item .row {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    padding: 14px 18px;
-    border-top: var(--line);
     font-family: var(--font-display);
   }
-  .shop-item figcaption span {
+  .shop-item .price {
     font-style: italic;
+    white-space: nowrap;
+  }
+  .shop-item .buy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .shop-item select {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.45em 0.7em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+    min-width: 0;
+    flex: 1 1 110px;
+  }
+  .shop-item .add {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
+    margin-left: auto;
+  }
+  .shop-item .add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
   }
   .shop-item figcaption.signs {
     flex-direction: column;

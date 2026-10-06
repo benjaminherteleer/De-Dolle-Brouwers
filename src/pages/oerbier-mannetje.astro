@@ -2,6 +2,16 @@
 import type { ImageMetadata } from 'astro';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
+import { getProducts } from '../lib/shopify';
+
+// Variant ids for the cart: the plain yellow figurine and the personalised one.
+let plainId = '';
+let customId = '';
+try {
+  const products = await getProducts();
+  plainId = products.find((p) => p.handle === 'oerbier-mannetje')?.variants.nodes[0]?.id ?? '';
+  customId = products.find((p) => p.handle === 'oerbier-mannetje-op-maat')?.variants.nodes[0]?.id ?? '';
+} catch {}
 
 const examples = import.meta.glob<{ default: ImageMetadata }>('../assets/mannetjes/*.jpg', { eager: true });
 const gallery = Object.entries(examples)
@@ -204,7 +214,7 @@ const flagArt: Record<string, string> = {
         <p class="price-tag"><span id="price">€60</span> <small id="price-note">het gewone gele</small></p>
       </div>
 
-      <form class="controls" id="maker">
+      <form class="controls" id="maker" data-plain={plainId} data-custom={customId}>
         <fieldset>
           <legend>1. Kleuren</legend>
           <p class="hint">Kies eerst wat je kleurt, daarna de kleur.</p>
@@ -259,7 +269,7 @@ const flagArt: Record<string, string> = {
             <em id="logo-name">Nog geen logo</em>
           </label>
           <button type="button" class="link" id="logo-weg" hidden>Logo weghalen</button>
-          <p class="hint">Je logo komt op de buik. Stuur het bestand mee als bijlage in de mail.</p>
+          <p class="hint">Je logo komt op de buik. We bewaren het bij je bestelling.</p>
         </fieldset>
 
         <fieldset>
@@ -287,8 +297,8 @@ const flagArt: Record<string, string> = {
           </label>
         </fieldset>
 
-        <button class="btn dark" type="submit">Bestel dit mannetje →</button>
-        <p class="note">Je bestelling komt binnen via mail. We laten je weten wanneer je mannetje klaar staat in de Oerbar.</p>
+        <button class="btn dark" type="submit" id="bestel">In mijn mandje →</button>
+        <p class="note">Elk mannetje wordt met de hand beschilderd. We laten je weten wanneer het klaar is om te verzenden of af te halen in de Oerbar.</p>
       </form>
     </div>
   </section>
@@ -322,7 +332,8 @@ const flagArt: Record<string, string> = {
   const colors = { ...DEFAULTS };
   let logo = null;
 
-  const nameOf = (hex) => (palette.find(([, h]) => h === hex) || [hex])[0];
+  const STANDAARD = { '#c8241c': 'Rood (standaard)', '#fbfaf5': 'Wit (standaard)' };
+  const nameOf = (hex) => (palette.find(([, h]) => h === hex) || [STANDAARD[hex] || hex])[0];
   const ink = (hex) => {
     const n = parseInt(hex.slice(1), 16);
     const l = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
@@ -380,6 +391,7 @@ const flagArt: Record<string, string> = {
     const reader = new FileReader();
     reader.onload = () => {
       logo = file.name;
+      form.dataset.logo = reader.result;
       logoImg.setAttribute('href', reader.result);
       logoName.textContent = file.name;
       logoWeg.hidden = false;
@@ -389,6 +401,7 @@ const flagArt: Record<string, string> = {
   });
   logoWeg.addEventListener('click', () => {
     logo = null;
+    delete form.dataset.logo;
     logoInput.value = '';
     logoImg.removeAttribute('href');
     logoName.textContent = 'Nog geen logo';
@@ -400,30 +413,81 @@ const flagArt: Record<string, string> = {
     e.preventDefault();
     const patroon = form.querySelector('input[name="patroon"]:checked').closest('label').textContent.trim();
     const extra = [on('bril') && 'zonnebril', on('strik') && 'strikje'].filter(Boolean).join(', ') || 'geen';
-    const lines = [
-      'Hallo,',
-      '',
-      'Ik wil graag dit Oerbier-mannetje bestellen:',
-      '',
-      `Hoofd: ${nameOf(colors.hoofd)}`,
-      `Lichaam: ${nameOf(colors.lichaam)}`,
-      `Armen: ${nameOf(colors.armen)}`,
-      `Voetjes: ${nameOf(colors.voeten)}`,
-      `Glas: ${nameOf(colors.glas)}`,
-      `Sjaal: ${nameOf(colors.sjaal)}, met de tekst "${form.elements.namedItem('tekst').value}"`,
-      `Op het lijf: ${patroon}`,
-      `Extra: ${extra}`,
-      `Logo: ${logo ? logo + ' (zit als bijlage bij deze mail)' : 'geen'}`,
-      `Idee: ${form.elements.namedItem('idee').value || '-'}`,
-      '',
-      `Prijs: ${price.textContent}`,
-      '',
-      'Groeten,',
-    ];
-    location.href = `mailto:boniface@dedollebrouwers.be?subject=${encodeURIComponent('Oerbier-mannetje bestellen')}&body=${encodeURIComponent(lines.join('\n'))}`;
+    const attributes = [
+      ['Hoofd', nameOf(colors.hoofd)],
+      ['Lichaam', nameOf(colors.lichaam)],
+      ['Armen', nameOf(colors.armen)],
+      ['Voetjes', nameOf(colors.voeten)],
+      ['Glas', nameOf(colors.glas)],
+      ['Sjaal', `${nameOf(colors.sjaal)}, tekst "${form.elements.namedItem('tekst').value}"`],
+      ['Op het lijf', patroon],
+      ['Extra', extra],
+      ['Idee', form.elements.namedItem('idee').value || '-'],
+    ].map(([key, value]) => ({ key, value }));
+    // Picked up by the cart script below
+    window.dispatchEvent(new CustomEvent('mannetje:bestel', { detail: { plain: price.textContent === '€60', attributes, logoName: logo } }));
   });
 
   render();
+</script>
+
+<script>
+  import { addToCart, openCart } from '../lib/cart';
+
+  const form = document.getElementById('maker') as HTMLFormElement;
+  const button = document.getElementById('bestel') as HTMLButtonElement;
+
+  // Redraw the logo as PNG (max 800 px) before storing it; this also turns SVG files into plain images.
+  const shrink = (dataUrl: string) =>
+    new Promise<string>((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 800 / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = () => resolve('');
+      img.src = dataUrl;
+    });
+
+  window.addEventListener('mannetje:bestel', async (e) => {
+    const { plain, attributes, logoName } = (e as CustomEvent).detail as {
+      plain: boolean;
+      attributes: { key: string; value: string }[];
+      logoName: string | null;
+    };
+    const variant = plain ? form.dataset.plain : form.dataset.custom;
+    if (!variant) {
+      alert('De webshop is even niet bereikbaar. Mail je bestelling naar boniface@dedollebrouwers.be.');
+      return;
+    }
+    button.disabled = true;
+    const label = button.textContent;
+    button.textContent = 'Even…';
+    try {
+      const lines = plain ? [] : [...attributes];
+      if (!plain && form.dataset.logo) {
+        const res = await fetch('/api/logo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: await shrink(form.dataset.logo), name: logoName }),
+        });
+        if (!res.ok) throw new Error('logo');
+        const { url } = await res.json();
+        lines.push({ key: 'Logo', value: url });
+      }
+      await addToCart(variant, 1, lines);
+      openCart();
+    } catch {
+      alert('Dat lukte niet. Probeer het straks nog eens, of mail naar boniface@dedollebrouwers.be.');
+    } finally {
+      button.disabled = false;
+      button.textContent = label;
+    }
+  });
 </script>
 
 <style>

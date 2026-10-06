@@ -1,0 +1,256 @@
+---
+import { Image } from 'astro:assets';
+import kar from '../assets/logo/mannetje-kar.png';
+---
+
+<div class="cart-shade" id="cart-shade" hidden></div>
+<aside class="cart" id="cart" aria-label="Je mandje" aria-hidden="true">
+  <header class="cart-head">
+    <Image src={kar} alt="" width={160} class="cart-kar" />
+    <h2>Je mandje</h2>
+    <button type="button" class="cart-close" id="cart-close" aria-label="Mandje sluiten">×</button>
+  </header>
+  <ul class="cart-lines" id="cart-lines"></ul>
+  <p class="cart-empty" id="cart-empty">Je mandje is nog leeg. Kijk eens in de <a href="/oershop">Oershop</a>.</p>
+  <footer class="cart-foot" id="cart-foot" hidden>
+    <p class="cart-total"><span>Subtotaal</span><b id="cart-total"></b></p>
+    <p class="cart-note">Verzending reken je af bij de volgende stap. Afhalen in de Oerbar kan gratis.</p>
+    <a class="btn dark cart-checkout" id="cart-checkout" href="#">Afrekenen →</a>
+  </footer>
+</aside>
+
+<script>
+  import { loadCart, setQuantity, getCart, type Cart } from '../lib/cart';
+  import { euro } from '../lib/shopify';
+
+  const panel = document.getElementById('cart')!;
+  const shade = document.getElementById('cart-shade')!;
+  const list = document.getElementById('cart-lines')!;
+  const empty = document.getElementById('cart-empty')!;
+  const foot = document.getElementById('cart-foot')!;
+  const total = document.getElementById('cart-total')!;
+  const checkout = document.getElementById('cart-checkout') as HTMLAnchorElement;
+
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  const open = () => {
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    shade.hidden = false;
+  };
+  const close = () => {
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    shade.hidden = true;
+  };
+
+  const draw = (cart: Cart | null) => {
+    const lines = cart?.lines.nodes ?? [];
+    document.querySelectorAll<HTMLElement>('[data-cart-count]').forEach((el) => {
+      el.textContent = String(cart?.totalQuantity ?? 0);
+      el.closest<HTMLElement>('[data-cart-button]')!.hidden = !cart;
+    });
+    empty.hidden = lines.length > 0;
+    foot.hidden = lines.length === 0;
+    if (!cart) {
+      list.innerHTML = '';
+      return;
+    }
+    total.textContent = euro(cart.cost.subtotalAmount);
+    checkout.href = cart.checkoutUrl;
+    list.innerHTML = lines
+      .map((l) => {
+        const m = l.merchandise;
+        const variant = m.title === 'Default Title' ? '' : `<small>${esc(m.title)}</small>`;
+        const extra = l.attributes.length
+          ? `<details><summary>Jouw keuzes</summary><dl>${l.attributes
+              .map((a) => `<dt>${esc(a.key)}</dt><dd>${/^https?:/.test(a.value) ? `<a href="${esc(a.value)}" target="_blank" rel="noopener">bekijk</a>` : esc(a.value)}</dd>`)
+              .join('')}</dl></details>`
+          : '';
+        return `<li data-line="${esc(l.id)}">
+          ${m.image ? `<img src="${esc(m.image.url + (m.image.url.includes('?') ? '&' : '?') + 'width=160')}" alt="" width="64" height="64" />` : '<span class="ph"></span>'}
+          <div class="info"><b>${esc(m.product.title)}</b>${variant}${extra}</div>
+          <div class="qty">
+            <button type="button" data-step="-1" aria-label="Eén minder">−</button>
+            <span>${l.quantity}</span>
+            <button type="button" data-step="1" aria-label="Eén meer">+</button>
+          </div>
+          <span class="price">${euro(l.cost.totalAmount)}</span>
+        </li>`;
+      })
+      .join('');
+  };
+
+  list.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-step]');
+    if (!btn) return;
+    const li = btn.closest<HTMLElement>('li')!;
+    const line = getCart()?.lines.nodes.find((l) => l.id === li.dataset.line);
+    if (!line) return;
+    li.classList.add('busy');
+    try {
+      await setQuantity(line.id, line.quantity + Number(btn.dataset.step));
+    } catch {
+      li.classList.remove('busy');
+    }
+  });
+
+  window.addEventListener('cart:change', (e) => draw((e as CustomEvent<Cart | null>).detail));
+  window.addEventListener('cart:open', open);
+  document.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('[data-cart-button]')) open();
+  });
+  document.getElementById('cart-close')!.addEventListener('click', close);
+  shade.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+
+  loadCart();
+</script>
+
+<style>
+  .cart-shade {
+    position: fixed;
+    inset: 0;
+    background: rgba(33, 23, 12, 0.35);
+    z-index: 200;
+  }
+  .cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(420px, 100vw);
+    background: var(--paper) var(--grain);
+    border-left: var(--line);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(105%);
+    transition: transform 0.3s ease;
+    visibility: hidden;
+  }
+  .cart.open {
+    transform: none;
+    visibility: visible;
+  }
+  .cart-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: var(--line);
+  }
+  .cart-head :global(.cart-kar) {
+    width: 64px;
+    height: auto;
+  }
+  .cart-head h2 {
+    font-size: 1.7rem;
+    margin: 0;
+    flex: 1;
+  }
+  .cart-close {
+    font: inherit;
+    font-size: 2rem;
+    line-height: 1;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .cart-lines {
+    list-style: none;
+    margin: 0;
+    padding: 6px 20px;
+    overflow: auto;
+    flex: 1;
+  }
+  .cart-lines :global(li) {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    grid-template-areas: 'img info price' 'img qty qty';
+    gap: 6px 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  .cart-lines :global(li.busy) {
+    opacity: 0.5;
+  }
+  .cart-lines :global(img),
+  .cart-lines :global(.ph) {
+    grid-area: img;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--ink);
+    background: var(--paper-light);
+  }
+  .cart-lines :global(.info) {
+    grid-area: info;
+    display: grid;
+    gap: 2px;
+  }
+  .cart-lines :global(.info small) {
+    color: var(--ink-soft);
+  }
+  .cart-lines :global(details) {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .cart-lines :global(dl) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 8px;
+    margin: 6px 0 0;
+  }
+  .cart-lines :global(dd) {
+    margin: 0;
+  }
+  .cart-lines :global(.qty) {
+    grid-area: qty;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cart-lines :global(.qty button) {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    background: var(--paper-light);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cart-lines :global(.price) {
+    grid-area: price;
+    font-family: var(--font-display);
+    font-weight: 650;
+  }
+  .cart-empty {
+    padding: 24px 20px;
+    color: var(--ink-soft);
+  }
+  .cart-foot {
+    padding: 18px 20px 22px;
+    border-top: var(--line);
+    background: var(--paper-light);
+  }
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin: 0 0 6px;
+  }
+  .cart-note {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+  .cart-checkout {
+    display: block;
+    text-align: center;
+  }
+</style>
