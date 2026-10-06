@@ -1,0 +1,297 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+
+import rodeDeur from '../assets/foto/rode-deur.jpg';
+import binnenkoer from '../assets/foto/binnenkoer.jpg';
+import toast from '../assets/foto/historische-toast.jpg';
+import signs from '../assets/foto/signs-photo.jpg';
+import ketel from '../assets/foto/terras-ketel.jpg';
+import arGroep from '../assets/archief/groep-proost.jpg';
+import arRoerkuip from '../assets/archief/roerkuip-toen.jpg';
+import arKrant from '../assets/archief/krant-1990.jpg';
+import arKleur from '../assets/archief/roerkuip-kleur.jpg';
+import arBrouwer from '../assets/archief/brouwer-jaren80.jpg';
+import arNatStraf from '../assets/archief/krant-nat-en-straf.jpg';
+import arGevel from '../assets/archief/gevel-toen.jpg';
+import arPlateaus from '../assets/archief/plateaus.jpg';
+import arTractor from '../assets/archief/mout-tractor.jpg';
+import arKinderen from '../assets/archief/kinderen-roerkuip.jpg';
+import arJasje from '../assets/archief/oerbier-jasje.jpg';
+import arKoelschip from '../assets/archief/krant-koelschip.jpg';
+import arBak from '../assets/archief/oerbierbak.jpg';
+import arBezoek from '../assets/archief/bezoek-toen.jpg';
+import affOerbier from '../assets/affiches/oerbier.jpg';
+import affArabier from '../assets/affiches/arabier.jpg';
+import affBoskeun from '../assets/affiches/boskeun.jpg';
+import affTeve from '../assets/affiches/dulle-teve.jpg';
+import affNacht from '../assets/affiches/stille-nacht.jpg';
+
+const history = [
+  { year: '1835', text: 'Dokter Louis Nevejan sticht in Esen een brouwerij met stokerij. Het dorp telt er toen zes.' },
+  { year: '1882', text: 'De familie Costenoble neemt over en brouwt er drie generaties lang. Begin jaren 80 valt de brouwerij stil.' },
+  {
+    year: "'70",
+    text: 'Fietsclubje “De Dolle Dravers”: de broers Jo en Kris Herteleer, Dirk Coussée en Bernard Veranneman. Ze kennen elke helling, en elk café.',
+  },
+  { year: '1980', text: 'Na proeven in de wastobbe nemen ze de lege brouwerij over. Op 11 november brouwen ze het eerste Oerbier.' },
+  { year: '1998', text: 'Kris legt het eerste Oerbier te slapen in oude sherryvaten. De Reserva is geboren.' },
+  { year: 'Nu', text: 'Zo’n 1.200 hectoliter per jaar. Klein genoeg om alles zelf in het oog te houden.' },
+];
+
+const affiches = [
+  { src: affOerbier, alt: 'Affiche van Oerbier', tilt: -4 },
+  { src: affArabier, alt: 'Affiche van Arabier', tilt: 3 },
+  { src: affTeve, alt: 'Affiche van Dulle Teve', tilt: -2 },
+  { src: affBoskeun, alt: 'Affiche van Boskeun', tilt: 4 },
+  { src: affNacht, alt: 'Affiche van Stille Nacht', tilt: -3 },
+];
+
+---
+
+<Base
+  title="Ons verhaal | De Dolle Brouwers, sinds 1980 in Esen"
+  description="Van fietsclub tot brouwerij: het verhaal van De Dolle Brouwers in Esen sinds 1980, met oude foto's uit het album en de affiches van Kris Herteleer."
+>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://www.oerbier.be/verhaal" />
+    <meta property="og:title" content="Ons verhaal | De Dolle Brouwers" />
+    <meta property="og:locale" content="nl_BE" />
+  </Fragment>
+
+  <!-- VERHAAL -->
+  <section class="section story" id="verhaal">
+    <div class="wrap">
+      <div class="story-top">
+        <div>
+          <h1>Van fietsclub tot brouwerij.</h1>
+          <p class="lead">
+            De naam komt van de buurt. Toen een paar vrienden zonder ervaring een leegstaande brouwerij kochten, noemden ze hen
+            gewoon “de dolle brouwers”. Die koppigheid zit nog altijd in elk bier.
+          </p>
+        </div>
+        <Polaroid src={toast} alt="Zwart-witfoto van de eerste Dolle Brouwers die klinken" caption="Nat en straf, van bij het begin" tilt={-3} ratio="7 / 5" taped />
+      </div>
+
+      <ol class="timeline">
+        {
+          history.map((h) => (
+            <li>
+              <span class="year">{h.year}</span>
+              <p>{h.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="story-photos">
+        <Polaroid src={binnenkoer} alt="Doorkijk naar de binnenkoer van de brouwerij" tilt={-3} ratio="3 / 4" />
+        <Polaroid src={signs} alt="Oude metalen uithangborden in de brouwerij" caption="De originele uithangborden" tilt={2} ratio="3 / 4" />
+        <Polaroid src={rodeDeur} alt="Rode deur in een witte muur met hop" tilt={-2} ratio="3 / 4" />
+        <Polaroid src={ketel} alt="Oude brouwketel op het terras" tilt={3} ratio="3 / 4" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOTOALBUM -->
+  <section class="section album">
+    <div class="wrap">
+      <h2>Uit het fotoalbum.</h2>
+      <div class="album-grid">
+        {
+          [
+            { src: arGroep, alt: 'Een volle Oerbar, jaren 80', tilt: -2, r: '4 / 3' },
+            { src: arRoerkuip, alt: 'Brouwers bij de roerkuip, zwart-wit', tilt: 2, r: '4 / 3' },
+            { src: arKrant, alt: 'Krantenknipsel van 20 april 1990 met een baby en een fles Oerbier', caption: '20 april 1990', tilt: -1.5, r: '3 / 4' },
+            { src: arKleur, alt: 'Twee brouwers bij roerkuip nr. 1 van 34,83 hl', tilt: 1.5, r: '4 / 3' },
+            { src: arBrouwer, alt: 'Een jonge brouwer aan het werk in de brouwerij', tilt: -2.5, r: '3 / 4' },
+            { src: arNatStraf, alt: 'Krantenknipsel over het nieuwe bier Nat en Straf', tilt: 2, r: '4 / 3' },
+            { src: arGevel, alt: 'De gevel met het smiley-mannetje, jaren geleden', tilt: -1, r: '4 / 3' },
+            { src: arPlateaus, alt: 'Drie mensen met plateaus vol glazen Oerbier', tilt: 2.5, r: '4 / 3' },
+            { src: arTractor, alt: 'Mout wordt van een tractor in de brouwerij gelost', tilt: -2, r: '3 / 4' },
+            { src: arKinderen, alt: 'Kinderen in Oerbier-shirts aan de roerkuip', tilt: 1.5, r: '4 / 3' },
+            { src: arJasje, alt: 'Een man in een jasje vol Oerbier-opdruk aan de toog', tilt: -1.5, r: '3 / 4' },
+            { src: arKoelschip, alt: 'Krantenknipsel met het koelschip en de roerkuip', tilt: 2, r: '4 / 3' },
+            { src: arBak, alt: 'Een vrouw met een bak Oerbier voor een huis', tilt: -2, r: '3 / 4' },
+            { src: arBezoek, alt: 'Bezoekers aan de rode deur van de brouwerij', tilt: 1, r: '4 / 3' },
+          ].map((p) => <Polaroid src={p.src} alt={p.alt} caption={p.caption} tilt={p.tilt} ratio={p.r} width={600} />)
+        }
+      </div>
+    </div>
+  </section>
+
+
+  <!-- AFFICHES -->
+  <section class="section posters">
+    <div class="wrap">
+      <div class="posters-head">
+        <h2>Alles met de hand getekend.</h2>
+        <p class="lead">
+          Etiketten, affiches, mannetjes: Kris Herteleer tekent ze sinds het begin zelf. Daarom herken je een De Dolle Brouwers-biertje van ver.
+        </p>
+      </div>
+      <div class="poster-row">
+        {
+          affiches.map((a) => (
+            <figure class="poster" style={`--tilt:${a.tilt}deg`}>
+              <Image src={a.src} alt={a.alt} width={420} />
+            </figure>
+          ))
+        }
+      </div>
+      <p class="posters-more">
+        <a class="btn light" href="https://krisherteleer.com" target="_blank" rel="noopener">Meer werk van Kris ↗</a>
+      </p>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  /* STORY */
+  .story {
+    background: var(--paper-deep) var(--grain);
+  }
+  .story-top {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+    margin-bottom: 60px;
+  }
+  .story-top h1 {
+    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  }
+  .story-top h1,
+  .story-top h2 {
+    margin-bottom: 20px;
+  }
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 70px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    border-top: 3px dashed var(--ink);
+  }
+  .timeline li {
+    position: relative;
+  }
+  .year {
+    display: inline-grid;
+    place-items: center;
+    min-width: 58px;
+    height: 58px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--yellow);
+    border: var(--line);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+  }
+  .timeline p {
+    font-size: 0.98rem;
+  }
+  .story-photos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  /* ALBUM */
+  .album {
+    background: #2a2118 var(--grain);
+    color: var(--paper);
+  }
+  .album h2 {
+    margin-bottom: 50px;
+  }
+  .album-grid {
+    columns: 4 220px;
+    column-gap: 26px;
+  }
+  .album-grid :global(.polaroid) {
+    break-inside: avoid;
+    margin-bottom: 30px;
+  }
+
+  /* POSTERS */
+  .posters-head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px;
+  }
+  .posters-head h2 {
+    margin-bottom: 18px;
+  }
+  .posters-head .lead {
+    margin: 0 auto;
+  }
+  .poster-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    align-items: center;
+  }
+  .poster {
+    margin: 0;
+    border: var(--line);
+    box-shadow: var(--shadow);
+    transform: rotate(var(--tilt));
+    transition: transform 0.2s ease;
+    background: #fff;
+  }
+  .poster:hover {
+    transform: rotate(0) scale(1.06);
+    z-index: 2;
+  }
+  .poster :global(img) {
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+  }
+  .posters-more {
+    text-align: center;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 1000px) {
+    .story-top {
+      grid-template-columns: 1fr;
+    }
+    .timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .timeline::before {
+      display: none;
+    }
+    .story-photos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .poster-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+    .poster-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

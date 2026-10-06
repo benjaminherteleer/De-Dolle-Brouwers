@@ -1,0 +1,164 @@
+---
+import { Image } from 'astro:assets';
+import truien from '../assets/foto/shop-truien.jpg';
+import tshirt from '../assets/foto/shop-tshirt.jpg';
+import hoodie from '../assets/foto/shop-hoodie.jpg';
+import oerbierman from '../assets/foto/shop-oerbierman.jpg';
+import oerbiermanNaam from '../assets/foto/shop-oerbierman-naam.jpg';
+import borden from '../assets/foto/shop-borden.jpg';
+
+interface Props {
+  /** On the shop page itself the heading is the page title. */
+  page?: boolean;
+}
+const { page = false } = Astro.props;
+---
+
+  <section class="section shop" id="shop">
+    <div class="wrap">
+      <div class="shop-head">
+        {page ? <h1>Oershop.</h1> : <h2>Oershop.</h2>}
+        <p class="lead">
+          Truien, T-shirts, het Oerbier-mannetje en metalen borden met de bende erop. Te koop in de Oerbar, of mail naar{' '}
+          <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
+        </p>
+      </div>
+      <div class="shop-grid">
+        <figure class="shop-item">
+          <Image src={truien} alt="Zwarte en grijze truien van De Dolle Brouwers aan een groen paneel" width={700} />
+          <figcaption><b>Crewneck</b><span>€50</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={tshirt} alt="Wit T-shirt met de bende van De Dolle Brouwers op de toog" width={700} />
+          <figcaption><b>T-shirt</b><span>€20</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={hoodie} alt="Rugkant van een zwarte trui met het De Dolle Brouwers-logo in goud" width={700} />
+          <figcaption><b>Trui</b><span>€50 · met rits €60</span></figcaption>
+        </figure>
+        <figure class="shop-item">
+          <Image src={oerbierman} alt="Het gele Oerbier-mannetje als beeldje" width={700} />
+          <figcaption><b>Oerbier-mannetje</b><span>€60</span></figcaption>
+        </figure>
+        <a class="shop-item shop-link" href="/oerbier-mannetje">
+          <Image src={oerbiermanNaam} alt="Een gepersonaliseerd Oerbier-mannetje met een naam op de sjerp" width={700} />
+          <span class="cap"><b>Stel je eigen mannetje samen →</b><span>€90</span></span>
+        </a>
+        <figure class="shop-item">
+          <Image src={borden} alt="Metalen borden van Boskeun, Arabier, Stille Nacht, Oerbier en Dulle Teve" width={700} />
+          <figcaption class="signs">
+            <span class="row"><b>Metalen borden</b><span>€20</span></span>
+            <span class="list">Oerbier wit · Arabier · Boskeun · Dulle Teve · Stille Nacht · <s>Oerbier zwart</s> uitverkocht</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+
+<style>
+  /* OERSHOP */
+  .shop {
+    padding-bottom: 40px;
+  }
+  .shop-head {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 20px 60px;
+    align-items: end;
+    margin-bottom: 40px;
+  }
+  .shop-head .lead {
+    margin: 0;
+  }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  .shop-item {
+    margin: 0;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .shop-item :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .shop-item:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .shop-item figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+  }
+  .shop-item figcaption span {
+    font-style: italic;
+  }
+  .shop-item figcaption.signs {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .shop-item .signs .row {
+    display: flex;
+    justify-content: space-between;
+    font-style: normal;
+  }
+  .shop-link {
+    display: block;
+    text-decoration: none;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .shop-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .shop-link .cap {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 18px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+    background: var(--yellow);
+  }
+  .shop-link .cap > span {
+    font-style: italic;
+  }
+  .shop-item .signs .list {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .shop-item .signs s {
+    text-decoration-thickness: 2px;
+  }
+
+  .shop-head h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+  }
+  @media (max-width: 980px) {
+    .shop-head {
+      grid-template-columns: 1fr;
+    }
+    .shop-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .shop-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

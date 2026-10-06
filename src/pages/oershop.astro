@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Shop from '../components/Shop.astro';
+---
+
+<Base
+  title="Oershop | Truien, T-shirts, het Oerbier-mannetje en metalen borden | De Dolle Brouwers"
+  description="Merch van De Dolle Brouwers: T-shirts, crewnecks, truien, het Oerbier-mannetje (ook gepersonaliseerd) en metalen borden. Te koop in de Oerbar in Esen of via mail."
+>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://www.oerbier.be/oershop" />
+    <meta property="og:title" content="Oershop | De Dolle Brouwers" />
+    <meta property="og:locale" content="nl_BE" />
+  </Fragment>
+  <Shop page />
+</Base>
