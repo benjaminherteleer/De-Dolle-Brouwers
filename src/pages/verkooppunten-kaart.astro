@@ -2,9 +2,10 @@
 import Base from '../layouts/Base.astro';
 import VerkoopKaart from '../components/VerkoopKaart.astro';
 import Polaroid from '../components/Polaroid.astro';
-import places from '../data/verkooppunten.json';
+import { getPlaces } from '../lib/verkooppunten';
 import flesHop from '../assets/foto/fles-hop.jpg';
 
+const places = await getPlaces();
 const countries = new Set(places.map((p) => p.country)).size;
 ---
 
@@ -162,7 +163,6 @@ const countries = new Set(places.map((p) => p.country)).size;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (field('_honey').value) return;
     const v = (n: string) => field(n).value.trim();
     const [city = '', country = ''] = v('plaats').split(',').map((x) => x.trim());
     const entry = {
@@ -171,25 +171,20 @@ const countries = new Set(places.map((p) => p.country)).size;
       country: v('land') || country,
       lat: +v('lat') || null,
       lng: +v('lng') || null,
+      honey: v('_honey'),
     };
     const button = form.querySelector('button')!;
     button.disabled = true;
     status.textContent = 'Even versturen…';
     try {
-      const res = await fetch('https://formsubmit.co/ajax/info@dedollebrouwers.be', {
+      const res = await fetch('/api/tip', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          _subject: `Verkooppunt-tip: ${v('naam')}`,
-          _template: 'table',
-          _captcha: 'false',
-          Cafe: v('naam'),
-          Plaats: v('plaats'),
-          Kaart: entry.lat ? `https://www.openstreetmap.org/?mlat=${entry.lat}&mlon=${entry.lng}#map=18/${entry.lat}/${entry.lng}` : 'geen locatie gekozen',
-          Opmerking: (form.elements.namedItem('opmerking') as HTMLTextAreaElement).value || '-',
-          'Doorgegeven door': v('jij') || '-',
-          email: v('email') || undefined,
-          'Regel voor de kaart (na akkoord)': JSON.stringify(entry),
+          ...entry,
+          note: (form.elements.namedItem('opmerking') as HTMLTextAreaElement).value,
+          from: v('jij'),
+          email: v('email'),
         }),
       });
       if (!res.ok) throw new Error(String(res.status));

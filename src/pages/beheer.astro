@@ -1,0 +1,241 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Beheer | Café-tips">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <section class="section">
+    <div class="wrap">
+      <h1>Café-tips</h1>
+      <p class="lead">Tips van bezoekers voor de verkooppuntenkaart. Goedgekeurde cafés staan een paar minuten later op de kaart.</p>
+
+      <form id="login" class="card login">
+        <label>Wachtwoord<input type="password" name="pw" required autocomplete="current-password" /></label>
+        <button class="btn" type="submit">Open</button>
+        <p class="msg" id="login-msg" role="status"></p>
+      </form>
+
+      <div id="lijsten" hidden>
+        <h2>Wachten op akkoord <span id="n-pending"></span></h2>
+        <div id="pending" class="tips"></div>
+        <h2>Al goedgekeurd <span id="n-approved"></span></h2>
+        <ul id="approved" class="approved"></ul>
+        <p class="msg" id="msg" role="status"></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  type Tip = {
+    id: string; name: string; city: string; country: string; lat: number | null; lng: number | null;
+    note: string; from: string; email: string; at: string;
+  };
+  const KEY = 'beheer-pw';
+  const login = document.getElementById('login') as HTMLFormElement;
+  const loginMsg = document.getElementById('login-msg')!;
+  const lijsten = document.getElementById('lijsten')!;
+  const pendingEl = document.getElementById('pending')!;
+  const approvedEl = document.getElementById('approved')!;
+  const msg = document.getElementById('msg')!;
+
+  let pw = '';
+  try {
+    pw = sessionStorage.getItem(KEY) || '';
+  } catch {}
+
+  const api = (init?: RequestInit) =>
+    fetch('/api/beheer', { ...init, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${pw}` } });
+
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const date = (iso: string) => new Date(iso).toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+  const osm = (t: Tip) => `https://www.openstreetmap.org/?mlat=${t.lat}&mlon=${t.lng}#map=17/${t.lat}/${t.lng}`;
+
+  const card = (t: Tip) => `
+    <article class="card tip" data-id="${esc(t.id)}">
+      <div class="fields">
+        <label>Naam<input name="name" value="${esc(t.name)}" /></label>
+        <label>Stad<input name="city" value="${esc(t.city)}" /></label>
+        <label>Land<input name="country" value="${esc(t.country)}" /></label>
+        <label>Breedte<input name="lat" value="${esc(t.lat ?? '')}" inputmode="decimal" /></label>
+        <label>Lengte<input name="lng" value="${esc(t.lng ?? '')}" inputmode="decimal" /></label>
+      </div>
+      <p class="meta">
+        ${t.lat ? `<a href="${osm(t)}" target="_blank" rel="noopener">Bekijk op de kaart ↗</a> · ` : '<b>Geen locatie: vul breedte en lengte in.</b> · '}
+        ${date(t.at)}${t.from ? ` · van ${esc(t.from)}` : ''}${t.email ? ` (<a href="mailto:${esc(t.email)}">${esc(t.email)}</a>)` : ''}
+      </p>
+      ${t.note ? `<p class="note">“${esc(t.note)}”</p>` : ''}
+      <div class="actions">
+        <button class="btn" data-action="ok">Goedkeuren</button>
+        <button class="btn light" data-action="nee">Weigeren</button>
+      </div>
+    </article>`;
+
+  const load = async () => {
+    const res = await api();
+    if (res.status === 401) {
+      try { sessionStorage.removeItem(KEY); } catch {}
+      login.hidden = false;
+      lijsten.hidden = true;
+      loginMsg.textContent = 'Fout wachtwoord.';
+      return;
+    }
+    if (!res.ok) {
+      loginMsg.textContent = 'De beheerpagina is nog niet ingesteld in Vercel.';
+      return;
+    }
+    const { pending, approved } = (await res.json()) as { pending: Tip[]; approved: Tip[] };
+    login.hidden = true;
+    lijsten.hidden = false;
+    document.getElementById('n-pending')!.textContent = `(${pending.length})`;
+    document.getElementById('n-approved')!.textContent = `(${approved.length})`;
+    pendingEl.innerHTML = pending.length ? pending.map(card).join('') : '<p class="empty">Geen nieuwe tips.</p>';
+    approvedEl.innerHTML = approved.length
+      ? approved
+          .map((t) => `<li><span><b>${esc(t.name)}</b>, ${esc(t.city)}, ${esc(t.country)}</span><button class="link" data-id="${esc(t.id)}">Haal van de kaart</button></li>`)
+          .join('')
+      : '<li class="empty">Nog niets.</li>';
+  };
+
+  const act = async (id: string, action: string, place?: object) => {
+    msg.textContent = 'Even bezig…';
+    const res = await api({ method: 'POST', body: JSON.stringify({ id, action, place }) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      msg.textContent = data.error || 'Dat lukte niet.';
+      return;
+    }
+    msg.textContent =
+      action === 'nee' ? 'Tip geweigerd.' : data.rebuilt ? 'Opgeslagen. De kaart is binnen een paar minuten bijgewerkt.' : 'Opgeslagen. De kaart wordt bijgewerkt bij de volgende update van de site.';
+    load();
+  };
+
+  pendingEl.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('button');
+    if (!btn) return;
+    const tip = btn.closest('.tip') as HTMLElement;
+    const val = (n: string) => (tip.querySelector(`[name=${n}]`) as HTMLInputElement).value.trim();
+    const place = { name: val('name'), city: val('city'), country: val('country'), lat: parseFloat(val('lat').replace(',', '.')), lng: parseFloat(val('lng').replace(',', '.')) };
+    if (btn.dataset.action === 'ok' && (!Number.isFinite(place.lat) || !Number.isFinite(place.lng))) {
+      msg.textContent = 'Vul eerst breedte en lengte in (bv. van Google Maps).';
+      return;
+    }
+    act(tip.dataset.id!, btn.dataset.action!, place);
+  });
+  approvedEl.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('button');
+    if (btn && confirm('Dit café van de kaart halen?')) act(btn.dataset.id!, 'verwijder');
+  });
+
+  login.addEventListener('submit', (e) => {
+    e.preventDefault();
+    pw = (login.elements.namedItem('pw') as HTMLInputElement).value;
+    try { sessionStorage.setItem(KEY, pw); } catch {}
+    loginMsg.textContent = '';
+    load();
+  });
+
+  if (pw) load();
+</script>
+
+<style>
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 1.6rem;
+    margin: 40px 0 16px;
+  }
+  h2 span {
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  .login {
+    max-width: 420px;
+    display: grid;
+    gap: 14px;
+    margin-top: 30px;
+  }
+  .login[hidden] {
+    display: none;
+  }
+  label,
+  .tips :global(label) {
+    display: grid;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  input,
+  .tips :global(input) {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.55em 0.8em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+    min-width: 0;
+  }
+  .tips {
+    display: grid;
+    gap: 18px;
+  }
+  .tips :global(.tip) {
+    display: grid;
+    gap: 12px;
+  }
+  .tips :global(.fields) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .tips :global(.meta),
+  .tips :global(.note) {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .tips :global(.note) {
+    font-style: italic;
+    color: var(--ink);
+  }
+  .tips :global(.actions) {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .approved {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .approved :global(li) {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  .approved :global(.link) {
+    font: inherit;
+    font-size: 0.85rem;
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+  :global(.empty) {
+    color: var(--ink-soft);
+  }
+  .msg {
+    font-weight: 600;
+    min-height: 1.4em;
+  }
+</style>

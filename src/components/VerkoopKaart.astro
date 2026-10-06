@@ -7,9 +7,10 @@ import { getImage } from 'astro:assets';
 import world from 'world-atlas/countries-50m.json';
 import worldLight from 'world-atlas/countries-110m.json';
 import { geoCentroid } from 'd3-geo';
-import places from '../data/verkooppunten.json';
+import { getPlaces } from '../lib/verkooppunten';
 import mascot from '../assets/logo/logo-full.png';
 
+const places = await getPlaces();
 const W = 1200;
 const H = 640;
 const ESEN: [number, number] = [2.9032, 51.0279];
