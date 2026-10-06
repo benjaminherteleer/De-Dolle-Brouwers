@@ -23,6 +23,21 @@ import vaten from '../assets/foto/vaten-rij.jpg';
 import flesHop from '../assets/foto/fles-hop.jpg';
 import mascot from '../assets/logo/logo-full.png';
 import reservaLogo from '../assets/logo/reserva-logo.png';
+import valArabier from '../assets/bieren/arabier.png';
+import valBoskeun from '../assets/bieren/boskeun.png';
+import valTeve from '../assets/bieren/dulle-teve.png';
+import valNacht from '../assets/bieren/stille-nacht.png';
+import valHoop from '../assets/bieren/dehoop-logo.png';
+import vliegtuig from '../assets/bieren/oeral-vliegtuig.png';
+
+// The Oeral plane flies over once and drops the bende next to the Oerbier-mannetje.
+const bende = [
+  { src: valArabier, slug: 'arabier' },
+  { src: valNacht, slug: 'stille-nacht' },
+  { src: valBoskeun, slug: 'boskeun' },
+  { src: valTeve, slug: 'dulle-teve' },
+  { src: valHoop, slug: 'lichtervelds-blond' },
+];
 
 
 
@@ -74,6 +89,9 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
 
   <!-- HERO -->
   <section class="hero">
+    <div class="sky" aria-hidden="true">
+      <Image src={vliegtuig} alt="" width={440} class="vliegtuig" loading="eager" />
+    </div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="hand hero-note">Esen, West-Vlaanderen ↘</p>
@@ -108,8 +126,34 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
           loading="eager"
           class="c-proost"
         />
-        <Image src={mascot} alt="Het Oerbier-mannetje met brouwersvork en glas" width={360} class="c-mascot" loading="eager" />
         <Stamp class="c-stamp" size={136} />
+        <div class="bende-rij" id="bende-rij">
+          <span class="gastheer">
+            <Image src={mascot} alt="Het Oerbier-mannetje met brouwersvork en glas" height={240} class="c-mascot" loading="eager" />
+          </span>
+          {
+            bende.map((b) => (
+              <span class="lid" aria-hidden="true">
+                <span class="val">
+                <svg class="parachute" viewBox="0 0 120 92">
+                  <path d="M60 60 L8 34 M60 60 L36 30 M60 60 L84 30 M60 60 L112 34" stroke="#21170c" stroke-width="2" fill="none" />
+                  <path d="M6 34 Q8 2 60 2 Q112 2 114 34 Q101 25 87 34 Q74 25 60 34 Q46 25 33 34 Q19 25 6 34 Z" fill="#fbfaf5" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
+                  <path d="M33 34 Q35 4 60 2 Q50 10 46 31 Z M87 34 Q85 4 60 2 Q70 10 74 31 Z" fill="#f7b500" />
+                  <path d="M6 34 Q8 2 60 2 Q112 2 114 34 Q101 25 87 34 Q74 25 60 34 Q46 25 33 34 Q19 25 6 34 Z" fill="none" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
+                </svg>
+                <Image src={b.src} alt="" height={240} loading="eager" />
+                </span>
+              </span>
+            ))
+          }
+        </div>
+        <script is:inline>
+          // Hide the bende before first paint when the drop will play (once per visit, not with reduced motion).
+          try {
+            if (!sessionStorage.getItem('bende-geland') && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+              document.getElementById('bende-rij').classList.add('wacht');
+          } catch (e) {}
+        </script>
       </div>
     </div>
     <div class="edge-bottom"></div>
@@ -272,6 +316,78 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
   </section>
 </Base>
 
+<script>
+  // The Oeral plane crosses the hero once; as it passes each spot it drops a member of the bende,
+  // who floats down on a parachute and lands next to the Oerbier-mannetje.
+  const rij = document.getElementById('bende-rij');
+  const plane = document.querySelector<HTMLElement>('.sky .vliegtuig');
+  const sky = document.querySelector<HTMLElement>('.sky');
+
+  const drop = () => {
+    if (!rij || !plane || !sky) return;
+    try {
+      sessionStorage.setItem('bende-geland', '1');
+    } catch {}
+    const skyBox = sky.getBoundingClientRect();
+    const pw = plane.offsetWidth;
+    const flight = 14000;
+    const start = skyBox.width + 20;
+    const end = -pw - 40;
+    plane.style.visibility = 'visible';
+    plane.animate(
+      [
+        { transform: `translateX(${start}px) rotate(-2deg)` },
+        { transform: `translateX(${(start + end) / 2}px) rotate(2deg)` },
+        { transform: `translateX(${end}px) rotate(-2deg)` },
+      ],
+      { duration: flight, easing: 'linear', fill: 'forwards' },
+    ).onfinish = () => (plane.style.visibility = 'hidden');
+
+    const leden = [...rij.querySelectorAll<HTMLElement>('.lid')];
+    leden.forEach((lid) => {
+      const box = lid.getBoundingClientRect();
+      const centre = box.left + box.width / 2 - skyBox.left;
+      // When the cockpit (about a fifth into the plane) is right above this spot
+      const at = ((start - (centre - pw * 0.2)) / (start - end)) * flight;
+      const height = box.top - skyBox.top - plane.offsetHeight * 0.5;
+      const fall = 5600;
+      const chute = lid.querySelector<SVGElement>('.parachute')!;
+      const val = lid.querySelector<HTMLElement>('.val')!;
+      setTimeout(() => {
+        lid.style.visibility = 'visible';
+        val.animate(
+          [
+            { transform: `translateY(${-height}px) rotate(-6deg)`, offset: 0 },
+            { transform: `translateY(${-height * 0.62}px) rotate(7deg)`, offset: 0.3 },
+            { transform: `translateY(${-height * 0.3}px) rotate(-5deg)`, offset: 0.62 },
+            { transform: 'translateY(0) rotate(2deg)', offset: 0.9 },
+            { transform: 'translateY(0) scale(1.06, 0.92)', offset: 0.95 },
+            { transform: 'none', offset: 1 },
+          ],
+          { duration: fall, easing: 'cubic-bezier(.3,.1,.6,1)' },
+        );
+        chute.animate(
+          [
+            { opacity: 0, transform: 'scale(0.3)', offset: 0 },
+            { opacity: 1, transform: 'scale(1)', offset: 0.12 },
+            { opacity: 1, transform: 'scale(1)', offset: 0.86 },
+            { opacity: 0, transform: 'translateY(20px) scale(0.9, 0.3)', offset: 1 },
+          ],
+          { duration: fall + 300, easing: 'ease-out' },
+        );
+      }, at);
+    });
+  };
+
+  if (rij?.classList.contains('wacht')) {
+    rij.querySelectorAll<HTMLElement>('.lid').forEach((l) => (l.style.visibility = 'hidden'));
+    rij.classList.remove('wacht');
+    // Wait until the figures have their size, then a short beat before the plane comes in.
+    const go = () => setTimeout(drop, 600);
+    document.readyState === 'complete' ? go() : addEventListener('load', go, { once: true });
+  }
+</script>
+
 <style>
   /* HERO */
   .hero {
@@ -308,6 +424,8 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
   .hero-collage {
     position: relative;
     min-height: 640px;
+    /* Feet on the bottom edge of the yellow, where the paper tears off */
+    --grond: calc(-1 * clamp(70px, 8vw, 110px) + 4px);
   }
   .hero-collage :global(.c-toast) {
     position: absolute;
@@ -323,12 +441,7 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
     z-index: 1;
   }
   .hero-collage :global(.c-mascot) {
-    position: absolute;
-    width: 30%;
-    left: 0;
-    bottom: -6%;
-    z-index: 2;
-    filter: drop-shadow(4px 6px 0 rgba(33, 23, 12, 0.25));
+    transform-origin: 50% 100%;
     animation: bob 4s ease-in-out infinite;
   }
   .hero-collage :global(.c-stamp) {
@@ -338,8 +451,66 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
   }
   @keyframes bob {
     50% {
-      transform: translateY(-8px) rotate(2deg);
+      transform: rotate(2.5deg);
     }
+  }
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+  }
+  .sky {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .sky :global(.vliegtuig) {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: clamp(190px, 19vw, 280px);
+    height: auto;
+    visibility: hidden;
+    filter: drop-shadow(3px 5px 0 rgba(33, 23, 12, 0.2));
+  }
+  .bende-rij {
+    position: absolute;
+    left: -10%;
+    right: -6%;
+    bottom: var(--grond);
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+  .lid,
+  .gastheer {
+    position: relative;
+    display: block;
+  }
+  .val {
+    display: block;
+  }
+  .lid :global(img),
+  .gastheer :global(img) {
+    display: block;
+    height: clamp(64px, 6.6vw, 100px);
+    width: auto;
+    filter: drop-shadow(3px 5px 0 rgba(33, 23, 12, 0.22));
+  }
+  .parachute {
+    position: absolute;
+    left: 50%;
+    bottom: 78%;
+    width: 140%;
+    translate: -50% 0;
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  .bende-rij.wacht .lid {
+    visibility: hidden;
   }
 
   /* TRADITION */
@@ -687,7 +858,17 @@ import reservaLogo from '../assets/logo/reserva-logo.png';
       aspect-ratio: 1 / 0.95;
       max-width: 560px;
       width: 100%;
-      margin: 0 auto;
+      margin: 0 auto 60px;
+      --grond: -134px;
+    }
+    /* Stacked layout: the bende stands in a row under the photos */
+    .bende-rij {
+      left: 0;
+      right: 0;
+    }
+    .lid :global(img),
+    .gastheer :global(img) {
+      height: clamp(48px, 12vw, 90px);
     }
     .beer-grid {
       grid-template-columns: repeat(2, 1fr);
