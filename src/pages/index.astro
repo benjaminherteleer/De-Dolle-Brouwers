@@ -5,6 +5,7 @@ import Polaroid from '../components/Polaroid.astro';
 import Shop from '../components/Shop.astro';
 import Stamp from '../components/Stamp.astro';
 import BeerFx from '../components/BeerFx.astro';
+import Strik from '../components/Strik.astro';
 import { vast, reserva, abv } from '../lib/bieren';
 
 import toast from '../assets/foto/historische-toast.jpg';
@@ -199,6 +200,7 @@ const bende = [
             <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg`}>
               <a href={`/bieren/${b.slug}`} class="beer fx-host">
                 <span class="beer-art">
+                  {b.strik && <Strik color={b.strik} class="card-strik" />}
                   <BeerFx slug={b.slug} />
                   <Image src={b.art} alt="" width={420} />
                 </span>
@@ -606,6 +608,15 @@ const bende = [
     overflow: hidden;
     container-type: size;
   }
+  .beer-art :global(.card-strik) {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 72px;
+    translate: -50% 0;
+    rotate: -3deg;
+    z-index: 3;
+  }
   .beer-art :global(img) {
     position: absolute;
     inset: 18px;
@@ -860,7 +871,7 @@ const bende = [
       max-width: 560px;
       width: 100%;
       margin: 0 auto 60px;
-      --grond: -134px;
+      --grond: -122px;
     }
     /* Stacked layout: the bende stands in a row under the photos */
     .bende-rij {

@@ -17,7 +17,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Het allereerste bier van de brouwerij, gebrouwen op 11 november 1980. Donker, rond en met een lichte zuurdesem-toets door de toevoeging van melkzuurbacteriën, die het bier zijn typische karakter geven naarmate het rijpt.",
@@ -38,7 +38,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Schenk op 10-12°C in een tulpglas, zodat de aroma's zich rustig kunnen ontplooien."
+        "text": "Schenk op 10-12°C in het Oerbier-glas of een tulpglas, zodat de aroma's zich rustig kunnen ontplooien."
       },
       {
         "label": "Past bij",
@@ -50,7 +50,6 @@
       "Ontstaan als studentenbrouwsel: twee broers brouwden het eerst op kleine schaal thuis, in een koperen wasketel.",
       "Ze namen een verlaten brouwerij over met de gedachte: “als wij ze niet nieuw leven inblazen, doet niemand het.”",
       "Gebrouwen met verschillende mouten, hele Poperingse Goldinghop-bellen en een speciale gist die het bier licht tart maakt, vooral naarmate het ouder wordt.",
-      "Rijpt in de brouwerijkelders bij een constante temperatuur van 8°C.",
       "Na een paar jaar rijping proeft Oerbier bijna alsof het met wijn is versneden.",
       "Hergist op fles — er zit een gistlaagje in met vitamine B.",
       "“Nat en Straf” op de glazen is een waarschuwing voor het stevige alcoholpercentage (9%).",
@@ -78,7 +77,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een hoppig, amberkleurig bier dat opvalt door zijn stevige bitterheid (zo'n 60 IBU) — droog gehopt met hele Nugget-bellen uit Poperinge, voor een uitgesproken, fris-bittere smaak.",
@@ -134,7 +133,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een kerstbier van 12%, zwaar en warmend, gebrouwen voor de koudste maanden van het jaar. Een bier om langzaam van te genieten, bij de haard.",
@@ -197,7 +196,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een van de eerste echte Belgische paasbieren, gebrouwen met honing. Verschijnt elk voorjaar in een beperkte oplage en is doorgaans snel uitverkocht.",
@@ -259,7 +258,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een goudkleurig tripelbier van 10%, gebrouwen met witte kandijsuiker in de ketel. De naam ontstond ooit in de Oerbar, toen een ongeduldige cafébazin haar man aan de telefoon toebeet: \"Weet ge wat gij zijt? Een dulle teve!\" — en de brouwers meteen wisten: naam gevonden, nu nog het bier brouwen.",
@@ -280,7 +279,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 10°C in een tulpglas en geef het bier tijd om op temperatuur te komen."
+        "text": "Serveer op 10°C in het Oerbier-glas of een tulpglas en geef het bier tijd om op temperatuur te komen."
       },
       {
         "label": "Past bij",
@@ -309,7 +308,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een heropgevist bier uit Lichtervelde: oorspronkelijk \"Blonde des Flandres\" van brouwerij De Hoop / Th. Labens, later opnieuw gebrouwen en gebotteld door De Dolle Brouwers in Esen. en goudblond, in de traditie van Scotch Ale en Belgische porter.",
@@ -330,7 +329,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 8-10°C in een tulpglas."
+        "text": "Serveer op 8-10°C in het Oerbier-glas of een tulpglas."
       },
       {
         "label": "Past bij",
@@ -371,7 +370,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Een donkere stout van 9%, gebrouwen met wilde gisten en bacteriën in de traditie van de oorspronkelijke Engelse en Ierse stouts — de tegenpool van de blonde bieren in het gamma.",
@@ -392,7 +391,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 10-12°C in een tulpglas."
+        "text": "Serveer op 10-12°C in het Oerbier-glas of een tulpglas."
       },
       {
         "label": "Past bij",
@@ -430,10 +429,6 @@
       {
         "label": "Stijl",
         "value": "Belgische pale ale"
-      },
-      {
-        "label": "Gisting",
-        "value": "Hoge gisting"
       }
     ],
     "intro": "De meest sessionable pale ale van ons gamma: fris, hoppig en bloemig, met een droge afwerking. Geen jaargebonden brouwsel voor de fles — Oeral schenken we uitsluitend van het vat.",
@@ -488,7 +483,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "De donkere basis van het Oerbier krijgt er na twaalf maanden op rode wijnvat tonen van hout en wijn bij.",
@@ -542,7 +537,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "Extra rond en warmend: de tannines van het rode wijnvat verzwaren de body van de al stevige Dulle Teve.",
@@ -563,7 +558,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 12°C in een tulpglas en geef het de tijd om open te bloeien."
+        "text": "Serveer op 12°C in het Oerbier-glas of een tulpglas en geef het de tijd om open te bloeien."
       },
       {
         "label": "Past bij",
@@ -596,7 +591,7 @@
       },
       {
         "label": "Gisting",
-        "value": "Hoge gisting, hergist op fles"
+        "value": "Hergist op fles"
       }
     ],
     "intro": "De complexe, goudkleurige Stille Nacht krijgt hier een tweede leven: minstens twee jaar op vaten die eerder rode wijn bevatten, tot een dieper, houtiger en licht vineus bier. Geen jaarlijkse editie, maar een release om de paar jaar, telkens met een eigen vatnummer.",

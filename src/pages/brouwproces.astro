@@ -12,6 +12,8 @@ import koelschip from '../assets/foto/bp-koelschip-wort.jpg';
 import koeler from '../assets/foto/bp-koeler.jpg';
 import vergisting from '../assets/foto/bp-gisting.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
+import bottelmachine from '../assets/foto/bp-bottelmachine.jpg';
+import warmeKamer from '../assets/foto/bp-warme-kamer.jpg';
 
 const art = import.meta.glob<{ default: ImageMetadata }>('../assets/brouwproces/stap-*.jpg', { eager: true });
 const stepArt = (n: number) => art[`../assets/brouwproces/stap-${String(n).padStart(2, '0')}.jpg`].default;
@@ -72,10 +74,12 @@ const steps: Step[] = [
     title: 'Bottelen',
     tag: '+ suiker & gist',
     text: 'Voor het bottelen voegen we nog wat suiker en verse gist toe. Dan wordt elke fles gevuld en gekroonkurkt.',
+    photo: { src: bottelmachine, alt: 'De ronde bottelmachine met genummerde vulkranen', caption: 'Onze bottelmachine' },
   },
   {
     title: 'De warme kamer',
     text: 'De bakken gaan naar de warme kamer, waar het bier hergist op de fles. Zo krijgt elk De Dolle Brouwers-biertje zijn natuurlijke prik.',
+    photo: { src: warmeKamer, alt: 'Gestapelde gele Oerbier-bakken vol flessen bij de warme kamer', caption: 'Op weg naar de warme kamer' },
   },
 ];
 ---

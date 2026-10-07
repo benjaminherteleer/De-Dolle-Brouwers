@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import Polaroid from '../../components/Polaroid.astro';
 import Stamp from '../../components/Stamp.astro';
 import BeerFx from '../../components/BeerFx.astro';
+import Strik from '../../components/Strik.astro';
 import { bieren, abv, short, type Bier } from '../../lib/bieren';
 import vaten from '../../assets/foto/vaten-rij.jpg';
 
@@ -54,6 +55,7 @@ const ld = {
             {!b.reserva && <BeerFx slug={b.slug} live />}
             <Image src={b.art} alt={b.alt ?? `${b.name} personage`} width={640} loading="eager" />
           </div>
+          {b.strik && <Strik color={b.strik} class="neck" />}
           <Stamp class="abv" ring={`${b.name} · De Dolle Brouwers · `} center={abv(b)} size={128} />
         </div>
         <div class="copy">
@@ -197,6 +199,16 @@ const ld = {
   }
   .art {
     position: relative;
+  }
+  .art :global(.neck) {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    width: clamp(110px, 14vw, 160px);
+    translate: -50% 0;
+    rotate: -4deg;
+    z-index: 3;
+    filter: drop-shadow(3px 4px 0 rgba(33, 23, 12, 0.25));
   }
   .art-frame {
     background: var(--paper-light);
