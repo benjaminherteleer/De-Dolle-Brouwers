@@ -418,7 +418,7 @@
     "slug": "oeral",
     "name": "Oeral",
     "title": "Oeral — Pale ale van De Dolle Brouwers, enkel op vat | Esen, West-Vlaanderen",
-    "description": "Oeral (6%) is de hoppige, bloemige pale ale van De Dolle Brouwers uit Esen, West-Vlaanderen — enkel op vat verkrijgbaar in de Oerbar, niet op fles of in blik.",
+    "description": "Oeral (6%) is de hoppige, bloemige pale ale van De Dolle Brouwers uit Esen, West-Vlaanderen — enkel op vat verkrijgbaar in de Oerbar, niet op fles.",
     "alt": null,
     "kicker": "Enkel van het vat",
     "meta": [
@@ -457,11 +457,11 @@
       }
     ],
     "weetjes": [
-      "Oeral is het enige bier in ons gamma dat we niet bottelen of blikken — het is puur voor de Oerbar en de tap.",
+      "Oeral is het enige bier in ons gamma dat we niet bottelen — het is puur voor de Oerbar en de tap.",
       "Op Untappd en BeerAdvocate staat het te boek als een \"Belgian Pale Ale\", geprezen om zijn florale en kruidige complexiteit ondanks het bescheiden alcoholpercentage.",
       "Vroeger verscheen Oeral wel af en toe in beperkte, gedateerde botteling (zogenaamde \"vintages\"), maar vandaag schenken we het uitsluitend vers van het vat."
     ],
-    "badge": "Enkel op vat — niet op fles of in blik",
+    "badge": "Enkel op vat, niet op fles",
     "reserva": false,
     "tagline": "Pale ale, enkel van het vat te verkrijgen."
   },

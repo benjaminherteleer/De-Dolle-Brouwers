@@ -24,16 +24,15 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
 {
   kind === 'boskeun' && (
     <div class:list={['scene', { live }]} aria-hidden="true">
-      <svg class="pot" viewBox="0 0 120 120">
-        <!-- honey pot on the grass, with a dipper and a run of honey -->
-        <path d="M22 44 Q14 44 14 56 V96 Q14 112 34 112 H86 Q106 112 106 96 V56 Q106 44 98 44 Z" fill="#c9852a" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
-        <path d="M22 44 H98 Q100 50 92 52 Q84 56 80 52 Q76 64 70 52 Q60 56 52 52 Q46 60 40 52 Q30 56 22 50 Z" fill="#e9a93a" stroke="#21170c" stroke-width="2.5" stroke-linejoin="round" />
-        <rect x="16" y="32" width="88" height="16" rx="6" fill="#8a5a2b" stroke="#21170c" stroke-width="3" />
-        <path d="M18 32 Q60 18 102 32" fill="none" stroke="#21170c" stroke-width="3" />
-        <rect x="32" y="66" width="56" height="26" rx="6" fill="#fbf5ea" stroke="#21170c" stroke-width="2.5" />
-        <text x="60" y="84" text-anchor="middle" font-size="13" font-weight="700" font-style="italic" fill="#21170c" style="font-family: var(--font-display)">honing</text>
-        <path d="M76 8 L64 40" stroke="#8a5a2b" stroke-width="5" stroke-linecap="round" />
-        <ellipse cx="62" cy="44" rx="8" ry="5" fill="#e9a93a" stroke="#21170c" stroke-width="2.5" />
+      <svg class="drip" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path
+          d="M0 0 H200 V10 C192 10 190 14 190 22 C190 30 182 30 182 22 C182 14 176 12 168 12 C150 12 150 18 148 26 C146 36 136 36 136 26 C136 16 128 12 112 12 C96 12 94 16 92 20 C90 28 82 28 82 20 C82 14 72 11 60 11 C46 11 44 18 42 30 C40 40 30 40 30 30 C30 18 22 12 12 12 C4 12 0 14 0 14 Z"
+          fill="#e9a93a"
+          stroke="#21170c"
+          stroke-width="2"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"
+        />
       </svg>
       <svg class="grass" viewBox="0 0 200 40" preserveAspectRatio="none">
         <path
@@ -209,11 +208,9 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
     left: 0;
     width: 100%;
   }
-  .scene :global(.pot) {
-    left: 7%;
-    bottom: 7%;
-    width: 26%;
-    rotate: -6deg;
+  .scene :global(.drip) {
+    top: 0;
+    height: 18%;
   }
   .scene :global(.grass) {
     bottom: 0;

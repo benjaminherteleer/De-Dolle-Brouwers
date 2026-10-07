@@ -14,6 +14,7 @@ import vergisting from '../assets/foto/bp-gisting.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
 import bottelmachine from '../assets/foto/bp-bottelmachine.jpg';
 import warmeKamer from '../assets/foto/bp-warme-kamer.jpg';
+import lagertanks from '../assets/foto/bp-lagertanks.jpg';
 
 const art = import.meta.glob<{ default: ImageMetadata }>('../assets/brouwproces/stap-*.jpg', { eager: true });
 const stepArt = (n: number) => art[`../assets/brouwproces/stap-${String(n).padStart(2, '0')}.jpg`].default;
@@ -69,6 +70,7 @@ const steps: Step[] = [
     title: 'Rijpen',
     tag: '4° · 2 maanden',
     text: 'Na de gisting rust het bier minstens twee maanden in de lagertanks, op 4 °C. We nemen onze tijd: daar ronden de smaken af.',
+    photo: { src: lagertanks, alt: 'Stalen lagertanks met ladders in de brouwerij' },
   },
   {
     title: 'Bottelen',
