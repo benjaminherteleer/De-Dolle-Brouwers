@@ -31,5 +31,5 @@ export const shopifyImage = (url: string, width: number) => `${url}${url.include
 
 /** Which gallery photo (0-based) belongs to an option value, so picking a design shows that design. */
 export const variantPhotos: Record<string, Record<string, number>> = {
-  'metalen-bord': { Oerbier: 6, Arabier: 2, Boskeun: 3, 'Dulle Teve': 4, 'Stille Nacht': 5, Stout: 9, 'Oerbier rotstekening': 9 },
+  'metalen-bord': { Oerbier: 5, Arabier: 1, Boskeun: 2, 'Dulle Teve': 3, 'Stille Nacht': 4, Stout: 8, 'Oerbier rotstekening': 8 },
 };
