@@ -3,7 +3,7 @@ import { euro, type Product } from './shopify';
 
 /** The personalised figurine is ordered through the maker page, not a product page. */
 export const CUSTOM = 'oerbier-mannetje-op-maat';
-const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord'];
+const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord', 'oerbier-glas-charente', 'oeral-glas', 'oerbier-glas-klein'];
 
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
