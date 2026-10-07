@@ -4,6 +4,8 @@ import data from '../data/bieren.json';
 export type Bier = (typeof data)[number] & {
   art: ImageMetadata;
   poster?: ImageMetadata;
+  /** Studio photo of the bottle with a filled glass. */
+  fles?: ImageMetadata;
   color: string;
   onColor: string;
   /** Colour of the polka-dot bow on the bottle neck, where the beer has one. */
@@ -11,6 +13,7 @@ export type Bier = (typeof data)[number] & {
 };
 
 const art = import.meta.glob<{ default: ImageMetadata }>('../assets/bieren/*.png', { eager: true });
+const flessen = import.meta.glob<{ default: ImageMetadata }>('../assets/flessen/*.jpg', { eager: true });
 const posters = import.meta.glob<{ default: ImageMetadata }>('../assets/affiches/*.jpg', { eager: true });
 const pick = (map: typeof art, file: string) => map[file]?.default;
 
@@ -38,6 +41,7 @@ export const bieren: Bier[] = data.map((b) => {
     color: l.color,
     onColor: l.onColor ?? '#21170c',
     strik: l.strik,
+    fles: b.reserva ? undefined : pick(flessen, `../assets/flessen/${b.slug}.jpg`),
   };
 });
 

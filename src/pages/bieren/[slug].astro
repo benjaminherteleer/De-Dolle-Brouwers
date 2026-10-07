@@ -85,8 +85,15 @@ const ld = {
         }
       </div>
 
-      <div class:list={['serve', { 'with-poster': b.poster }]}>
-        {b.poster && <Polaroid src={b.poster} alt={`Affiche van ${b.name}`} caption="De affiche" tilt={-3} ratio="5 / 7" width={600} taped />}
+      <div class:list={['serve', { 'with-poster': b.poster || b.fles }]}>
+        {
+          (b.poster || b.fles) && (
+            <div class="serve-side">
+              {b.fles && <Polaroid src={b.fles} alt={`Een fles ${b.name} met een vol glas`} caption="In het glas" tilt={2} ratio="2 / 3" width={500} />}
+              {b.poster && <Polaroid src={b.poster} alt={`Affiche van ${b.name}`} caption="De affiche" tilt={-3} ratio="5 / 7" width={600} taped />}
+            </div>
+          )
+        }
         <div class="serve-cards">
           {
             b.info.map((n) => (
@@ -301,6 +308,10 @@ const ld = {
     display: grid;
     gap: clamp(30px, 6vw, 80px);
     align-items: start;
+  }
+  .serve-side {
+    display: grid;
+    gap: 34px;
   }
   .serve.with-poster {
     grid-template-columns: 0.75fr 1.25fr;

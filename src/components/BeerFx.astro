@@ -21,6 +21,69 @@ const many = (n: number) => Array.from({ length: n }, (_, i) => i);
 const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc58f'];
 ---
 
+{
+  kind === 'boskeun' && (
+    <div class="scene" aria-hidden="true">
+      <svg class="comb" viewBox="0 0 120 60" preserveAspectRatio="xMidYMin slice">
+        <defs>
+          <pattern id="honing-raat" width="15" height="26" patternUnits="userSpaceOnUse" patternTransform="scale(0.9)">
+            <path d="M7.5 0 L15 4.3 V13 L7.5 17.3 L0 13 V4.3 Z M7.5 17.3 V26 M0 13 L-7.5 17.3 M15 13 L22.5 17.3" fill="none" stroke="#f7b500" stroke-width="1.6" />
+          </pattern>
+          <linearGradient id="honing-fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="1" />
+            <stop offset="1" stop-color="#fff" stop-opacity="0" />
+          </linearGradient>
+          <mask id="honing-mask"><rect width="120" height="60" fill="url(#honing-fade)" /></mask>
+        </defs>
+        <rect width="120" height="60" fill="url(#honing-raat)" mask="url(#honing-mask)" opacity="0.55" />
+      </svg>
+      <svg class="drip" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path
+          d="M0 0 H200 V10 C192 10 190 14 190 22 C190 30 182 30 182 22 C182 14 176 12 168 12 C150 12 150 18 148 26 C146 36 136 36 136 26 C136 16 128 12 112 12 C96 12 94 16 92 20 C90 28 82 28 82 20 C82 14 72 11 60 11 C46 11 44 18 42 30 C40 40 30 40 30 30 C30 18 22 12 12 12 C4 12 0 14 0 14 Z"
+          fill="#f7b500"
+          stroke="#21170c"
+          stroke-width="2"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+      <svg class="grass" viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path
+          d="M0 40 V26 L6 14 L10 26 L16 8 L20 25 L27 16 L31 27 L38 6 L42 24 L49 14 L53 26 L60 10 L64 25 L71 17 L75 27 L82 5 L86 24 L93 15 L97 26 L104 9 L108 25 L115 16 L119 27 L126 7 L130 24 L137 14 L141 26 L148 10 L152 25 L159 17 L163 27 L170 6 L174 24 L181 15 L185 26 L192 9 L196 25 L200 18 V40 Z"
+          fill="#2c7f36"
+          stroke="#21170c"
+          stroke-width="2"
+          stroke-linejoin="round"
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+    </div>
+  )
+}
+
+{
+  kind === 'oeral' && (
+    <div class="scene" aria-hidden="true">
+      <svg class="sky" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+        <circle cx="18" cy="20" r="9" fill="#e2412b" stroke="#21170c" stroke-width="1.2" />
+        <ellipse cx="18" cy="20" rx="15" ry="4" fill="none" stroke="#21170c" stroke-width="1.2" transform="rotate(-18 18 20)" />
+        <circle cx="84" cy="14" r="4" fill="#fffdf7" stroke="#21170c" stroke-width="1" />
+        <circle cx="70" cy="36" r="2.4" fill="#5b8fd6" stroke="#21170c" stroke-width="0.8" />
+        {[
+          [35, 10], [55, 22], [92, 40], [8, 44], [44, 34], [76, 54], [28, 58], [62, 8],
+        ].map(([x, y]) => (
+          <path d={`M${x} ${y - 2.2} L${x + 0.7} ${y - 0.7} L${x + 2.2} ${y} L${x + 0.7} ${y + 0.7} L${x} ${y + 2.2} L${x - 0.7} ${y + 0.7} L${x - 2.2} ${y} L${x - 0.7} ${y - 0.7} Z`} fill="#21170c" />
+        ))}
+      </svg>
+      <svg class="mountains" viewBox="0 0 200 60" preserveAspectRatio="none">
+        <path d="M0 60 V44 L22 26 L38 38 L62 12 L84 34 L104 20 L126 40 L150 16 L174 36 L190 28 L200 34 V60 Z" fill="#3d6fb8" stroke="#21170c" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <path d="M54 19 L62 12 L70 20 L65 18 L62 22 L58 18 Z M143 22 L150 16 L157 23 L153 21 L150 25 L147 21 Z" fill="#fffdf7" stroke="#21170c" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+        <path d="M0 60 V52 L30 42 L58 50 L92 38 L120 50 L150 44 L180 52 L200 46 V60 Z" fill="#2a4f8a" stroke="#21170c" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+      </svg>
+    </div>
+  )
+}
+
 <div class:list={['fx', `fx-${kind}`, { live }]} aria-hidden="true">
   {
     kind === 'stille-nacht' &&
@@ -49,19 +112,22 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
 
   {
     kind === 'oeral' &&
-      many(6).map((i) => (
+      many(14).map((i) => (
         <svg
-          class="cloud"
-          viewBox="0 0 100 50"
-          style={`--y:${(8 + rnd(i) * 70).toFixed(0)}%; --w:${(70 + rnd(i, 2) * 70).toFixed(0)}px; --d:${(5 + rnd(i, 3) * 4).toFixed(1)}s; --delay:-${(rnd(i, 4) * 8).toFixed(1)}s`}
+          class="twinkle"
+          viewBox="0 0 20 20"
+          style={`--x:${(4 + rnd(i) * 90).toFixed(0)}%; --y:${(4 + rnd(i, 2) * 60).toFixed(0)}%; --s:${(10 + rnd(i, 3) * 12).toFixed(0)}px; --delay:-${(rnd(i, 4) * 2).toFixed(2)}s`}
         >
-          <path
-            d="M18 44 h66 a14 14 0 0 0 0-28 a20 20 0 0 0-37-6 a15 15 0 0 0-27 9 a13 13 0 0 0-2 25z"
-            fill="#fffdf7"
-            stroke="#21170c"
-            stroke-width="2.5"
-            stroke-linejoin="round"
-          />
+          <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z" fill="#fffdf7" stroke="#21170c" stroke-width="1.5" stroke-linejoin="round" />
+        </svg>
+      ))
+  }
+  {
+    kind === 'oeral' &&
+      many(3).map((i) => (
+        <svg class="comet" viewBox="0 0 60 20" style={`--y:${[12, 34, 22][i]}%; --d:${[4.5, 6, 5.2][i]}s; --delay:-${[0, 2.2, 3.8][i]}s`}>
+          <path d="M4 10 H40" stroke="#21170c" stroke-width="1.5" stroke-dasharray="3 3" />
+          <circle cx="48" cy="10" r="6" fill="#f7b500" stroke="#21170c" stroke-width="2" />
         </svg>
       ))
   }
@@ -135,6 +201,39 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
 </div>
 
 <style>
+  /* Static backdrops, always visible behind the character */
+  .scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .scene :global(svg) {
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+  .scene :global(.comb) {
+    top: 0;
+    height: 70%;
+  }
+  .scene :global(.drip) {
+    top: 0;
+    height: 16%;
+  }
+  .scene :global(.grass) {
+    bottom: 0;
+    height: 18%;
+  }
+  .scene :global(.sky) {
+    inset: 0;
+    height: 100%;
+  }
+  .scene :global(.mountains) {
+    bottom: 0;
+    height: 34%;
+  }
   .fx {
     position: absolute;
     inset: 0;
@@ -197,17 +296,35 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
     }
   }
 
-  /* Oeral: flying through clouds */
-  .cloud {
+  /* Oeral: stars and little comets, like the label */
+  .twinkle {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--s);
+    animation: twinkle 1.8s ease-in-out infinite var(--delay);
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      transform: scale(0.4) rotate(0);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1) rotate(45deg);
+      opacity: 1;
+    }
+  }
+  .comet {
     position: absolute;
     top: var(--y);
     left: 100%;
-    width: var(--w);
-    animation: cloud var(--d) linear infinite var(--delay);
+    width: 70px;
+    animation: comet var(--d) linear infinite var(--delay);
   }
-  @keyframes cloud {
+  @keyframes comet {
     to {
-      transform: translateX(calc(-100cqw - 160px));
+      transform: translate(calc(-100cqw - 120px), 40px);
     }
   }
 

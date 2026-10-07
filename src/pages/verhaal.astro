@@ -22,6 +22,7 @@ import arJasje from '../assets/archief/oerbier-jasje.jpg';
 import arKoelschip from '../assets/archief/krant-koelschip.jpg';
 import arBak from '../assets/archief/oerbierbak.jpg';
 import arBezoek from '../assets/archief/bezoek-toen.jpg';
+import arFestival from '../assets/archief/krant-bierfestival.jpg';
 import affOerbier from '../assets/affiches/oerbier.jpg';
 import affArabier from '../assets/affiches/arabier.jpg';
 import affBoskeun from '../assets/affiches/boskeun.jpg';
@@ -116,6 +117,7 @@ const affiches = [
             { src: arKoelschip, alt: 'Krantenknipsel met het koelschip en de roerkuip', tilt: 2, r: '4 / 3' },
             { src: arBak, alt: 'Een vrouw met een bak Oerbier voor een huis', tilt: -2, r: '3 / 4' },
             { src: arBezoek, alt: 'Bezoekers aan de rode deur van de brouwerij', tilt: 1, r: '4 / 3' },
+            { src: arFestival, alt: 'Krantenknipsel van het eerste bierfestival in België, met de Dolle Brouwers aan hun stand', tilt: -1.5, r: '4 / 5' },
           ].map((p) => <Polaroid src={p.src} alt={p.alt} caption={p.caption} tilt={p.tilt} ratio={p.r} width={600} />)
         }
       </div>
