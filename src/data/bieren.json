@@ -52,7 +52,8 @@
       "Na een paar jaar rijping krijgt Oerbier een wijnachtig karakter.",
       "De brouwerij bewaart nog stalen van het allereerste brouwsel, en die zijn nog perfect drinkbaar.",
       "\"Nat en straf\" op de glazen is een waarschuwing voor de 9%.",
-      "Het Oerbier-mannetje houdt een brouwersvork vast, het werk, maar kijkt naar het glas bier, het resultaat."
+      "Het Oerbier-mannetje houdt een brouwersvork vast, het werk, maar kijkt naar het glas bier, het resultaat.",
+      "Het etiket is geïnspireerd op de grotschilderingen van Altamira in Spanje, zowat het oudste bekende kunstwerk ter wereld. Je ziet ze terug op het metalen bord met de rotstekening."
     ],
     "reserva": false,
     "tagline": "Ons eerste bier. Donker, met vijf soorten mout."
@@ -168,7 +169,7 @@
       "image": "/images/kerstkaart.jpg",
       "alt": "Kerstkaart van De Dolle Brouwers met het brouwerijgebouw in de sneeuw",
       "title": "Onze jaarlijkse kerstkaart",
-      "text": "Elk jaar rond kerst tekent onze huisillustrator Benjamin Herteleer een nieuwe kerstkaart met de vertrouwde personages van het gamma — inclusief het Stille Nacht-mannetje zelf, glas in de hand, klaar voor de \"beste wensen\"."
+      "text": "Elk jaar rond kerst tekent Benjamin Herteleer een nieuwe kerstkaart met de personages die Kris ooit voor de etiketten tekende, inclusief het Stille Nacht-mannetje zelf, glas in de hand, klaar voor de \"beste wensen\"."
     },
     "reserva": false,
     "tagline": "Je favoriete kerstbier."
@@ -198,28 +199,25 @@
     "notes": [
       {
         "label": "Aroma",
-        "text": "Bessen, droge bladeren en vanille."
+        "text": "Zachte mout met een toets van honing."
       },
       {
         "label": "Smaak",
-        "text": "Krachtig, met zoethout en een vleugje chocolade."
+        "text": "Krachtig, met de ronde zoetheid van de honing."
       },
       {
         "label": "Afdronk",
-        "text": "Lang, met de zachte zoetheid van de honing."
+        "text": "Lang en zacht."
       }
     ],
     "info": [
       {
-        "label": "Wanneer",
-        "text": "Elk jaar te koop in de brouwerij vanaf 15 maart."
-      },
-      {
-        "label": "Bewaren",
-        "text": "Twee jaar houdbaar, koel en donker."
+        "label": "Serveertip",
+        "text": "Schenk het in het Oerbier-glas of een tulpglas."
       }
     ],
     "weetjes": [
+      "\"Boskeun\" is West-Vlaams voor boskonijn.",
       "Gebrouwen met bleke mout, Poperingse Goldinghop, biologische rietsuiker, honing en zuiver bronwater.",
       "Ongefilterd, niet gepasteuriseerd en hergist op fles.",
       "\"Keun\" was de bijnaam van Jo, een van de broers Herteleer. Na een broederlijke vechtpartij hield hij een wonde aan zijn bovenlip over, een hazenlip. Zo werd het Boskeun."
@@ -510,11 +508,11 @@
       "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
       "Hergist op fles met champagnegist.",
       "Bewaar de flessen rechtop en koel.",
-      "De Oerbier Special Reserva 2023 kwam na vier jaar afwezigheid uit, in een oplage van 8.000 flessen."
+      "Altijd in een kleine oplage."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op rode wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
+      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op rode wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
     "tagline": "Oerbier, minstens een jaar op rode wijnvaten."
