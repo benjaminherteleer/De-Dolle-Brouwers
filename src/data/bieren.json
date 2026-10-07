@@ -20,41 +20,39 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Het allereerste bier van de brouwerij, gebrouwen op 11 november 1980. Donker, rond en met een lichte zuurdesem-toets door de toevoeging van melkzuurbacteriën, die het bier zijn typische karakter geven naarmate het rijpt.",
+    "intro": "Het allereerste bier van de brouwerij, officieel sinds 1980. Donker door een mengeling van verschillende mouten en een urenlange kooktijd, met een lichte, frisse zurigheid door gist en melkzuurbacteriën.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Rijpe donkere vruchten, een vleugje zuurdesem en een zweem van kruidnagel."
+        "text": "Donkere mout en een frisse, licht zure toets."
       },
       {
         "label": "Smaak",
-        "text": "Vol en rond, met karamelmout, een tikkeltje rood fruit en een licht zure ondertoon die de zoetheid in evenwicht houdt."
+        "text": "Vol en rond, met een zurigheid die de zoetheid van de mout in evenwicht houdt."
       },
       {
         "label": "Afdronk",
-        "text": "Droog en licht bitter, met een nasmaak van gebrande mout die lang blijft hangen."
+        "text": "Droog en licht bitter."
       }
     ],
     "info": [
       {
         "label": "Serveertip",
-        "text": "Schenk op 10-12°C in het Oerbier-glas of een tulpglas, zodat de aroma's zich rustig kunnen ontplooien."
+        "text": "Bewaar koel en donker in de kelder en schenk op 12°C in het Oerbier-glas of een wijnglas."
       },
       {
-        "label": "Past bij",
-        "text": "Stevige stoofschotels, gerijpte kaas of gewoon puur, als afsluiter van de avond."
+        "label": "Bewaren",
+        "text": "Wettelijk een jaar houdbaar na botteling, maar Oerbier blijft evolueren en kan veel langer liggen."
       }
     ],
     "weetjes": [
-      "De naam betekent letterlijk “oer-bier” — bier van de bron, van de oorsprong.",
-      "Ontstaan als studentenbrouwsel: twee broers brouwden het eerst op kleine schaal thuis, in een koperen wasketel.",
-      "Ze namen een verlaten brouwerij over met de gedachte: “als wij ze niet nieuw leven inblazen, doet niemand het.”",
-      "Gebrouwen met verschillende mouten, hele Poperingse Goldinghop-bellen en een speciale gist die het bier licht tart maakt, vooral naarmate het ouder wordt.",
-      "Na een paar jaar rijping proeft Oerbier bijna alsof het met wijn is versneden.",
-      "Hergist op fles — er zit een gistlaagje in met vitamine B.",
-      "“Nat en Straf” op de glazen is een waarschuwing voor het stevige alcoholpercentage (9%).",
-      "Het Oerbier-mannetje houdt een brouwersvork vast — symbool voor het werk — maar kijkt naar het glas bier, het resultaat.",
-      "Het etiket is geïnspireerd op de grotschilderingen van Altamira (Spanje), zowat het oudste bekende kunstwerk ter wereld (ca. 30.000 v.Chr.)."
+      "Het prototype werd gebrouwen door twee studenten, in een koperen wasketel.",
+      "De naam staat voor het oorspronkelijke en het pure.",
+      "Densiteit 1078 en 9% alcohol, gehopt met enkel bellenhop \"Golding\" uit Poperinge.",
+      "Na een paar jaar rijping krijgt Oerbier een wijnachtig karakter.",
+      "De brouwerij bewaart nog stalen van het allereerste brouwsel, en die zijn nog perfect drinkbaar.",
+      "\"Nat en straf\" op de glazen is een waarschuwing voor de 9%.",
+      "Het Oerbier-mannetje houdt een brouwersvork vast, het werk, maar kijkt naar het glas bier, het resultaat."
     ],
     "reserva": false,
     "tagline": "Ons eerste bier. Donker, met vijf soorten mout."
@@ -80,15 +78,15 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een hoppig, amberkleurig bier dat opvalt door zijn stevige bitterheid (zo'n 60 IBU) — droog gehopt met hele Nugget-bellen uit Poperinge, voor een uitgesproken, fris-bittere smaak.",
+    "intro": "Een zuiver moutbier van 8%, gehopt met bloemhop uit Poperinge: Nugget en WGV (Whitbread Golding Variety). Droog gehopt, fris en bitter: de perfecte dorstlesser.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Kruidige hop, citrus en een lichte gist-fruitigheid."
+        "text": "Frisse bloemhop."
       },
       {
         "label": "Smaak",
-        "text": "Droog en fris, met een uitgesproken hopbitterheid die het hoge alcoholgehalte verrassend goed verbergt."
+        "text": "Droog en fris, met een uitgesproken hopbitterheid."
       },
       {
         "label": "Afdronk",
@@ -98,19 +96,18 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Bewaar koel en donker, serveer op 10°C in een breed glas om de hop tot zijn recht te laten komen."
+        "text": "Drink Arabier koel, zoals er in het Arabisch op de fles staat."
       },
       {
-        "label": "Past bij",
-        "text": "Pittige gerechten, verse geitenkaas of een terrasje in de zon."
+        "label": "Bewaren",
+        "text": "Twee jaar houdbaar; de datum staat op de kroonkurk."
       }
     ],
     "weetjes": [
-      "Een puur moutbier van 8%, gebrouwen met bloem-Nugget-hop uit Poperinge.",
-      "Herkenbaar aan de droog-gehopte smaak en het aroma — geliefd bij bierliefhebbers wereldwijd.",
-      "Een van de twee bieren die het hele jaar door gebrouwen worden.",
-      "Beperkt houdbaar: de hopbitterheid neemt geleidelijk af naarmate het bier ouder wordt.",
-      "Bewaar koel en donker, serveer op 10°C."
+      "Op de fles staat in het Arabisch: \"Drink arabier koel\".",
+      "De naam schrijf je altijd met een kleine a.",
+      "Eén arabier, twee arabiers. Maar: er zijn geen twee arabieren.",
+      "Een knipoog: in Arabische landen is bier eigenlijk verboden."
     ],
     "reserva": false,
     "tagline": "De perfecte dorstlesser, dry hopped."
@@ -136,38 +133,36 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een kerstbier van 12%, zwaar en warmend, gebrouwen voor de koudste maanden van het jaar. Een bier om langzaam van te genieten, bij de haard.",
+    "intro": "Ons kerstbier van 12%. Gebrouwen met enkel bellenhop uit Poperinge en witte kandijsuiker, wat het een van de zwaarste densiteiten geeft die we brouwen: 22° Plato.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Gedroogd fruit, honing en een vleugje alcohol."
+        "text": "Rijp fruit en kandij."
       },
       {
         "label": "Smaak",
-        "text": "Vol en zoetig, met karamel- en moutzoetheid die de hoge densiteit dragen."
+        "text": "Vol en zoetig, gedragen door de hoge densiteit."
       },
       {
         "label": "Afdronk",
-        "text": "Warmend en lang, met een subtiele alcoholgloed op het einde."
+        "text": "Warmend en lang."
       }
     ],
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 12-14°C in een klein snifferglaasje, als digestief."
+        "text": "Schenk het rustig in het Oerbier-glas of een wijnglas, en neem je tijd."
       },
       {
-        "label": "Past bij",
-        "text": "Chocoladedesserts, blauwe kaas of gewoon bij een goed boek in de winter."
+        "label": "Bewaren",
+        "text": "Stille Nacht leent zich goed om te bewaren. De bottelingsdatum staat op de kroonkurk."
       }
     ],
     "weetjes": [
-      "Een prestigebier, speciaal gebrouwen voor kerst — 12% alcohol.",
-      "Kookt urenlang; bleke mout met witte kandijsuiker in de ketel geeft de hoge densiteit.",
-      "Nugget-hop zorgt voor extra bitterheid, als tegengewicht voor de zoetheid.",
-      "Een lichte zurigheid van de gisting maakt de smaak compleet.",
-      "Leent zich uitstekend om te bewaren — de brouwerij bewaart zelf stalen van elke botteling, en de kwaliteit blijft overeind.",
-      "Bewaartip: hou het op 10°C en noteer het jaartal met een alcoholstift op de kroonkurk."
+      "Gekookt in een koperen ketel op directe gasverwarming en afgekoeld in het koperen koelschip.",
+      "Vergist in open koperen gistkuipen en daarna minstens een maand gerijpt.",
+      "Hergist op fles.",
+      "We brouwen één brouwsel per dag."
     ],
     "story": {
       "image": "/images/kerstkaart.jpg",
@@ -182,13 +177,13 @@
     "slug": "boskeun",
     "name": "Boskeun",
     "title": "Boskeun — Paasbier met honing van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Boskeun is het seizoensgebonden paasbier van De Dolle Brouwers uit Esen (West-Vlaanderen), gebrouwen met honing en gehopt met Goldings, elk jaar in beperkte oplage.",
+    "description": "Boskeun (9%) is het paasbier van De Dolle Brouwers uit Esen (West-Vlaanderen), gebrouwen met honing en Goldinghop uit Poperinge.",
     "alt": "Boskeun personage",
     "kicker": "Een van de eerste paasbieren",
     "meta": [
       {
         "label": "Alcohol",
-        "value": "8%"
+        "value": "9%"
       },
       {
         "label": "Stijl",
@@ -199,43 +194,41 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een van de eerste echte Belgische paasbieren, gebrouwen met honing. Verschijnt elk voorjaar in een beperkte oplage en is doorgaans snel uitverkocht.",
+    "intro": "Ons paasbier van 9%, de opvolger van Stille Nacht in het jaar. Een krachtig bier met een eigen smaak en aroma, gebrouwen met honing.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Fris gist, een licht kruidige toets en zachte moutigheid."
+        "text": "Bessen, droge bladeren en vanille."
       },
       {
         "label": "Smaak",
-        "text": "Rond en toegankelijk, gebrouwen met bleke mout, Goldinghop en honing, met een lichte, ronde zoetheid."
+        "text": "Krachtig, met zoethout en een vleugje chocolade."
       },
       {
         "label": "Afdronk",
-        "text": "Kort en fris, uitnodigend voor een volgend glas."
+        "text": "Lang, met de zachte zoetheid van de honing."
       }
     ],
     "info": [
       {
-        "label": "Serveertip",
-        "text": "Een seizoensbier — het best op tijd gedronken, niet eindeloos bewaren. Serveer op 6-8°C."
+        "label": "Wanneer",
+        "text": "Elk jaar te koop in de brouwerij vanaf 15 maart."
       },
       {
-        "label": "Past bij",
-        "text": "Lichte lentegerechten, asperges of gewoon als aperitief."
+        "label": "Bewaren",
+        "text": "Twee jaar houdbaar, koel en donker."
       }
     ],
     "weetjes": [
-      "Gebrouwen met honing — dat geeft het bier een zachte, ronde zoetheid naast de klassieke moutbasis.",
-      "Een van de eerste echte Belgische paasbieren (na Slaghmuylder’s paasbier).",
-      "Gebrouwen met bleke mout, Goldinghop en honing, hergist op fles.",
-      "Een seizoensbier — niet bedoeld om eindeloos te bewaren.",
-      "“Boskeun” betekent boskonijn; het etiket toont er eentje dat van de laatste brouwsel proeft."
+      "Gebrouwen met bleke mout, Poperingse Goldinghop, biologische rietsuiker, honing en zuiver bronwater.",
+      "Ongefilterd, niet gepasteuriseerd en hergist op fles.",
+      "\"Keun\" was de bijnaam van Jo, een van de broers Herteleer. Na een broederlijke vechtpartij hield hij een wonde aan zijn bovenlip over, een hazenlip. Zo werd het Boskeun."
     ],
     "story": {
       "image": "/images/boskeun-illustratie.jpg",
       "alt": "Illustratie van de Boskeun-konijnen in hun ondergrondse bar",
       "title": "Het verhaal achter Boskeun",
-      "text": "Elk voorjaar duiken de Boskeun-konijnen weer op — ondergronds, met een eigen stamcafeetje vol paasversiering. Een knipoog naar de naam van het bier, en naar de beperkte oplage die er elk jaar weer razendsnel doorheen gaat."
+      "text": "Op deze tekening hebben de Boskeun-konijnen een eigen ondergronds stamcafeetje vol paasversiering. Elk voorjaar duiken ze weer op, en de oplage is meestal snel op."
     },
     "reserva": false,
     "tagline": "Een van de eerste paasbieren, met honing."
@@ -265,28 +258,32 @@
     "notes": [
       {
         "label": "Aroma",
-        "text": "Gist-fruitigheid, een vleugje peper en donkere mout."
+        "text": "Fruitig, met een toets van de kandij."
       },
       {
         "label": "Smaak",
-        "text": "Vol en complex, met een evenwicht tussen zoetheid van de kandij en een stevige, drogende afwerking."
+        "text": "Vol, met de zoetheid van de witte kandij."
       },
       {
         "label": "Afdronk",
-        "text": "Lang, droog en licht kruidig, met het alcoholgehalte goed verstopt."
+        "text": "Lang en droog, met de 10% goed verstopt."
       }
     ],
     "info": [
       {
         "label": "Serveertip",
-        "text": "Serveer op 10°C in het Oerbier-glas of een tulpglas en geef het bier tijd om op temperatuur te komen."
+        "text": "Schenk op 10°C in het Oerbier-glas of een tulpglas."
       },
       {
-        "label": "Past bij",
-        "text": "Wild, stevige stoofpotjes of een pittige harde kaas."
+        "label": "Wanneer",
+        "text": "Bijna het hele jaar verkrijgbaar."
       }
     ],
-    "weetjes": [],
+    "weetjes": [
+      "\"Dulle teve\" is streektaal voor een lastige vrouw.",
+      "De cafébaas die belde, zocht een eigen bier en proefde in de Oerbar twee bieren tegelijk.",
+      "\"Nu nog een bier maken, de naam hebben we al.\""
+    ],
     "reserva": false,
     "tagline": "Onze tripel."
   },
@@ -311,7 +308,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een heropgevist bier uit Lichtervelde: oorspronkelijk \"Blonde des Flandres\" van brouwerij De Hoop / Th. Labens, later opnieuw gebrouwen en gebotteld door De Dolle Brouwers in Esen. en goudblond, in de traditie van Scotch Ale en Belgische porter.",
+    "intro": "Een heropgevist bier uit Lichtervelde: oorspronkelijk \"Blonde des Flandres\" van brouwerij De Hoop / Th. Labens, nu gebrouwen en gebotteld door De Dolle Brouwers in Esen.",
     "notes": [
       {
         "label": "Aroma",
@@ -356,7 +353,7 @@
     "slug": "export-stout",
     "name": "Export Stout",
     "title": "Export Stout — Stout van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Export Stout (9%) van De Dolle Brouwers is een donkere stout uit Esen (West-Vlaanderen), gebrouwen met wilde gisten en bacteriën in de traditie van de oorspronkelijke Engelse en Ierse stouts.",
+    "description": "Export Stout (9%) van De Dolle Brouwers uit Esen (West-Vlaanderen), ontworpen op vraag van de Amerikaanse invoerder en maar enkele keren per jaar gebrouwen.",
     "alt": null,
     "kicker": "Veel body, donker en geroosterd",
     "meta": [
@@ -373,37 +370,35 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een donkere stout van 9%, gebrouwen met wilde gisten en bacteriën in de traditie van de oorspronkelijke Engelse en Ierse stouts — de tegenpool van de blonde bieren in het gamma.",
+    "intro": "Een stout van 9%, ontworpen op vraag van onze Amerikaanse invoerder. Het krijgt dezelfde gisting als het Oerbier; de mout bepaalt de kleur en de bitterheid.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Geroosterde koffie, pure chocolade en een vleugje rook."
+        "text": "Geroosterde mout."
       },
       {
         "label": "Smaak",
-        "text": "Vol en droog, met bittere chocolade en geroosterde mout die de boventoon voeren."
+        "text": "Vol en bitter, met donkere mout."
       },
       {
         "label": "Afdronk",
-        "text": "Droog en licht bitter, met een lang aanhoudende koffie-toets."
+        "text": "Droog en bitter."
       }
     ],
     "info": [
       {
-        "label": "Serveertip",
-        "text": "Serveer op 10-12°C in het Oerbier-glas of een tulpglas."
+        "label": "Wanneer",
+        "text": "We brouwen het maar enkele keren per jaar. Wees er snel bij."
       },
       {
-        "label": "Past bij",
-        "text": "Donkere chocoladedesserts, gegrild vlees of stevige stoofschotels."
+        "label": "Serveertip",
+        "text": "Schenk op 10-12°C in het Oerbier-glas of een tulpglas."
       }
     ],
     "weetjes": [
-      "Het alcoholpercentage schommelt per brouwsel tussen 8 en 9%.",
-      "Een ouderwetse bierstijl, nog altijd populair in Engelstalige landen.",
-      "Wordt een paar keer per jaar gebrouwen, op vraag van de Amerikaanse importeur.",
-      "Gebrouwen met gebrande mout, karamelmout en bleke mout, Nugget-hop, en dezelfde gisting als Oerbier.",
-      "Het resultaat: een bitter, stevig bier met karakter — zoals je 200 jaar geleden in Engeland of Ierland zou gedronken hebben."
+      "Ontworpen op vraag van onze Amerikaanse invoerder.",
+      "Dezelfde gisting als het Oerbier.",
+      "Het alcoholpercentage schommelt per brouwsel tussen 8 en 9%."
     ],
     "story": {
       "image": "/images/stout-logo.png",
@@ -457,9 +452,7 @@
       }
     ],
     "weetjes": [
-      "Oeral is het enige bier in ons gamma dat we niet bottelen — het is puur voor de Oerbar en de tap.",
-      "Op Untappd en BeerAdvocate staat het te boek als een \"Belgian Pale Ale\", geprezen om zijn florale en kruidige complexiteit ondanks het bescheiden alcoholpercentage.",
-      "Vroeger verscheen Oeral wel af en toe in beperkte, gedateerde botteling (zogenaamde \"vintages\"), maar vandaag schenken we het uitsluitend vers van het vat."
+      "Oeral is het enige bier in ons gamma dat we niet bottelen: het is puur voor de Oerbar en de tap."
     ],
     "badge": "Enkel op vat, niet op fles",
     "reserva": false,
@@ -511,10 +504,17 @@
         "text": "Gerijpte kaas, wild of donker chocoladedessert."
       }
     ],
-    "weetjes": [],
+    "weetjes": [
+      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
+      "Hergist op fles met champagnegist.",
+      "Bewaar de flessen rechtop en koel.",
+      "De Oerbier Special Reserva 2023 kwam na vier jaar afwezigheid uit, in een oplage van 8.000 flessen."
+    ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op rode wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
+      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op rode wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
     "tagline": "Oerbier, minstens een jaar op rode wijnvaten."
@@ -565,7 +565,13 @@
         "text": "Wild, stevige stoofpotjes of een pittige harde kaas."
       }
     ],
-    "weetjes": [],
+    "weetjes": [
+      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
+      "Hergist op fles met champagnegist.",
+      "Bewaar de flessen rechtop en koel."
+    ],
     "barrel": {
       "title": "Over de vatrijping",
       "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, gaat af en toe ook een geselecteerd brouwsel Dulle Teve minstens een jaar op rode wijnvaten. De tannines en houttonen geven het bier een extra laag complexiteit, telkens in een beperkte, genummerde oplage."
@@ -619,7 +625,13 @@
         "text": "Gerijpte kaas, een fruitdessert of gewoon puur, als afsluiter."
       }
     ],
-    "weetjes": [],
+    "weetjes": [
+      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
+      "Hergist op fles met champagnegist.",
+      "Bewaar de flessen rechtop en koel."
+    ],
     "barrel": {
       "title": "Over de vatrijping",
       "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, is vatrijping de basis van onze hele Reserva-lijn gebleven. Stille Nacht Reserva is geen jaarlijkse uitgave: om de paar jaar zet de brouwerij een geselecteerd brouwsel minstens twee jaar op vaten die eerder rode wijn bevatten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De rijpingsduur varieert bewust — soms twee jaar, soms langer — tot het bier de gewenste complexiteit heeft. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
