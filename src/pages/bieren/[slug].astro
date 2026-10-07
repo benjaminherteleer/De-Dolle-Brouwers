@@ -55,12 +55,11 @@ const ld = {
             {!b.reserva && <BeerFx slug={b.slug} live />}
             <Image src={b.art} alt={b.alt ?? `${b.name} personage`} width={640} loading="eager" />
           </div>
-          {b.strik && <Strik color={b.strik} class="neck" />}
           <Stamp class="abv" ring={`${b.name} · De Dolle Brouwers · `} center={abv(b)} size={128} />
         </div>
         <div class="copy">
           <p class="kicker">{b.kicker}</p>
-          <h1>{b.name}</h1>
+          <h1>{b.name}{b.strik && <Strik color={b.strik} class="neck" />}</h1>
           <ul class="facts">
             {b.meta.map((m) => <li class="pill">{m.value}</li>)}
           </ul>
@@ -200,15 +199,13 @@ const ld = {
   .art {
     position: relative;
   }
-  .art :global(.neck) {
-    position: absolute;
-    top: -22px;
-    left: 50%;
-    width: clamp(110px, 14vw, 160px);
-    translate: -50% 0;
-    rotate: -4deg;
-    z-index: 3;
-    filter: drop-shadow(3px 4px 0 rgba(33, 23, 12, 0.25));
+  h1 :global(.neck) {
+    display: inline-block;
+    width: 0.9em;
+    margin-left: 0.25em;
+    vertical-align: middle;
+    rotate: -6deg;
+    filter: drop-shadow(2px 3px 0 rgba(33, 23, 12, 0.25));
   }
   .art-frame {
     background: var(--paper-light);
