@@ -14,7 +14,6 @@ import vergisting from '../assets/foto/bp-gisting.jpg';
 import vaten from '../assets/foto/vaten-rij.jpg';
 import bottelmachine from '../assets/foto/bp-bottelmachine.jpg';
 import warmeKamer from '../assets/foto/bp-warme-kamer.jpg';
-import lagertanks from '../assets/foto/bp-lagertanks.jpg';
 
 const art = import.meta.glob<{ default: ImageMetadata }>('../assets/brouwproces/stap-*.jpg', { eager: true });
 const stepArt = (n: number) => art[`../assets/brouwproces/stap-${String(n).padStart(2, '0')}.jpg`].default;
@@ -23,7 +22,7 @@ type Step = {
   title: string;
   tag?: string;
   text: string;
-  photo?: { src: ImageMetadata; alt: string; caption: string };
+  photo?: { src: ImageMetadata; alt: string; caption?: string };
 };
 
 const steps: Step[] = [
@@ -70,7 +69,6 @@ const steps: Step[] = [
     title: 'Rijpen',
     tag: '4° · 2 maanden',
     text: 'Na de gisting rust het bier minstens twee maanden in de lagertanks, op 4 °C. We nemen onze tijd: daar ronden de smaken af.',
-    photo: { src: lagertanks, alt: 'Witte genummerde lagertanks in de brouwerij', caption: 'De lagertanks' },
   },
   {
     title: 'Bottelen',
@@ -81,7 +79,7 @@ const steps: Step[] = [
   {
     title: 'De warme kamer',
     text: 'De bakken gaan naar de warme kamer, waar het bier hergist op de fles. Zo krijgt elk De Dolle Brouwers-biertje zijn natuurlijke prik.',
-    photo: { src: warmeKamer, alt: 'Gestapelde gele Oerbier-bakken vol flessen bij de warme kamer', caption: 'Op weg naar de warme kamer' },
+    photo: { src: warmeKamer, alt: 'Gestapelde gele Oerbier-bakken vol flessen bij de warme kamer' },
   },
 ];
 ---
@@ -158,7 +156,7 @@ const steps: Step[] = [
   <section class="section reserva">
     <div class="edge-top"></div>
     <div class="wrap res-grid">
-      <Polaroid src={vaten} alt="Eiken wijnvaten in de kelder" caption="Wie wacht, krijgt Reserva" tilt={-3} ratio="4 / 5" taped />
+      <Polaroid src={vaten} alt="Eiken wijnvaten in de kelder" tilt={-3} ratio="4 / 5" taped />
       <div>
         <span class="tag">Extra stap, soms</span>
         <h2>En dan nog een jaar op vat.</h2>
