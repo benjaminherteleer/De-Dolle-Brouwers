@@ -19,3 +19,9 @@ Astro site, deployed on Vercel from GitHub (push to `main` = deploy).
   - `foto/` photos, `brouwproces/` step drawings cut from the Instagram carousel, `affiches/` posters, `bieren/` beer characters, `logo/`.
 - `public/images` only holds files referenced by plain URL from the older pages.
 - Source material lives in `~/Downloads/De Dolle Brouwers/` (Foto's, Etiketten, Instagram brewing slides `NN_DeDolle_brewing.jpg`).
+
+## Oerbier Fake Nieuws (`/nieuws`)
+
+- One MDX file per monthly edition in `src/content/nieuws/` (file name = URL, e.g. `2026-10-stille-nacht-reserva-2024.mdx`). Schema in `src/content.config.ts`: `titel`, `datum`, `kicker`, `stempel`, `lead` (also the Google description), `kleur` (geel/blauw/rood/groen), `foto`, `fotoAlt`.
+- Building blocks in `src/components/nieuws/`: `Artikel` (label, titel, sub, foto, donker, rechts), `Kader`, `Citaat`, `Markeer`, `Cijfers`, `Prijzen` (the for-sale box; opening hours are built in), `Origineel` (Kris's handwritten version), `Knop`.
+- Photos per edition go in `src/assets/nieuws/<jjjj-mm>/`. Keep the user's text exactly as written; only the layout is ours.
