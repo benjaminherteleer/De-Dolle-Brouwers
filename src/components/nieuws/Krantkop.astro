@@ -57,8 +57,10 @@ const Tag = hoofd ? 'h1' : 'p';
     line-height: 0;
   }
   .logo :global(img) {
+    display: block;
     width: min(100%, 640px);
     height: auto;
+    margin: 0 auto;
   }
   @media (max-width: 560px) {
     .bovenregel span:nth-child(2) {
