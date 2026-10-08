@@ -1,0 +1,20 @@
+---
+/** Pull quote. */
+---
+
+<blockquote class="citaat"><slot /></blockquote>
+
+<style>
+  .citaat {
+    margin: 1.2em 0;
+    padding: 0 0 0 18px;
+    border-left: 4px solid var(--yellow);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    line-height: 1.25;
+  }
+  :global(.donker) .citaat {
+    color: var(--yellow);
+  }
+</style>

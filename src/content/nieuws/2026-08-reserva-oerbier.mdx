@@ -1,0 +1,72 @@
+---
+titel: 2 Reservas Oerbier.
+datum: 2026-08-01
+kicker: Esen, West-Vlaanderen ↘
+stempel: Bijna volledig uitverkocht!
+lead: 'Nieuwe oogst: Priorat en Madiran 2017, gebotteld mét kurk. Een must voor uw bierkelder!'
+kleur: geel
+foto: ../../assets/nieuws/2026-08/flessen-op-vat.jpg
+fotoAlt: Flessen Oerbier Reserva op een eiken vat in de kelder
+---
+
+import Artikel from '../../components/nieuws/Artikel.astro';
+import Kader from '../../components/nieuws/Kader.astro';
+import Markeer from '../../components/nieuws/Markeer.astro';
+import Citaat from '../../components/nieuws/Citaat.astro';
+import Knop from '../../components/nieuws/Knop.astro';
+import Prijzen from '../../components/nieuws/Prijzen.astro';
+import Origineel from '../../components/nieuws/Origineel.astro';
+import vaten from '../../assets/foto/vaten-rij.jpg';
+import madiran from '../../assets/nieuws/2026-08/madiran.jpg';
+import origineel from '../../assets/nieuws/2026-08/origineel.jpg';
+
+<Artikel label="Reserva 1" titel="Priorat / Oerbier" sub="4 vaten · mét kurk en hergisting" foto={vaten} fotoAlt="Eiken vaten in de kelder van de brouwerij">
+
+**Oerbier Reserva 2024 Ferrer-Bobet** werd onlangs gebotteld, mét kurk en hergisting. Priorat, wat is dat, denkt u. Wel, PRIORAT is een kleine wijnregio in Catalonië (Noord-Spanje, hoofdstad Falset) die de <Markeer>duurste wijn van Spanje maakt</Markeer>.
+
+Waarom is die zo duur? Omdat het reliëf heel <Markeer>steil</Markeer> is en er enkel manueel kan worden gewerkt. De grond is <Markeer>leisteen</Markeer>, heel hard en twee druivenrassen worden geteeld voor RODE wijn: Granacha en Cariñena.
+
+De naam PRIORAT komt van een klooster die er kwam nadat de Muslims vertrokken: Karthuizermonniken uit Frankrijk die er wijn verbouwden.
+
+<Kader titel="In juni dit jaar hebben we de wijnstreek grondig bezocht ↘">
+
+**Ferrer-Bobet is een TOP-Bodega** die heel in glas en beton is, en als het ware in de berg uitgesneden is. Het proeflokaal is helemaal in glas. Er zijn 5 verdiepingen kelders onder de grond.
+
+In Barcelona hebben ze een café waar 30 soorten wijn van het glas kunnen worden gedegusteerd: **MONVINIT**, Plaza de Catalunya.
+
+<Knop href="https://www.instagram.com/ferrerbobet/">Bekijk Ferrer-Bobet op Instagram →</Knop>
+
+</Kader>
+
+</Artikel>
+
+<Artikel label="Reserva 2" titel="“Nieuwe” oogst: Madiran 2017." sub="100% Tannat druif, die zijn naam geeft aan “tannine”." foto={madiran} fotoAlt="Etiket Special Oerbier Reserva, brewed in 2017" donker>
+
+Na proeving een unieke botteling, **RESERVA oerbier** in 75 cl flessen, met kurk.
+
+<Citaat>“Prachtig evenwicht, scherp en zuur maar veel body!”</Citaat>
+
+9 jaar oud en perfect om nu te drinken.
+
+<Markeer>Een must voor uw bierkelder!</Markeer>
+
+*Santé — ddb*
+
+</Artikel>
+
+<Prijzen
+  titel="Nu te koop in de brouwerij."
+  sub="Bijna volledig uitverkocht, wees er snel bij ↘"
+  items={[
+    { naam: 'Oerbier Reserva', detail: 'Priorat', prijs: '€25' },
+    { naam: 'Oerbier Reserva', detail: 'Madiran 2017 · 75 cl', prijs: '€25' },
+  ]}
+/>
+
+<Origineel foto={origineel} fotoAlt="Het originele, handgeschreven Oerbier Fake Nieuws" bijschrift="Het origineel, met de hand">
+
+Met de hand geschreven door Kris.
+
+Maar iets leesbaarder gemaakt voor jullie.
+
+</Origineel>

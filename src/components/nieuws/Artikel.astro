@@ -1,0 +1,116 @@
+---
+import type { ImageMetadata } from 'astro';
+import Polaroid from '../Polaroid.astro';
+
+/** One story in an edition: label, headline, optional photo beside the text. */
+interface Props {
+  label?: string;
+  titel: string;
+  sub?: string;
+  foto?: ImageMetadata;
+  fotoAlt?: string;
+  /** Dark background, like the second story in a printed edition */
+  donker?: boolean;
+  /** Photo on the right instead of the left */
+  rechts?: boolean;
+}
+const { label, titel, sub, foto, fotoAlt = '', donker = false, rechts = false } = Astro.props;
+---
+
+<section class:list={['artikel', { donker, rechts, 'met-foto': foto }]}>
+  <header>
+    {label && <p class="label">{label}</p>}
+    <h2 set:html={titel} />
+    {sub && <p class="sub" set:html={sub} />}
+  </header>
+  <div class="inhoud">
+    {foto && <Polaroid src={foto} alt={fotoAlt} tilt={rechts ? 2 : -2} ratio="auto" width={560} class="artikel-foto" />}
+    <div class="tekst"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .artikel {
+    padding: clamp(36px, 5vw, 60px) clamp(20px, 5vw, 56px);
+    border-top: 2px solid var(--ink);
+  }
+  .artikel.donker {
+    background: var(--ink);
+    color: var(--paper);
+    --ink-soft: rgba(244, 233, 215, 0.75);
+  }
+  header {
+    margin-bottom: 26px;
+  }
+  .label {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--ink);
+    color: var(--yellow);
+    margin: 0 0 12px;
+  }
+  .donker .label {
+    background: var(--yellow);
+    color: var(--ink);
+  }
+  h2 {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    line-height: 1.02;
+    margin: 0;
+  }
+  .donker h2 {
+    color: var(--yellow);
+  }
+  .sub {
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
+  }
+  .inhoud {
+    display: grid;
+    gap: clamp(24px, 4vw, 44px);
+    align-items: start;
+  }
+  .met-foto .inhoud {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+  .met-foto.rechts .inhoud {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  .rechts :global(.artikel-foto) {
+    order: 2;
+  }
+  .tekst {
+    font-size: 1.06rem;
+    line-height: 1.7;
+  }
+  .tekst :global(p) {
+    margin: 0 0 1em;
+  }
+  /* Newspaper drop cap on the first paragraph of the first story */
+  :global(.krant > .artikel:first-of-type) .tekst > :global(p:first-child::first-letter) {
+    float: left;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 3.6em;
+    line-height: 0.85;
+    margin: 0.06em 0.08em 0 0;
+  }
+  @media (max-width: 760px) {
+    .met-foto .inhoud,
+    .met-foto.rechts .inhoud {
+      grid-template-columns: 1fr;
+    }
+    .rechts :global(.artikel-foto) {
+      order: 0;
+    }
+    :global(.artikel-foto) {
+      max-width: 360px;
+    }
+  }
+</style>

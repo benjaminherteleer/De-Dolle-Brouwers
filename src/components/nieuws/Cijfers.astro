@@ -1,0 +1,50 @@
+---
+/** A row of key figures, e.g. 2 · jaar op Amarone-vaten. */
+interface Props {
+  items: [string | number, string][];
+}
+const { items } = Astro.props;
+---
+
+<dl class="cijfers">
+  {
+    items.map(([n, label]) => (
+      <div>
+        <dt>{n}</dt>
+        <dd>{label}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .cijfers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    margin: 1.6em 0 0.4em;
+    border: var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--paper-light);
+  }
+  .cijfers div {
+    padding: 18px 14px;
+    text-align: center;
+    border-right: 2px solid var(--ink);
+  }
+  .cijfers div:last-child {
+    border-right: 0;
+  }
+  dt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  dd {
+    margin: 6px 0 0;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+</style>

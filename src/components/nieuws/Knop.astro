@@ -1,0 +1,22 @@
+---
+/** Button link inside an edition. */
+interface Props {
+  href: string;
+}
+const { href } = Astro.props;
+const extern = /^https?:/.test(href);
+---
+
+<p class="knop-wrap">
+  <a class="btn dark" href={href} target={extern ? '_blank' : undefined} rel={extern ? 'noopener' : undefined}><slot /></a>
+</p>
+
+<style>
+  .knop-wrap {
+    margin: 1.2em 0 0.6em;
+  }
+  :global(.donker) .knop-wrap :global(.btn) {
+    background: var(--yellow);
+    color: var(--ink);
+  }
+</style>

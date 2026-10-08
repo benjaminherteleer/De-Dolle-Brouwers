@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logo/oerbier-fake-nieuws.png';
+
+/** Masthead of Oerbier Fake Nieuws: the hand-drawn logo between newspaper rules. */
+interface Props {
+  /** Line under the logo, e.g. "Editie 2 · Oktober 2026" */
+  regel?: string;
+  /** Use h1 for the logo on the overview page */
+  hoofd?: boolean;
+}
+const { regel, hoofd = false } = Astro.props;
+const Tag = hoofd ? 'h1' : 'p';
+---
+
+<header class="krantkop">
+  <p class="bovenregel"><span>De Dolle Brouwers</span><span>Esen, West-Vlaanderen</span><span>Gratis</span></p>
+  <Tag class="logo">
+    <a href="/nieuws" aria-label="Oerbier Fake Nieuws">
+      <Image src={logo} alt="Oerbier Fake Nieuws" width={900} loading="eager" />
+    </a>
+  </Tag>
+  {regel && <p class="onderregel">{regel}</p>}
+</header>
+
+<style>
+  .krantkop {
+    text-align: center;
+    padding: 18px clamp(16px, 4vw, 40px) 0;
+    background: var(--paper-light);
+  }
+  .bovenregel,
+  .onderregel {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 8px 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .onderregel {
+    justify-content: center;
+    border-bottom: 0;
+    border-top: 4px double var(--ink);
+    font-family: var(--font-display);
+    letter-spacing: 0.08em;
+  }
+  .logo {
+    margin: 0;
+    padding: clamp(14px, 3vw, 26px) 0;
+    line-height: 0;
+  }
+  .logo :global(img) {
+    width: min(100%, 640px);
+    height: auto;
+  }
+  @media (max-width: 560px) {
+    .bovenregel span:nth-child(2) {
+      display: none;
+    }
+  }
+</style>

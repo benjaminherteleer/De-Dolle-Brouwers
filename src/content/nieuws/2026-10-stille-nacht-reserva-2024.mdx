@@ -1,0 +1,43 @@
+---
+titel: Stille Nacht Reserva 2024 ❄
+datum: 2026-10-01
+kicker: Een speciale release uit onze kelders ↘
+lead: 'Twee jaar gerijpt op Amarone-wijnvaten. Nu af te halen in de brouwerij, samen met een beperkte botteling van Barrique 11.'
+kleur: blauw
+foto: ../../assets/nieuws/2026-10/stille-nacht-reserva.jpg
+fotoAlt: Een fles Stille Nacht Reserva 2024 van 75 cl en een van 33 cl in de brouwerij
+---
+
+import Artikel from '../../components/nieuws/Artikel.astro';
+import Citaat from '../../components/nieuws/Citaat.astro';
+import Cijfers from '../../components/nieuws/Cijfers.astro';
+import Prijzen from '../../components/nieuws/Prijzen.astro';
+import barrique from '../../assets/nieuws/2026-10/barrique-11.jpg';
+
+<Artikel label="Reserva · 33 cl" titel="Stille Nacht Reserva 2024">
+
+Stille Nacht Reserva 2024 is een zorgvuldig samengestelde blend van Stille Nacht, **twee jaar gerijpt op Amarone-wijnvaten**. Een blend van 7 barriques, met extra diepgang, tonen van rode wijn, frisse toetsen en een mooi evenwicht tussen de body van de Stille Nacht en de zuurtegraad.
+
+<Cijfers items={[[2, 'jaar op Amarone-vaten'], [7, 'barriques in de blend'], [11, 'Barrique 11, apart gebotteld']]} />
+
+</Artikel>
+
+<Artikel label="Beperkte oplage · 75 cl" titel="Barrique 11." sub="Eén Amarone-vat, apart gebotteld." foto={barrique} fotoAlt="Flessen Stille Nacht Reserva en Barrique 11 op de koperen vloer" donker>
+
+Naast de Reserva in 33 cl brengen we ook **Barrique 11** uit, in een beperkte 75 cl-fles.
+
+<Citaat>“Dit Amarone-vat ontwikkelde een uitgesprokener zuurtje en een heel eigen karakter.”</Citaat>
+
+In plaats van het in de Reserva-blend te verwerken, hebben we het apart gehouden.
+
+</Artikel>
+
+<Prijzen
+  titel="Nu af te halen in de brouwerij."
+  sub="Kom ze halen in Esen ↘"
+  items={[
+    { naam: 'Stille Nacht Reserva 2024', detail: '33 cl · per bak', prijs: '€82' },
+    { naam: 'Barrique 11', detail: 'Amarone · 75 cl', prijs: '€30' },
+  ]}
+  noot="Maximum 1 bak + 2 flessen per persoon 💛"
+/>
