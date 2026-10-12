@@ -1,4 +1,5 @@
 ---
+import { brewery } from '../lib/schema';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
@@ -49,14 +50,14 @@ const stops = [
 ---
 
 <Base
-  title="De brouwerij | Bezoek De Dolle Brouwers in Esen"
-  description="Bezoek De Dolle Brouwers in Esen bij Diksmuide: rondleiding elke zondag (14u Engels, 15u Nederlands), Oerbar open op zaterdag en zondag. Ontdek het koelschip, de open gistkuipen en ons verhaal sinds 1980."
+  title="Brouwerij bezoeken & rondleiding | De Dolle Brouwers, Esen, Diksmuide"
+  description="Bezoek brouwerij De Dolle Brouwers in Esen, Diksmuide (West-Vlaanderen): rondleiding elke zondag (14u Engels, 15u Nederlands), Oerbar open op zaterdag en zondag. Ontdek het koelschip, de open gistkuipen en ons verhaal sinds 1980."
 >
   <Fragment slot="head">
-    <link rel="canonical" href="https://www.oerbier.be/brouwerij" />
     <meta property="og:title" content="Kom langs bij De Dolle Brouwers in Esen" />
     <meta property="og:description" content="Rondleiding elke zondag, Oerbar open in het weekend. Sinds 1980 in Esen." />
     <meta property="og:locale" content="nl_BE" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(brewery())} />
   </Fragment>
 
   <!-- HERO -->

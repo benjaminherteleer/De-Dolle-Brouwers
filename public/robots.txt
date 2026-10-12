@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /beheer
 Disallow: /api/
 
-Sitemap: https://www.oerbier.be/sitemap-index.xml
+Sitemap: https://www.dedollebrouwers.be/sitemap-index.xml

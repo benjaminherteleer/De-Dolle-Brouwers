@@ -18,6 +18,9 @@ interface Props {
 }
 
 const { title, description, back, image = deelfoto } = Astro.props;
+// One canonical URL per page, always on the main domain and without .html
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/') || '/';
+const canonical = /^\/404\b/.test(path) ? undefined : new URL(path, Astro.site).href;
 const shareImage = new URL(
   typeof image === 'string' ? image : (await getImage({ src: image, width: 1200, format: 'jpg' })).src,
   Astro.site,
@@ -31,6 +34,8 @@ const shareImage = new URL(
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:site_name" content="De Dolle Brouwers" />

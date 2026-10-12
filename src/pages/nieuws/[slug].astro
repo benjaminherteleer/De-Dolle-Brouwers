@@ -17,7 +17,7 @@ const { editie, vorige, volgende } = Astro.props;
 const { data } = editie;
 const { Content } = await render(editie);
 const kleur = kleuren[data.kleur];
-const url = `https://www.oerbier.be/nieuws/${editie.id}`;
+const url = `https://www.dedollebrouwers.be/nieuws/${editie.id}`;
 const titelZonderPunt = data.titel.replace(/[.\s❄]+$/u, '');
 const ld = {
   '@context': 'https://schema.org',
@@ -27,15 +27,14 @@ const ld = {
   datePublished: data.datum.toISOString(),
   inLanguage: 'nl-BE',
   url,
-  isPartOf: { '@type': 'Blog', name: 'Oerbier Fake Nieuws', url: 'https://www.oerbier.be/nieuws' },
+  isPartOf: { '@type': 'Blog', name: 'Oerbier Fake Nieuws', url: 'https://www.dedollebrouwers.be/nieuws' },
   author: { '@type': 'Organization', name: 'De Dolle Brouwers' },
-  publisher: { '@type': 'Organization', name: 'De Dolle Brouwers', url: 'https://www.oerbier.be' },
+  publisher: { '@type': 'Organization', name: 'De Dolle Brouwers', url: 'https://www.dedollebrouwers.be' },
 };
 ---
 
 <Base title={`${titelZonderPunt} | Oerbier Fake Nieuws ${maand(data.datum)} | De Dolle Brouwers`} description={data.lead} image={data.foto}>
   <Fragment slot="head">
-    <link rel="canonical" href={url} />
     <meta property="og:type" content="article" />
     <meta property="og:title" content={`${titelZonderPunt} | Oerbier Fake Nieuws`} />
     <meta property="og:description" content={data.lead} />

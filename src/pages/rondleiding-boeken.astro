@@ -1,10 +1,11 @@
 ---
+import { tours } from '../lib/schema';
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title={'Boek een rondleiding — De Dolle Brouwers'} description={'Boek een rondleiding bij De Dolle Brouwers in Esen. Elke zondag om 14u (Engels) of 15u (Nederlands), gegeven door brouwer en oprichter Kris Herteleer. €10 per persoon, ter plaatse te betalen.'}>
+<Base title={'Rondleiding boeken | Brouwerij De Dolle Brouwers, Esen, Diksmuide'} description={'Boek een rondleiding bij brouwerij De Dolle Brouwers in Esen, Diksmuide. Elke zondag om 14u (Engels) of 15u (Nederlands), gegeven door brouwer en oprichter Kris Herteleer. €10 per persoon, ter plaatse te betalen.'}>
 <Fragment slot="head">
-<link rel="canonical" href="https://www.oerbier.be/rondleiding-boeken" />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(tours())} />
 
 </Fragment>
 

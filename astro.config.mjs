@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.oerbier.be',
+  site: 'https://www.dedollebrouwers.be',
   trailingSlash: 'never',
   devToolbar: { enabled: false },
   build: { format: 'file' },

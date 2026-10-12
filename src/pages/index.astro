@@ -1,4 +1,5 @@
 ---
+import { brewery } from '../lib/schema';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
@@ -44,11 +45,10 @@ const bende = [
 ---
 
 <Base
-  title="De Dolle Brouwers | Oerbier, gebrouwen in Esen sinds 1980"
-  description="Ambachtelijke brouwerij in Esen bij Diksmuide, sinds 1980. Ongefilterd, hoog gegist bier: Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht en de Reserva's. Rondleiding elke zondag, Oerbar open in het weekend."
+  title="De Dolle Brouwers | Brouwerij in Esen, Diksmuide · Oerbier sinds 1980"
+  description="Ambachtelijke brouwerij in Esen, Diksmuide (West-Vlaanderen), sinds 1980. Ongefilterd, hoog gegist bier: Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht en de Reserva's. Rondleiding elke zondag, Oerbar open in het weekend."
 >
   <Fragment slot="head">
-    <link rel="canonical" href="https://www.oerbier.be/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="De Dolle Brouwers | Oerbier uit Esen, sinds 1980" />
     <meta
@@ -57,34 +57,7 @@ const bende = [
     />
     <meta property="og:locale" content="nl_BE" />
     <meta name="robots" content="index, follow" />
-    <script is:inline type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Brewery",
-        "name": "De Dolle Brouwers",
-        "alternateName": "Oerbier",
-        "url": "https://www.oerbier.be/",
-        "description": "Ambachtelijke specialiteitsbrouwerij in Esen (Diksmuide), West-Vlaanderen, sinds 1980. Bekend van Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht, Export Stout en Oeral.",
-        "foundingDate": "1980",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Roeselarestraat 12B",
-          "postalCode": "8600",
-          "addressLocality": "Esen (Diksmuide)",
-          "addressRegion": "West-Vlaanderen",
-          "addressCountry": "BE"
-        },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Saturday", "Sunday"],
-            "opens": "14:00",
-            "closes": "19:00"
-          }
-        ],
-        "email": "info@dedollebrouwers.be"
-      }
-    </script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(brewery())} />
   </Fragment>
 
   <!-- HERO -->

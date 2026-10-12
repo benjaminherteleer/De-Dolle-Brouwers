@@ -11,14 +11,14 @@ const ld = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
   name: 'Oerbier Fake Nieuws',
-  url: 'https://www.oerbier.be/nieuws',
+  url: 'https://www.dedollebrouwers.be/nieuws',
   inLanguage: 'nl-BE',
   publisher: { '@type': 'Organization', name: 'De Dolle Brouwers' },
   blogPost: lijst.map((e) => ({
     '@type': 'BlogPosting',
     headline: e.data.titel,
     datePublished: e.data.datum.toISOString(),
-    url: `https://www.oerbier.be/nieuws/${e.id}`,
+    url: `https://www.dedollebrouwers.be/nieuws/${e.id}`,
   })),
 };
 ---
@@ -28,7 +28,6 @@ const ld = {
   description="Het Oerbier Fake Nieuws: elke maand nieuws uit de brouwerij van De Dolle Brouwers in Esen. Nieuwe Reserva's, nieuwe brouwsels en wat er gebeurt in de brouwerij."
 >
   <Fragment slot="head">
-    <link rel="canonical" href="https://www.oerbier.be/nieuws" />
     <meta property="og:title" content="Oerbier Fake Nieuws | De Dolle Brouwers" />
     <meta property="og:locale" content="nl_BE" />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(ld)} />

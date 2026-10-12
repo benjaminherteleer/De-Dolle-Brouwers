@@ -25,7 +25,6 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
   image={photos[0] ?? (p.featuredImage ? shopifyImage(p.featuredImage.url, 1200) : undefined)}
 >
   <Fragment slot="head">
-    <link rel="canonical" href={`https://www.oerbier.be/oershop/${p.handle}`} />
     <meta property="og:title" content={`${p.title} | De Dolle Brouwers`} />
     <meta property="og:locale" content="nl_BE" />
   </Fragment>

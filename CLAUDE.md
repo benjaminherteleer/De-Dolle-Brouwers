@@ -11,6 +11,7 @@ Astro site, deployed on Cloudflare from GitHub (adapter `@astrojs/cloudflare`, c
 - `src/styles/global.css` holds the look: paper/ink/yellow tokens, Fraunces (soft, chunky) + Caveat Brush (handwritten), and shared pieces like `.btn`, `.pill`, `.tag`, `.polaroid`, `.card`, `.stamp`, `.ticker`, torn edges (`.edge-top` / `.edge-bottom`).
 - `src/components/Polaroid.astro` (taped/tilted photo) and `Stamp.astro` (round rotating badge).
 - Beers: content in `src/data/bieren.json`, colours/drawings/posters in `src/lib/bieren.ts`, one template at `src/pages/bieren/[slug].astro`.
+- Domain: https://www.dedollebrouwers.be (oerbier.be is no longer used). Canonical URLs come from `Base.astro`; brewery/tour structured data from `src/lib/schema.ts`.
 - `index`, `brouwerij` and `brouwproces` are built on the new design. `contact`, `faq`, `rondleiding-boeken` and `verkooppunten-kaart` still carry their older page styles in a `<style is:global>` block, mapped onto the new tokens.
 
 ## Images
