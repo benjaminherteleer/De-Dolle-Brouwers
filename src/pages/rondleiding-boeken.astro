@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 
 <Base title={'Boek een rondleiding — De Dolle Brouwers'} description={'Boek een rondleiding bij De Dolle Brouwers in Esen. Elke zondag om 14u (Engels) of 15u (Nederlands), gegeven door brouwer en oprichter Kris Herteleer. €10 per persoon, ter plaatse te betalen.'}>
 <Fragment slot="head">
+<link rel="canonical" href="https://www.oerbier.be/rondleiding-boeken" />
 
 </Fragment>
 
@@ -161,9 +162,9 @@ import Base from '../layouts/Base.astro';
     const telefoon = document.getElementById('telefoon').value || '-';
 
     const subject = `Boeking rondleiding ${formatDate(selectedDate)} — ${selectedTime}`;
-    const body = `Hallo,%0D%0A%0D%0AIk wil graag een rondleiding boeken:%0D%0A%0D%0ADatum: ${formatDate(selectedDate)}%0D%0AUur: ${selectedTime} (${selectedLang})%0D%0AAantal personen: ${aantal}%0D%0A%0D%0ANaam: ${naam}%0D%0AE-mail: ${email}%0D%0ATelefoon: ${telefoon}%0D%0A%0D%0ATot dan!`;
+    const body = `Hallo,\n\nIk wil graag een rondleiding boeken:\n\nDatum: ${formatDate(selectedDate)}\nUur: ${selectedTime} (${selectedLang})\nAantal personen: ${aantal}\n\nNaam: ${naam}\nE-mail: ${email}\nTelefoon: ${telefoon}\n\nTot dan!`;
 
-    window.location.href = `mailto:info@dedollebrouwers.be?subject=${encodeURIComponent(subject)}&body=${body}`;
+    window.location.href = `mailto:info@dedollebrouwers.be?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   buildDates();

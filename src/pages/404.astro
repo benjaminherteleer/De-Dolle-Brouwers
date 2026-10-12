@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import oeral from '../assets/bieren/oeral-vliegtuig.png';
+---
+
+<Base title="Pagina niet gevonden | De Dolle Brouwers">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <section class="section niet-gevonden">
+    <div class="wrap">
+      <Image src={oeral} alt="" width={420} class="vlieger" />
+      <p class="hand">Oei, verkeerd gevlogen</p>
+      <h1>Deze pagina bestaat niet (meer).</h1>
+      <p class="lead">
+        Misschien kwam je via een oude link. Onze site is vernieuwd: de bieren, het bezoek en de Oershop vind je hieronder.
+      </p>
+      <div class="knoppen">
+        <a class="btn dark" href="/">Naar de homepagina</a>
+        <a class="btn" href="/#bieren">Onze bieren</a>
+        <a class="btn light" href="/brouwerij">Bezoek</a>
+        <a class="btn light" href="/oershop">Oershop</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .niet-gevonden {
+    text-align: center;
+    padding-block: clamp(40px, 8vw, 100px);
+  }
+  .niet-gevonden :global(.vlieger) {
+    width: min(320px, 70%);
+    height: auto;
+    margin: 0 auto 10px;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    margin: 6px 0 14px;
+  }
+  .lead {
+    max-width: 34em;
+    margin: 0 auto 26px;
+  }
+  .knoppen {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>

@@ -22,6 +22,7 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
 <Base
   title={`${p.title} | Oershop | De Dolle Brouwers`}
   description={`${p.title} van De Dolle Brouwers, ${priceLabel(p)}. ${p.description}`.slice(0, 160)}
+  image={photos[0] ?? (p.featuredImage ? shopifyImage(p.featuredImage.url, 1200) : undefined)}
 >
   <Fragment slot="head">
     <link rel="canonical" href={`https://www.oerbier.be/oershop/${p.handle}`} />

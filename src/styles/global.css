@@ -57,7 +57,12 @@ body {
   font-size: 18px;
   font-variation-settings: 'SOFT' 0;
   line-height: 1.55;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Tilted photos and torn edges may poke out sideways; never let them widen the page on phones */
+html {
+  overflow-x: clip;
 }
 
 img {
