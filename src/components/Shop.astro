@@ -70,7 +70,7 @@ const price = priceLabel;
                   </span>
                   <span class="buy">
                     {realOptions(p).map((o) => (
-                      <select data-option={o.name} aria-label={o.name}>
+                      <select data-option={o.name} aria-label={o.name} class:list={{ maat: o.name === 'Maat' }}>
                         {o.optionValues.map((v) => (
                           <option value={v.name}>{v.name}</option>
                         ))}
@@ -192,7 +192,12 @@ const price = priceLabel;
     border-radius: 10px;
     background: var(--paper);
     min-width: 0;
-    flex: 1 1 110px;
+    flex: 1 1 100%;
+  }
+  /* Size is short: a small box next to the button, under the model/design choice */
+  .shop-item select.maat {
+    flex: 0 0 auto;
+    width: 5.5em;
   }
   .shop-item .add {
     font-size: 0.9rem;
