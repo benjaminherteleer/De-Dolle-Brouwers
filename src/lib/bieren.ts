@@ -33,7 +33,7 @@ const look: Record<string, { art: string; poster?: string; color: string; onColo
   oeral: { art: 'oeral', color: '#ffe17a' },
   'oerbier-reserva': { art: 'oerbier', color: '#1d1812', onColor: '#fbf5ea', foto: 'oerbier-reserva.webp', foto2: 'oerbier-reserva-kurken.jpg' },
   'dulle-teve-reserva': { art: 'dulle-teve', color: '#1d1812', onColor: '#fbf5ea', foto: 'dulle-teve-reserva.jpg' },
-  'stille-nacht-reserva': { art: 'stille-nacht', color: '#1d1812', onColor: '#fbf5ea', foto: 'stille-nacht-reserva.jpg', foto2: 'stille-nacht-reserva-liggend.jpg' },
+  'stille-nacht-reserva': { art: 'stille-nacht', color: '#1d1812', onColor: '#fbf5ea', foto: 'stille-nacht-reserva.jpg', foto2: 'stille-nacht-reserva-barriques.webp' },
 };
 
 export const bieren: Bier[] = data.map((b) => {
