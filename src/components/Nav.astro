@@ -50,6 +50,10 @@ const links = [
                 </li>
               ))}
             </ul>
+            <div class="extra">
+              <a href="/faq" aria-current={path === '/faq' ? 'page' : undefined}>Veelgestelde vragen</a>
+              <a href="/contact" aria-current={path === '/contact' ? 'page' : undefined}>Contact</a>
+            </div>
             <a class="kris" href="https://krisherteleer.com" target="_blank" rel="noopener">Kris Herteleer ↗</a>
           </nav>
           <button type="button" class="cart-btn" data-cart-button hidden aria-label="Mandje openen">
@@ -227,6 +231,10 @@ const links = [
     text-decoration-color: var(--yellow);
     text-decoration-thickness: 3px;
   }
+  /* FAQ and contact: only in the phone menu (they are in the footer on large screens) */
+  .extra {
+    display: none;
+  }
   .back {
     font-family: var(--font-display);
     font-weight: 700;
@@ -319,6 +327,22 @@ const links = [
     }
     .toggle:checked ~ .menu {
       display: flex;
+    }
+    .extra {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      padding-top: 16px;
+      border-top: 2px solid var(--ink);
+    }
+    .extra a {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.15rem;
+      text-decoration: none;
+    }
+    .extra a[aria-current='page'] {
+      background: linear-gradient(var(--yellow), var(--yellow)) left bottom / 100% 40% no-repeat;
     }
   }
 </style>
