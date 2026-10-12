@@ -460,9 +460,9 @@
     "slug": "oerbier-reserva",
     "name": "Oerbier Reserva",
     "title": "Oerbier Reserva — Donker, vatgerijpt bier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Oerbier Reserva (9%) is de op rode wijnvat gerijpte versie van Oerbier, van De Dolle Brouwers in Esen, West-Vlaanderen. Beperkte, genummerde oplage.",
+    "description": "Oerbier Reserva (9%) is de op wijnvat gerijpte versie van Oerbier, van De Dolle Brouwers in Esen, West-Vlaanderen. Beperkte, genummerde oplage.",
     "alt": "Oerbier Reserva personage",
-    "kicker": "Oerbier, gerijpt op rode wijnvat",
+    "kicker": "Oerbier, gerijpt op wijnvat",
     "meta": [
       {
         "label": "Alcohol",
@@ -477,7 +477,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "De donkere basis van het Oerbier krijgt er na twaalf maanden op rode wijnvat tonen van hout en wijn bij.",
+    "intro": "De donkere basis van het Oerbier krijgt er na twaalf maanden op wijnvat tonen van hout en wijn bij.",
     "notes": [
       {
         "label": "Aroma",
@@ -503,27 +503,26 @@
       }
     ],
     "weetjes": [
-      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "We gebruiken wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
-      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
-      "Hergist op fles met champagnegist.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
       "Bewaar de flessen rechtop en koel.",
       "Altijd in een kleine oplage."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op rode wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
+      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
-    "tagline": "Oerbier, minstens een jaar op rode wijnvaten."
+    "tagline": "Oerbier, minstens een jaar op wijnvaten."
   },
   {
     "slug": "dulle-teve-reserva",
     "name": "Dulle Teve Reserva",
     "title": "Dulle Teve Reserva — Vatgerijpte tripel van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Dulle Teve Reserva (10%) is de op rode wijnvat gerijpte versie van Dulle Teve, het tripelbier van De Dolle Brouwers uit Esen, West-Vlaanderen.",
+    "description": "Dulle Teve Reserva (10%) is de op wijnvat gerijpte versie van Dulle Teve, het tripelbier van De Dolle Brouwers uit Esen, West-Vlaanderen.",
     "alt": "Dulle Teve Reserva personage",
-    "kicker": "Dulle Teve, gerijpt op rode wijnvat",
+    "kicker": "Dulle Teve, gerijpt op wijnvat",
     "meta": [
       {
         "label": "Alcohol",
@@ -538,7 +537,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Extra rond en warmend: de tannines van het rode wijnvat verzwaren de body van de al stevige Dulle Teve.",
+    "intro": "Extra rond en warmend: de tannines van het wijnvat verzwaren de body van de al stevige Dulle Teve.",
     "notes": [
       {
         "label": "Aroma",
@@ -564,24 +563,23 @@
       }
     ],
     "weetjes": [
-      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "We gebruiken wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
-      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
-      "Hergist op fles met champagnegist.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
       "Bewaar de flessen rechtop en koel."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, gaat af en toe ook een geselecteerd brouwsel Dulle Teve minstens een jaar op rode wijnvaten. De tannines en houttonen geven het bier een extra laag complexiteit, telkens in een beperkte, genummerde oplage."
+      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, gaat af en toe ook een geselecteerd brouwsel Dulle Teve minstens een jaar op wijnvaten. De tannines en houttonen geven het bier een extra laag complexiteit, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
-    "tagline": "Onze tripel, minstens een jaar op rode wijnvaten."
+    "tagline": "Onze tripel, minstens een jaar op wijnvaten."
   },
   {
     "slug": "stille-nacht-reserva",
     "name": "Stille Nacht Reserva",
     "title": "Stille Nacht Reserva — Vatgerijpt kerstbier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Stille Nacht Reserva (12%) is de op rode wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
+    "description": "Stille Nacht Reserva (12%) is de op wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
     "alt": null,
     "kicker": "Stille Nacht, jarenlang gerijpt op wijnvat",
     "meta": [
@@ -598,7 +596,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "De complexe, goudkleurige Stille Nacht krijgt hier een tweede leven: minstens twee jaar op vaten die eerder rode wijn bevatten, tot een dieper, houtiger en licht vineus bier. Geen jaarlijkse editie, maar een release om de paar jaar, telkens met een eigen vatnummer.",
+    "intro": "De complexe, goudkleurige Stille Nacht krijgt hier een tweede leven: minstens twee jaar op vaten die eerder wijn bevatten, tot een dieper, houtiger en licht vineus bier. Geen jaarlijkse editie, maar een release om de paar jaar, telkens met een eigen vatnummer.",
     "notes": [
       {
         "label": "Aroma",
@@ -624,17 +622,16 @@
       }
     ],
     "weetjes": [
-      "We gebruiken rode wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
+      "We gebruiken wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
-      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 134\".",
-      "Hergist op fles met champagnegist.",
+      "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
       "Bewaar de flessen rechtop en koel."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, is vatrijping de basis van onze hele Reserva-lijn gebleven. Stille Nacht Reserva is geen jaarlijkse uitgave: om de paar jaar zet de brouwerij een geselecteerd brouwsel minstens twee jaar op vaten die eerder rode wijn bevatten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De rijpingsduur varieert bewust — soms twee jaar, soms langer — tot het bier de gewenste complexiteit heeft. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
+      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, is vatrijping de basis van onze hele Reserva-lijn gebleven. Stille Nacht Reserva is geen jaarlijkse uitgave: om de paar jaar zet de brouwerij een geselecteerd brouwsel minstens twee jaar op vaten die eerder wijn bevatten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De rijpingsduur varieert bewust — soms twee jaar, soms langer — tot het bier de gewenste complexiteit heeft. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
     },
     "reserva": true,
-    "tagline": "Stille Nacht, jaren op rode wijnvaten."
+    "tagline": "Stille Nacht, jaren op wijnvaten."
   }
 ]

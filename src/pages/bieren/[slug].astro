@@ -36,7 +36,7 @@ const ld = {
 };
 ---
 
-<Base title={b.title} description={b.description} image={b.poster ?? b.fles}>
+<Base title={b.title} description={b.description} image={b.foto ?? b.poster ?? b.fles}>
   <Fragment slot="head">
     <link rel="canonical" href={`https://www.oerbier.be/bieren/${b.slug}`} />
     <meta property="og:type" content="product" />
@@ -51,10 +51,18 @@ const ld = {
       <a class="back" href={back}>← Alle bieren</a>
       <div class="hero-grid">
         <div class="art">
-          <div class="art-frame" style={`background:${b.reserva ? 'var(--paper-light)' : b.color}`}>
-            {!b.reserva && <BeerFx slug={b.slug} live />}
-            <Image src={b.art} alt={b.alt ?? `${b.name} personage`} width={640} loading="eager" />
-          </div>
+          {
+            b.foto ? (
+              <div class="art-frame foto">
+                <Image src={b.foto} alt={`Flessen ${b.name}`} width={900} loading="eager" />
+              </div>
+            ) : (
+              <div class="art-frame" style={`background:${b.reserva ? 'var(--paper-light)' : b.color}`}>
+                {!b.reserva && <BeerFx slug={b.slug} live />}
+                <Image src={b.art} alt={b.alt ?? `${b.name} personage`} width={640} loading="eager" />
+              </div>
+            )
+          }
           <Stamp class="abv" ring={`${b.name} · De Dolle Brouwers · `} center={abv(b)} size={128} />
         </div>
         <div class="copy">
@@ -85,10 +93,11 @@ const ld = {
         }
       </div>
 
-      <div class:list={['serve', { 'with-poster': b.poster || b.fles }]}>
+      <div class:list={['serve', { 'with-poster': b.poster || b.fles || b.foto2 }]}>
         {
-          (b.poster || b.fles) && (
+          (b.poster || b.fles || b.foto2) && (
             <div class="serve-side">
+              {b.foto2 && <Polaroid src={b.foto2} alt={`Flessen ${b.name}`} tilt={2} ratio="4 / 5" width={600} taped />}
               {b.fles && <Polaroid src={b.fles} alt={`Een fles ${b.name} met een vol glas`} caption="In het glas" tilt={2} ratio="2 / 3" width={500} />}
               {b.poster && <Polaroid src={b.poster} alt={`Affiche van ${b.name}`} caption="De affiche" tilt={-3} ratio="5 / 7" width={600} taped />}
             </div>
@@ -160,8 +169,8 @@ const ld = {
           others.map((o, i) => (
             <li style={`--c:${o.color}; --tilt:${[-2, 1.5, -1, 2][i]}deg`}>
               <a href={`/bieren/${o.slug}`}>
-                <span class="more-art">
-                  <Image src={o.art} alt="" width={300} />
+                <span class:list={['more-art', { foto: o.foto }]}>
+                  <Image src={o.foto ?? o.art} alt="" width={300} />
                 </span>
                 <span class="more-name">{o.name}</span>
                 <span class="more-abv">{abv(o)}</span>
@@ -238,8 +247,20 @@ const ld = {
       transform: translateY(-6px) rotate(-2deg);
     }
   }
+  .art-frame.foto {
+    border-radius: 18px;
+    aspect-ratio: 4 / 5;
+  }
+  .art-frame.foto :global(img) {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: none;
+  }
   .art :global(.abv) {
     position: absolute;
+    z-index: 2;
     right: -10px;
     bottom: 6%;
   }
@@ -419,6 +440,15 @@ const ld = {
     width: calc(100% - 12px);
     height: calc(100% - 12px);
     object-fit: contain;
+  }
+  .more-art.foto {
+    overflow: hidden;
+  }
+  .more-art.foto :global(img) {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .more-name {
     font-family: var(--font-display);
