@@ -230,7 +230,10 @@ const bende = [
             reserva.map((b) => (
               <li>
                 <a href={`/bieren/${b.slug}`}>
-                  <span>{b.name}</span>
+                  <span class="res-name">
+                    {b.name}
+                    {b.badge && <small class:list={['res-stock', { out: b.badge.includes('niet') }]}>{b.badge}</small>}
+                  </span>
                   <span class="res-abv">{abv(b)}</span>
                 </a>
               </li>
@@ -673,6 +676,19 @@ const bende = [
   .res-list a:hover {
     color: var(--yellow);
     padding-left: 12px;
+  }
+  .res-name {
+    display: grid;
+    gap: 2px;
+  }
+  .res-stock {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--yellow);
+  }
+  .res-stock.out {
+    color: rgba(244, 233, 215, 0.55);
   }
   .res-abv {
     font-family: var(--font-hand);

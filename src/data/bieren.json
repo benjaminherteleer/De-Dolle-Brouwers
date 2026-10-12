@@ -458,6 +458,7 @@
   },
   {
     "slug": "oerbier-reserva",
+    "badge": "Momenteel voorradig, in beperkte oplage",
     "name": "Oerbier Reserva",
     "title": "Oerbier Reserva — Donker, vatgerijpt bier van De Dolle Brouwers | Esen, West-Vlaanderen",
     "description": "Oerbier Reserva (9%) is de op wijnvat gerijpte versie van Oerbier, van De Dolle Brouwers in Esen, West-Vlaanderen. Beperkte, genummerde oplage.",
@@ -518,6 +519,7 @@
   },
   {
     "slug": "dulle-teve-reserva",
+    "badge": "Momenteel niet voorradig",
     "name": "Dulle Teve Reserva",
     "title": "Dulle Teve Reserva — Vatgerijpte tripel van De Dolle Brouwers | Esen, West-Vlaanderen",
     "description": "Dulle Teve Reserva (10%) is de op wijnvat gerijpte versie van Dulle Teve, het tripelbier van De Dolle Brouwers uit Esen, West-Vlaanderen.",
@@ -577,6 +579,7 @@
   },
   {
     "slug": "stille-nacht-reserva",
+    "badge": "Momenteel voorradig, in beperkte oplage",
     "name": "Stille Nacht Reserva",
     "title": "Stille Nacht Reserva — Vatgerijpt kerstbier van De Dolle Brouwers | Esen, West-Vlaanderen",
     "description": "Stille Nacht Reserva (12%) is de op wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
