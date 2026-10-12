@@ -1,6 +1,6 @@
 # Oerbier / De Dolle Brouwers
 
-Astro site, deployed on Vercel from GitHub (push to `main` = deploy).
+Astro site, deployed on Cloudflare from GitHub (adapter `@astrojs/cloudflare`, config in `wrangler.jsonc`). The Cloudflare setup lives on the `cloudflare` branch; Vercel (from `main`) was the old host.
 
 - Node lives in `~/.local/node/bin`; package manager is pnpm.
 - Dev server: `pnpm dev`, build: `pnpm build`.
