@@ -32,8 +32,8 @@ const look: Record<string, { art: string; poster?: string; color: string; onColo
   'export-stout': { art: 'stout-logo', color: '#1c1813', onColor: '#fbf5ea' },
   oeral: { art: 'oeral', color: '#ffe17a' },
   'oerbier-reserva': { art: 'oerbier', color: '#1d1812', onColor: '#fbf5ea', foto: 'oerbier-reserva.webp', foto2: 'oerbier-reserva-kurken.jpg' },
-  'dulle-teve-reserva': { art: 'dulle-teve', color: '#1d1812', onColor: '#fbf5ea', foto: 'dulle-teve-reserva.jpg' },
-  'stille-nacht-reserva': { art: 'stille-nacht', color: '#1d1812', onColor: '#fbf5ea', foto: 'stille-nacht-reserva.jpg', foto2: 'stille-nacht-reserva-barriques.webp' },
+  'dulle-teve-reserva': { art: 'dulle-teve', color: '#1d1812', onColor: '#fbf5ea', foto: 'dulle-teve-reserva.jpg', foto2: 'dulle-teve-reserva-pinot.jpg' },
+  'stille-nacht-reserva': { art: 'stille-nacht', color: '#1d1812', onColor: '#fbf5ea', foto: 'stille-nacht-reserva-barriques.webp', foto2: 'stille-nacht-reserva.jpg' },
 };
 
 export const bieren: Bier[] = data.map((b) => {
