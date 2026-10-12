@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import mascot from '../assets/logo/logo-full.png';
 import wordmark from '../assets/logo/ddb-wordmark.png';
 import kar from '../assets/logo/mannetje-kar.png';
+import { langOf, link, counterpart } from '../i18n';
 
 interface Props {
   back?: { href: string; label: string };
@@ -10,21 +11,28 @@ interface Props {
 
 const { back } = Astro.props;
 const path = Astro.url.pathname.replace(/\.html$/, '');
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const L = (href: string) => link(lang, href);
 
 const links = [
-  { href: '/#bieren', label: 'Bieren' },
-  { href: '/brouwerij', label: 'Bezoek' },
-  { href: '/verhaal', label: 'Ons verhaal' },
-  { href: '/brouwproces', label: 'Brouwproces' },
-  { href: '/oershop', label: 'Oershop' },
-  { href: '/nieuws', label: 'Nieuws' },
-  { href: '/verkooppunten-kaart', label: 'Verkooppunten' },
+  { href: L('/#bieren'), label: en ? 'Beers' : 'Bieren' },
+  { href: L('/brouwerij'), label: en ? 'Visit' : 'Bezoek' },
+  { href: L('/verhaal'), label: en ? 'Our story' : 'Ons verhaal' },
+  { href: L('/brouwproces'), label: en ? 'Brewing' : 'Brouwproces' },
+  { href: L('/oershop'), label: en ? 'Shop' : 'Oershop' },
+  { href: '/nieuws', label: en ? 'News (NL)' : 'Nieuws' },
+  { href: L('/verkooppunten-kaart'), label: en ? 'Where to drink' : 'Verkooppunten' },
 ];
+const faq = L('/faq');
+const contact = L('/contact');
+// Language switch: same page in the other language, else that language's home page
+const switchTo = counterpart(path) ?? (en ? '/' : '/en');
 ---
 
 <header class="site-nav">
   <div class="bar">
-    <a class="brand" href="/" aria-label="De Dolle Brouwers, naar de homepage">
+    <a class="brand" href={en ? '/en' : '/'} aria-label={en ? 'De Dolle Brouwers, home' : 'De Dolle Brouwers, naar de homepage'}>
       <Image src={mascot} alt="" width={96} class="brand-mascot" loading="eager" />
       <span class="brand-word"><Image src={wordmark} alt="De Dolle Brouwers" width={200} loading="eager" /></span>
     </a>
@@ -40,7 +48,7 @@ const links = [
             <span />
             <span />
           </label>
-          <nav class="menu" aria-label="Hoofdmenu">
+          <nav class="menu" aria-label={en ? 'Main menu' : 'Hoofdmenu'}>
             <ul>
               {links.map((l) => (
                 <li>
@@ -51,17 +59,20 @@ const links = [
               ))}
             </ul>
             <div class="extra">
-              <a href="/faq" aria-current={path === '/faq' ? 'page' : undefined}>Veelgestelde vragen</a>
-              <a href="/contact" aria-current={path === '/contact' ? 'page' : undefined}>Contact</a>
+              <a href={faq} aria-current={path === faq ? 'page' : undefined}>{en ? 'FAQ' : 'Veelgestelde vragen'}</a>
+              <a href={contact} aria-current={path === contact ? 'page' : undefined}>Contact</a>
             </div>
             <a class="kris" href="https://krisherteleer.com" target="_blank" rel="noopener">Kris Herteleer ↗</a>
           </nav>
-          <button type="button" class="cart-btn" data-cart-button hidden aria-label="Mandje openen">
+          <a class="lang" href={switchTo} hreflang={en ? 'nl' : 'en'} lang={en ? 'nl' : 'en'} aria-label={en ? 'Nederlands' : 'English'}>
+            {en ? 'NL' : 'EN'}
+          </a>
+          <button type="button" class="cart-btn" data-cart-button hidden aria-label={en ? 'Open cart' : 'Mandje openen'}>
             <Image src={kar} alt="" width={80} />
             <span data-cart-count>0</span>
           </button>
-          <a class="btn cta" href="/brouwerij">
-            Kom langs →
+          <a class="btn cta" href={L('/brouwerij')}>
+            {en ? 'Visit us →' : 'Kom langs →'}
           </a>
         </>
       )
@@ -226,10 +237,28 @@ const links = [
     text-decoration: none;
     white-space: nowrap;
   }
+  @media (min-width: 1281px) and (max-width: 1500px) {
+    .menu > .kris {
+      display: none;
+    }
+  }
   .kris:hover {
     text-decoration: underline;
     text-decoration-color: var(--yellow);
     text-decoration-thickness: 3px;
+  }
+  .lang {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.25em 0.6em;
+    line-height: 1;
+  }
+  .lang:hover {
+    background: var(--yellow);
   }
   /* FAQ and contact: only in the phone menu (they are in the footer on large screens) */
   .extra {
@@ -245,7 +274,7 @@ const links = [
     display: none;
   }
 
-  @media (min-width: 981px) and (max-width: 1240px) {
+  @media (min-width: 1121px) and (max-width: 1280px) {
     .bar {
       gap: 16px;
     }
@@ -260,6 +289,19 @@ const links = [
       display: none;
     }
   }
+  @media (max-width: 400px) {
+    .bar {
+      gap: 6px;
+    }
+    .cta {
+      padding: 0.5em 0.7em;
+      font-size: 0.8rem;
+    }
+    /* Small phones: the wordmark alone, so the language switch, cart and button still fit */
+    .brand :global(.brand-mascot) {
+      display: none;
+    }
+  }
   @media (max-width: 560px) {
     .bar {
       gap: 10px;
@@ -271,15 +313,15 @@ const links = [
       width: 70px;
     }
   }
-  @media (max-width: 980px) {
-    .cart-btn {
+  @media (max-width: 1120px) {
+    .lang {
       margin-left: auto;
     }
-    .cart-btn:not([hidden]) + .cta {
+    .cart-btn,
+    .cta {
       margin-left: 0;
     }
     .cta {
-      margin-left: auto;
       font-size: 0.85rem;
       padding: 0.5em 0.9em;
     }

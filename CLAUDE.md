@@ -14,6 +14,14 @@ Astro site, deployed on Cloudflare from GitHub (adapter `@astrojs/cloudflare`, c
 - Domain: https://www.dedollebrouwers.be (oerbier.be is no longer used). Canonical URLs come from `Base.astro`; brewery/tour structured data from `src/lib/schema.ts`.
 - `index`, `brouwerij` and `brouwproces` are built on the new design. `contact`, `faq`, `rondleiding-boeken` and `verkooppunten-kaart` still carry their older page styles in a `<style is:global>` block, mapped onto the new tokens.
 
+## Two languages (Dutch at `/`, English at `/en`)
+
+- Each page's design lives once in `src/views/<Page>.astro`; `src/pages/x.astro` and `src/pages/en/<english-slug>.astro` are thin wrappers that render it.
+- Texts sit next to each other in the view: `tr('Nederlands', 'English')`. Links go through `L('/dutch-path')`, which maps to the English URL (`src/i18n/index.ts` holds the URL map).
+- Beer texts: `src/data/bieren.json` (NL) and `src/data/bieren.en.json` (EN, per slug); use `beers(lang)`. Shop texts: `src/data/producten.en.json`, option labels in `src/lib/shop.ts`.
+- Client scripts check `document.documentElement.lang === 'en'`. Nav, Footer, CartDrawer, Shop and the map read the language from the URL.
+- When changing Dutch text, change the English next to it. `/nieuws` stays Dutch only.
+
 ## Images
 
 - Put images in `src/assets/` and use `astro:assets` (`<Image>` / `Polaroid`) so they are resized to webp at build.

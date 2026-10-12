@@ -1,0 +1,14 @@
+---
+import Product from '../../../views/Product.astro';
+import { getProducts, type Product as P } from '../../../lib/shopify';
+import { CUSTOM, sortProducts } from '../../../lib/shop';
+
+export async function getStaticPaths() {
+  const products = sortProducts(await getProducts()).filter((p) => p.handle !== CUSTOM);
+  return products.map((product) => ({ params: { handle: product.handle }, props: { product, all: products } }));
+}
+
+const { product, all } = Astro.props as { product: P; all: P[] };
+---
+
+<Product product={product} all={all} />

@@ -1,0 +1,417 @@
+---
+import { langOf, link } from '../i18n';
+import { brewery } from '../lib/schema';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+import Stamp from '../components/Stamp.astro';
+
+import brouwer from '../assets/foto/bp-brouwer.jpg';
+import koelschip from '../assets/foto/bp-koelschip.jpg';
+import oerbar from '../assets/foto/oerbar-interieur.jpg';
+import parasols from '../assets/foto/terras-parasols.jpg';
+import taps from '../assets/foto/taphandles.jpg';
+import gevel from '../assets/foto/brouwerij-gevel.jpg';
+import poort from '../assets/foto/brouwerij-poort.jpg';
+import mascot from '../assets/logo/logo-full.png';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const route = 'https://www.google.com/maps/dir/?api=1&destination=De+Dolle+Brouwers,+Roeselarestraat+12B,+8600+Esen';
+
+const stops = [
+  {
+    img: brouwer,
+    alt: tr('Brouwer aan het werk bij de roerkuip', 'Brewer at work by the mash tun'),
+    title: tr('Rondleiding', 'Brewery tour'),
+    text: tr('Drie kwartier door het brouwhuis, langs de moutmolen, de roerkuip en de open gistkuipen. Met verhalen die je nergens anders hoort.', 'Forty-five minutes through the brewhouse, past the malt mill, the mash tun and the open fermenters. With stories you won\'t hear anywhere else.'),
+    tilt: -3,
+  },
+  {
+    img: koelschip,
+    alt: tr('Het koperen koelschip onder het dak', 'The copper coolship under the roof'),
+    title: tr('Het koelschip', 'The coolship'),
+    text: tr('Het koelschip dateert van rond 1900 en wordt nog altijd gebruikt: elk brouwsel koelt hier af. Er zijn niet veel brouwerijen meer waar je dat nog ziet.', 'The coolship dates from around 1900 and is still in use: every brew cools down here. There aren\'t many breweries left where you can still see that.'),
+    tilt: 2,
+  },
+  {
+    img: oerbar,
+    alt: tr('Het interieur van de Oerbar', 'Inside the Oerbar'),
+    title: tr('De Oerbar', 'The Oerbar'),
+    text: tr('Na de rondleiding proef je drie bieren van het vat. Daarna kan je het hele gamma bestellen, ook Oeral, dat je enkel hier drinkt.', 'After the tour you taste three beers from the cask. Then you can order the whole range in our taproom, including Oeral, which you can only drink here.'),
+    tilt: -2,
+  },
+  {
+    img: parasols,
+    alt: tr('Het terras met gele parasols', 'The terrace with yellow parasols'),
+    title: tr('Het terras', 'The terrace'),
+    text: tr('Bij mooi weer zit je buiten, tussen de oude brouwerijgebouwen, met een De Dolle Brouwers-biertje in de zon.', 'In good weather you sit outside, between the old brewery buildings, with a De Dolle Brouwers beer in the sun.'),
+    tilt: 3,
+  },
+];
+
+---
+
+<Base
+  title={tr("Brouwerij bezoeken & rondleiding | De Dolle Brouwers, Esen, Diksmuide", "Brewery visit & tour | De Dolle Brouwers, Esen, Belgium")}
+  description={tr("Bezoek brouwerij De Dolle Brouwers in Esen, Diksmuide (West-Vlaanderen): rondleiding elke zondag (14u Engels, 15u Nederlands), Oerbar open op zaterdag en zondag. Ontdek het koelschip, de open gistkuipen en ons verhaal sinds 1980.", "Visit De Dolle Brouwers in Esen near Diksmuide, West Flanders: brewery tour in English every Sunday at 2 pm, taproom open Saturday and Sunday. See the coolship, the open fermenters and our story since 1980.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Kom langs bij De Dolle Brouwers in Esen", "Visit De Dolle Brouwers in Esen, Belgium")} />
+    <meta property="og:description" content={tr("Rondleiding elke zondag, Oerbar open in het weekend. Sinds 1980 in Esen.", "Brewery tour every Sunday, taproom open on weekends. In Esen since 1980.")} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(brewery(lang))} />
+  </Fragment>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="hand">Roeselarestraat 12B, Esen</p>
+      <h1><Fragment set:html={tr("Kom eens<br />langs.", "Come and<br />visit.")} /></h1>
+      <p class="lead">
+        {tr("Een brouwerij uit 1835, installaties van rond 1900 die nog elke brouwdag draaien, en een bar vol bier dat hier gebrouwen is. Elke zondag geven we een rondleiding, en in het weekend is de Oerbar open.", "A brewery from 1835, equipment from around 1900 that still runs on every brew day, and a bar full of beer brewed right here. Every Sunday we give a brewery tour, and on weekends the Oerbar, our taproom, is open.")}
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href={L('/rondleiding-boeken')}>{tr("Boek een rondleiding", "Book a tour")}</a>
+        <a class="btn light" href={route} target="_blank" rel="noopener">{tr("Route plannen ↗", "Get directions ↗")}</a>
+      </div>
+      <dl class="hours">
+        <div><dt>{tr("Zaterdag", "Saturday")}</dt><dd>{tr("Oerbar 14u – 19u", "Oerbar 2 – 7 pm")}</dd></div>
+        <div><dt>{tr("Zondag", "Sunday")}</dt><dd>{tr("Oerbar 14u – 19u · Rondleiding 14u (EN) & 15u (NL)", "Oerbar 2 – 7 pm · Tour 2 pm (English) & 3 pm (Dutch)")}</dd></div>
+        <div><dt>{tr("Prijs", "Price")}</dt><dd>{tr("€10 pp, met drie proevertjes van het vat", "€10 per person, with three tastings from the cask")}</dd></div>
+      </dl>
+      <p class="small">{tr("Gesloten tijdens de kerstvakantie. Check vooraf onze socials.", "Closed during the Christmas holidays. Check our socials before you come.")}</p>
+    </div>
+    <div class="hero-photo">
+      <Image
+        src={gevel}
+        alt={tr("De binnenkoer van De Dolle Brouwers met het smiley-mannetje op het dak en rode vensters", "The courtyard of De Dolle Brouwers with the smiling figure on the roof and red windows")}
+        width={1200}
+        class="hero-img"
+        loading="eager"
+      />
+      <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, daterend rond 1900", "The coolship, from around 1900")} tilt={-4} ratio="4 / 3" width={500} class="hero-pol" />
+    </div>
+    <div class="edge-bottom"></div>
+  </section>
+
+  <!-- WAT JE ZIET -->
+  <section class="section stops" id="bezoek">
+    <div class="wrap">
+      <div class="head">
+        <h2>{tr("Wat je hier beleeft.", "What to expect.")}</h2>
+        <p class="hand">{tr("Reken op een namiddag ↓", "Plan for an afternoon ↓")}</p>
+      </div>
+      <ol class="stop-list">
+        {
+          stops.map((s, i) => (
+            <li>
+              <Polaroid src={s.img} alt={s.alt} tilt={s.tilt} ratio="4 / 5" width={600} taped={i % 2 === 0} />
+              <span class="stop-num">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- PRAKTISCH -->
+  <section class="section practical">
+    <div class="edge-top"></div>
+    <div class="wrap prac-grid">
+      <div class="prac-copy">
+        <h2>{tr("Praktisch.", "Practical.")}</h2>
+        <div class="prac-cards">
+          <div class="card">
+            <h3>{tr("Rondleiding op zondag", "Sunday brewery tour")}</h3>
+            <p>{tr("Om 14u in het Engels en om 15u in het Nederlands. Ongeveer drie kwartier, €10 per persoon, inclusief drie proevertjes van het vat.", "At 2 pm in English and at 3 pm in Dutch. About 45 minutes, €10 per person, including three tastings from the cask. Book online or just turn up and buy a ticket on the spot.")}</p>
+            <a class="btn" href={L('/rondleiding-boeken')}>{tr("Reserveer je plaats", "Book your spot")}</a>
+          </div>
+          <div class="card">
+            <h3>{tr("Met een groep?", "Coming with a group?")}</h3>
+            <p>
+              {tr("Vanaf 20 personen plannen we een aparte rondleiding, ook in de week. Mail naar", "For 20 people or more we plan a separate tour, also on weekdays. Email")}{' '}
+              <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>.
+            </p>
+          </div>
+          <div class="card">
+            <h3>{tr("Zo vind je ons", "How to find us")}</h3>
+            <p>{tr("Roeselarestraat 12B, 8600 Esen. Net buiten Diksmuide, niet ver van de kust.", "Roeselarestraat 12B, 8600 Esen, Belgium. Just outside Diksmuide, not far from the coast.")}</p>
+            <a class="link" href={route} target="_blank" rel="noopener">{tr("Route in Google Maps ↗", "Directions in Google Maps ↗")}</a>
+          </div>
+        </div>
+        <p class="faq">{tr("Nog vragen?", "More questions?")} <a href={L('/faq')}>{tr("Bekijk de veelgestelde vragen", "Read the FAQ")}</a> {tr("of", "or")} <a href={L('/contact')}>{tr("neem contact op", "get in touch")}</a>.</p>
+      </div>
+      <div class="prac-photos">
+        <Polaroid src={poort} alt={tr("De poort van de brouwerij in Esen", "The gate of the brewery in Esen")} caption={tr("Hier moet je zijn", "This is the place")} tilt={3} ratio="3 / 4" taped />
+        <Polaroid src={taps} alt={tr("Tapkranen in de Oerbar", "Taps in the Oerbar")} tilt={-4} ratio="1 / 1" width={500} class="small-pol" />
+      </div>
+    </div>
+    <div class="edge-bottom"></div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="edge-top"></div>
+    <div class="wrap cta-inner">
+      <Image src={mascot} alt="" width={260} class="cta-mascot" />
+      <div>
+        <h2>{tr("Tot zondag?", "See you Sunday?")}</h2>
+        <p class="lead">{tr("Rondleiding om 14u (Engels) of 15u (Nederlands). Daarna is de Oerbar van jou.", "Tour at 2 pm (English) or 3 pm (Dutch). After that, the Oerbar is all yours.")}</p>
+        <div class="hero-actions">
+          <a class="btn dark" href={L('/rondleiding-boeken')}>{tr("Boek een rondleiding", "Book a tour")}</a>
+          <a class="btn light" href={route} target="_blank" rel="noopener">{tr("Route plannen ↗", "Get directions ↗")}</a>
+        </div>
+      </div>
+      <Stamp class="cta-stamp" ring={tr('Oerbar open · Zaterdag & zondag · ', 'Oerbar open · Saturday & Sunday · ')} center={tr('14–19u', '2–7pm')} size={150} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    min-height: min(90vh, 860px);
+    background: var(--ink) var(--grain);
+    color: var(--paper-light);
+    z-index: 2;
+  }
+  .hero-copy {
+    padding: clamp(50px, 7vw, 100px) clamp(24px, 5vw, 70px) 80px max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter)));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero .hand {
+    color: var(--yellow);
+    background: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.92;
+    margin-bottom: 22px;
+  }
+  .hero .lead {
+    max-width: 32em;
+    color: #efe3cf;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .hours {
+    margin: 40px 0 10px;
+    display: grid;
+    gap: 0;
+    max-width: 520px;
+    border-top: 1px solid rgba(244, 233, 215, 0.25);
+  }
+  .hours div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(244, 233, 215, 0.25);
+  }
+  .hours dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--yellow);
+  }
+  .hours dd {
+    margin: 0;
+    color: #efe3cf;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: #bfb19a;
+    margin: 0;
+  }
+  .hero-photo {
+    position: relative;
+    min-height: 520px;
+  }
+  .hero-photo :global(.hero-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 35% 60%;
+  }
+  .hero-photo :global(.hero-pol) {
+    position: absolute;
+    width: min(260px, 42%);
+    left: -60px;
+    bottom: 60px;
+    z-index: 2;
+  }
+
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px 40px;
+    flex-wrap: wrap;
+    margin-bottom: 54px;
+  }
+  .head .hand {
+    transform: rotate(-3deg);
+  }
+
+  /* STOPS */
+  .stop-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px;
+  }
+  .stop-list li {
+    position: relative;
+  }
+  .stop-num {
+    position: absolute;
+    top: -16px;
+    left: -10px;
+    z-index: 3;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: var(--line);
+    box-shadow: 3px 3px 0 var(--ink);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.3rem;
+  }
+  .stop-list h3 {
+    margin: 26px 0 8px;
+  }
+  .stop-list p {
+    font-size: 1rem;
+  }
+
+  /* PRACTICAL */
+  .practical {
+    background: var(--yellow) var(--grain);
+    z-index: 1;
+  }
+  .prac-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(36px, 6vw, 80px);
+    align-items: center;
+  }
+  .prac-copy h2 {
+    margin-bottom: 30px;
+  }
+  .prac-cards {
+    display: grid;
+    gap: 22px;
+  }
+  .prac-cards h3 {
+    margin-bottom: 8px;
+  }
+  .prac-cards p {
+    margin-bottom: 14px;
+  }
+  .prac-cards p:last-child {
+    margin-bottom: 0;
+  }
+  .link {
+    font-weight: 700;
+  }
+  .faq {
+    margin-top: 26px;
+    font-weight: 600;
+  }
+  .prac-photos {
+    position: relative;
+  }
+  .prac-photos :global(.small-pol) {
+    position: absolute;
+    width: 46%;
+    left: -12%;
+    bottom: -8%;
+  }
+
+  /* CTA */
+  .cta {
+    position: relative;
+    background: var(--yellow) var(--grain);
+    padding: 70px 0 150px;
+    margin-top: 40px;
+  }
+  .cta-inner {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  .cta :global(.cta-mascot) {
+    width: 100%;
+    animation: bob 4s ease-in-out infinite;
+  }
+  .cta h2 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    margin-bottom: 12px;
+  }
+  @keyframes bob {
+    50% {
+      transform: translateY(-8px) rotate(3deg);
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .hero,
+    .prac-grid,
+    .stop-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 24px;
+    }
+    .cta-inner {
+      grid-template-columns: 120px 1fr;
+    }
+    .cta :global(.cta-stamp) {
+      display: none;
+    }
+    .prac-photos {
+      max-width: 420px;
+      margin-left: auto;
+    }
+  }
+  @media (max-width: 560px) {
+    .hero,
+    .prac-grid,
+    .stop-list {
+      grid-template-columns: 1fr;
+    }
+    .hero-photo {
+      min-height: 360px;
+    }
+    .hero-photo :global(.hero-pol) {
+      left: 16px;
+      bottom: 40px;
+    }
+    .cta-inner {
+      grid-template-columns: 1fr;
+    }
+    .cta :global(.cta-mascot) {
+      width: 120px;
+    }
+  }
+</style>

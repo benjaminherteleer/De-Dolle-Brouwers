@@ -1,0 +1,413 @@
+---
+import { langOf, link } from '../i18n';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+
+import overzicht from '../assets/brouwproces/overzicht.jpg';
+import proost from '../assets/brouwproces/proost.jpg';
+import molen from '../assets/foto/moutmolen.jpg';
+import roerkuip from '../assets/foto/bp-roerkuip.jpg';
+import koelschip from '../assets/foto/bp-koelschip-wort.jpg';
+import koeler from '../assets/foto/bp-koeler.jpg';
+import vergisting from '../assets/foto/bp-gisting.jpg';
+import vaten from '../assets/foto/vaten-rij.jpg';
+import bottelmachine from '../assets/foto/bp-bottelmachine.jpg';
+import warmeKamer from '../assets/foto/bp-warme-kamer.jpg';
+import lagertanks from '../assets/foto/bp-lagertanks.jpg';
+
+const art = import.meta.glob<{ default: ImageMetadata }>('../assets/brouwproces/stap-*.jpg', { eager: true });
+const stepArt = (n: number) => art[`../assets/brouwproces/stap-${String(n).padStart(2, '0')}.jpg`].default;
+
+type Step = {
+  title: string;
+  tag?: string;
+  text: string;
+  photo?: { src: ImageMetadata; alt: string; caption?: string };
+};
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const steps: Step[] = [
+  {
+    title: tr("Mout", "Malt"),
+    tag: tr("+ mout", "+ malt"),
+    text: tr("Alles begint met gemoute gerst. Zak per zak gaat de mout in de trechter, op weg naar de molen.", "It all starts with malted barley. Sack by sack the malt goes into the hopper, on its way to the mill."),
+  },
+  {
+    title: tr("Malen", "Milling"),
+    text: tr("Onze oude moutmolen kraakt de korrels open, zodat het zetmeel binnenin zijn werk kan doen. Die trouwe machine draait hier al tientallen jaren.", "Our old malt mill cracks the grains open, so the starch inside can do its work. That faithful machine has been running here for decades."),
+    photo: { src: molen, alt: tr("De oude moutmolen in de brouwerij", "The old malt mill in the brewery"), caption: tr("De echte, nog altijd in dienst", "The real one, still in service") },
+  },
+  {
+    title: tr("Maischen", "Mashing"),
+    tag: tr("+ water", "+ water"),
+    text: tr("De gemalen mout gaat met water uit onze eigen bronnen de roerkuip in. We laten het rusten op 63 °C en daarna op 73 °C, zodat de enzymen het zetmeel omzetten in suikers. Dan filteren we het zoete <em>wort</em> eraf. De roerkuip is allicht nog ouder dan het koelschip.", "The milled malt goes into the mash tun with water from our own wells. We rest it at 63 °C and then at 73 °C, so the enzymes turn the starch into sugars. Then we filter off the sweet <em>wort</em>. The mash tun is probably even older than the coolship."),
+    photo: { src: roerkuip, alt: tr("Roerkuip nr. 1 in het brouwhuis", "Mash tun no. 1 in the brewhouse"), caption: tr("Roerkuip nr. 1, nog altijd in gebruik", "Mash tun no. 1, still in use") },
+  },
+  {
+    title: tr("Koken", "Boiling"),
+    tag: tr("+ Belgische hopbellen", "+ Belgian hop cones"),
+    text: tr("Het wort komt aan de kook in de brouwketel. Daar gaan de Belgische hopbellen in: voor bitterheid, aroma en natuurlijke bescherming.", "The wort comes to the boil in the brew kettle. In go the Belgian hop cones: for bitterness, aroma and natural protection."),
+  },
+  {
+    title: tr("Het koelschip", "The coolship"),
+    tag: tr("90°", "90°"),
+    text: tr("Het hete wort, nog zo’n 90 °C, stroomt in ons <em>koelschip</em>: een brede, open koperen bak. Koper, net als onze gistkuipen. Hier rust het terwijl het bezinksel zakt. Het koelschip dateert van rond 1900 en doet nog altijd zijn werk.", "The hot wort, still around 90 °C, flows into our <em>coolship</em>: a wide, open copper tray. Copper, just like our fermenters. Here it rests while the sediment settles. The coolship dates from around 1900 and still does its job."),
+    photo: { src: koelschip, alt: tr("Dampend wort met schuimeilandjes in het koelschip", "Steaming wort with islands of foam in the coolship"), caption: tr("Wort in het koelschip", "Wort in the coolship") },
+  },
+  {
+    title: tr("De koeler", "The cooler"),
+    tag: tr("↓ 25°", "↓ 25°"),
+    text: tr("Daarna loopt het over buizen met koud stromend water en zakt het naar zo’n 25 °C. Precies goed voor de gist.", "Then it runs over pipes with cold running water and drops to about 25 °C. Just right for the yeast."),
+    photo: { src: koeler, alt: tr("De koeler met buizen en schuim, met een bordje niet aanraken", "The cooler with pipes and foam, with a do-not-touch sign"), caption: tr("De koeler (niet aanraken!)", "The cooler (don't touch!)") },
+  },
+  {
+    title: tr("Gisting", "Fermentation"),
+    tag: tr("+ gist", "+ yeast"),
+    text: tr("In onze open koperen kuipen gaat onze eigen huisgist aan het werk. Die zet de suikers om in alcohol en CO₂. Een groot deel van wat een De Dolle Brouwers-bier zo eigen maakt.", "In our open copper vessels our own house yeast gets to work. It turns the sugars into alcohol and CO₂. A big part of what makes a De Dolle Brouwers beer so distinctive."),
+    photo: { src: vergisting, alt: tr("Gistschuim in een open koperen gistkuip", "Yeast foam in an open copper fermenter"), caption: tr("Open gisting, in het echt", "Open fermentation, for real") },
+  },
+  {
+    title: tr("Rijpen", "Maturing"),
+    tag: tr("4° · 2 maanden", "4° · 2 months"),
+    text: tr("Na de gisting rust het bier minstens twee maanden in de lagertanks, op 4 °C. We nemen onze tijd: daar ronden de smaken af.", "After fermentation the beer rests for at least two months in the lagering tanks, at 4 °C. We take our time: that's where the flavours round off."),
+    photo: { src: lagertanks, alt: tr("Stalen lagertanks met ladders in de brouwerij", "Steel lagering tanks with ladders in the brewery") },
+  },
+  {
+    title: tr("Bottelen", "Bottling"),
+    tag: tr("+ suiker & gist", "+ sugar & yeast"),
+    text: tr("Voor het bottelen voegen we nog wat suiker en verse gist toe. Dan wordt elke fles gevuld en gekroonkurkt.", "Before bottling we add a little sugar and fresh yeast. Then every bottle is filled and capped."),
+    photo: { src: bottelmachine, alt: tr("De ronde bottelmachine met genummerde vulkranen", "The round bottling machine with numbered filling valves"), caption: tr("Onze bottelmachine", "Our bottling machine") },
+  },
+  {
+    title: tr("De warme kamer", "The warm room"),
+    text: tr("De bakken gaan naar de warme kamer, waar het bier hergist op de fles. Zo krijgt elk De Dolle Brouwers-biertje zijn natuurlijke prik.", "The crates go to the warm room, where the beer referments in the bottle. That's how every De Dolle Brouwers beer gets its natural sparkle."),
+    photo: { src: warmeKamer, alt: tr("Gestapelde gele Oerbier-bakken vol flessen bij de warme kamer", "Stacked yellow Oerbier crates full of bottles by the warm room") },
+  },
+];
+---
+
+<Base
+  title={tr("Brouwproces | Van graan tot fles bij De Dolle Brouwers in Esen", "How we brew | From grain to bottle at De Dolle Brouwers, Esen (Belgium)")}
+  description={tr("Zo brouwen we in Esen, al sinds 1980: van mout en molen over het koelschip en open koperen gistkuipen tot hergisting op de fles. Tien stappen, met het Oerbier-mannetje als gids.", "How we've brewed in Esen since 1980: from malt and mill to the coolship, open copper fermenters and refermentation in the bottle. Ten steps, with the Oerbier figure as your guide.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Brouwproces | De Dolle Brouwers", "How we brew | De Dolle Brouwers")} />
+    <meta property="og:description" content={tr("Van graan tot fles in tien stappen, zoals we het al sinds 1980 doen.", "From grain to bottle in ten steps, the way we've done it since 1980.")} />
+  </Fragment>
+
+  <section class="intro">
+    <div class="wrap intro-grid">
+      <div>
+        <p class="hand note">{tr("Het Oerbier-mannetje legt uit ↘", "The Oerbier figure explains ↘")}</p>
+        <h1>{tr("Zo brouwen we.", "How we brew.")}<br /><span>{tr("Al sinds 1980.", "Since 1980.")}</span></h1>
+        <p class="lead">
+          {tr("Tien stappen van graan tot fles. Niets gefilterd, niets gepasteuriseerd, en met installaties van rond 1900 die nog altijd in gebruik zijn, zoals de roerkuip en het koelschip.", "Ten steps from grain to bottle. Nothing filtered, nothing pasteurised, and with equipment from around 1900 that is still in use, like the mash tun and the coolship.")}
+        </p>
+        <a class="btn dark" href="#stap-1">{tr("Start bij stap 1 ↓", "Start at step 1 ↓")}</a>
+      </div>
+      <div class="map">
+        <Image src={overzicht} alt={tr("Getekende kaart van de tien brouwstappen", "Drawn map of the ten brewing steps")} width={900} loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <nav class="progress" aria-label={tr("Brouwstappen", "Brewing steps")}>
+    <ol>
+      {
+        steps.map((s, i) => (
+          <li>
+            <a href={`#stap-${i + 1}`} data-step={i + 1}>
+              <span class="num">{i + 1}</span>
+              <span class="lbl">{s.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="steps">
+    {
+      steps.map((s, i) => (
+        <article class:list={['step', { flip: i % 2 === 1 }]} id={`stap-${i + 1}`} data-step={i + 1}>
+          <div class="wrap step-grid">
+            <div class="step-art">
+              <Image src={stepArt(i + 1)} alt={en ? `Drawing: the Oerbier figure at step ${i + 1}, ${s.title.toLowerCase()}` : `Tekening: het Oerbier-mannetje bij stap ${i + 1}, ${s.title.toLowerCase()}`} width={900} />
+            </div>
+            <div class="step-copy">
+              <div class="step-head">
+                <span class="pill">{tr('Stap', 'Step')} {i + 1}</span>
+                {s.tag && <span class="tag">{s.tag}</span>}
+              </div>
+              <h2>{s.title}</h2>
+              <p class="lead" set:html={s.text} />
+              {s.photo && (
+                <Polaroid src={s.photo.src} alt={s.photo.alt} caption={s.photo.caption} tilt={i % 2 ? 3 : -3} ratio="4 / 3" width={560} taped class="real" />
+              )}
+            </div>
+          </div>
+          {i < steps.length - 1 && <div class="pipe" aria-hidden="true" />}
+        </article>
+      ))
+    }
+  </div>
+
+  <section class="section reserva">
+    <div class="edge-top"></div>
+    <div class="wrap res-grid">
+      <Polaroid src={vaten} alt={tr("Eiken wijnvaten in de kelder", "Oak wine barrels in the cellar")} tilt={-3} ratio="4 / 5" taped />
+      <div>
+        <span class="tag">{tr("Extra stap, soms", "An extra step, sometimes")}</span>
+        <h2>{tr("En dan nog een jaar op vat.", "And then a year in the barrel.")}</h2>
+        <p class="lead">
+          {tr("Af en toe gaat een brouwsel Oerbier, Dulle Teve of Stille Nacht na de gisting niet naar de fles maar naar oude wijnvaten. Daar ligt het minstens een jaar, soms veel langer. Het begon in 1998, toen Kris het eerste Oerbier te slapen legde in oude sherryvaten.", "Now and then a batch of Oerbier, Dulle Teve or Stille Nacht doesn't go into the bottle after fermentation but into old wine barrels. It stays there for at least a year, sometimes much longer. It started in 1998, when Kris laid the first Oerbier to rest in old sherry casks.")}
+        </p>
+        <a class="btn" href={L('/#reserva')}>{tr("Naar de Reserva's", "To the Reservas")}</a>
+      </div>
+    </div>
+    <div class="edge-bottom"></div>
+  </section>
+
+  <section class="section cheers">
+    <div class="wrap cheers-grid">
+      <div>
+        <h2>Santé!</h2>
+        <p class="lead">{tr("Liever zelf zien hoe het gaat? Kris neemt je elke zondag mee door de brouwerij, met drie proevertjes van het vat.", "Rather see it for yourself? Every Sunday Kris takes you through the brewery, with three tastings from the cask.")}</p>
+        <div class="times">
+          <span class="pill">{tr("14u Engels", "2 pm English")}</span>
+          <span class="pill">{tr("15u Nederlands", "3 pm Dutch")}</span>
+        </div>
+        <a class="btn dark" href={L('/rondleiding-boeken')}>{tr("Boek een rondleiding", "Book a tour")}</a>
+      </div>
+      <Image src={proost} alt={tr("Het Oerbier-mannetje met een bak vol flessen in de warme kamer", "The Oerbier figure with a crate full of bottles in the warm room")} width={900} class="cheers-art" />
+    </div>
+  </section>
+</Base>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('.progress a');
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const n = (e.target as HTMLElement).dataset.step;
+        links.forEach((a) => {
+          a.classList.toggle('on', Number(a.dataset.step) <= Number(n));
+          a.classList.toggle('cur', a.dataset.step === n);
+        });
+        const cur = document.querySelector<HTMLElement>(`.progress a[data-step="${n}"]`);
+        cur?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  document.querySelectorAll('.step').forEach((s) => io.observe(s));
+</script>
+
+<style>
+  .intro {
+    padding: clamp(40px, 6vw, 80px) 0 40px;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .note {
+    transform: rotate(-3deg);
+    width: fit-content;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: clamp(3rem, 7.5vw, 6.2rem);
+    margin-bottom: 24px;
+  }
+  h1 span {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .intro .btn {
+    margin-top: 8px;
+  }
+  .map :global(img),
+  .step-art :global(img),
+  .cheers :global(.cheers-art) {
+    width: 100%;
+    border: var(--line);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg);
+    background: #f4e9d7;
+  }
+  .map :global(img) {
+    transform: rotate(1.5deg);
+  }
+
+  /* sticky step bar, like the dashes on our slides */
+  .progress {
+    position: sticky;
+    top: var(--nav-offset);
+    transition: top 0.3s ease;
+    z-index: 50;
+    background: var(--paper) var(--grain);
+    border-block: var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .progress ol {
+    list-style: none;
+    margin: 0 auto;
+    padding: 10px var(--gutter);
+    display: flex;
+    gap: 6px;
+    max-width: 1320px;
+    justify-content: space-between;
+  }
+  .progress a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .progress .num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    display: grid;
+    place-items: center;
+    font-size: 0.85rem;
+    background: var(--paper-light);
+    transition: background 0.2s;
+  }
+  .progress a.on .num {
+    background: var(--yellow);
+  }
+  .progress a:hover {
+    background: var(--paper-deep);
+  }
+
+  .step {
+    padding: clamp(50px, 7vw, 90px) 0 0;
+    position: relative;
+    scroll-margin-top: 80px;
+  }
+  .step-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(24px, 5vw, 70px);
+    align-items: center;
+  }
+  .flip .step-art {
+    order: 2;
+  }
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .step-head .tag {
+    transform: rotate(2deg);
+  }
+  .step-copy h2 {
+    margin-bottom: 16px;
+  }
+  .step-copy :global(em) {
+    font-style: italic;
+    font-weight: 700;
+  }
+  .step-copy :global(.real) {
+    width: min(300px, 80%);
+    margin-top: 26px;
+  }
+  .pipe {
+    width: 160px;
+    height: 150px;
+    margin: 18px auto -46px;
+    position: relative;
+    z-index: 3;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 150'%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%2321170c' stroke-width='17' stroke-linecap='round'/%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%23e3b25a' stroke-width='11' stroke-linecap='round'/%3E%3Cpath d='M80 14 C 18 48, 142 98, 80 136' fill='none' stroke='%23f6d78f' stroke-width='3' stroke-linecap='round' stroke-dasharray='10 14' transform='translate(-2 -1)'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  .flip .pipe {
+    transform: scaleX(-1);
+  }
+
+  .reserva {
+    margin-top: clamp(80px, 10vw, 130px);
+    background: #1d1812 var(--grain);
+    color: var(--paper);
+  }
+  .res-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+  }
+  .reserva h2 {
+    color: var(--yellow);
+    margin: 18px 0;
+  }
+  .reserva .tag {
+    background: var(--yellow);
+    color: var(--ink);
+  }
+
+  .cheers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .cheers h2 {
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    margin-bottom: 18px;
+  }
+  .times {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 4px 0 26px;
+  }
+
+  @media (max-width: 900px) {
+    .intro-grid,
+    .step-grid,
+    .res-grid,
+    .cheers-grid {
+      grid-template-columns: 1fr;
+    }
+    .flip .step-art {
+      order: 0;
+    }
+    .progress {
+      top: var(--nav-offset);
+    }
+    .progress .lbl {
+      display: none;
+    }
+    .progress a {
+      padding: 2px;
+    }
+    .progress a.cur .lbl {
+      display: inline;
+    }
+    .progress a.cur {
+      padding-right: 10px;
+    }
+  }
+</style>

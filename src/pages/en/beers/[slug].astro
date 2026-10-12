@@ -1,0 +1,10 @@
+---
+import Bier from '../../../views/Bier.astro';
+import { bieren } from '../../../lib/bieren';
+
+export function getStaticPaths() {
+  return bieren.map((b) => ({ params: { slug: b.slug } }));
+}
+---
+
+<Bier slug={Astro.params.slug!} />

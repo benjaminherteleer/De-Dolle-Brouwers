@@ -1,56 +1,61 @@
 ---
 import { Image } from 'astro:assets';
 import lineup from '../assets/logo/mascot-lineup.png';
+import { langOf, link } from '../i18n';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const L = (href: string) => link(lang, href);
 ---
 
 <footer class="site-footer">
   <div class="edge-top"></div>
   <div class="wrap">
     <div class="lineup">
-      <Image src={lineup} alt="De bende van De Dolle Brouwers: Dulle Teve, Stille Nacht, Oerbier, Boskeun en Arabier" width={640} />
+      <Image src={lineup} alt={en ? 'The De Dolle Brouwers gang: Dulle Teve, Stille Nacht, Oerbier, Boskeun and Arabier' : 'De bende van De Dolle Brouwers: Dulle Teve, Stille Nacht, Oerbier, Boskeun en Arabier'} width={640} />
     </div>
 
     <div class="grid">
       <div class="col about">
-        <p class="hand big">Nat en straf, sinds 1980.</p>
+        <p class="hand big">{en ? 'Nat en straf since 1980.' : 'Nat en straf, sinds 1980.'}</p>
         <p>
           De Dolle Brouwers<br />
           Roeselarestraat 12B<br />
-          8600 Esen (Diksmuide)
+          8600 Esen (Diksmuide){en && <><br />Belgium</>}
         </p>
         <p><a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a></p>
       </div>
 
       <div class="col">
         <h4>Oerbar</h4>
-        <p>Zaterdag &amp; zondag<br />14u – 19u</p>
-        <h4>Rondleiding</h4>
-        <p>Elke zondag<br />14u Engels · 15u Nederlands</p>
+        <p set:html={en ? 'Saturday &amp; Sunday<br />2 – 7 pm' : 'Zaterdag &amp; zondag<br />14u – 19u'} />
+        <h4>{en ? 'Brewery tour' : 'Rondleiding'}</h4>
+        <p set:html={en ? 'Every Sunday<br />2 pm English · 3 pm Dutch' : 'Elke zondag<br />14u Engels · 15u Nederlands'} />
       </div>
 
       <div class="col">
-        <h4>Verder kijken</h4>
+        <h4>{en ? 'Explore' : 'Verder kijken'}</h4>
         <ul>
-          <li><a href="/#bieren">Onze bieren</a></li>
-          <li><a href="/brouwerij">Bezoek</a></li>
-          <li><a href="/verhaal">Ons verhaal</a></li>
-          <li><a href="/brouwproces">Brouwproces</a></li>
-          <li><a href="/oershop">Oershop</a></li>
-          <li><a href="/nieuws">Oerbier Fake Nieuws</a></li>
-          <li><a href="/verkooppunten-kaart">Verkooppunten</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/faq">Veelgestelde vragen</a></li>
+          <li><a href={L('/#bieren')}>{en ? 'Our beers' : 'Onze bieren'}</a></li>
+          <li><a href={L('/brouwerij')}>{en ? 'Visit' : 'Bezoek'}</a></li>
+          <li><a href={L('/verhaal')}>{en ? 'Our story' : 'Ons verhaal'}</a></li>
+          <li><a href={L('/brouwproces')}>{en ? 'Brewing' : 'Brouwproces'}</a></li>
+          <li><a href={L('/oershop')}>{en ? 'Shop' : 'Oershop'}</a></li>
+          <li><a href="/nieuws">Oerbier Fake Nieuws{en && ' (NL)'}</a></li>
+          <li><a href={L('/verkooppunten-kaart')}>{en ? 'Where to drink' : 'Verkooppunten'}</a></li>
+          <li><a href={L('/contact')}>Contact</a></li>
+          <li><a href={L('/faq')}>{en ? 'FAQ' : 'Veelgestelde vragen'}</a></li>
           <li><a href="https://krisherteleer.com" target="_blank" rel="noopener">Kris Herteleer ↗</a></li>
         </ul>
       </div>
 
       <div class="col">
         <h4>Keep in touch!</h4>
-        <p>Schrijf je in voor ons <a href="/nieuws">Oerbier FAKE news</a>.</p>
+        <p>{en ? 'Sign up for our ' : 'Schrijf je in voor ons '}<a href="/nieuws">Oerbier FAKE news</a>{en ? ' (in Dutch).' : '.'}</p>
         <form class="news" id="news">
-          <input type="email" name="email" required placeholder="jouw@email.be" aria-label="E-mailadres" />
+          <input type="email" name="email" required placeholder={en ? 'you@email.com' : 'jouw@email.be'} aria-label={en ? 'Email address' : 'E-mailadres'} />
           <input type="text" name="honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <button class="btn" type="submit">Schrijf me in</button>
+          <button class="btn" type="submit">{en ? 'Sign me up' : 'Schrijf me in'}</button>
         </form>
         <p class="news-status" id="news-status" role="status"></p>
         <div class="socials">
@@ -84,8 +89,8 @@ import lineup from '../assets/logo/mascot-lineup.png';
 
     <div class="bottom">
       <span>© De Dolle Brouwers BV, Esen · BE 0420.717.308</span>
-      <span>Drink met mate. Of toch met verstand.</span>
-      <span>Site gemaakt door Benjamin Herteleer, 2026</span>
+      <span>{en ? 'Drink in moderation. Or at least with sense.' : 'Drink met mate. Of toch met verstand.'}</span>
+      <span>{en ? 'Site by Benjamin Herteleer, 2026' : 'Site gemaakt door Benjamin Herteleer, 2026'}</span>
     </div>
   </div>
 </footer>
@@ -239,9 +244,11 @@ import lineup from '../assets/logo/mascot-lineup.png';
       });
       if (!res.ok) throw new Error(String(res.status));
       news.reset();
-      if (newsStatus) newsStatus.textContent = 'Santé, je staat erop!';
+      const en = document.documentElement.lang === 'en';
+      if (newsStatus) newsStatus.textContent = en ? "Santé, you're on the list!" : 'Santé, je staat erop!';
     } catch {
-      if (newsStatus) newsStatus.textContent = 'Dat lukte niet. Probeer het later nog eens.';
+      const en = document.documentElement.lang === 'en';
+      if (newsStatus) newsStatus.textContent = en ? "That didn't work. Please try again later." : 'Dat lukte niet. Probeer het later nog eens.';
     } finally {
       button.disabled = false;
     }

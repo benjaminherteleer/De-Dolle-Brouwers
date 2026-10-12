@@ -1,0 +1,804 @@
+---
+import { langOf, link } from '../i18n';
+import type { ImageMetadata } from 'astro';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+import { getProducts } from '../lib/shopify';
+
+// Variant ids for the cart: the plain yellow figurine and the personalised one.
+let plainId = '';
+let customId = '';
+try {
+  const products = await getProducts();
+  plainId = products.find((p) => p.handle === 'oerbier-mannetje')?.variants.nodes[0]?.id ?? '';
+  customId = products.find((p) => p.handle === 'oerbier-mannetje-op-maat')?.variants.nodes[0]?.id ?? '';
+} catch {}
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const examples = import.meta.glob<{ default: ImageMetadata }>('../assets/mannetjes/*.jpg', { eager: true });
+const gallery = Object.entries(examples)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([file, mod], i) => ({
+    src: mod.default,
+    name: file.split('/').pop()!.replace('.jpg', ''),
+    tilt: [-2.5, 2, -1, 3, -3, 1.5][i % 6],
+  }));
+
+const palette = [
+  ['Oerbier-geel', '#f6bf1c'],
+  ['Citroengeel', '#fbe14a'],
+  ['Oranje', '#f28c28'],
+  ['Rood', '#d93a2b'],
+  ['Bordeaux', '#7d1f2b'],
+  ['Roze', '#f3a7c3'],
+  ['Fuchsia', '#d6337f'],
+  ['Lila', '#c9b3e8'],
+  ['Paars', '#8a6bc8'],
+  ['Donkerblauw', '#1f3c88'],
+  ['Blauw', '#3d7bd4'],
+  ['Hemelsblauw', '#8fc3ec'],
+  ['Turkoois', '#2bb3a8'],
+  ['Groen', '#2f7f45'],
+  ['Lichtgroen', '#8cc84b'],
+  ['Kaki', '#8a8a4a'],
+  ['Bruin', '#6b4226'],
+  ['Beige', '#e3cfa6'],
+  ['Wit', '#f7f6f1'],
+  ['Grijs', '#8c8c8c'],
+  ['Zwart', '#1f1b17'],
+  ['Zilver', '#c4c8ce'],
+  ['Goud', '#c9a13b'],
+  ['Brons', '#a86a2c'],
+];
+
+const parts = [
+  { id: 'alles', label: tr("Alles", "Everything") },
+  { id: 'hoofd', label: tr("Hoofd", "Head") },
+  { id: 'lichaam', label: tr("Lichaam", "Body") },
+  { id: 'armen', label: tr("Armen", "Arms") },
+  { id: 'voeten', label: tr("Voetjes", "Feet") },
+  { id: 'glas', label: tr("Glas", "Glass") },
+  { id: 'sjaal', label: tr("Sjaal", "Scarf") },
+];
+
+const flags = [
+  { id: 'be', label: tr("België", "Belgium") },
+  { id: 'nl', label: tr("Nederland", "Netherlands") },
+  { id: 'fr', label: tr("Frankrijk", "France") },
+  { id: 'de', label: tr("Duitsland", "Germany") },
+  { id: 'it', label: tr("Italië", "Italy") },
+  { id: 'es', label: tr("Spanje", "Spain") },
+  { id: 'pt', label: tr("Portugal", "Portugal") },
+  { id: 'ie', label: tr("Ierland", "Ireland") },
+  { id: 'gb', label: tr("Verenigd Koninkrijk", "United Kingdom") },
+  { id: 'at', label: tr("Oostenrijk", "Austria") },
+  { id: 'dk', label: tr("Denemarken", "Denmark") },
+  { id: 'se', label: tr("Zweden", "Sweden") },
+  { id: 'no', label: tr("Noorwegen", "Norway") },
+  { id: 'us', label: tr("Verenigde Staten", "United States") },
+  { id: 'jp', label: tr("Japan", "Japan") },
+];
+
+// Flag artwork in a 256 x 208 box that covers the body and arms
+const W = 256;
+const H = 208;
+const v3 = (a: string, b: string, c: string) =>
+  `<rect width="${W / 3 + 1}" height="${H}" fill="${a}"/><rect x="${W / 3}" width="${W / 3 + 1}" height="${H}" fill="${b}"/><rect x="${(2 * W) / 3}" width="${W / 3}" height="${H}" fill="${c}"/>`;
+const h3 = (a: string, b: string, c: string) =>
+  `<rect width="${W}" height="${H / 3 + 1}" fill="${a}"/><rect y="${H / 3}" width="${W}" height="${H / 3 + 1}" fill="${b}"/><rect y="${(2 * H) / 3}" width="${W}" height="${H / 3}" fill="${c}"/>`;
+const nordic = (bg: string, cross: string, inner?: string) =>
+  `<rect width="${W}" height="${H}" fill="${bg}"/><rect x="74" width="44" height="${H}" fill="${cross}"/><rect y="82" width="${W}" height="44" fill="${cross}"/>` +
+  (inner ? `<rect x="85" width="22" height="${H}" fill="${inner}"/><rect y="93" width="${W}" height="22" fill="${inner}"/>` : '');
+const usStripes = Array.from({ length: 13 }, (_, i) => `<rect y="${i * 16}" width="${W}" height="16" fill="${i % 2 ? '#fff' : '#b22234'}"/>`).join('');
+const usStars = Array.from({ length: 30 }, (_, i) => `<circle cx="${12 + (i % 6) * 18 + (Math.floor(i / 6) % 2) * 9}" cy="${12 + Math.floor(i / 6) * 20}" r="3.2" fill="#fff"/>`).join('');
+const flagArt: Record<string, string> = {
+  be: v3('#1f1b17', '#f7cf1c', '#d93a2b'),
+  fr: v3('#1f4ea3', '#ffffff', '#d93a2b'),
+  it: v3('#1d8a46', '#ffffff', '#d93a2b'),
+  ie: v3('#1d8a46', '#ffffff', '#f28c28'),
+  nl: h3('#ae1c28', '#ffffff', '#21468b'),
+  de: h3('#1f1b17', '#d93a2b', '#f7cf1c'),
+  at: h3('#d93a2b', '#ffffff', '#d93a2b'),
+  es: `<rect width="${W}" height="${H}" fill="#c60b1e"/><rect y="52" width="${W}" height="104" fill="#ffc400"/>`,
+  pt: `<rect width="${W}" height="${H}" fill="#d93a2b"/><rect width="102" height="${H}" fill="#1d6b2e"/><circle cx="102" cy="104" r="30" fill="#f7cf1c"/>`,
+  se: nordic('#1f5fa8', '#f7cf1c'),
+  dk: nordic('#c8102e', '#ffffff'),
+  no: nordic('#ba0c2f', '#ffffff', '#00205b'),
+  jp: `<rect width="${W}" height="${H}" fill="#ffffff"/><circle cx="140" cy="200" r="52" fill="#bc002d"/>`,
+  us: `${usStripes}<rect width="118" height="112" fill="#3c3b6e"/>${usStars}`,
+  gb: `<rect width="${W}" height="${H}" fill="#012169"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#fff" stroke-width="40"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#c8102e" stroke-width="13"/><rect x="104" width="48" height="${H}" fill="#fff"/><rect y="80" width="${W}" height="48" fill="#fff"/><rect x="113" width="30" height="${H}" fill="#c8102e"/><rect y="89" width="${W}" height="30" fill="#c8102e"/>`,
+};
+---
+
+<Base
+  title={tr("Jouw eigen Oerbier-mannetje | De Dolle Brouwers", "Design your own Oerbier figure | De Dolle Brouwers")}
+  description={tr("Stel je eigen Oerbier-mannetje samen: kleur per lichaamsdeel, een vlag, je eigen logo en tekst op de sjaal. Met de hand beschilderd, €90. Het gewone gele mannetje kost €60.", "Design your own Oerbier figure: a colour for every part, a flag, your own logo and text on the scarf. Hand-painted, €90. The regular yellow figure is €60.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Jouw eigen Oerbier-mannetje", "Your own Oerbier figure")} />
+  </Fragment>
+
+  <section class="intro">
+    <div class="wrap">
+      <a class="back" href={L('/oershop')}>{tr("← Oershop", "← Shop")}</a>
+      <h1>{tr("Jouw eigen", "Your own")}<br /><em>{tr("Oerbier-mannetje.", "Oerbier figure.")}</em></h1>
+      <p class="lead">
+        {tr("Elk mannetje wordt met de hand beschilderd. Geef elk stukje een eigen kleur, zet er een vlag of je logo op en kies wat er op de sjaal staat. Of verzin zelf iets: we hebben al voetbalshirts, namen, trouwdata en clublogo's gedaan.", "Every figure is painted by hand. Give each part its own colour, add a flag or your logo and choose what goes on the scarf. Or come up with something yourself: we've done football shirts, names, wedding dates and club logos.")}
+      </p>
+      <ul class="prices">
+        <li><strong>€60</strong> {tr("het gewone gele", "the regular yellow one")}</li>
+        <li><strong>€90</strong> {tr("gepersonaliseerd", "personalised")}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="maker">
+    <div class="wrap maker-grid">
+      <div class="preview">
+        <svg viewBox="0 0 320 340" role="img" aria-label={tr("Voorbeeld van jouw Oerbier-mannetje", "Preview of your Oerbier figure")} id="man">
+          <defs>
+            <clipPath id="clip-body">
+              <ellipse cx="160" cy="215" rx="92" ry="86"></ellipse>
+            </clipPath>
+            <clipPath id="clip-all">
+              <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)"></ellipse>
+              <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)"></ellipse>
+              <ellipse cx="160" cy="215" rx="92" ry="86"></ellipse>
+              <circle cx="160" cy="110" r="58"></circle>
+            </clipPath>
+            <pattern id="pat-strepen" width="24" height="24" patternUnits="userSpaceOnUse">
+              <rect width="24" height="11" fill="#fbfaf5"></rect>
+            </pattern>
+            <pattern id="pat-camo" width="90" height="90" patternUnits="userSpaceOnUse">
+              <path d="M5 12 q12-14 26-2 t22 6 q4 14-14 12 t-22 4 q-16-6-12-20z" fill="rgba(0,0,0,.28)"></path>
+              <path d="M52 50 q14-10 26 0 t6 18 q-12 10-24 2 t-8-20z" fill="rgba(255,255,255,.35)"></path>
+              <path d="M8 62 q10-8 20 2 q6 12-8 14 q-16-2-12-16z" fill="rgba(0,0,0,.2)"></path>
+              <path d="M60 4 q10 2 12 12 q-6 8-16 2z" fill="rgba(255,255,255,.3)"></path>
+            </pattern>
+            {
+              flags.map((f) => (
+                <pattern id={`pat-${f.id}`} x="18" y="96" width={W} height={H} patternUnits="userSpaceOnUse"><Fragment set:html={flagArt[f.id]} /></pattern>
+              ))
+            }
+            <path id="sash-line" d="M92 150 L244 274"></path>
+          </defs>
+
+          <ellipse cx="160" cy="322" rx="110" ry="12" fill="rgba(33,23,12,.12)"></ellipse>
+
+          <g stroke="#21170c" stroke-width="3">
+            <ellipse cx="122" cy="296" rx="34" ry="27" data-part="voeten"></ellipse>
+            <ellipse cx="198" cy="296" rx="34" ry="27" data-part="voeten"></ellipse>
+            <ellipse cx="62" cy="192" rx="42" ry="24" transform="rotate(-25 62 192)" data-part="armen"></ellipse>
+            <ellipse cx="236" cy="142" rx="22" ry="44" transform="rotate(35 236 142)" data-part="armen"></ellipse>
+            <ellipse cx="160" cy="215" rx="92" ry="86" data-part="lichaam"></ellipse>
+          </g>
+          <rect x="0" y="0" width="320" height="340" clip-path="url(#clip-body)" class="pattern" fill="none"></rect>
+          <image class="logo" x="96" y="214" width="62" height="62" preserveAspectRatio="xMidYMid meet" clip-path="url(#clip-body)"></image>
+          <circle cx="160" cy="110" r="58" stroke="#21170c" stroke-width="3" data-part="hoofd"></circle>
+          <ellipse cx="138" cy="76" rx="18" ry="10" fill="rgba(255,255,255,.4)" transform="rotate(-30 138 76)"></ellipse>
+
+          <g stroke="#21170c" stroke-width="3" stroke-linejoin="round">
+            <path d="M226 36 H296 Q294 98 261 102 Q228 98 226 36 Z" data-part="glas"></path>
+            <path d="M226 36 H296 L294 50 H228 Z" fill="#fbfaf5"></path>
+          </g>
+
+          <g>
+            <ellipse cx="142" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
+            <ellipse cx="178" cy="100" rx="14" ry="16" fill="#fff" stroke="#21170c" stroke-width="3"></ellipse>
+            <circle cx="147" cy="104" r="7.5" fill="#21170c"></circle>
+            <circle cx="183" cy="104" r="7.5" fill="#21170c"></circle>
+            <path d="M138 128 Q160 150 182 128" fill="none" stroke="#21170c" stroke-width="3.5" stroke-linecap="round"></path>
+          </g>
+
+          <g class="extra extra-bril" stroke="#21170c" stroke-width="3">
+            <rect x="122" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
+            <rect x="164" y="88" width="34" height="24" rx="9" fill="#21170c"></rect>
+            <path d="M156 98 H164" fill="none"></path>
+            <path d="M126 92 L136 92" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round"></path>
+          </g>
+
+          <g clip-path="url(#clip-all)">
+            <path d="M76 168 L104 136 L262 260 L234 292 Z" data-part="sjaal" stroke="#21170c" stroke-width="3"></path>
+          </g>
+          <text class="sash-text" font-size="24" dy="8">
+            <textPath href="#sash-line" startOffset="50%" text-anchor="middle" id="sash-text">oerbier</textPath>
+          </text>
+
+          <g class="extra extra-strik" stroke="#21170c" stroke-width="3" stroke-linejoin="round">
+            <path d="M160 168 L128 152 L128 186 Z" class="strik"></path>
+            <path d="M160 168 L192 152 L192 186 Z" class="strik"></path>
+            <circle cx="160" cy="168" r="7" class="strik"></circle>
+          </g>
+        </svg>
+        <p class="price-tag"><span id="price">€60</span> <small id="price-note">{tr("het gewone gele", "the regular yellow one")}</small></p>
+      </div>
+
+      <form class="controls" id="maker" data-plain={plainId} data-custom={customId}>
+        <fieldset>
+          <legend>{tr("1. Kleuren", "1. Colours")}</legend>
+          <p class="hint">{tr("Kies eerst wat je kleurt, daarna de kleur.", "First pick what to colour, then the colour.")}</p>
+          <div class="pills parts">
+            {
+              parts.map((p, i) => (
+                <label>
+                  <input type="radio" name="deel" value={p.id} checked={i === 0} />
+                  <span>
+                    {p.id !== 'alles' && <i data-dot={p.id} />}
+                    {p.label}
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+          <div class="swatches">
+            {palette.map(([name, hex]) => <button type="button" class="sw" data-hex={hex} title={name} aria-label={name} style={`--c:${hex}`} />)}
+            <label class="sw custom" title={tr("Eigen kleur", "Your own colour")}>
+              <input type="color" id="eigen" value="#4aa3a0" aria-label={tr("Eigen kleur kiezen", "Pick your own colour")} />
+              <span>+</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>{tr("2. Op het lijf", "2. On the body")}</legend>
+          <div class="pills">
+            <label><input type="radio" name="patroon" value="effen" checked /><span>{tr("Effen", "Plain")}</span></label>
+            <label><input type="radio" name="patroon" value="strepen" /><span>{tr("Strepen", "Stripes")}</span></label>
+            <label><input type="radio" name="patroon" value="camo" /><span>Camo</span></label>
+          </div>
+          <p class="sub">{tr("Of een vlag", "Or a flag")}</p>
+          <div class="pills flags">
+            {
+              flags.map((f) => (
+                <label>
+                  <input type="radio" name="patroon" value={f.id} />
+                  <span>{f.label}</span>
+                </label>
+              ))
+            }
+          </div>
+          <p class="hint">{tr("Ander land? Zet het bij je idee onderaan.", "Another country? Add it to your idea at the bottom.")}</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Logo</legend>
+          <label class="upload">
+            <input type="file" id="logo" accept="image/*" />
+            <span class="btn light">{tr("Logo kiezen", "Choose a logo")}</span>
+            <em id="logo-name">{tr("Nog geen logo", "No logo yet")}</em>
+          </label>
+          <button type="button" class="link" id="logo-weg" hidden>{tr("Logo weghalen", "Remove logo")}</button>
+          <p class="hint">{tr("Je logo komt op de buik. We bewaren het bij je bestelling.", "Your logo goes on the belly. We keep it with your order.")}</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Extra</legend>
+          <div class="pills">
+            <label><input type="checkbox" name="bril" /><span>{tr("Zonnebril", "Sunglasses")}</span></label>
+            <label><input type="checkbox" name="strik" /><span>{tr("Strikje", "Bow tie")}</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>{tr("5. De sjaal", "5. The scarf")}</legend>
+          <label class="field">
+            {tr("Wat staat erop?", "What does it say?")}
+            <input type="text" name="tekst" value="oerbier" maxlength="16" autocomplete="off" />
+          </label>
+          <p class="hint">{tr("De kleur van de sjaal kies je bij 1. Kleuren.", "You pick the scarf colour under 1. Colours.")}</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>{tr("6. Nog een idee?", "6. Any other idea?")}</legend>
+          <label class="field">
+            {tr("Een ander land, een clubshirt, een datum… Beschrijf het hier.", "Another country, a club shirt, a date… Describe it here.")}
+            <textarea name="idee" rows="3" placeholder={tr("Bv. in de kleuren van mijn voetbalclub, met 'Proficiat Jan' op de sjaal", "E.g. in the colours of my football club, with 'Happy birthday Jan' on the scarf")}></textarea>
+          </label>
+        </fieldset>
+
+        <button class="btn dark" type="submit" id="bestel">{tr("In mijn mandje →", "Add to my cart →")}</button>
+        <p class="note">{tr("Elk mannetje wordt met de hand beschilderd. We laten je weten wanneer het klaar is om te verzenden of af te halen in de Oerbar.", "Every figure is painted by hand. We'll let you know when it's ready to ship or to pick up in the Oerbar.")}</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section inspo">
+    <div class="wrap">
+      <h2>{tr("Wat anderen al bedachten.", "What others came up with.")}</h2>
+      <div class="inspo-grid">
+        {
+          gallery.map((g) => (
+            <Polaroid src={g.src} alt={tr(`Gepersonaliseerd Oerbier-mannetje: ${g.name.replace(/-/g, ' ')}`, `Personalised Oerbier figure: ${g.name.replace(/-/g, ' ')}`)} tilt={g.tilt} ratio="1 / 1" width={420} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ palette }}>
+  const EN = document.documentElement.lang === 'en';
+  const form = document.getElementById('maker');
+  const svg = document.getElementById('man');
+  const sashText = document.getElementById('sash-text');
+  const price = document.getElementById('price');
+  const priceNote = document.getElementById('price-note');
+  const logoImg = svg.querySelector('.logo');
+  const logoInput = document.getElementById('logo');
+  const logoName = document.getElementById('logo-name');
+  const logoWeg = document.getElementById('logo-weg');
+
+  const DEFAULTS = { hoofd: '#f6bf1c', lichaam: '#f6bf1c', armen: '#f6bf1c', voeten: '#f6bf1c', glas: '#c8241c', sjaal: '#fbfaf5' };
+  const colors = { ...DEFAULTS };
+  let logo = null;
+
+  const STANDAARD = { '#c8241c': 'Rood (standaard)', '#fbfaf5': 'Wit (standaard)' };
+  const nameOf = (hex) => (palette.find(([, h]) => h === hex) || [STANDAARD[hex] || hex])[0];
+  const ink = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    const l = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
+    return l > 150 ? '#21170c' : '#fbfaf5';
+  };
+  const value = (name) => form.elements.namedItem(name).value;
+  const on = (name) => form.elements.namedItem(name).checked;
+
+  const paint = (hex) => {
+    const deel = value('deel');
+    const targets = deel === 'alles' ? ['hoofd', 'lichaam', 'armen', 'voeten'] : [deel];
+    targets.forEach((t) => (colors[t] = hex));
+    render();
+  };
+
+  const render = () => {
+    Object.entries(colors).forEach(([part, hex]) => {
+      svg.querySelectorAll(`[data-part="${part}"]`).forEach((el) => el.setAttribute('fill', hex));
+      const dot = form.querySelector(`[data-dot="${part}"]`);
+      if (dot) dot.style.background = hex;
+    });
+    svg.querySelector('.sash-text').setAttribute('fill', ink(colors.sjaal));
+    svg.querySelectorAll('.strik').forEach((el) => el.setAttribute('fill', colors.sjaal === '#fbfaf5' ? '#c8241c' : colors.sjaal));
+
+    const patroon = value('patroon');
+    svg.querySelector('.pattern').setAttribute('fill', patroon === 'effen' ? 'none' : `url(#pat-${patroon})`);
+
+    svg.querySelector('.extra-bril').classList.toggle('on', on('bril'));
+    svg.querySelector('.extra-strik').classList.toggle('on', on('strik'));
+
+    const tekst = form.elements.namedItem('tekst').value.trim();
+    sashText.textContent = tekst || ' ';
+
+    const idee = form.elements.namedItem('idee').value.trim();
+    const plain =
+      Object.keys(DEFAULTS).every((k) => colors[k] === DEFAULTS[k]) &&
+      patroon === 'effen' &&
+      !on('bril') &&
+      !on('strik') &&
+      !logo &&
+      tekst.toLowerCase() === 'oerbier' &&
+      !idee;
+    price.textContent = plain ? '€60' : '€90';
+    priceNote.textContent = plain ? (EN ? 'the regular yellow one' : 'het gewone gele') : EN ? 'personalised' : 'gepersonaliseerd';
+  };
+
+  form.querySelectorAll('.sw[data-hex]').forEach((b) => b.addEventListener('click', () => paint(b.dataset.hex)));
+  document.getElementById('eigen').addEventListener('input', (e) => paint(e.target.value));
+  form.addEventListener('input', render);
+  form.addEventListener('change', render);
+
+  logoInput.addEventListener('change', () => {
+    const file = logoInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      logo = file.name;
+      form.dataset.logo = reader.result;
+      logoImg.setAttribute('href', reader.result);
+      logoName.textContent = file.name;
+      logoWeg.hidden = false;
+      render();
+    };
+    reader.readAsDataURL(file);
+  });
+  logoWeg.addEventListener('click', () => {
+    logo = null;
+    delete form.dataset.logo;
+    logoInput.value = '';
+    logoImg.removeAttribute('href');
+    logoName.textContent = EN ? 'No logo yet' : 'Nog geen logo';
+    logoWeg.hidden = true;
+    render();
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const patroon = form.querySelector('input[name="patroon"]:checked').closest('label').textContent.trim();
+    const extra = [on('bril') && 'zonnebril', on('strik') && 'strikje'].filter(Boolean).join(', ') || 'geen';
+    const attributes = [
+      ['Hoofd', nameOf(colors.hoofd)],
+      ['Lichaam', nameOf(colors.lichaam)],
+      ['Armen', nameOf(colors.armen)],
+      ['Voetjes', nameOf(colors.voeten)],
+      ['Glas', nameOf(colors.glas)],
+      ['Sjaal', `${nameOf(colors.sjaal)}, tekst "${form.elements.namedItem('tekst').value}"`],
+      ['Op het lijf', patroon],
+      ['Extra', extra],
+      ['Idee', form.elements.namedItem('idee').value || '-'],
+    ].map(([key, value]) => ({ key, value }));
+    // Picked up by the cart script below
+    window.dispatchEvent(new CustomEvent('mannetje:bestel', { detail: { plain: price.textContent === '€60', attributes, logoName: logo } }));
+  });
+
+  render();
+</script>
+
+<script>
+  import { addToCart, openCart } from '../lib/cart';
+
+  const EN = document.documentElement.lang === 'en';
+  const form = document.getElementById('maker') as HTMLFormElement;
+  const button = document.getElementById('bestel') as HTMLButtonElement;
+
+  // Redraw the logo as PNG (max 800 px) before storing it; this also turns SVG files into plain images.
+  const shrink = (dataUrl: string) =>
+    new Promise<string>((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 800 / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/png'));
+      };
+      img.onerror = () => resolve('');
+      img.src = dataUrl;
+    });
+
+  window.addEventListener('mannetje:bestel', async (e) => {
+    const { plain, attributes, logoName } = (e as CustomEvent).detail as {
+      plain: boolean;
+      attributes: { key: string; value: string }[];
+      logoName: string | null;
+    };
+    const variant = plain ? form.dataset.plain : form.dataset.custom;
+    if (!variant) {
+      alert(EN ? 'The shop is unavailable right now. Please email your order to boniface@dedollebrouwers.be.' : 'De webshop is even niet bereikbaar. Mail je bestelling naar boniface@dedollebrouwers.be.');
+      return;
+    }
+    button.disabled = true;
+    const label = button.textContent;
+    button.textContent = EN ? 'One moment…' : 'Even…';
+    try {
+      const lines = plain ? [] : [...attributes];
+      if (!plain && form.dataset.logo) {
+        const res = await fetch('/api/logo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: await shrink(form.dataset.logo), name: logoName }),
+        });
+        if (!res.ok) throw new Error('logo');
+        const { url } = await res.json();
+        lines.push({ key: 'Logo', value: url });
+      }
+      await addToCart(variant, 1, lines);
+      openCart();
+    } catch {
+      alert(EN ? "That didn't work. Please try again later, or email boniface@dedollebrouwers.be." : 'Dat lukte niet. Probeer het straks nog eens, of mail naar boniface@dedollebrouwers.be.');
+    } finally {
+      button.disabled = false;
+      button.textContent = label;
+    }
+  });
+</script>
+
+<style>
+  .intro {
+    padding: clamp(36px, 5vw, 70px) 0 30px;
+  }
+  .back {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .intro h1 {
+    font-size: clamp(2.8rem, 7vw, 5.6rem);
+    margin-bottom: 20px;
+  }
+  .intro h1 em {
+    font-weight: 400;
+  }
+  .prices {
+    list-style: none;
+    padding: 0;
+    margin: 22px 0 0;
+    display: flex;
+    gap: 34px;
+    flex-wrap: wrap;
+  }
+  .prices li {
+    display: grid;
+    color: var(--ink-soft);
+  }
+  .prices strong {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .maker {
+    padding: 20px 0 clamp(60px, 8vw, 100px);
+  }
+  .maker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: start;
+  }
+  .preview {
+    position: sticky;
+    top: calc(var(--nav-offset) + 24px);
+    transition: top 0.3s ease;
+    background: var(--yellow-soft) var(--grain);
+    border: var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    padding: 30px 30px 20px;
+  }
+  .preview svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .sash-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .extra {
+    display: none;
+  }
+  .extra.on {
+    display: inline;
+  }
+  .price-tag {
+    text-align: center;
+    margin: 6px 0 0;
+    font-family: var(--font-display);
+  }
+  .price-tag span {
+    font-size: 2rem;
+    font-weight: 650;
+  }
+  .price-tag small {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin-left: 6px;
+  }
+
+  .controls {
+    display: grid;
+    gap: 22px;
+  }
+  fieldset {
+    border: var(--line);
+    border-radius: 16px;
+    background: var(--paper-light);
+    padding: 16px 20px 18px;
+    margin: 0;
+  }
+  legend {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.15rem;
+    padding: 0 8px;
+  }
+  .hint {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 10px 0 0;
+  }
+  fieldset > .hint:first-of-type {
+    margin: 0 0 10px;
+  }
+  .sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    margin: 14px 0 8px;
+  }
+  input[type='radio'],
+  .pills input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pills label {
+    position: relative;
+    cursor: pointer;
+  }
+  .pills span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    background: var(--paper);
+    transition: background 0.15s;
+  }
+  .flags span {
+    padding: 5px 11px;
+    font-size: 0.85rem;
+  }
+  .pills span i {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+  }
+  .pills input:checked + span {
+    background: var(--yellow);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .pills input:focus-visible + span {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .sw {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2.5px solid var(--ink);
+    background: var(--c);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.12s;
+  }
+  .sw:hover,
+  .sw:focus-visible {
+    transform: scale(1.15);
+    outline: none;
+  }
+  .sw.custom {
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(#d93a2b, #f6bf1c, #2f7f45, #3d7bd4, #8a6bc8, #d93a2b);
+    overflow: hidden;
+  }
+  .sw.custom span {
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 3px #000;
+    pointer-events: none;
+  }
+  .sw.custom input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .upload {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+  .upload input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .upload .btn {
+    font-size: 0.95rem;
+    padding: 0.5em 1em;
+  }
+  .upload em {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  .upload input:focus-visible + .btn {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .link {
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-top: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .field {
+    display: grid;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .field input,
+  .field textarea {
+    font: inherit;
+    color: var(--ink);
+    padding: 0.6em 0.8em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: 3px solid var(--yellow);
+    outline-offset: 1px;
+  }
+  .controls > .btn {
+    justify-self: start;
+    font-size: 1.1rem;
+  }
+  .note {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin: -8px 0 0;
+  }
+
+  .inspo h2 {
+    margin-bottom: 40px;
+  }
+  .inspo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .maker-grid {
+      grid-template-columns: 1fr;
+    }
+    .preview {
+      position: sticky;
+      top: var(--nav-offset);
+      z-index: 5;
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 14px 18px 8px;
+    }
+    .inspo-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .preview {
+      max-width: 240px;
+    }
+    .price-tag span {
+      font-size: 1.4rem;
+    }
+    .inspo-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+</style>

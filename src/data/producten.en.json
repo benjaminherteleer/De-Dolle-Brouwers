@@ -1,0 +1,38 @@
+{
+  "t-shirt-de-bende": {
+    "title": "T-shirt The Gang",
+    "description": "White T-shirt with the De Dolle Brouwers gang: Oerbier, Arabier, Stille Nacht, Boskeun and Dulle Teve, drawn by Kris Herteleer."
+  },
+  "crewneck-grijs": {
+    "title": "Grey crewneck",
+    "description": "Grey crewneck from De Dolle Brouwers, with the brewery in Esen on the back."
+  },
+  "trui-zwart": {
+    "title": "Black hoodie",
+    "description": "Black hoodie with the De Dolle Brouwers logo in yellow on the back. With or without zip."
+  },
+  "pet": {
+    "title": "Oerbier figure cap",
+    "description": "Black cap with the Oerbier figure embroidered."
+  },
+  "oerbier-mannetje": {
+    "title": "Oerbier figure",
+    "description": "The yellow Oerbier figure as a statuette, with brewer's fork and glass."
+  },
+  "oerbier-mannetje-op-maat": {
+    "title": "Your own Oerbier figure",
+    "description": "Your own Oerbier figure: pick the colours, a flag or logo, and the text on the scarf. Put it together on our site; we make it by hand."
+  },
+  "metalen-bord": {
+    "title": "Metal sign",
+    "description": "Metal sign with one of the De Dolle Brouwers beers."
+  },
+  "oeral-glas": {
+    "title": "Oeral glass",
+    "description": "The Oeral glass, 25 cl, with the little plane from the Oeral drawing and the stars."
+  },
+  "oerbier-glas-klein": {
+    "title": "Small Oerbier glass",
+    "description": "The small stemmed Oerbier glass, with the Oerbier figure and \"Nat en straf\"."
+  }
+}

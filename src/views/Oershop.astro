@@ -1,0 +1,19 @@
+---
+import { langOf, link } from '../i18n';
+import Base from '../layouts/Base.astro';
+import Shop from '../components/Shop.astro';
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+---
+
+<Base
+  title={tr("Oershop | Truien, T-shirts, het Oerbier-mannetje en metalen borden | De Dolle Brouwers", "Shop | Hoodies, T-shirts, the Oerbier figure and metal signs | De Dolle Brouwers")}
+  description={tr("Merch van De Dolle Brouwers: T-shirts, crewnecks, truien, het Oerbier-mannetje (ook gepersonaliseerd) en metalen borden. Online te bestellen, of te koop in de Oerbar in Esen.", "Merch from De Dolle Brouwers: T-shirts, crewnecks, hoodies, the Oerbier figure (also personalised) and metal signs. Order online with international shipping, or buy it in the Oerbar in Esen.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Oershop | De Dolle Brouwers", "Shop | De Dolle Brouwers")} />
+  </Fragment>
+  <Shop page />
+</Base>

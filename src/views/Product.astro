@@ -1,0 +1,369 @@
+---
+import { langOf, link } from '../i18n';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { getProducts, type Product } from '../lib/shopify';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, variantPhotos, productText, optionLabel, valueLabel } from '../lib/shop';
+import maten from '../data/maten.json';
+
+const { product: p, all } = Astro.props as { product: Product; all: Product[] };
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const text = (x: Product) => productText(x, lang);
+const t = text(p);
+const kolom: Record<string, string> = { 'Halve borst': 'Half chest', 'Lengte rug': 'Back length', Mouwlengte: 'Sleeve length', Lengte: 'Length', Breedte: 'Width' };
+const photos = gallery(p.handle);
+const shopifyPhotos = photos.length ? [] : p.featuredImage ? [p.featuredImage] : [];
+const guide = (maten as unknown as Record<string, { kolommen: string[]; maten: Record<string, (number | null)[]> }>)[p.handle];
+const guideFilled = guide && Object.values(guide.maten).some((row) => row.some((v) => v !== null));
+const hasSizes = p.options.some((o) => o.name === 'Maat');
+const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
+---
+
+<Base
+  title={tr(`${t.title} | Oershop | De Dolle Brouwers`, `${t.title} | Shop | De Dolle Brouwers`)}
+  description={tr(`${t.title} van De Dolle Brouwers, ${priceLabel(p, lang)}. ${t.description}`, `${t.title} from De Dolle Brouwers, ${priceLabel(p, lang)}. ${t.description}`).slice(0, 160)}
+  image={photos[0] ?? (p.featuredImage ? shopifyImage(p.featuredImage.url, 1200) : undefined)}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={`${t.title} | De Dolle Brouwers`} />
+  </Fragment>
+
+  <section class="section product">
+    <div class="wrap">
+      <a class="back" href={L('/oershop')}>{tr("← Oershop", "← Shop")}</a>
+      <div class="product-grid">
+        <div class="photos">
+          <div class="main">
+            {
+              photos.map((src, i) => (
+                <Image src={src} alt={tr(`${t.title}, foto ${i + 1}`, `${t.title}, photo ${i + 1}`)} width={1000} class:list={['shot', { active: i === 0 }]} data-shot={i} loading={i === 0 ? 'eager' : 'lazy'} />
+              ))
+            }
+            {shopifyPhotos.map((img) => <img src={shopifyImage(img.url, 1000)} alt={t.title} class="shot active" width="1000" height="1250" />)}
+          </div>
+          {
+            photos.length > 1 && (
+              <div class="thumbs" role="list">
+                {photos.map((src, i) => (
+                  <button type="button" class:list={['thumb', { active: i === 0 }]} data-thumb={i} aria-label={tr(`Toon foto ${i + 1}`, `Show photo ${i + 1}`)}>
+                    <Image src={src} alt="" width={180} />
+                  </button>
+                ))}
+              </div>
+            )
+          }
+        </div>
+
+        <div
+          class="info"
+          data-product={p.handle}
+          data-variants={JSON.stringify(p.variants.nodes)}
+          data-variant-shots={JSON.stringify(variantPhotos[p.handle] ?? {})}
+        >
+          <h1>{t.title}</h1>
+          <p class="price" data-price>{priceLabel(p, lang)}</p>
+          <p class="lead">{t.description}</p>
+
+          <div class="buy">
+            {
+              realOptions(p).map((o) => (
+                <label>
+                  {optionLabel(o.name, lang)}
+                  <select data-option={o.name}>
+                    {o.optionValues.map((v) => (
+                      <option value={v.name} data-label={valueLabel(v.name, lang)}>{valueLabel(v.name, lang)}</option>
+                    ))}
+                  </select>
+                </label>
+              ))
+            }
+            <button type="button" class="btn dark add" data-add disabled={!p.availableForSale}>
+              {p.availableForSale ? tr('In mandje', 'Add to cart') : tr('Uitverkocht', 'Sold out')}
+            </button>
+          </div>
+
+          {
+            guideFilled && (
+              <details class="guide" open>
+                <summary>{tr("Maattabel", "Size guide")}</summary>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>{tr("Maat", "Size")}</th>
+                      {guide.kolommen.map((k) => (
+                        <th>{en ? kolom[k] ?? k : k}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(guide.maten).map(([maat, row]) => (
+                      <tr>
+                        <td>{maat}</td>
+                        {row.map((v) => (
+                          <td>{v === null ? '–' : `${String(v).replace('.', ',')} cm`}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p>
+                  {tr("Plat gemeten: de halve borst van oksel tot oksel, de lengte van de schouder tot de onderkant. Kleine afwijkingen (±2 cm) zijn normaal.", "Measured flat: half chest from armpit to armpit, length from shoulder to hem. Small differences (±2 cm) are normal.")}
+                </p>
+              </details>
+            )
+          }
+          {
+            hasSizes && !guideFilled && (
+              <p class="hint">
+                {tr("Twijfel je over je maat? Mail naar", "Not sure about your size? Email")} <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>{tr(", dan meten we het voor je op.", " and we'll measure it for you.")}
+              </p>
+            )
+          }
+
+          <ul class="facts">
+            <li><b>{tr("Verzenden", "Shipping")}</b> {tr("naar heel wat landen; de kost zie je bij het afrekenen", "to many countries; you'll see the cost at checkout")}</li>
+            <li><b>{tr("Afhalen", "Pick-up")}</b> {tr("gratis in de Oerbar in Esen", "free in the Oerbar in Esen")}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    others.length > 0 && (
+      <section class="section more">
+        <div class="wrap">
+          <h2>{tr("Ook in de Oershop.", "Also in the shop.")}</h2>
+          <div class="more-grid">
+            {others.map((o) => (
+              <a class="card more-card" href={L(`/oershop/${o.handle}`)}>
+                {gallery(o.handle)[0] ? (
+                  <Image src={gallery(o.handle)[0]} alt="" width={500} />
+                ) : (
+                  o.featuredImage && <img src={shopifyImage(o.featuredImage.url, 500)} alt="" width="500" height="625" loading="lazy" />
+                )}
+                <span>
+                  <b>{text(o).title}</b>
+                  <em>{priceLabel(o, lang)}</em>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<script>
+  import '../lib/buy';
+
+  // Thumbnails switch the big photo
+  const shots = [...document.querySelectorAll<HTMLElement>('[data-shot]')];
+  const thumbs = [...document.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
+  const show = (i: string) => {
+    shots.forEach((s) => s.classList.toggle('active', s.dataset.shot === i));
+    thumbs.forEach((x) => x.classList.toggle('active', x.dataset.thumb === i));
+  };
+  thumbs.forEach((t) => t.addEventListener('click', () => show(t.dataset.thumb!)));
+
+  // Picking a design (e.g. which metal sign) shows its photo
+  const info = document.querySelector<HTMLElement>('.info[data-variant-shots]');
+  const byValue: Record<string, number> = JSON.parse(info?.dataset.variantShots || '{}');
+  info?.addEventListener('change', (e) => {
+    const i = byValue[(e.target as HTMLSelectElement).value];
+    if (i !== undefined && shots[i]) show(String(i));
+  });
+</script>
+
+<style>
+  .product {
+    padding-top: clamp(24px, 4vw, 48px);
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 22px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(28px, 5vw, 70px);
+    align-items: start;
+  }
+  .main {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border: var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--paper-light);
+  }
+  .main :global(.shot) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .main :global(.shot.active) {
+    opacity: 1;
+  }
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .thumb {
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    opacity: 0.7;
+  }
+  .thumb.active,
+  .thumb:hover {
+    border-color: var(--ink);
+    opacity: 1;
+  }
+  .thumb :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .info {
+    position: sticky;
+    top: calc(var(--nav-offset) + 24px);
+    transition: top 0.3s ease;
+  }
+  .info h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .price {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.6rem;
+    margin: 0 0 18px;
+  }
+  .buy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    margin: 24px 0 18px;
+  }
+  .buy label {
+    display: grid;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex: 1 1 140px;
+  }
+  .buy select {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.6em 0.8em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .buy .add {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .buy .add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .guide {
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    background: var(--paper-light);
+  }
+  .guide summary {
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .guide table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 0.92rem;
+  }
+  .guide th,
+  .guide td {
+    text-align: left;
+    padding: 6px 4px;
+    border-bottom: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  .guide p,
+  .hint {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .facts {
+    list-style: none;
+    padding: 16px 0 0;
+    margin: 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    gap: 6px;
+    font-size: 0.92rem;
+  }
+  .facts b {
+    font-weight: 700;
+    margin-right: 6px;
+  }
+  .more h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 24px;
+  }
+  .more-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .more-card {
+    padding: 0;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .more-card :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .more-card span {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: var(--line);
+    font-family: var(--font-display);
+  }
+  @media (max-width: 860px) {
+    .product-grid,
+    .more-grid {
+      grid-template-columns: 1fr;
+    }
+    .info {
+      position: static;
+    }
+  }
+</style>

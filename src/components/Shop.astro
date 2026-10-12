@@ -1,8 +1,9 @@
 ---
+import { langOf, link } from '../i18n';
 import { Image } from 'astro:assets';
 import MannetjeSvg from './MannetjeSvg.astro';
 import { getProducts, type Product } from '../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage } from '../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, productText, optionLabel, valueLabel } from '../lib/shop';
 
 interface Props {
   /** On the shop page itself the heading is the page title. */
@@ -17,23 +18,27 @@ try {
 } catch (e) {
   console.warn('Shopify niet bereikbaar, Oershop zonder producten gebouwd', e);
 }
-const price = priceLabel;
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const price = (p: Product) => priceLabel(p, lang);
+const text = (p: Product) => productText(p, lang);
 ---
 
   <section class="section shop" id="shop">
     <div class="wrap">
       <div class="shop-head">
-        {page ? <h1>Oershop.</h1> : <h2>Oershop.</h2>}
+        {page ? <h1>{tr('Oershop.', 'Shop.')}</h1> : <h2>{tr('Oershop.', 'Shop.')}</h2>}
         <p class="lead">
-          Truien, T-shirts, een pet, het Oerbier-mannetje, glazen en metalen borden met de bende erop. We versturen tot ver over
-          de grens, of je haalt het gratis af in de Oerbar. Staat jouw land er bij het afrekenen niet tussen?
-          <a href="mailto:info@dedollebrouwers.be">Mail ons even</a>.
+          {tr("Truien, T-shirts, een pet, het Oerbier-mannetje, glazen en metalen borden met de bende erop. We versturen tot ver over de grens, of je haalt het gratis af in de Oerbar. Staat jouw land er bij het afrekenen niet tussen?", "Hoodies, T-shirts, a cap, the Oerbier figure, glasses and metal signs with the gang on them. We ship far beyond Belgium, or pick it up for free in the Oerbar. Is your country not listed at checkout?")}
+          <a href="mailto:info@dedollebrouwers.be">{tr("Mail ons even", "Send us an email")}</a>.
         </p>
       </div>
       {
         products.length === 0 && (
           <p class="lead">
-            De webshop is even niet bereikbaar. Bestellen kan via{' '}
+            {tr('De webshop is even niet bereikbaar. Bestellen kan via', 'The shop is unavailable right now. You can order via')}{' '}
             <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
           </p>
         )
@@ -42,42 +47,42 @@ const price = priceLabel;
         {
           products.map((p) =>
             p.handle === CUSTOM ? (
-              <a class="shop-item shop-link" href="/oerbier-mannetje">
-                <span class="maker-art" role="img" aria-label="Drie zelf samengestelde Oerbier-mannetjes in verschillende kleuren">
-                  <MannetjeSvg class="m1" head="#f6bf1c" flag="be" text="jouw naam" />
+              <a class="shop-item shop-link" href={L('/oerbier-mannetje')}>
+                <span class="maker-art" role="img" aria-label={tr("Drie zelf samengestelde Oerbier-mannetjes in verschillende kleuren", "Three custom Oerbier figures in different colours")}>
+                  <MannetjeSvg class="m1" head="#f6bf1c" flag="be" text={tr("jouw naam", "your name")} />
                   <MannetjeSvg class="m2" head="#3d7bd4" arms="#f6bf1c" feet="#1f1b17" glass="#f6bf1c" scarf="#1f1b17" text="Jan 50" bril />
                   <MannetjeSvg class="m3" head="#f3a7c3" body="#f3a7c3" arms="#d6337f" feet="#c9a13b" scarf="#d6337f" text="Greta" strik />
                 </span>
                 <span class="cap">
-                  <b>Stel je eigen mannetje samen →</b>
+                  <b>{tr("Stel je eigen mannetje samen →", "Design your own figure →")}</b>
                   <span>{price(p)}</span>
                 </span>
               </a>
             ) : (
               <figure class="shop-item" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
-                <a class="photo" href={`/oershop/${p.handle}`} aria-label={`${p.title}: meer foto's en info`}>
+                <a class="photo" href={L(`/oershop/${p.handle}`)} aria-label={`${text(p).title}: ${tr("meer foto's en info", 'more photos and info')}`}>
                   {gallery(p.handle)[0] ? (
-                    <Image src={gallery(p.handle)[0]} alt={p.featuredImage?.altText ?? p.title} width={700} />
+                    <Image src={gallery(p.handle)[0]} alt={text(p).title} width={700} />
                   ) : p.featuredImage ? (
-                    <img src={shopifyImage(p.featuredImage.url, 700)} alt={p.featuredImage.altText ?? p.title} width="700" height="875" loading="lazy" />
+                    <img src={shopifyImage(p.featuredImage.url, 700)} alt={text(p).title} width="700" height="875" loading="lazy" />
                   ) : null}
-                  {gallery(p.handle).length > 1 && <span class="more">{gallery(p.handle).length} foto's</span>}
+                  {gallery(p.handle).length > 1 && <span class="more">{gallery(p.handle).length} {tr("foto's", 'photos')}</span>}
                 </a>
                 <figcaption>
                   <span class="row">
-                    <a class="name" href={`/oershop/${p.handle}`}>{p.title}</a>
+                    <a class="name" href={L(`/oershop/${p.handle}`)}>{text(p).title}</a>
                     <span class="price" data-price>{price(p)}</span>
                   </span>
                   <span class="buy">
                     {realOptions(p).map((o) => (
-                      <select data-option={o.name} aria-label={o.name} class:list={{ maat: o.name === 'Maat' }}>
+                      <select data-option={o.name} aria-label={optionLabel(o.name, lang)} class:list={{ maat: o.name === 'Maat' }}>
                         {o.optionValues.map((v) => (
-                          <option value={v.name}>{v.name}</option>
+                          <option value={v.name} data-label={valueLabel(v.name, lang)}>{valueLabel(v.name, lang)}</option>
                         ))}
                       </select>
                     ))}
                     <button type="button" class="btn add" data-add disabled={!p.availableForSale}>
-                      {p.availableForSale ? 'In mandje' : 'Uitverkocht'}
+                      {p.availableForSale ? tr('In mandje', 'Add to cart') : tr('Uitverkocht', 'Sold out')}
                     </button>
                   </span>
                 </figcaption>

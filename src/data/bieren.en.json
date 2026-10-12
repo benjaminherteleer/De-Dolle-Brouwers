@@ -1,0 +1,298 @@
+{
+  "oerbier": {
+    "title": "Oerbier | Dark, top-fermented beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Oerbier (9%) is the flagship beer of De Dolle Brouwers, a craft brewery in Esen, West Flanders. A dark, top-fermented beer with a light sourness from lactic bacteria, hopped with Goldings from Poperinge.",
+    "alt": "The Oerbier character",
+    "kicker": "Our first beer, since 1980",
+    "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Dark, top-fermented" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "The very first beer of the brewery, officially since 1980. Dark from a blend of different malts and a boil of several hours, with a light, fresh sourness from the yeast and lactic bacteria.",
+    "notes": [
+      { "label": "Aroma", "text": "Dark malt and a fresh, slightly sour touch." },
+      { "label": "Taste", "text": "Full and round, with a sourness that balances the sweetness of the malt." },
+      { "label": "Finish", "text": "Dry and lightly bitter." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Keep cool and dark in the cellar and pour at 12°C into the Oerbier glass or a wine glass." },
+      { "label": "Keeping", "text": "Legally good for one year after bottling, but Oerbier keeps evolving and can be cellared much longer." }
+    ],
+    "weetjes": [
+      "The prototype was brewed by two students in a copper washing boiler.",
+      "The name stands for the original and the pure (\"oer\" means primal).",
+      "Gravity 1078 and 9% alcohol, hopped only with Golding whole-cone hops from Poperinge.",
+      "After a few years of ageing Oerbier takes on a wine-like character.",
+      "The brewery still keeps samples of the very first brew, and they are still perfectly drinkable.",
+      "\"Nat en straf\" (wet and strong) on the glasses is a warning about the 9%.",
+      "The Oerbier figure holds a brewer's fork, the work, but looks at the glass of beer, the result.",
+      "The label is inspired by the cave paintings of Altamira in Spain, about the oldest known artwork in the world. You see them again on the metal sign with the cave drawing."
+    ],
+    "tagline": "Our first beer. Dark, with five kinds of malt."
+  },
+  "arabier": {
+    "title": "Arabier | Amber, dry-hopped beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Arabier (8%) from De Dolle Brouwers is an amber, generously hopped beer from Esen (West Flanders), dry-hopped with Nugget hops from Poperinge. Fresh, bitter and full of character.",
+    "alt": "The Arabier character",
+    "kicker": "The perfect thirst quencher",
+    "meta": [{ "label": "Alcohol", "value": "8%" }, { "label": "Style", "value": "Amber, dry-hopped" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "A pure malt beer of 8%, hopped with whole-cone hops from Poperinge: Nugget and WGV (Whitbread Golding Variety). Dry-hopped, fresh and bitter: the perfect thirst quencher.",
+    "notes": [
+      { "label": "Aroma", "text": "Fresh whole-cone hops." },
+      { "label": "Taste", "text": "Dry and fresh, with a pronounced hop bitterness." },
+      { "label": "Finish", "text": "Long and bitter, refreshing to the last sip." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Drink Arabier cool, as it says in Arabic on the bottle." },
+      { "label": "Keeping", "text": "Keeps for two years; the date is on the crown cap." }
+    ],
+    "weetjes": [
+      "The bottle says in Arabic: \"Drink arabier cool\".",
+      "In Dutch the name is always written with a small a.",
+      "One arabier, two arabiers. But there are never two Arabs (\"arabieren\").",
+      "A wink: in Arab countries beer is actually forbidden."
+    ],
+    "tagline": "The perfect thirst quencher, dry-hopped."
+  },
+  "stille-nacht": {
+    "title": "Stille Nacht | Christmas beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Stille Nacht (12%) is the Christmas beer of De Dolle Brouwers from Esen, West Flanders. Heavy and warming, brewed for the coldest months of the year.",
+    "alt": "The Stille Nacht character",
+    "kicker": "Your favourite Christmas beer",
+    "meta": [{ "label": "Alcohol", "value": "12%" }, { "label": "Style", "value": "Christmas beer" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "Our Christmas beer of 12% (\"Stille Nacht\" means Silent Night). Brewed only with whole-cone hops from Poperinge and white candi sugar, which gives it one of the highest gravities we brew: 22° Plato.",
+    "notes": [
+      { "label": "Aroma", "text": "Ripe fruit and candi sugar." },
+      { "label": "Taste", "text": "Full and sweetish, carried by the high gravity." },
+      { "label": "Finish", "text": "Warming and long." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Pour it slowly into the Oerbier glass or a wine glass, and take your time." },
+      { "label": "Keeping", "text": "Stille Nacht ages well. The bottling date is on the crown cap." }
+    ],
+    "weetjes": [
+      "Boiled in a copper kettle over a direct gas flame and cooled in the copper coolship.",
+      "Fermented in open copper fermenters, then matured for at least a month.",
+      "Refermented in the bottle.",
+      "We brew one batch a day."
+    ],
+    "story": {
+      "alt": "Christmas card from De Dolle Brouwers with the brewery building in the snow",
+      "title": "Our yearly Christmas card",
+      "text": "Every year around Christmas, Benjamin Herteleer draws a new Christmas card with the characters Kris once drew for the labels, including the Stille Nacht figure himself, glass in hand, ready for the season's greetings."
+    },
+    "tagline": "Your favourite Christmas beer."
+  },
+  "boskeun": {
+    "title": "Boskeun | Easter beer with honey from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Boskeun (9%) is the Easter beer of De Dolle Brouwers from Esen (West Flanders), brewed with honey and Golding hops from Poperinge.",
+    "alt": "The Boskeun character",
+    "kicker": "One of the first Easter beers",
+    "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Easter beer" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "Our Easter beer of 9%, following Stille Nacht in the year. A powerful beer with its own taste and aroma, brewed with honey.",
+    "notes": [
+      { "label": "Aroma", "text": "Soft malt with a touch of honey." },
+      { "label": "Taste", "text": "Powerful, with the round sweetness of the honey." },
+      { "label": "Finish", "text": "Long and soft." }
+    ],
+    "info": [{ "label": "Serving tip", "text": "Pour it into the Oerbier glass or a tulip glass." }],
+    "weetjes": [
+      "\"Boskeun\" is West Flemish for wild rabbit.",
+      "Brewed with pale malt, Golding hops from Poperinge, organic cane sugar, honey and pure spring water.",
+      "Unfiltered, unpasteurised and refermented in the bottle.",
+      "\"Keun\" was the nickname of Jo, one of the Herteleer brothers. After a brotherly fight he was left with a cut on his upper lip, a hare lip. That is how it became Boskeun."
+    ],
+    "story": {
+      "alt": "Illustration of the Boskeun rabbits in their underground bar",
+      "title": "The story behind Boskeun",
+      "text": "In this drawing the Boskeun rabbits have their own underground local, full of Easter decorations. Every spring they pop up again, and the batch usually sells out fast."
+    },
+    "tagline": "One of the first Easter beers, with honey."
+  },
+  "dulle-teve": {
+    "title": "Dulle Teve | Tripel from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Dulle Teve (10%) is a tripel from De Dolle Brouwers in Esen, West Flanders, brewed with white candi sugar and with a witty story behind its name.",
+    "alt": "The Dulle Teve character",
+    "kicker": "Our tripel, with a story",
+    "meta": [{ "label": "Alcohol", "value": "10%" }, { "label": "Style", "value": "Tripel" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "A golden tripel of 10%, brewed with white candi sugar in the kettle. The name was born in the Oerbar, when an impatient landlady snapped at her husband on the phone: \"Do you know what you are? A dulle teve!\" (a mad bitch) — and the brewers knew at once: name found, now we just have to brew the beer.",
+    "notes": [
+      { "label": "Aroma", "text": "Fruity, with a touch of candi sugar." },
+      { "label": "Taste", "text": "Full, with the sweetness of the white candi sugar." },
+      { "label": "Finish", "text": "Long and dry, with the 10% well hidden." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Pour at 10°C into the Oerbier glass or a tulip glass." },
+      { "label": "When", "text": "Available almost all year round." }
+    ],
+    "weetjes": [
+      "\"Dulle teve\" is dialect for a difficult woman.",
+      "The café owner who phoned was looking for a beer of his own and was tasting two beers at once in the Oerbar.",
+      "\"Now we just need to make a beer, we already have the name.\""
+    ],
+    "tagline": "Our tripel."
+  },
+  "lichtervelds-blond": {
+    "title": "Lichtervelds Blond | Golden blond beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Lichtervelds Blond (8%) from De Dolle Brouwers is a golden blond beer, brewed in Esen, West Flanders.",
+    "alt": null,
+    "kicker": "Golden blond, once every two years",
+    "meta": [{ "label": "Alcohol", "value": "8%" }, { "label": "Style", "value": "Golden blond" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "A revived beer from Lichtervelde: originally \"Blonde des Flandres\" from brewery De Hoop / Th. Labens, now brewed and bottled by De Dolle Brouwers in Esen.",
+    "notes": [
+      { "label": "Aroma", "text": "Soft malt, a hint of citrus and discreet hops." },
+      { "label": "Taste", "text": "Round and full for a blond beer, with a soft sweetness that turns into a drier finish." },
+      { "label": "Finish", "text": "Fairly long and dry, with a subtle warmth from the alcohol." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Serve at 8-10°C in the Oerbier glass or a tulip glass." },
+      { "label": "Goes with", "text": "Light lunch dishes, mature cheese or as an aperitif." }
+    ],
+    "weetjes": [
+      "Brewed at the request of the local history society Karel Van de Poele in Lichtervelde.",
+      "On the market since 1990, each time for the Lichtervelde folklore festival held every two years.",
+      "Brewed only once every two years.",
+      "Taste, colour and strength vary slightly from batch to batch.",
+      "It has its own glass: a schwenker."
+    ],
+    "story": {
+      "alt": "Logo of brewery De Hoop, Lichtervelde",
+      "title": "A revived local beer",
+      "text": "The label refers to the original brewery \"De Hoop\" and maltings of Th. Labens in Lichtervelde (West Flanders), which once brewed this beer as \"Blonde des Flandres\". De Dolle Brouwers brews and bottles it again today in Esen, in the spirit of the original: pure malt and hops, unfiltered, refermented in the bottle."
+    },
+    "tagline": "Golden blond."
+  },
+  "export-stout": {
+    "title": "Export Stout | Stout from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Export Stout (9%) from De Dolle Brouwers in Esen (West Flanders), created at the request of our American importer and brewed only a few times a year.",
+    "alt": null,
+    "kicker": "Full-bodied, dark and roasted",
+    "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Stout" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "A stout of 9%, created at the request of our American importer. It gets the same fermentation as Oerbier; the malt decides the colour and the bitterness.",
+    "notes": [
+      { "label": "Aroma", "text": "Roasted malt." },
+      { "label": "Taste", "text": "Full and bitter, with dark malt." },
+      { "label": "Finish", "text": "Dry and bitter." }
+    ],
+    "info": [
+      { "label": "When", "text": "We brew it only a few times a year. Be quick." },
+      { "label": "Serving tip", "text": "Pour at 10-12°C into the Oerbier glass or a tulip glass." }
+    ],
+    "weetjes": [
+      "Created at the request of our American importer.",
+      "The same fermentation as Oerbier.",
+      "The strength varies between 8 and 9% from batch to batch."
+    ],
+    "story": {
+      "alt": "Original label stamp of Export Stout, De Dolle Brouwers, Esen Belgium, 9%",
+      "title": "The label",
+      "text": "The round stamp on every bottle of Export Stout shows the brewery in Esen, with the brewer's signature and the strength. A classic, handmade design — fitting for a beer with just as few frills."
+    },
+    "tagline": "Full-bodied: chocolate, coffee and liquorice."
+  },
+  "oeral": {
+    "title": "Oeral | Pale ale from De Dolle Brouwers, on draught only, Esen (Belgium)",
+    "description": "Oeral (6%) is the hoppy, floral pale ale of De Dolle Brouwers from Esen, West Flanders — only on draught in the Oerbar, never bottled.",
+    "alt": null,
+    "kicker": "Only from the tap",
+    "meta": [{ "label": "Alcohol", "value": "6%" }, { "label": "Style", "value": "Belgian pale ale" }],
+    "intro": "The most sessionable pale ale in our range: fresh, hoppy and floral, with a dry finish. Never bottled — we only pour Oeral from the keg.",
+    "notes": [
+      { "label": "Aroma", "text": "Citrus and floral hops, with rose petals, lavender and a spicy yeast undertone of hay and white pepper." },
+      { "label": "Taste", "text": "A light, honey-like sweetness at first, which soon gives way to a dry, grassy bitterness with a hint of lemongrass." },
+      { "label": "Finish", "text": "Dry and refreshing, with a long, spicy and hoppy aftertaste." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Only available on draught in the Oerbar — served fresh at 6-8°C." },
+      { "label": "Goes with", "text": "Light summer dishes, fresh cheese, or simply as a thirst quencher on the terrace." }
+    ],
+    "weetjes": ["Oeral is the only beer in our range that we don't bottle: it's purely for the Oerbar and the tap."],
+    "badge": "On draught only, not bottled",
+    "tagline": "Pale ale, only from the tap."
+  },
+  "oerbier-reserva": {
+    "badge": "Currently in stock, limited edition",
+    "title": "Oerbier Reserva | Barrel-aged dark beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Oerbier Reserva (9%) is the wine-barrel-aged version of Oerbier, from De Dolle Brouwers in Esen, West Flanders. Limited, numbered edition.",
+    "alt": "Oerbier Reserva bottles",
+    "kicker": "Oerbier, aged in wine barrels",
+    "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Dark, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "After twelve months in wine barrels, the dark base of Oerbier picks up notes of wood and wine.",
+    "notes": [
+      { "label": "Aroma", "text": "Red fruit, a hint of oak and the malty base of Oerbier." },
+      { "label": "Taste", "text": "Round and complex, with tannin and notes of wood and wine on top of the familiar Oerbier base." },
+      { "label": "Finish", "text": "Long, dry and slightly wine-like." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Serve at 12°C in a wine glass, so the wood notes can shine." },
+      { "label": "Goes with", "text": "Aged cheese, game or a dark chocolate dessert." }
+    ],
+    "weetjes": [
+      "We use wine barrels from France, Spain and Italy, and each barrel only once.",
+      "Every month we top up the barrels, so no air gets to the beer.",
+      "The label says which barrel the beer comes from, for example \"barrique 11\".",
+      "Store the bottles upright and cool.",
+      "Always a small edition."
+    ],
+    "barrel": {
+      "title": "About the barrel ageing",
+      "text": "In 1998 Kris laid his very first Oerbier to rest in old sherry casks. That makes De Dolle Brouwers one of the pioneers of barrel-aged beer in Belgium. Since then, now and then a selected batch of Oerbier goes into wine barrels for at least a year, where it develops further and takes on notes of wood, wine and tannin, each time in a limited, numbered edition."
+    },
+    "tagline": "Oerbier, at least a year in wine barrels."
+  },
+  "dulle-teve-reserva": {
+    "badge": "Currently out of stock",
+    "title": "Dulle Teve Reserva | Barrel-aged tripel from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Dulle Teve Reserva (10%) is the wine-barrel-aged version of Dulle Teve, the tripel of De Dolle Brouwers from Esen, West Flanders.",
+    "alt": "Dulle Teve Reserva bottles",
+    "kicker": "Dulle Teve, aged in wine barrels",
+    "meta": [{ "label": "Alcohol", "value": "10%" }, { "label": "Style", "value": "Tripel, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "Extra round and warming: the tannins of the wine barrel add weight to the already sturdy Dulle Teve.",
+    "notes": [
+      { "label": "Aroma", "text": "Dark fruit, a hint of oak and the spicy kick of Dulle Teve." },
+      { "label": "Taste", "text": "Full and complex, with notes of wood and wine that soften the base." },
+      { "label": "Finish", "text": "Long, dry and slightly tannic." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Serve at 12°C in the Oerbier glass or a tulip glass and give it time to open up." },
+      { "label": "Goes with", "text": "Game, hearty stews or a sharp hard cheese." }
+    ],
+    "weetjes": [
+      "We use wine barrels from France, Spain and Italy, and each barrel only once.",
+      "Every month we top up the barrels, so no air gets to the beer.",
+      "The label says which barrel the beer comes from, for example \"barrique 11\".",
+      "Store the bottles upright and cool."
+    ],
+    "barrel": {
+      "title": "About the barrel ageing",
+      "text": "Ever since Kris put the first Oerbier into sherry casks in 1998, now and then a selected batch of Dulle Teve also goes into wine barrels for at least a year. The tannins and wood notes give the beer an extra layer of complexity, each time in a limited, numbered edition."
+    },
+    "tagline": "Our tripel, at least a year in wine barrels."
+  },
+  "stille-nacht-reserva": {
+    "badge": "Currently in stock, limited edition",
+    "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers, Esen (Belgium)",
+    "description": "Stille Nacht Reserva (12%) is the wine-barrel-aged version of Stille Nacht, released in a limited edition by De Dolle Brouwers in Esen, West Flanders.",
+    "alt": "Stille Nacht Reserva bottles",
+    "kicker": "Stille Nacht, aged for years in wine barrels",
+    "meta": [{ "label": "Alcohol", "value": "12%" }, { "label": "Style", "value": "Golden, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "The complex, golden Stille Nacht gets a second life here: at least two years in barrels that held wine before, into a deeper, woodier and slightly vinous beer. Not a yearly edition, but a release every few years, each with its own barrel number.",
+    "notes": [
+      { "label": "Aroma", "text": "Oak, vanilla, dried fruit, citrus peel and a hint of wild yeast." },
+      { "label": "Taste", "text": "Lightly sour and fruity, with candied orange, wood and a soft vinous touch that trades the original Stille Nacht sweetness for more depth." },
+      { "label": "Finish", "text": "Long and warming, with the high strength well hidden behind wood and fruit." }
+    ],
+    "info": [
+      { "label": "Serving tip", "text": "Serve at 12°C in a wine glass — a bottle is meant for sharing on a special occasion." },
+      { "label": "Goes with", "text": "Aged cheese, a fruit dessert or simply on its own, to finish." }
+    ],
+    "weetjes": [
+      "We use wine barrels from France, Spain and Italy, and each barrel only once.",
+      "Every month we top up the barrels, so no air gets to the beer.",
+      "The label says which barrel the beer comes from, for example \"barrique 11\".",
+      "Store the bottles upright and cool."
+    ],
+    "barrel": {
+      "title": "About the barrel ageing",
+      "text": "Ever since Kris put the first Oerbier into sherry casks in 1998, barrel ageing has been the base of our whole Reserva line. Stille Nacht Reserva is not a yearly release: every few years the brewery puts a selected batch into barrels that held wine for at least two years, before it is bottled as a numbered Reserva (per \"barrique\"). The ageing time varies on purpose — sometimes two years, sometimes longer — until the beer has the complexity we want. The bottles are limited and mostly sold directly at the brewery."
+    },
+    "tagline": "Stille Nacht, years in wine barrels."
+  }
+}

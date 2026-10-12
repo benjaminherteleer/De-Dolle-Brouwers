@@ -5,6 +5,7 @@
 import { addToCart, openCart } from './cart';
 import { storefront, euro, type Variant } from './shopify';
 
+const en = document.documentElement.lang === 'en';
 const cards = [...document.querySelectorAll<HTMLElement>('[data-product]')];
 
 const update = (card: HTMLElement) => {
@@ -15,7 +16,7 @@ const update = (card: HTMLElement) => {
   const variant = variants.find((v) => v.selectedOptions.every((o) => o.name === 'Title' || chosen[o.name] === o.value));
   const button = card.querySelector<HTMLButtonElement>('[data-add]')!;
   button.disabled = !variant?.availableForSale;
-  button.textContent = variant?.availableForSale ? 'In mandje' : 'Uitverkocht';
+  button.textContent = variant?.availableForSale ? (en ? 'Add to cart' : 'In mandje') : en ? 'Sold out' : 'Uitverkocht';
   if (variant && card.querySelector('select')) card.querySelector('[data-price]')!.textContent = euro(variant.price);
   // Mark sold-out values in single-option lists (sizes, designs)
   card.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((sel) => {
@@ -24,7 +25,8 @@ const update = (card: HTMLElement) => {
         v.selectedOptions.every((o) => (o.name === sel.dataset.option ? o.value === opt.value : o.name === 'Title' || chosen[o.name] === o.value)),
       );
       const out = match.length > 0 && match.every((v) => !v.availableForSale);
-      opt.textContent = out ? `${opt.value} (uitverkocht)` : opt.value;
+      const label = opt.dataset.label ?? opt.value;
+      opt.textContent = out ? `${label} (${en ? 'sold out' : 'uitverkocht'})` : label;
     });
   });
   return variant;
@@ -45,12 +47,12 @@ cards.forEach((card) => {
     const variant = update(card);
     if (!variant?.availableForSale) return;
     button.disabled = true;
-    button.textContent = 'Even…';
+    button.textContent = en ? 'One moment…' : 'Even…';
     try {
       await addToCart(variant.id);
       openCart();
     } catch {
-      alert('Dat lukte niet. Probeer het straks nog eens.');
+      alert(en ? "That didn't work. Please try again in a moment." : 'Dat lukte niet. Probeer het straks nog eens.');
     }
     update(card);
   });

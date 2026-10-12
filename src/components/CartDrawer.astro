@@ -1,21 +1,28 @@
 ---
 import { Image } from 'astro:assets';
 import kar from '../assets/logo/mannetje-kar.png';
+import { langOf, link } from '../i18n';
+
+const en = langOf(Astro.url) === 'en';
 ---
 
 <div class="cart-shade" id="cart-shade" hidden></div>
-<aside class="cart" id="cart" aria-label="Je mandje" aria-hidden="true">
+<aside class="cart" id="cart" aria-label={en ? 'Your cart' : 'Je mandje'} aria-hidden="true">
   <header class="cart-head">
     <Image src={kar} alt="" width={160} class="cart-kar" />
-    <h2>Je mandje</h2>
-    <button type="button" class="cart-close" id="cart-close" aria-label="Mandje sluiten">×</button>
+    <h2>{en ? 'Your cart' : 'Je mandje'}</h2>
+    <button type="button" class="cart-close" id="cart-close" aria-label={en ? 'Close cart' : 'Mandje sluiten'}>×</button>
   </header>
   <ul class="cart-lines" id="cart-lines"></ul>
-  <p class="cart-empty" id="cart-empty">Je mandje is nog leeg. Kijk eens in de <a href="/oershop">Oershop</a>.</p>
+  <p class="cart-empty" id="cart-empty">
+    {en ? 'Your cart is still empty. Have a look in the ' : 'Je mandje is nog leeg. Kijk eens in de '}<a href={link(en ? 'en' : 'nl', '/oershop')}>{en ? 'shop' : 'Oershop'}</a>.
+  </p>
   <footer class="cart-foot" id="cart-foot" hidden>
-    <p class="cart-total"><span>Subtotaal</span><b id="cart-total"></b></p>
-    <p class="cart-note">Verzending reken je af bij de volgende stap. Afhalen in de Oerbar kan gratis.</p>
-    <a class="btn dark cart-checkout" id="cart-checkout" href="#">Afrekenen →</a>
+    <p class="cart-total"><span>{en ? 'Subtotal' : 'Subtotaal'}</span><b id="cart-total"></b></p>
+    <p class="cart-note">
+      {en ? 'Shipping is calculated at the next step. Pick-up at the brewery taproom is free.' : 'Verzending reken je af bij de volgende stap. Afhalen in de Oerbar kan gratis.'}
+    </p>
+    <a class="btn dark cart-checkout" id="cart-checkout" href="#">{en ? 'Checkout →' : 'Afrekenen →'}</a>
   </footer>
 </aside>
 
@@ -31,6 +38,7 @@ import kar from '../assets/logo/mannetje-kar.png';
   const total = document.getElementById('cart-total')!;
   const checkout = document.getElementById('cart-checkout') as HTMLAnchorElement;
 
+  const en = document.documentElement.lang === 'en';
   const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
   const open = () => {
@@ -57,23 +65,24 @@ import kar from '../assets/logo/mannetje-kar.png';
       return;
     }
     total.textContent = euro(cart.cost.subtotalAmount);
-    checkout.href = cart.checkoutUrl;
+    // Shopify shows its checkout in English with locale=en
+    checkout.href = en ? cart.checkoutUrl + (cart.checkoutUrl.includes('?') ? '&' : '?') + 'locale=en' : cart.checkoutUrl;
     list.innerHTML = lines
       .map((l) => {
         const m = l.merchandise;
         const variant = m.title === 'Default Title' ? '' : `<small>${esc(m.title)}</small>`;
         const extra = l.attributes.length
-          ? `<details><summary>Jouw keuzes</summary><dl>${l.attributes
-              .map((a) => `<dt>${esc(a.key)}</dt><dd>${/^https?:/.test(a.value) ? `<a href="${esc(a.value)}" target="_blank" rel="noopener">bekijk</a>` : esc(a.value)}</dd>`)
+          ? `<details><summary>${en ? 'Your choices' : 'Jouw keuzes'}</summary><dl>${l.attributes
+              .map((a) => `<dt>${esc(a.key)}</dt><dd>${/^https?:/.test(a.value) ? `<a href="${esc(a.value)}" target="_blank" rel="noopener">${en ? 'view' : 'bekijk'}</a>` : esc(a.value)}</dd>`)
               .join('')}</dl></details>`
           : '';
         return `<li data-line="${esc(l.id)}">
           ${m.image ? `<img src="${esc(m.image.url + (m.image.url.includes('?') ? '&' : '?') + 'width=160')}" alt="" width="64" height="64" />` : '<span class="ph"></span>'}
           <div class="info"><b>${esc(m.product.title)}</b>${variant}${extra}</div>
           <div class="qty">
-            <button type="button" data-step="-1" aria-label="Eén minder">−</button>
+            <button type="button" data-step="-1" aria-label="${en ? 'One less' : 'Eén minder'}">−</button>
             <span>${l.quantity}</span>
-            <button type="button" data-step="1" aria-label="Eén meer">+</button>
+            <button type="button" data-step="1" aria-label="${en ? 'One more' : 'Eén meer'}">+</button>
           </div>
           <span class="price">${euro(l.cost.totalAmount)}</span>
         </li>`;

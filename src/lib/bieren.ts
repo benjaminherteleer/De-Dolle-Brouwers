@@ -1,5 +1,7 @@
 import type { ImageMetadata } from 'astro';
 import data from '../data/bieren.json';
+import english from '../data/bieren.en.json';
+import type { Lang } from '../i18n';
 
 export type Bier = (typeof data)[number] & {
   art: ImageMetadata;
@@ -54,5 +56,24 @@ export const bieren: Bier[] = data.map((b) => {
 export const vast = bieren.filter((b) => !b.reserva);
 export const reserva = bieren.filter((b) => b.reserva);
 
-export const short = (b: Bier) => b.meta.find((m) => m.label === 'Stijl')?.value ?? '';
+/** The beers with their texts in the given language (pictures and colours stay the same). */
+const en: Record<string, any> = english;
+export const beers = (lang: Lang): Bier[] =>
+  lang === 'en'
+    ? bieren.map((b) => {
+        const t = en[b.slug] ?? {};
+        const b2 = b as any;
+        return {
+          ...b,
+          ...t,
+          story: b2.story && t.story ? { ...b2.story, ...t.story } : b2.story,
+          barrel: b2.barrel && t.barrel ? { ...b2.barrel, ...t.barrel } : b2.barrel,
+        } as Bier;
+      })
+    : bieren;
+
+/** Whether the badge says the beer is out of stock. */
+export const uitverkocht = (b: Bier) => /niet voorradig|out of stock/i.test((b as any).badge ?? '');
+
+export const short = (b: Bier) => b.meta.find((m) => m.label === 'Stijl' || m.label === 'Style')?.value ?? '';
 export const abv = (b: Bier) => b.meta.find((m) => m.label === 'Alcohol')?.value ?? '';

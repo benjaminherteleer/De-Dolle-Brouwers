@@ -1,0 +1,301 @@
+---
+import { langOf, link } from '../i18n';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+
+import rodeDeur from '../assets/foto/rode-deur.jpg';
+import binnenkoer from '../assets/foto/binnenkoer.jpg';
+import toast from '../assets/foto/historische-toast.jpg';
+import signs from '../assets/foto/signs-photo.jpg';
+import ketel from '../assets/foto/terras-ketel.jpg';
+import arGroep from '../assets/archief/groep-proost.jpg';
+import arRoerkuip from '../assets/archief/roerkuip-toen.jpg';
+import arKrant from '../assets/archief/krant-1990.jpg';
+import arKleur from '../assets/archief/roerkuip-kleur.jpg';
+import arBrouwer from '../assets/archief/brouwer-jaren80.jpg';
+import arNatStraf from '../assets/archief/krant-nat-en-straf.jpg';
+import arGevel from '../assets/archief/gevel-toen.jpg';
+import arPlateaus from '../assets/archief/plateaus.jpg';
+import arTractor from '../assets/archief/mout-tractor.jpg';
+import arKinderen from '../assets/archief/kinderen-roerkuip.jpg';
+import arJasje from '../assets/archief/oerbier-jasje.jpg';
+import arKoelschip from '../assets/archief/krant-koelschip.jpg';
+import arBak from '../assets/archief/oerbierbak.jpg';
+import arBezoek from '../assets/archief/bezoek-toen.jpg';
+import arFestival from '../assets/archief/krant-bierfestival.jpg';
+import affOerbier from '../assets/affiches/oerbier.jpg';
+import affArabier from '../assets/affiches/arabier.jpg';
+import affBoskeun from '../assets/affiches/boskeun.jpg';
+import affTeve from '../assets/affiches/dulle-teve.jpg';
+import affNacht from '../assets/affiches/stille-nacht.jpg';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const history = [
+  { year: '1835', text: tr("Dokter Louis Nevejan sticht in Esen een brouwerij met stokerij. Het dorp telt er toen zes.", "Doctor Louis Nevejan founds a brewery with a distillery in Esen. The village has six of them at the time.") },
+  { year: '1882', text: tr("De familie Costenoble neemt over en brouwt er drie generaties lang. Begin jaren 80 valt de brouwerij stil.", "The Costenoble family takes over and brews there for three generations. In the early '80s the brewery falls silent.") },
+  {
+    year: "'70",
+    text: tr("Fietsclubje “De Dolle Dravers”: de broers Jo en Kris Herteleer, Dirk Coussée en Bernard Veranneman. Ze kennen elke helling, en elk café.", "A little cycling club, “De Dolle Dravers”: the brothers Jo and Kris Herteleer, Dirk Coussée and Bernard Veranneman. They know every hill, and every café."),
+  },
+  { year: '1980', text: tr("Na proeven in de wastobbe nemen ze de lege brouwerij over. Op 11 november brouwen ze het eerste Oerbier.", "After test brews in the washtub they take over the empty brewery. On 11 November they brew the first Oerbier.") },
+  { year: '1998', text: tr("Kris legt het eerste Oerbier te slapen in oude sherryvaten. De Reserva is geboren.", "Kris lays the first Oerbier to rest in old sherry casks. The Reserva is born.") },
+  { year: tr("Nu", "Now"), text: tr("Zo’n 1.200 hectoliter per jaar. Klein genoeg om alles zelf in het oog te houden.", "About 1,200 hectolitres a year. Small enough to keep an eye on everything ourselves.") },
+];
+
+const affiches = [
+  { src: affOerbier, alt: tr("Affiche van Oerbier", "Oerbier poster"), tilt: -4 },
+  { src: affArabier, alt: tr("Affiche van Arabier", "Arabier poster"), tilt: 3 },
+  { src: affTeve, alt: tr("Affiche van Dulle Teve", "Dulle Teve poster"), tilt: -2 },
+  { src: affBoskeun, alt: tr("Affiche van Boskeun", "Boskeun poster"), tilt: 4 },
+  { src: affNacht, alt: tr("Affiche van Stille Nacht", "Stille Nacht poster"), tilt: -3 },
+];
+
+---
+
+<Base
+  title={tr("Ons verhaal | De Dolle Brouwers, sinds 1980 in Esen, Diksmuide", "Our story | De Dolle Brouwers, in Esen (Belgium) since 1980")}
+  description={tr("Van fietsclub tot brouwerij: het verhaal van De Dolle Brouwers in Esen sinds 1980, met oude foto's uit het album en de affiches van Kris Herteleer.", "From cycling club to brewery: the story of De Dolle Brouwers in Esen since 1980, with old photos from the album and the posters by Kris Herteleer.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Ons verhaal | De Dolle Brouwers", "Our story | De Dolle Brouwers")} />
+  </Fragment>
+
+  <!-- VERHAAL -->
+  <section class="section story" id="verhaal">
+    <div class="wrap">
+      <div class="story-top">
+        <div>
+          <h1>{tr("Van fietsclub tot brouwerij.", "From cycling club to brewery.")}</h1>
+          <p class="lead">
+            {tr("De naam komt van de buurt. Toen een paar vrienden zonder ervaring een leegstaande brouwerij kochten, noemden ze hen gewoon “de dolle brouwers”. Die koppigheid zit nog altijd in elk bier.", "The name came from the neighbours. When a few friends with no experience bought an empty brewery, people simply called them “de dolle brouwers”: the mad brewers. That stubbornness is still in every beer.")}
+          </p>
+        </div>
+        <Polaroid src={toast} alt={tr("Zwart-witfoto van de eerste Dolle Brouwers die klinken", "Black and white photo of the first Dolle Brouwers raising their glasses")} caption={tr("Nat en straf, van bij het begin", "Nat en straf, from the very start")} tilt={-3} ratio="7 / 5" taped />
+      </div>
+
+      <ol class="timeline">
+        {
+          history.map((h) => (
+            <li>
+              <span class="year">{h.year}</span>
+              <p>{h.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="story-photos">
+        <Polaroid src={binnenkoer} alt={tr("Doorkijk naar de binnenkoer van de brouwerij", "View into the brewery courtyard")} tilt={-3} ratio="3 / 4" />
+        <Polaroid src={signs} alt={tr("Oude metalen uithangborden in de brouwerij", "Old metal signs in the brewery")} caption={tr("De originele uithangborden", "The original signs")} tilt={2} ratio="3 / 4" />
+        <Polaroid src={rodeDeur} alt={tr("Rode deur in een witte muur met hop", "Red door in a white wall with hops")} tilt={-2} ratio="3 / 4" />
+        <Polaroid src={ketel} alt={tr("Oude brouwketel op het terras", "Old brewing kettle on the terrace")} tilt={3} ratio="3 / 4" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOTOALBUM -->
+  <section class="section album">
+    <div class="wrap">
+      <h2>{tr("Uit het fotoalbum.", "From the photo album.")}</h2>
+      <div class="album-grid">
+        {
+          [
+            { src: arGroep, alt: tr("Een volle Oerbar, jaren 80", "A packed Oerbar, 1980s"), tilt: -2, r: '4 / 3' },
+            { src: arRoerkuip, alt: tr("Brouwers bij de roerkuip, zwart-wit", "Brewers at the mash tun, black and white"), tilt: 2, r: '4 / 3' },
+            { src: arKrant, alt: tr("Krantenknipsel van 20 april 1990 met een baby en een fles Oerbier", "Newspaper clipping from 20 April 1990 with a baby and a bottle of Oerbier"), caption: tr("20 april 1990", "20 April 1990"), tilt: -1.5, r: '3 / 4' },
+            { src: arKleur, alt: tr("Twee brouwers bij roerkuip nr. 1 van 34,83 hl", "Two brewers at mash tun no. 1 of 34.83 hl"), tilt: 1.5, r: '4 / 3' },
+            { src: arBrouwer, alt: tr("Een jonge brouwer aan het werk in de brouwerij", "A young brewer at work in the brewery"), tilt: -2.5, r: '3 / 4' },
+            { src: arNatStraf, alt: tr("Krantenknipsel over het nieuwe bier Nat en Straf", "Newspaper clipping about the new beer Nat en Straf"), tilt: 2, r: '4 / 3' },
+            { src: arGevel, alt: tr("De gevel met het smiley-mannetje, jaren geleden", "The front with the smiling figure, years ago"), tilt: -1, r: '4 / 3' },
+            { src: arPlateaus, alt: tr("Drie mensen met plateaus vol glazen Oerbier", "Three people with trays full of glasses of Oerbier"), tilt: 2.5, r: '4 / 3' },
+            { src: arTractor, alt: tr("Mout wordt van een tractor in de brouwerij gelost", "Malt being unloaded from a tractor into the brewery"), tilt: -2, r: '3 / 4' },
+            { src: arKinderen, alt: tr("Kinderen in Oerbier-shirts aan de roerkuip", "Children in Oerbier shirts at the mash tun"), tilt: 1.5, r: '4 / 3' },
+            { src: arJasje, alt: tr("Een man in een jasje vol Oerbier-opdruk aan de toog", "A man in a jacket covered in Oerbier prints at the bar"), tilt: -1.5, r: '3 / 4' },
+            { src: arKoelschip, alt: tr("Krantenknipsel met het koelschip en de roerkuip", "Newspaper clipping with the coolship and the mash tun"), tilt: 2, r: '4 / 3' },
+            { src: arBak, alt: tr("Een vrouw met een bak Oerbier voor een huis", "A woman with a crate of Oerbier in front of a house"), tilt: -2, r: '3 / 4' },
+            { src: arBezoek, alt: tr("Bezoekers aan de rode deur van de brouwerij", "Visitors at the red door of the brewery"), tilt: 1, r: '4 / 3' },
+            { src: arFestival, alt: tr("Krantenknipsel van het eerste bierfestival in België, met de Dolle Brouwers aan hun stand", "Newspaper clipping of the first beer festival in Belgium, with the Dolle Brouwers at their stand"), tilt: -1.5, r: '4 / 5' },
+          ].map((p) => <Polaroid src={p.src} alt={p.alt} caption={p.caption} tilt={p.tilt} ratio={p.r} width={600} />)
+        }
+      </div>
+    </div>
+  </section>
+
+
+  <!-- AFFICHES -->
+  <section class="section posters">
+    <div class="wrap">
+      <div class="posters-head">
+        <h2>{tr("Alles met de hand getekend.", "Everything drawn by hand.")}</h2>
+        <p class="lead">
+          {tr("Etiketten, affiches, mannetjes: Kris Herteleer tekent ze sinds het begin zelf. Daarom herken je een De Dolle Brouwers-biertje van ver.", "Labels, posters, characters: Kris Herteleer has drawn them himself from the very start. That's why you can spot a De Dolle Brouwers beer from afar.")}
+        </p>
+      </div>
+      <div class="poster-row">
+        {
+          affiches.map((a) => (
+            <figure class="poster" style={`--tilt:${a.tilt}deg`}>
+              <Image src={a.src} alt={a.alt} width={420} />
+            </figure>
+          ))
+        }
+      </div>
+      <p class="posters-more">
+        <a class="btn light" href="https://krisherteleer.com" target="_blank" rel="noopener">{tr("Meer werk van Kris ↗", "More work by Kris ↗")}</a>
+      </p>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  /* STORY */
+  .story {
+    background: var(--paper-deep) var(--grain);
+  }
+  .story-top {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+    margin-bottom: 60px;
+  }
+  .story-top h1 {
+    font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+  }
+  .story-top h1,
+  .story-top h2 {
+    margin-bottom: 20px;
+  }
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 70px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 0;
+    right: 0;
+    border-top: 3px dashed var(--ink);
+  }
+  .timeline li {
+    position: relative;
+  }
+  .year {
+    display: inline-grid;
+    place-items: center;
+    min-width: 58px;
+    height: 58px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--yellow);
+    border: var(--line);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+  }
+  .timeline p {
+    font-size: 0.98rem;
+  }
+  .story-photos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  /* ALBUM */
+  .album {
+    background: #2a2118 var(--grain);
+    color: var(--paper);
+  }
+  .album h2 {
+    margin-bottom: 50px;
+  }
+  .album-grid {
+    columns: 4 220px;
+    column-gap: 26px;
+  }
+  .album-grid :global(.polaroid) {
+    break-inside: avoid;
+    margin-bottom: 30px;
+  }
+
+  /* POSTERS */
+  .posters-head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 50px;
+  }
+  .posters-head h2 {
+    margin-bottom: 18px;
+  }
+  .posters-head .lead {
+    margin: 0 auto;
+  }
+  .poster-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    align-items: center;
+  }
+  .poster {
+    margin: 0;
+    border: var(--line);
+    box-shadow: var(--shadow);
+    transform: rotate(var(--tilt));
+    transition: transform 0.2s ease;
+    background: #fff;
+  }
+  .poster:hover {
+    transform: rotate(0) scale(1.06);
+    z-index: 2;
+  }
+  .poster :global(img) {
+    width: 100%;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+  }
+  .posters-more {
+    text-align: center;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 1000px) {
+    .story-top {
+      grid-template-columns: 1fr;
+    }
+    .timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .timeline::before {
+      display: none;
+    }
+    .story-photos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .poster-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .timeline {
+      grid-template-columns: 1fr;
+    }
+    .poster-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

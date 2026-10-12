@@ -1,0 +1,900 @@
+---
+import { langOf, link } from '../i18n';
+import { brewery } from '../lib/schema';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Polaroid from '../components/Polaroid.astro';
+import Shop from '../components/Shop.astro';
+import Stamp from '../components/Stamp.astro';
+import BeerFx from '../components/BeerFx.astro';
+import { beers, abv, uitverkocht } from '../lib/bieren';
+
+import toast from '../assets/foto/historische-toast.jpg';
+import klinken from '../assets/foto/oerbar-tafel.jpg';
+import koelschip from '../assets/foto/bp-koelschip.jpg';
+import vergisting from '../assets/foto/bp-gisting.jpg';
+import molen from '../assets/foto/bp-roerkuip.jpg';
+import overzicht from '../assets/brouwproces/overzicht.jpg';
+import toog from '../assets/foto/oerbar-toog.jpg';
+import tap from '../assets/foto/oerbar-tap.jpg';
+import proostBar from '../assets/foto/oerbar-proost.jpg';
+import parasols from '../assets/foto/terras-parasols.jpg';
+import oerbar from '../assets/foto/oerbar-interieur.jpg';
+import gevel from '../assets/foto/brouwerij-gevel.jpg';
+import vaten from '../assets/foto/vaten-rij.jpg';
+import flesHop from '../assets/foto/fles-hop.jpg';
+import mascot from '../assets/logo/logo-full.png';
+import reservaLogo from '../assets/logo/reserva-logo.png';
+import valArabier from '../assets/bieren/arabier.png';
+import valBoskeun from '../assets/bieren/boskeun.png';
+import valTeve from '../assets/bieren/dulle-teve.png';
+import valNacht from '../assets/bieren/stille-nacht.png';
+import valHoop from '../assets/bieren/dehoop-logo.png';
+import vliegtuig from '../assets/bieren/oeral-vliegtuig.png';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const vast = beers(lang).filter((b) => !b.reserva);
+const reserva = beers(lang).filter((b) => b.reserva);
+
+// The Oeral plane flies over once and drops the bende next to the Oerbier-mannetje.
+const bende = [
+  { src: valArabier, slug: 'arabier' },
+  { src: valNacht, slug: 'stille-nacht' },
+  { src: valBoskeun, slug: 'boskeun' },
+  { src: valTeve, slug: 'dulle-teve' },
+  { src: valHoop, slug: 'lichtervelds-blond' },
+];
+
+
+
+---
+
+<Base
+  title={tr("De Dolle Brouwers | Brouwerij in Esen, Diksmuide · Oerbier sinds 1980", "De Dolle Brouwers | Craft brewery in Esen, Belgium · Oerbier since 1980")}
+  description={tr("Ambachtelijke brouwerij in Esen, Diksmuide (West-Vlaanderen), sinds 1980. Ongefilterd, hoog gegist bier: Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht en de Reserva's. Rondleiding elke zondag, Oerbar open in het weekend.", "Craft brewery in Esen near Diksmuide (West Flanders, Belgium) since 1980. Unfiltered, top-fermented beer: Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht and the Reservas. Brewery tour every Sunday, taproom open on weekends.")}
+>
+  <Fragment slot="head">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={tr("De Dolle Brouwers | Oerbier uit Esen, sinds 1980", "De Dolle Brouwers | Oerbier from Esen, since 1980")} />
+    <meta
+      property="og:description"
+      content={tr("Ongefilterd, hoog gegist bier uit Esen. Kom proeven in de Oerbar of volg een rondleiding op zondag.", "Unfiltered, top-fermented beer from Esen, Belgium. Come and taste in the Oerbar or join a brewery tour on Sunday.")}
+    />
+    <meta name="robots" content="index, follow" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(brewery(lang))} />
+  </Fragment>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="sky" aria-hidden="true">
+      <Image src={vliegtuig} alt="" width={440} class="vliegtuig" loading="eager" />
+    </div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hand hero-note">{tr("Esen, West-Vlaanderen ↘", "Esen, West Flanders ↘")}</p>
+        <h1>Nat<br />en straf.</h1>
+        <p class="lead">
+          {tr("Op 11 november 1980 brouwde een bende vrienden hun eerste Oerbier in een leegstaande brouwerij in Esen. We doen het vandaag nog altijd op dezelfde koppige manier: ongefilterd, hoog gegist en zonder haast.", "On 11 November 1980 a gang of friends brewed their first Oerbier in an empty brewery in Esen, Belgium. We still do it the same stubborn way today: unfiltered, top-fermented and never in a hurry.")}
+        </p>
+        <div class="hero-actions">
+          <a class="btn dark" href={L('/brouwerij')}>{tr("Kom langs in Esen", "Visit us in Esen")}</a>
+          <a class="btn light" href="#bieren">{tr("Ontdek de bende", "Meet the gang")}</a>
+        </div>
+      </div>
+
+      <div class="hero-collage">
+        <Polaroid
+          src={toast}
+          alt={tr("Zwart-witfoto van de eerste Dolle Brouwers die klinken met Oerbier", "Black and white photo of the first Dolle Brouwers raising a glass of Oerbier")}
+          caption={tr("Begin jaren '80", "Early '80s")}
+          tilt={-4}
+          ratio="7 / 5"
+          taped
+          loading="eager"
+          class="c-toast"
+        />
+        <Polaroid
+          src={klinken}
+          alt={tr("Vrienden die klinken aan tafel in de Oerbar", "Friends raising their glasses at a table in the Oerbar")}
+          caption={tr("...en vandaag, in de Oerbar", "...and today, in the Oerbar")}
+          tilt={3}
+          ratio="3 / 2"
+          loading="eager"
+          class="c-proost"
+        />
+        <Stamp class="c-stamp" size={136} ring={tr('Esen · West-Vlaanderen · Sinds · ', 'Esen · West Flanders · Since · ')} />
+        <div class="bende-rij" id="bende-rij">
+          <span class="gastheer">
+            <Image src={mascot} alt={tr("Het Oerbier-mannetje met brouwersvork en glas", "The Oerbier figure with brewer's fork and glass")} height={240} class="c-mascot" loading="eager" />
+          </span>
+          {
+            bende.map((b) => (
+              <span class="lid" aria-hidden="true">
+                <span class="val">
+                <svg class="parachute" viewBox="0 0 120 92">
+                  <path d="M60 60 L8 34 M60 60 L36 30 M60 60 L84 30 M60 60 L112 34" stroke="#21170c" stroke-width="2" fill="none" />
+                  <path d="M6 34 Q8 2 60 2 Q112 2 114 34 Q101 25 87 34 Q74 25 60 34 Q46 25 33 34 Q19 25 6 34 Z" fill="#fbfaf5" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
+                  <path d="M33 34 Q35 4 60 2 Q50 10 46 31 Z M87 34 Q85 4 60 2 Q70 10 74 31 Z" fill="#f7b500" />
+                  <path d="M6 34 Q8 2 60 2 Q112 2 114 34 Q101 25 87 34 Q74 25 60 34 Q46 25 33 34 Q19 25 6 34 Z" fill="none" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
+                </svg>
+                <Image src={b.src} alt="" height={240} loading="eager" />
+                </span>
+              </span>
+            ))
+          }
+        </div>
+        <script is:inline>
+          // Hide the bende before first paint when the drop will play (once per visit, not with reduced motion).
+          try {
+            if (!sessionStorage.getItem('bende-geland') && !matchMedia('(prefers-reduced-motion: reduce)').matches)
+              document.getElementById('bende-rij').classList.add('wacht');
+          } catch (e) {}
+        </script>
+      </div>
+    </div>
+    <div class="edge-bottom"></div>
+  </section>
+
+  <!-- TRADITIE -->
+  <section class="section tradition">
+    <div class="wrap trad-grid">
+      <div class="trad-photos">
+        <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, daterend rond 1900", "The coolship, from around 1900")} tilt={-2} ratio="3 / 4" class="t1" />
+        <Polaroid src={vergisting} alt={tr("Schuimende gist in een open gistkuip", "Foaming yeast in an open fermenter")} caption={tr("Open gisting", "Open fermentation")} tilt={2} ratio="4 / 3" class="t2" />
+        <Polaroid src={molen} alt={tr("Roerkuip nr. 1 in het brouwhuis", "Mash tun no. 1 in the brewhouse")} caption={tr("Roerkuip nr. 1, allicht nog ouder", "Mash tun no. 1, probably even older")} tilt={-1.5} ratio="4 / 3" class="t3" />
+      </div>
+      <div class="trad-copy">
+        <h2>{tr("Toen we begonnen, had niemand het over craft.", "When we started, nobody talked about craft.")}</h2>
+        <p class="lead">
+          {tr("Wij noemden het gewoon bier brouwen zoals het hoort. Met een koelschip, open koperen gistkuipen, hop uit Poperinge en gist die zijn tijd krijgt. Het koelschip en de roerkuip dateren van rond 1900 en zijn nog altijd in gebruik. Gesloten tanks, filters en snelle recepten? Niet bij ons.", "We just called it brewing beer the way it should be. With a coolship, open copper fermenters, hops from Poperinge and yeast that gets its time. The coolship and the mash tun date from around 1900 and are still in use. Closed tanks, filters and quick recipes? Not here.")}
+        </p>
+        <ol class="years">
+          <li><span class="pill">1835</span> {tr("Dokter Nevejan start een brouwerij in Esen.", "Doctor Nevejan starts a brewery in Esen.")}</li>
+          <li><span class="pill">1980</span> {tr("De Dolle Brouwers nemen ze over. Eerste Oerbier op 11 november.", "De Dolle Brouwers take it over. First Oerbier on 11 November.")}</li>
+          <li><span class="pill">1998</span> {tr("Het eerste Oerbier gaat in oude sherryvaten. De Reserva is geboren.", "The first Oerbier goes into old sherry casks. The Reserva is born.")}</li>
+          <li><span class="pill">{tr("Nu", "Now")}</span> {tr("Zelfde gebouw, zelfde koelschip, zelfde koppigheid.", "Same building, same coolship, same stubbornness.")}</li>
+        </ol>
+        <a class="btn" href={L('/verhaal')}>{tr("Lees ons verhaal", "Read our story")}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIEREN -->
+  <section class="section beers" id="bieren">
+    <div class="edge-top"></div>
+    <div class="wrap">
+      <div class="beers-head">
+        <h2>{tr("De bende.", "The gang.")}</h2>
+        <p class="hand">{tr("Elk bier een eigen kop, met de hand getekend ↓", "Every beer its own face, drawn by hand ↓")}</p>
+      </div>
+      <ul class="beer-grid">
+        {
+          vast.map((b, i) => (
+            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg`}>
+              <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
+                <span class="beer-art">
+                  <BeerFx slug={b.slug} />
+                  <Image src={b.art} alt="" width={420} />
+                </span>
+                <span class="beer-name">{b.name}</span>
+                <span class="beer-meta">
+                  <strong>{abv(b)}</strong> {b.tagline}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESERVA -->
+  <section class="section reserva" id="reserva">
+    <div class="edge-top"></div>
+    <div class="wrap res-grid">
+      <div class="res-copy">
+        <Image src={reservaLogo} alt={tr("Het Oerbier-mannetje op een wijnvat", "The Oerbier figure on a wine barrel")} width={120} class="res-logo" />
+        <h2>Reserva.<br />{tr("Geduld op vat.", "Patience in the barrel.")}</h2>
+        <p class="lead">
+          {tr("In 1998 legde Kris het eerste Oerbier te slapen in oude sherryvaten. Vanaf dan is de Reserva geboren. Nu nog gaat af en toe een brouwsel voor minstens een jaar op wijnvaten. Beperkte, genummerde oplage. Op is op.", "In 1998 Kris laid the first Oerbier to rest in old sherry casks. That was the birth of the Reserva. Now and then a batch still goes into wine barrels for at least a year. Limited, numbered editions. When it's gone, it's gone.")}
+        </p>
+        <ul class="res-list">
+          {
+            reserva.map((b) => (
+              <li>
+                <a href={L(`/bieren/${b.slug}`)}>
+                  <span class="res-name">
+                    {b.name}
+                    {b.badge && <small class:list={['res-stock', { out: uitverkocht(b) }]}>{b.badge}</small>}
+                  </span>
+                  <span class="res-abv">{abv(b)}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <Polaroid src={vaten} alt={tr("Rij eiken wijnvaten in de kelder", "A row of oak wine barrels in the cellar")} tilt={3} ratio="4 / 5" taped />
+    </div>
+  </section>
+
+  <!-- BROUWPROCES -->
+  <section class="section process">
+    <div class="wrap proc-grid">
+      <div class="proc-copy">
+        <h2>{tr("Van graan tot fles, in tien stappen.", "From grain to bottle, in ten steps.")}</h2>
+        <p class="lead">
+          {tr("Mout, molen, roerkuip, koelschip, open gistkuipen, twee maanden rust en dan nog eens hergisten op de fles. Ons Oerbier-mannetje loopt je er stap voor stap door.", "Malt, mill, mash tun, coolship, open fermenters, two months of rest and then a second fermentation in the bottle. Our Oerbier figure walks you through it step by step.")}
+        </p>
+        <a class="btn dark" href={L('/brouwproces')}>{tr("Bekijk het brouwproces", "See how we brew")}</a>
+      </div>
+      <a href={L('/brouwproces')} class="proc-art" aria-label={tr("Naar het brouwproces", "To the brewing process")}>
+        <Image src={overzicht} alt={tr("Getekende kaart van de tien brouwstappen, met het Oerbier-mannetje bij elke stap", "Drawn map of the ten brewing steps, with the Oerbier figure at each step")} width={900} />
+      </a>
+    </div>
+  </section>
+
+  <!-- BEZOEK -->
+  <section class="section visit" id="bezoek">
+    <div class="edge-top"></div>
+    <div class="wrap">
+      <div class="visit-head">
+        <h2>{tr("Kom proeven waar het gebrouwen wordt.", "Taste it where it's brewed.")}</h2>
+        <p class="hand">Roeselarestraat 12B, Esen</p>
+      </div>
+      <div class="visit-grid">
+        <div class="wall">
+          <Polaroid src={toog} alt={tr("De toog van de Oerbar met de koperen tapkranen", "The bar of the Oerbar with its copper taps")} tilt={-2} ratio="3 / 4" class="w1" />
+          <Polaroid src={tap} alt={tr("De barman tapt een glas in de Oerbar", "The barman pouring a glass in the Oerbar")} tilt={2} ratio="4 / 3" class="w2" />
+          <Polaroid src={proostBar} alt={tr("Een vrouw die lachend haar glas heft in de Oerbar", "A woman laughing and raising her glass in the Oerbar")} tilt={-1.5} ratio="4 / 5" class="w3" />
+          <Polaroid src={parasols} alt={tr("Het terras met gele parasols naast de brouwerij", "The terrace with yellow parasols next to the brewery")} tilt={2.5} ratio="4 / 5" class="w4" />
+          <Polaroid src={oerbar} alt={tr("De zaal van de Oerbar", "Inside the Oerbar")} tilt={1.5} ratio="4 / 3" class="w5" />
+        </div>
+        <div class="ticket">
+          <div class="ticket-top">
+            <span class="tag">{tr("Elke zondag", "Every Sunday")}</span>
+            <h3>{tr("Rondleiding met proeverij", "Brewery tour with tasting")}</h3>
+          </div>
+          <dl>
+            <div><dt>{tr("14u", "2 pm")}</dt><dd>{tr("in het Engels", "in English")}</dd></div>
+            <div><dt>{tr("15u", "3 pm")}</dt><dd>{tr("in het Nederlands", "in Dutch")}</dd></div>
+            <div><dt>€10</dt><dd>{tr("inclusief drie proevertjes van het vat", "including three tastings from the cask")}</dd></div>
+          </dl>
+          <p>{tr("Groepen vanaf 20 personen kunnen ook in de week, op afspraak.", "Groups of 20 or more can also come on weekdays, by appointment.")}</p>
+          <div class="ticket-actions">
+            <a class="btn" href={L('/rondleiding-boeken')}>{tr("Boek je plaats", "Book your spot")}</a>
+            <a class="ticket-link" href={L('/brouwerij#bezoek')}>{tr("Meer over je bezoek →", "More about your visit →")}</a>
+          </div>
+          <div class="ticket-foot">
+            <strong>Oerbar</strong> {tr("open op zaterdag en zondag van 14u tot 19u. Gesloten tijdens de kerstvakantie.", "(our taproom) open Saturday and Sunday from 2 to 7 pm. Closed during the Christmas holidays.")}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OERSHOP -->
+  <Shop />
+
+  <!-- VERKOOPPUNTEN -->
+  <section class="section extra" id="verkooppunten">
+    <div class="wrap">
+      <div class="card where">
+        <Polaroid src={flesHop} alt={tr("Een fles Oerbier tussen verse hop", "A bottle of Oerbier among fresh hops")} tilt={4} ratio="1 / 1" width={500} class="where-photo" />
+        <div>
+          <h3>{tr("Ook te vinden ver buiten Esen", "Also found far beyond Esen")}</h3>
+          <p>{tr("Van Café Pardaf in Antwerpen tot een bierbar in Rome. Kijk waar je in de buurt een De Dolle Brouwers-biertje kan drinken.", "From Café Pardaf in Antwerp to beer bars in Rome, London and San Diego. See where you can drink a De Dolle Brouwers beer near you.")}</p>
+          <a class="btn" href={L('/verkooppunten-kaart')}>{tr("Open de kaart", "Open the map")}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // The Oeral plane crosses the hero once; as it passes each spot it drops a member of the bende,
+  // who floats down on a parachute and lands next to the Oerbier-mannetje.
+  const rij = document.getElementById('bende-rij');
+  const plane = document.querySelector<HTMLElement>('.sky .vliegtuig');
+  const sky = document.querySelector<HTMLElement>('.sky');
+
+  const drop = () => {
+    if (!rij || !plane || !sky) return;
+    try {
+      sessionStorage.setItem('bende-geland', '1');
+    } catch {}
+    const skyBox = sky.getBoundingClientRect();
+    const pw = plane.offsetWidth;
+    const flight = 14000;
+    const start = skyBox.width + 20;
+    const end = -pw - 40;
+    plane.style.visibility = 'visible';
+    plane.animate(
+      [
+        { transform: `translateX(${start}px) rotate(-2deg)` },
+        { transform: `translateX(${(start + end) / 2}px) rotate(2deg)` },
+        { transform: `translateX(${end}px) rotate(-2deg)` },
+      ],
+      { duration: flight, easing: 'linear', fill: 'forwards' },
+    ).onfinish = () => (plane.style.visibility = 'hidden');
+
+    const leden = [...rij.querySelectorAll<HTMLElement>('.lid')];
+    leden.forEach((lid) => {
+      const box = lid.getBoundingClientRect();
+      const centre = box.left + box.width / 2 - skyBox.left;
+      // When the cockpit (about a fifth into the plane) is right above this spot
+      const at = ((start - (centre - pw * 0.2)) / (start - end)) * flight;
+      const height = box.top - skyBox.top - plane.offsetHeight * 0.5;
+      const fall = 5600;
+      const chute = lid.querySelector<SVGElement>('.parachute')!;
+      const val = lid.querySelector<HTMLElement>('.val')!;
+      setTimeout(() => {
+        lid.style.visibility = 'visible';
+        val.animate(
+          [
+            { transform: `translateY(${-height}px) rotate(-6deg)`, offset: 0 },
+            { transform: `translateY(${-height * 0.62}px) rotate(7deg)`, offset: 0.3 },
+            { transform: `translateY(${-height * 0.3}px) rotate(-5deg)`, offset: 0.62 },
+            { transform: 'translateY(0) rotate(2deg)', offset: 0.9 },
+            { transform: 'translateY(0) scale(1.06, 0.92)', offset: 0.95 },
+            { transform: 'none', offset: 1 },
+          ],
+          { duration: fall, easing: 'cubic-bezier(.3,.1,.6,1)' },
+        );
+        chute.animate(
+          [
+            { opacity: 0, transform: 'scale(0.3)', offset: 0 },
+            { opacity: 1, transform: 'scale(1)', offset: 0.12 },
+            { opacity: 1, transform: 'scale(1)', offset: 0.86 },
+            { opacity: 0, transform: 'translateY(20px) scale(0.9, 0.3)', offset: 1 },
+          ],
+          { duration: fall + 300, easing: 'ease-out' },
+        );
+      }, at);
+    });
+  };
+
+  if (rij?.classList.contains('wacht')) {
+    rij.querySelectorAll<HTMLElement>('.lid').forEach((l) => (l.style.visibility = 'hidden'));
+    rij.classList.remove('wacht');
+    // Wait until the figures have their size, then a short beat before the plane comes in.
+    const go = () => setTimeout(drop, 600);
+    document.readyState === 'complete' ? go() : addEventListener('load', go, { once: true });
+  }
+</script>
+
+<style>
+  /* HERO */
+  .hero {
+    background: var(--yellow) var(--grain);
+    position: relative;
+    padding: clamp(40px, 6vw, 80px) 0 clamp(70px, 8vw, 110px);
+    z-index: 2;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .hero-note {
+    margin-bottom: 6px;
+    transform: rotate(-3deg);
+    width: fit-content;
+  }
+  .hero h1 {
+    font-size: clamp(4rem, 12vw, 9.5rem);
+    line-height: 0.86;
+    margin-bottom: 26px;
+  }
+  .hero .lead {
+    max-width: 30em;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 26px;
+  }
+  .hero-collage {
+    position: relative;
+    min-height: 640px;
+    /* Feet on the bottom edge of the yellow, where the paper tears off */
+    --grond: calc(-1 * clamp(70px, 8vw, 110px) + 4px);
+  }
+  .hero-collage :global(.c-toast) {
+    position: absolute;
+    width: 70%;
+    top: 0;
+    left: 0;
+  }
+  .hero-collage :global(.c-proost) {
+    position: absolute;
+    width: 66%;
+    right: 0;
+    top: 46%;
+    z-index: 1;
+  }
+  .hero-collage :global(.c-mascot) {
+    transform-origin: 50% 100%;
+    animation: bob 4s ease-in-out infinite;
+  }
+  .hero-collage :global(.c-stamp) {
+    position: absolute;
+    right: 4%;
+    top: -14px;
+  }
+  @keyframes bob {
+    50% {
+      transform: rotate(2.5deg);
+    }
+  }
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+  }
+  .sky {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .sky :global(.vliegtuig) {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: clamp(190px, 19vw, 280px);
+    height: auto;
+    visibility: hidden;
+    filter: drop-shadow(3px 5px 0 rgba(33, 23, 12, 0.2));
+  }
+  .bende-rij {
+    position: absolute;
+    left: -10%;
+    right: -6%;
+    bottom: var(--grond);
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+  .lid,
+  .gastheer {
+    position: relative;
+    display: block;
+  }
+  .val {
+    display: block;
+  }
+  .lid :global(img),
+  .gastheer :global(img) {
+    display: block;
+    height: clamp(64px, 6.6vw, 100px);
+    width: auto;
+    filter: drop-shadow(3px 5px 0 rgba(33, 23, 12, 0.22));
+  }
+  .parachute {
+    position: absolute;
+    left: 50%;
+    bottom: 78%;
+    width: 140%;
+    translate: -50% 0;
+    transform-origin: 50% 100%;
+    opacity: 0;
+  }
+  .bende-rij.wacht .lid {
+    visibility: hidden;
+  }
+
+  /* TRADITION */
+  .trad-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(36px, 6vw, 90px);
+    align-items: center;
+  }
+  .trad-photos {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 26px 22px;
+    align-items: start;
+  }
+  .trad-photos :global(.t1) {
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+  .trad-photos :global(.t3) {
+    margin-left: -18px;
+  }
+  .trad-copy h2 {
+    margin-bottom: 22px;
+  }
+  .years {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 32px;
+    display: grid;
+    gap: 14px;
+  }
+  .years li {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .years .pill {
+    text-align: center;
+  }
+
+  /* BEERS */
+  .beers {
+    background: var(--paper-deep) var(--grain);
+  }
+  .beers-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 44px;
+  }
+  .beers-head .hand {
+    transform: rotate(-2deg);
+  }
+  .beer-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px 26px;
+  }
+  .beer {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transform: rotate(var(--tilt));
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    height: 100%;
+  }
+  .beer:hover {
+    transform: rotate(0deg) translateY(-6px);
+    box-shadow: 10px 12px 0 var(--ink);
+  }
+  .beer-art {
+    background: var(--c);
+    border-bottom: var(--line);
+    aspect-ratio: 1;
+    padding: 18px;
+  }
+  .beer-art {
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+  }
+  .beer-art :global(img) {
+    position: absolute;
+    inset: 18px;
+    width: calc(100% - 36px);
+    height: calc(100% - 36px);
+    object-fit: contain;
+    z-index: 1;
+    transition: transform 0.25s ease;
+  }
+  .beer:hover .beer-art :global(img) {
+    transform: scale(1.06) rotate(-4deg);
+  }
+  .beer-name {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-variation-settings: 'SOFT' 0, 'WONK' 0;
+    font-size: 1.6rem;
+    padding: 14px 18px 2px;
+    line-height: 1.05;
+  }
+  .beer-meta {
+    padding: 0 18px 18px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  /* RESERVA */
+  .reserva {
+    background: #1d1812 var(--grain);
+    color: var(--paper);
+  }
+  .res-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(36px, 6vw, 80px);
+    align-items: center;
+  }
+  .res-copy :global(.res-logo) {
+    width: 70px;
+    margin-bottom: 18px;
+  }
+  .res-copy h2 {
+    margin-bottom: 20px;
+    color: var(--yellow);
+  }
+  .res-list {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+    border-top: 2px dashed rgba(244, 233, 215, 0.35);
+  }
+  .res-list a {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 4px;
+    border-bottom: 2px dashed rgba(244, 233, 215, 0.35);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    transition:
+      color 0.15s,
+      padding 0.15s;
+  }
+  .res-list a:hover {
+    color: var(--yellow);
+    padding-left: 12px;
+  }
+  .res-name {
+    display: grid;
+    gap: 2px;
+  }
+  .res-stock {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--yellow);
+  }
+  .res-stock.out {
+    color: rgba(244, 233, 215, 0.55);
+  }
+  .res-abv {
+    font-family: var(--font-hand);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--yellow);
+  }
+
+  /* PROCESS */
+  .proc-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(30px, 5vw, 70px);
+    align-items: center;
+  }
+  .proc-copy h2 {
+    margin-bottom: 20px;
+  }
+  .proc-copy .btn {
+    margin-top: 10px;
+  }
+  .proc-art {
+    display: block;
+    transition: transform 0.25s ease;
+  }
+  .proc-art:hover {
+    transform: rotate(-1deg) scale(1.01);
+  }
+  .proc-art :global(img) {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  /* VISIT */
+  .visit {
+    background: var(--yellow) var(--grain);
+  }
+  .visit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+  .visit-head h2 {
+    max-width: 13em;
+  }
+  .visit-head .hand {
+    transform: rotate(-3deg);
+  }
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: clamp(30px, 5vw, 60px);
+    align-items: start;
+  }
+  .wall {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .wall > :global(*) {
+    align-self: start;
+  }
+  .wall :global(.w1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .wall :global(.w2) {
+    grid-column: 2 / 4;
+    grid-row: 1;
+  }
+  .wall :global(.w3) {
+    grid-column: 2;
+    grid-row: 2 / 4;
+  }
+  .wall :global(.w4) {
+    grid-column: 3;
+    grid-row: 2 / 4;
+    margin-top: 24px;
+  }
+  .wall :global(.w5) {
+    grid-column: 1;
+    grid-row: 2 / 4;
+  }
+  .ticket {
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow-lg);
+    position: sticky;
+    top: calc(var(--nav-offset) + 24px);
+    transition: top 0.3s ease;
+    overflow: hidden;
+  }
+  .ticket-top {
+    padding: 26px 28px 20px;
+    border-bottom: 3px dashed var(--ink);
+  }
+  .ticket-top h3 {
+    font-size: 2rem;
+    margin-top: 14px;
+  }
+  .ticket dl {
+    margin: 0;
+    padding: 20px 28px 4px;
+    display: grid;
+    gap: 10px;
+  }
+  .ticket dl div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    align-items: baseline;
+  }
+  .ticket dt {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 1.6rem;
+  }
+  .ticket dd {
+    margin: 0;
+  }
+  .ticket > p {
+    padding: 8px 28px 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .ticket-actions {
+    padding: 4px 28px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ticket-link {
+    font-weight: 600;
+  }
+  .ticket-foot {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 28px;
+    font-size: 0.95rem;
+  }
+  .ticket-foot strong {
+    color: var(--yellow);
+  }
+
+  /* EXTRA */
+  .extra {
+    padding-top: 0;
+  }
+  .extra .where {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .extra .card {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 26px;
+    align-items: center;
+  }
+  .extra h3 {
+    margin-bottom: 12px;
+  }
+  .price {
+    color: var(--rust);
+    font-size: 1.45rem;
+    margin: 0;
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid,
+    .trad-grid,
+    .res-grid,
+    .proc-grid,
+    .visit-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-collage {
+      min-height: 0;
+      aspect-ratio: 1 / 0.95;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto 60px;
+      --grond: -122px;
+    }
+    /* Stacked layout: the bende stands in a row under the photos */
+    .bende-rij {
+      left: 0;
+      right: 0;
+    }
+    .lid :global(img),
+    .gastheer :global(img) {
+      height: clamp(48px, 12vw, 90px);
+    }
+    .beer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .ticket {
+      position: static;
+    }
+  }
+  @media (max-width: 560px) {
+    .beer-grid {
+      gap: 20px 14px;
+    }
+    .beer-name {
+      font-size: 1.25rem;
+      padding: 12px 12px 2px;
+    }
+    .beer-meta {
+      padding: 0 12px 14px;
+      font-size: 0.85rem;
+    }
+    .extra .card {
+      grid-template-columns: 1fr;
+    }
+    .extra .card :global(.polaroid) {
+      max-width: 220px;
+    }
+    .wall {
+      gap: 14px;
+    }
+    .trad-photos {
+      gap: 16px 12px;
+    }
+    .trad-photos :global(.t3) {
+      margin-left: 0;
+    }
+  }
+</style>

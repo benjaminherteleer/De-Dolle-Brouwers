@@ -1,0 +1,374 @@
+---
+import { langOf, link } from '../i18n';
+import Base from '../layouts/Base.astro';
+import VerkoopKaart from '../components/VerkoopKaart.astro';
+import Polaroid from '../components/Polaroid.astro';
+import { getPlaces } from '../lib/verkooppunten';
+import flesHop from '../assets/foto/fles-hop.jpg';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const places = await getPlaces();
+const countries = new Set(places.map((p) => p.country)).size;
+---
+
+<Base
+  title={tr("Verkooppunten | Waar drink je een De Dolle Brouwers-biertje?", "Where to drink De Dolle Brouwers | Bars and beer shops worldwide")}
+  description={tr("Vind De Dolle Brouwers en Oerbier bij cafés en bierwinkels: van Antwerpen en Brussel tot Rome, Stockholm, Kaunas, Vancouver en San Diego.", "Find De Dolle Brouwers and Oerbier in bars and beer shops: from Antwerp and Brussels to London, Rome, Stockholm, Kaunas, Vancouver and San Diego.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content={tr("Waar drink je een De Dolle Brouwers-biertje?", "Where can you drink a De Dolle Brouwers beer?")} />
+    <meta property="og:description" content={tr("Cafés en bierwinkels met onze bieren, van Esen tot ver over de oceaan.", "Bars and beer shops with our beers, from Esen to far across the ocean.")} />
+  </Fragment>
+
+  <section class="intro">
+    <div class="wrap intro-grid">
+      <div>
+        <p class="hand">{tr("Van Esen tot ver over de oceaan", "From Esen to far across the ocean")}</p>
+        <h1>{tr("Waar drink je een", "Where can you drink a")}<br /><em>{tr("De Dolle Brouwers-biertje?", "De Dolle Brouwers beer?")}</em></h1>
+        <p class="lead">
+          {tr("Onze bieren reizen verder dan wijzelf. Hieronder de cafés en bierwinkels die we kennen. Klik op een adres of een gele stip om in te zoomen.", "Our beers travel further than we do. Below are the bars and beer shops we know of. Click an address or a yellow dot to zoom in.")}
+        </p>
+        <ul class="stats">
+          <li><strong>{places.length}</strong> {tr("adressen", "places")}</li>
+          <li><strong>{countries}</strong> {tr("landen", "countries")}</li>
+          <li><strong>1</strong> {tr("brouwerij, in Esen", "brewery, in Esen")}</li>
+        </ul>
+      </div>
+      <Polaroid src={flesHop} alt={tr("Een fles Oerbier tussen verse hop", "A bottle of Oerbier among fresh hops")} caption={tr("Overal even nat en straf", "Nat en straf, wherever you are")} tilt={3} ratio="4 / 5" width={520} taped />
+    </div>
+  </section>
+
+  <section class="map-section">
+    <div class="wrap">
+      <VerkoopKaart />
+      <p class="note">{tr("Locaties bij benadering. Check openingsuren en assortiment vooraf bij de zaak zelf.", "Locations are approximate. Check opening hours and what's on offer with the place itself.")}</p>
+    </div>
+  </section>
+
+  <section class="section suggest">
+    <div class="wrap">
+      <div class="card suggest-card">
+        <div>
+          <h2>{tr("Ontbreekt er een café?", "Is a bar missing?")}</h2>
+          <p>
+            {tr("Deze lijst is verre van compleet. We weten zelf niet overal waar onze bieren getapt of verkocht worden. Ken je een plek die er niet bij staat? Zoek het hieronder op en stuur het door. We kijken het na en zetten het daarna op de kaart.", "This list is far from complete. We don't know every place where our beers are poured or sold. Know a place that isn't on it? Look it up below and send it in. We'll check it and then put it on the map.")}
+          </p>
+        </div>
+        <form class="suggest-form" id="suggest">
+          <label class="full search">
+            {tr("Zoek het café of de winkel", "Search for the bar or shop")}
+            <input id="zoek" type="search" placeholder={tr("Bv. Café Gollem, Amsterdam", "E.g. Café Gollem, Amsterdam")} autocomplete="off" aria-controls="zoek-lijst" />
+            <ul id="zoek-lijst" class="results" role="listbox" hidden></ul>
+          </label>
+          <p class="full chosen" id="gekozen" hidden></p>
+          <label>{tr("Naam", "Name")}<input name="naam" required placeholder={tr("Wordt ingevuld als je zoekt", "Filled in when you search")} /></label>
+          <label>{tr("Stad & land", "City & country")}<input name="plaats" required placeholder={tr("Bv. Amsterdam, Nederland", "E.g. Amsterdam, Netherlands")} /></label>
+          <label>{tr("Jouw naam", "Your name")} <span>{tr("(optioneel)", "(optional)")}</span><input name="jij" /></label>
+          <label>{tr("Je e-mailadres", "Your email")} <span>{tr("(optioneel)", "(optional)")}</span><input name="email" type="email" /></label>
+          <label class="full">{tr("Iets om bij te zeggen?", "Anything to add?")} <span>{tr("(optioneel)", "(optional)")}</span><textarea name="opmerking" rows="2" placeholder={tr("Bv. ze hebben Oerbier van het vat", "E.g. they have Oerbier on tap")}></textarea></label>
+          <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="lat" /><input type="hidden" name="lng" /><input type="hidden" name="land" /><input type="hidden" name="stad" />
+          <button class="btn" type="submit">{tr("Stuur door", "Send it in")}</button>
+          <p class="full status" id="status" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const EN = document.documentElement.lang === 'en';
+  const form = document.getElementById('suggest') as HTMLFormElement;
+  const zoek = document.getElementById('zoek') as HTMLInputElement;
+  const lijst = document.getElementById('zoek-lijst') as HTMLUListElement;
+  const gekozen = document.getElementById('gekozen') as HTMLParagraphElement;
+  const status = document.getElementById('status') as HTMLParagraphElement;
+  const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
+
+  type Place = { name: string; label: string; city: string; country: string; lat: number; lng: number };
+  let timer: number | undefined;
+  let results: Place[] = [];
+
+  const pick = (p: Place) => {
+    field('naam').value = p.name;
+    field('plaats').value = [p.city, p.country].filter(Boolean).join(', ');
+    field('lat').value = p.lat.toFixed(5);
+    field('lng').value = p.lng.toFixed(5);
+    field('stad').value = p.city;
+    field('land').value = p.country;
+    gekozen.hidden = false;
+    gekozen.textContent = `${EN ? 'Chosen' : 'Gekozen'}: ${p.label}`;
+    lijst.hidden = true;
+    zoek.value = p.name;
+  };
+
+  // Photon (OpenStreetMap data) forgives typos, e.g. "Golem" finds "Gollem"
+  const search = async (q: string) => {
+    const url = `https://photon.komoot.io/api/?limit=6&q=${encodeURIComponent(q)}`;
+    try {
+      const data = await (await fetch(url)).json();
+      results = data.features
+        .filter((f: any) => f.properties.name)
+        .map((f: any) => {
+          const p = f.properties;
+          const city = p.city || p.town || p.village || p.county || '';
+          const street = [p.street, p.housenumber].filter(Boolean).join(' ');
+          return {
+            name: p.name,
+            label: [p.name, street, city, p.country].filter(Boolean).join(', '),
+            city,
+            country: p.country || '',
+            lat: f.geometry.coordinates[1],
+            lng: f.geometry.coordinates[0],
+          };
+        });
+    } catch {
+      results = [];
+    }
+    lijst.innerHTML = '';
+    if (!results.length) {
+      lijst.innerHTML = EN
+        ? '<li class="empty">Nothing found. Fill in the name and city below yourself.</li>'
+        : '<li class="empty">Niets gevonden. Vul de naam en stad hieronder zelf in.</li>';
+    }
+    results.forEach((p, i) => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.tabIndex = 0;
+      li.innerHTML = `<b></b><small></small>`;
+      li.querySelector('b')!.textContent = p.name;
+      li.querySelector('small')!.textContent = p.label;
+      li.addEventListener('click', () => pick(results[i]));
+      li.addEventListener('keydown', (e) => e.key === 'Enter' && (e.preventDefault(), pick(results[i])));
+      lijst.appendChild(li);
+    });
+    lijst.hidden = false;
+  };
+
+  zoek.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = zoek.value.trim();
+    if (q.length < 3) {
+      lijst.hidden = true;
+      return;
+    }
+    timer = window.setTimeout(() => search(q), 450);
+  });
+  zoek.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') e.preventDefault();
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.search')) lijst.hidden = true;
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const v = (n: string) => field(n).value.trim();
+    const [city = '', country = ''] = v('plaats').split(',').map((x) => x.trim());
+    const entry = {
+      name: v('naam'),
+      city: v('stad') || city,
+      country: v('land') || country,
+      lat: +v('lat') || null,
+      lng: +v('lng') || null,
+      honey: v('_honey'),
+    };
+    const button = form.querySelector('button')!;
+    button.disabled = true;
+    status.textContent = EN ? 'Sending…' : 'Even versturen…';
+    try {
+      const res = await fetch('/api/tip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...entry,
+          note: (form.elements.namedItem('opmerking') as HTMLTextAreaElement).value,
+          from: v('jij'),
+          email: v('email'),
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      gekozen.hidden = true;
+      status.textContent = EN ? "Thanks! We'll check it and then put it on the map." : 'Bedankt! We kijken het na en zetten het daarna op de kaart.';
+    } catch {
+      status.innerHTML = EN
+        ? "That didn't work. Feel free to send the name and city to <b>info@dedollebrouwers.be</b>."
+        : 'Dat lukte niet. Stuur de naam en stad gerust naar <b>info@dedollebrouwers.be</b>.';
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .intro {
+    padding: clamp(40px, 6vw, 80px) 0 50px;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.6fr;
+    gap: clamp(30px, 6vw, 80px);
+    align-items: center;
+  }
+  .intro .hand {
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 5.5vw, 4.6rem);
+    margin-bottom: 22px;
+  }
+  h1 em {
+    font-weight: 400;
+  }
+  .stats {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0;
+    display: flex;
+    gap: 34px;
+    flex-wrap: wrap;
+  }
+  .stats li {
+    display: grid;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .stats strong {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .map-section {
+    padding-bottom: 20px;
+  }
+  .note {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-top: 18px;
+  }
+  .suggest-card {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .suggest-card h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 14px;
+  }
+  .suggest-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .suggest-form label {
+    display: grid;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .suggest-form label span {
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+  .suggest-form input {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.65em 0.9em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .suggest-form input:focus {
+    outline: 3px solid var(--yellow);
+    outline-offset: 1px;
+  }
+  .suggest-form .full {
+    grid-column: 1 / -1;
+  }
+  .suggest-form textarea {
+    font: inherit;
+    font-weight: 400;
+    padding: 0.65em 0.9em;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .search {
+    position: relative;
+  }
+  .results {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 5;
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 6px;
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-height: 300px;
+    overflow: auto;
+  }
+  .results :global(li) {
+    display: grid;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .results :global(li:hover),
+  .results :global(li:focus) {
+    background: var(--yellow-soft);
+    outline: none;
+  }
+  .results :global(small) {
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+  }
+  .results :global(.empty) {
+    cursor: default;
+    color: var(--ink-soft);
+  }
+  .chosen {
+    margin: -4px 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .honey {
+    position: absolute;
+    left: -9999px;
+  }
+  .status {
+    margin: 0;
+    font-weight: 600;
+  }
+  .suggest-form .btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  @media (max-width: 900px) {
+    .intro-grid,
+    .suggest-card {
+      grid-template-columns: 1fr;
+    }
+    .intro :global(.polaroid) {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    .suggest-form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

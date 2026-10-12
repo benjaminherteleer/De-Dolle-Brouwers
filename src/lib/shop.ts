@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro';
+import productenEn from '../data/producten.en.json';
 import { euro, type Product } from './shopify';
 
 /** The personalised figurine is ordered through the maker page, not a product page. */
@@ -19,10 +20,10 @@ export const gallery = (handle: string): ImageMetadata[] =>
     .sort((a, b) => Number(a.m![2]) - Number(b.m![2]))
     .map((x) => x.img);
 
-export const priceLabel = (p: Product) =>
+export const priceLabel = (p: Product, lang: 'nl' | 'en' = 'nl') =>
   p.priceRange.minVariantPrice.amount === p.priceRange.maxVariantPrice.amount
     ? euro(p.priceRange.minVariantPrice)
-    : `vanaf ${euro(p.priceRange.minVariantPrice)}`;
+    : `${lang === 'en' ? 'from' : 'vanaf'} ${euro(p.priceRange.minVariantPrice)}`;
 
 /** Options worth showing (Shopify adds a dummy "Title" option to single-variant products). */
 export const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title' && o.optionValues.length === 1));
@@ -33,3 +34,12 @@ export const shopifyImage = (url: string, width: number) => `${url}${url.include
 export const variantPhotos: Record<string, Record<string, number>> = {
   'metalen-bord': { Oerbier: 5, Arabier: 1, Boskeun: 2, 'Dulle Teve': 3, 'Stille Nacht': 4, Stout: 8, 'Oerbier rotstekening': 8 },
 };
+
+/** English texts for the shop: product titles and descriptions, option names and values. */
+const optionNames: Record<string, string> = { Maat: 'Size', Model: 'Style', Ontwerp: 'Design' };
+const optionValues: Record<string, string> = { 'Zonder rits': 'Without zip', 'Met rits': 'With zip', 'Oerbier rotstekening': 'Oerbier cave drawing' };
+export const productText = (p: Product, lang: 'nl' | 'en') =>
+  lang === 'en' ? { title: p.title, description: p.description, ...(productenEn as Record<string, { title: string; description: string }>)[p.handle] } : { title: p.title, description: p.description };
+/** Label to show for an option name or value; the value sent to Shopify stays Dutch. */
+export const optionLabel = (name: string, lang: 'nl' | 'en') => (lang === 'en' ? optionNames[name] ?? name : name);
+export const valueLabel = (value: string, lang: 'nl' | 'en') => (lang === 'en' ? optionValues[value] ?? value : value);

@@ -7,10 +7,14 @@ import { getImage } from 'astro:assets';
 import world from 'world-atlas/countries-50m.json';
 import worldLight from 'world-atlas/countries-110m.json';
 import { geoCentroid } from 'd3-geo';
-import { getPlaces } from '../lib/verkooppunten';
+import { getPlaces, placesIn } from '../lib/verkooppunten';
+import { langOf } from '../i18n';
 import mascot from '../assets/logo/logo-full.png';
 
-const places = await getPlaces();
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const places = placesIn(await getPlaces(), lang);
 const W = 1200;
 const H = 640;
 const ESEN: [number, number] = [2.9032, 51.0279];
@@ -93,7 +97,7 @@ const mascotImg = await getImage({ src: mascot, width: 120 });
 
 <div class="kaart" data-views={JSON.stringify(views)} data-w={W} data-h={H}>
   <div class="map-frame">
-    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Kaart met de verkooppunten van De Dolle Brouwers" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={tr('Kaart met de verkooppunten van De Dolle Brouwers', 'Map of places that serve or sell De Dolle Brouwers')} preserveAspectRatio="xMidYMid meet">
       <rect x="-2000" y="-2000" width={W + 4000} height={H + 4000} class="sea"></rect>
       <path d={graticule} class="grid"></path>
       <g class="land">
@@ -116,19 +120,19 @@ const mascotImg = await getImage({ src: mascot, width: 120 });
     </svg>
 
     <div class="controls">
-      <div class="presets" role="group" aria-label="Inzoomen op">
-        <button type="button" data-view="wereld">Wereld</button>
-        <button type="button" data-view="europa" class="on">Europa</button>
-        <button type="button" data-view="benelux">België &amp; Nederland</button>
+      <div class="presets" role="group" aria-label={tr('Inzoomen op', 'Zoom to')}>
+        <button type="button" data-view="wereld">{tr('Wereld', 'World')}</button>
+        <button type="button" data-view="europa" class="on">{tr('Europa', 'Europe')}</button>
+        <button type="button" data-view="benelux">{tr('België & Nederland', 'Belgium & Netherlands')}</button>
       </div>
       <div class="zoom">
-        <button type="button" data-zoom="0.6" aria-label="Inzoomen">+</button>
-        <button type="button" data-zoom="1.6" aria-label="Uitzoomen">−</button>
+        <button type="button" data-zoom="0.6" aria-label={tr('Inzoomen', 'Zoom in')}>+</button>
+        <button type="button" data-zoom="1.6" aria-label={tr('Uitzoomen', 'Zoom out')}>−</button>
       </div>
     </div>
 
     <div class="card" hidden>
-      <button type="button" class="close" aria-label="Sluiten">×</button>
+      <button type="button" class="close" aria-label={tr('Sluiten', 'Close')}>×</button>
       <strong></strong>
       <span class="where"></span>
       <a target="_blank" rel="noopener">Route ↗</a>
@@ -136,7 +140,7 @@ const mascotImg = await getImage({ src: mascot, width: 120 });
   </div>
 
   <aside class="list">
-    <p class="count"><strong>{pins.length}</strong> adressen in <strong>{byCountry.length}</strong> landen</p>
+    <p class="count"><strong>{pins.length}</strong> {tr('adressen in', 'places in')} <strong>{byCountry.length}</strong> {tr('landen', 'countries')}</p>
     {
       byCountry.map(([country, list], ci) => (
         <details open={ci < 2}>
