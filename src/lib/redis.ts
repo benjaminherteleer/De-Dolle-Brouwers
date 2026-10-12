@@ -1,4 +1,4 @@
-/** Tiny client for the Upstash Redis REST API, linked to the project in Vercel. */
+/** Tiny client for the Upstash Redis REST API, credentials come from the KV_REST_API_* secrets. */
 const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || process.env.STORAGE_REST_API_URL;
 const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || process.env.STORAGE_REST_API_TOKEN;
 

@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import vercel from '@astrojs/vercel';
+import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
@@ -10,7 +10,7 @@ export default defineConfig({
   trailingSlash: 'never',
   devToolbar: { enabled: false },
   build: { format: 'file' },
-  // Pages stay static; only the /api routes run on Vercel.
-  adapter: vercel(),
+  // Pages stay static; only the /api routes run on Cloudflare.
+  adapter: cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
   integrations: [mdx(), sitemap({ filter: (page) => !page.includes('/beheer') })],
 });

@@ -391,8 +391,13 @@ const stops = [
     }
   }
   @media (max-width: 560px) {
+    .hero,
+    .prac-grid,
     .stop-list {
       grid-template-columns: 1fr;
+    }
+    .hero-photo {
+      min-height: 360px;
     }
     .hero-photo :global(.hero-pol) {
       left: 16px;

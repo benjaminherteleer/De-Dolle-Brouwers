@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dedollebrouwers",
+  "compatibility_date": "2026-10-01",
+  // process.env (Upstash, BEHEER_WACHTWOORD, DEPLOY_HOOK_URL) needs Node compatibility
+  "compatibility_flags": ["nodejs_compat"]
+}

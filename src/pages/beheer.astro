@@ -94,7 +94,7 @@ import Base from '../layouts/Base.astro';
       return;
     }
     if (!res.ok) {
-      loginMsg.textContent = 'De beheerpagina is nog niet ingesteld in Vercel.';
+      loginMsg.textContent = 'De beheerpagina is nog niet ingesteld in Cloudflare.';
       return;
     }
     const { pending, approved, nieuwsbrief = [] } = (await res.json()) as { pending: Tip[]; approved: Tip[]; nieuwsbrief?: { email: string; at: string }[] };

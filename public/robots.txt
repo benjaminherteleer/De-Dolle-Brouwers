@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /beheer
+Disallow: /api/
+
+Sitemap: https://www.oerbier.be/sitemap-index.xml
