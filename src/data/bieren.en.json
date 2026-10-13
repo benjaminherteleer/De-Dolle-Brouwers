@@ -104,9 +104,12 @@
       ],
       "pers": [
         { "bron": "In de Gazette", "jaar": "2025", "url": "https://www.indegazette.be/kris-herteleer-en-stille-nacht-van-de-dolle-brouwers-schrijven-biergeschiedenis-met-twaalfde-gouden-medaille/" },
-        { "bron": "Het Laatste Nieuws", "url": "https://www.hln.be/diksmuide/stille-nacht-zevende-keer-verkozen-tot-beste-kerstbier~addadc36/" },
+        { "bron": "O.B.E.R.", "jaar": "2023", "url": "https://www.ober.be/single-post/stille-nacht-voor-de-10e-keer-verkozen-tot-beste-kerstbier" },
+        { "bron": "Discover Benelux", "jaar": "2018", "url": "https://issuu.com/scanmagazine/docs/discoverbenelux_60_dec_2018/132" },
+        { "bron": "Het Laatste Nieuws", "jaar": "2014", "url": "https://www.hln.be/diksmuide/stille-nacht-zevende-keer-verkozen-tot-beste-kerstbier~addadc36/" },
         { "bron": "Gazet van Antwerpen", "jaar": "2012", "url": "https://www.gva.be/regio/antwerpen/regio-antwerpen/essen/stille-nacht-is-beste-kerstbier-2012/38599659.html" },
-        { "bron": "Het Nieuwsblad", "url": "https://www.nieuwsblad.be/regio/west-vlaanderen/stille-nacht-voor-vijfde-keer-verkozen-tot-beste-kerstbier/60261384.html" }
+        { "bron": "Het Nieuwsblad", "jaar": "2012", "url": "https://www.nieuwsblad.be/regio/west-vlaanderen/stille-nacht-voor-vijfde-keer-verkozen-tot-beste-kerstbier/60261384.html" },
+        { "bron": "Biernet", "jaar": "2012", "url": "https://www.biernet.nl/nieuws/stille-nacht-voor-de-vijfde-keer-beste-kerstbier" }
       ]
     }
   },
