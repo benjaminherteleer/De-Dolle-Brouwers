@@ -12,7 +12,7 @@ export const TICKET = 'rondleiding';
  * Pay for tour tickets online. Keep false until Shopify Payments is active:
  * until then the booking page reserves by email and people pay on the spot.
  */
-export const TICKETS_BETALEN = true;
+export const TICKETS_BETALEN = false;
 
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
