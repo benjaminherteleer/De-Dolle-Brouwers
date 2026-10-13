@@ -171,10 +171,20 @@
       "We brouwen één brouwsel per dag."
     ],
     "story": {
-      "image": "/images/kerstkaart.jpg",
-      "alt": "Kerstkaart van De Dolle Brouwers met het brouwerijgebouw in de sneeuw",
-      "title": "Onze jaarlijkse kerstkaart",
-      "text": "Elk jaar rond kerst tekent Benjamin Herteleer een nieuwe kerstkaart met de personages die Kris ooit voor de etiketten tekende, inclusief het Stille Nacht-mannetje zelf, glas in de hand, klaar voor de \"beste wensen\"."
+      "image": "stille-nacht-kerstkaart.webp",
+      "alt": "Kerstkaart van De Dolle Brouwers: het Stille Nacht-mannetje in de sneeuw bij de brouwerij, met de Dulle Teve op haar bezem, de ara en de Boskeun",
+      "title": "Elk jaar een nieuwe kerstkaart",
+      "text": "Elk jaar rond kerst tekent <a href=\"https://www.instagram.com/benjaminherteleer\" target=\"_blank\" rel=\"noopener\">Benjamin Herteleer</a> een nieuwe kerstkaart met de personages die Kris ooit voor de etiketten tekende: het Stille Nacht-mannetje, het Oerbier-mannetje, de Dulle Teve, de ara van Arabier en de Boskeun. Glas in de hand, klaar voor de beste wensen. De nieuwe kaart verschijnt telkens op <a href=\"https://www.instagram.com/dedollebrouwers\" target=\"_blank\" rel=\"noopener\">@dedollebrouwers</a>.",
+      "extra": [
+        {
+          "file": "stille-nacht-kerstman.webp",
+          "alt": "Kersttekening: de kerstman met een fles Stille Nacht en een kerstboom met een glas in de Oerbar, met de personages van de etiketten"
+        },
+        {
+          "file": "stille-nacht-see-you.webp",
+          "alt": "Nieuwjaarstekening: drie Oerbier-mannetjes op bizons in de sneeuw met een vlag \"See you in 2025\""
+        }
+      ]
     },
     "reserva": false,
     "tagline": "Je favoriete kerstbier."

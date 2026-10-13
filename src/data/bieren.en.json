@@ -79,9 +79,13 @@
       "We brew one batch a day."
     ],
     "story": {
-      "alt": "Christmas card from De Dolle Brouwers with the brewery building in the snow",
-      "title": "Our yearly Christmas card",
-      "text": "Every year around Christmas, Benjamin Herteleer draws a new Christmas card with the characters Kris once drew for the labels, including the Stille Nacht figure himself, glass in hand, ready for the season's greetings."
+      "alt": "Christmas card from De Dolle Brouwers: the Stille Nacht figure in the snow by the brewery, with the Dulle Teve on her broom, the macaw and the Boskeun",
+      "title": "A new Christmas card every year",
+      "text": "Every year around Christmas, <a href=\"https://www.instagram.com/benjaminherteleer\" target=\"_blank\" rel=\"noopener\">Benjamin Herteleer</a> draws a new Christmas card with the characters Kris once drew for the labels: the Stille Nacht figure, the Oerbier figure, the Dulle Teve, the Arabier macaw and the Boskeun. Glass in hand, ready for the season's greetings. The new card always appears on <a href=\"https://www.instagram.com/dedollebrouwers\" target=\"_blank\" rel=\"noopener\">@dedollebrouwers</a>.",
+      "extra": [
+        { "file": "stille-nacht-kerstman.webp", "alt": "Christmas drawing: Santa with a bottle of Stille Nacht and a Christmas tree with a glass in the Oerbar, with the characters from the labels" },
+        { "file": "stille-nacht-see-you.webp", "alt": "New Year drawing: three Oerbier figures riding bison in the snow with a \"See you in 2025\" flag" }
+      ]
     },
     "tagline": "Your favourite Christmas beer."
   },
