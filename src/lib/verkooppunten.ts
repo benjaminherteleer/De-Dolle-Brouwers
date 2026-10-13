@@ -17,11 +17,18 @@ const COUNTRIES: Record<string, string> = {
 };
 const dutch = (c: string) => COUNTRIES[c.trim().toLowerCase()] ?? c;
 
+/** Approved cafés: straight from Redis, or (in a build without Redis credentials) from the live site. */
+async function approved(): Promise<Place[]> {
+  if (hasRedis) return readHash<Place>(APPROVED);
+  const res = await fetch('https://www.dedollebrouwers.be/api/plekken', { signal: AbortSignal.timeout(8000) });
+  if (!res.ok) throw new Error(String(res.status));
+  return res.json();
+}
+
 /** The fixed list plus every café approved on /beheer (read at build time). */
 export async function getPlaces(): Promise<Place[]> {
-  if (!hasRedis) return base;
   try {
-    const extra = (await readHash<Place>(APPROVED)).map(({ name, city, country, lat, lng }) => ({
+    const extra = (await approved()).map(({ name, city, country, lat, lng }) => ({
       name,
       city,
       country: dutch(country),
