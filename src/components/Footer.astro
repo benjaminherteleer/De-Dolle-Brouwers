@@ -133,6 +133,8 @@ const L = (href: string) => link(lang, href);
   .col p.big {
     font-size: 2.2rem;
     color: var(--yellow);
+    /* no marker stripe from .hand: yellow on yellow would hide the text */
+    background: none;
     margin-bottom: 14px;
   }
   ul {
