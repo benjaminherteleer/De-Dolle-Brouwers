@@ -1,5 +1,7 @@
 import type { APIRoute } from 'astro';
-import { redis, hasRedis, PENDING, type Tip } from '../../lib/redis';
+import { redis, hasRedis, readHash, PENDING, type Tip } from '../../lib/redis';
+import { getPlaces } from '../../lib/verkooppunten';
+import { findDuplicate } from '../../lib/dubbel';
 
 export const prerender = false;
 
@@ -20,6 +22,18 @@ export const POST: APIRoute = async ({ request }) => {
   const city = clean(body.city, 80);
   if (!name || !city) return new Response('Naam en stad ontbreken', { status: 400 });
   if ((await redis<number>('HLEN', PENDING)) >= 300) return new Response('Wachtlijst vol', { status: 429 });
+
+  // Already on the map, or already sent in and waiting: tell the visitor instead of storing it twice
+  const spot = { name, city, lat: num(body.lat), lng: num(body.lng) };
+  const onMap = findDuplicate(spot, await getPlaces());
+  const waiting = onMap ? undefined : findDuplicate(spot, await readHash<Tip>(PENDING));
+  const dup = onMap ?? waiting;
+  if (dup) {
+    return new Response(JSON.stringify({ dubbel: onMap ? 'kaart' : 'wachtlijst', name: dup.name, city: dup.city }), {
+      status: 409,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
   const tip: Tip = {
     id: crypto.randomUUID().slice(0, 8),

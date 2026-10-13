@@ -39,7 +39,7 @@ import Base from '../layouts/Base.astro';
 <script>
   type Tip = {
     id: string; name: string; city: string; country: string; lat: number | null; lng: number | null;
-    note: string; from: string; email: string; at: string;
+    note: string; from: string; email: string; at: string; dubbel?: string;
   };
   const KEY = 'beheer-pw';
   const login = document.getElementById('login') as HTMLFormElement;
@@ -66,6 +66,7 @@ import Base from '../layouts/Base.astro';
 
   const card = (t: Tip) => `
     <article class="card tip" data-id="${esc(t.id)}">
+      ${t.dubbel ? `<p class="dubbel">⚠️ Staat al op de kaart als <b>${esc(t.dubbel)}</b>. Weigeren, tenzij het een andere plek is.</p>` : ''}
       <div class="fields">
         <label>Naam<input name="name" value="${esc(t.name)}" /></label>
         <label>Stad<input name="city" value="${esc(t.city)}" /></label>
@@ -214,6 +215,13 @@ import Base from '../layouts/Base.astro';
   .tips {
     display: grid;
     gap: 18px;
+  }
+  .tips :global(.dubbel) {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin: 0 0 14px;
   }
   .tips :global(.tip) {
     display: grid;

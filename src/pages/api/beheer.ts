@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { getPlaces } from '../../lib/verkooppunten';
+import { findDuplicate } from '../../lib/dubbel';
 import { redis, hasRedis, readHash, PENDING, APPROVED, NIEUWSBRIEF, type Tip, type Inschrijving } from '../../lib/redis';
 
 export const prerender = false;
@@ -13,8 +15,14 @@ export const GET: APIRoute = async ({ request }) => {
   if (!hasRedis || !password) return json({ error: 'Nog niet ingesteld' }, 503);
   if (!allowed(request)) return json({ error: 'Fout wachtwoord' }, 401);
   const byDate = (a: Tip, b: Tip) => (a.at < b.at ? 1 : -1);
+  // Mark tips that are already on the map, so they aren't approved twice
+  const places = await getPlaces();
+  const pending = (await readHash<Tip>(PENDING)).sort(byDate).map((t) => {
+    const d = findDuplicate(t, places);
+    return d ? { ...t, dubbel: `${d.name}, ${d.city}` } : t;
+  });
   return json({
-    pending: (await readHash<Tip>(PENDING)).sort(byDate),
+    pending,
     approved: (await readHash<Tip>(APPROVED)).sort(byDate),
     nieuwsbrief: (await readHash<Inschrijving>(NIEUWSBRIEF)).sort((a, b) => (a.at < b.at ? 1 : -1)),
   });

@@ -87,6 +87,7 @@ const countries = new Set(places.map((p) => p.country)).size;
   const gekozen = document.getElementById('gekozen') as HTMLParagraphElement;
   const status = document.getElementById('status') as HTMLParagraphElement;
   const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
+  const esc = (t: string) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
   type Place = { id?: string; name: string; label: string; city: string; country: string; lat: number; lng: number };
   let timer: number | undefined;
@@ -252,6 +253,15 @@ const countries = new Set(places.map((p) => p.country)).size;
           email: v('email'),
         }),
       });
+      if (res.status === 409) {
+        const d = await res.json();
+        const plek = `<b>${esc(d.name)}</b> (${esc(d.city)})`;
+        status.innerHTML =
+          d.dubbel === 'kaart'
+            ? EN ? `${plek} is already on the map. Thanks anyway!` : `${plek} staat al op de kaart. Toch bedankt!`
+            : EN ? `${plek} was already sent in and is waiting to be checked. Thanks!` : `${plek} is al doorgestuurd en wordt nog nagekeken. Bedankt!`;
+        return;
+      }
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
       gekozen.hidden = true;
