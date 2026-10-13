@@ -53,3 +53,53 @@ const EN_NAMES: Record<string, string> = {
 };
 export const placesIn = (places: Place[], lang: 'nl' | 'en'): Place[] =>
   lang === 'en' ? places.map((p) => ({ ...p, city: EN_NAMES[p.city] ?? p.city, country: EN_NAMES[p.country] ?? p.country })) : places;
+
+/** Belgian provinces (Dutch names), English names for the list on /en. */
+const PROVINCIE_EN: Record<string, string> = {
+  'West-Vlaanderen': 'West Flanders', 'Oost-Vlaanderen': 'East Flanders', Antwerpen: 'Antwerp', Limburg: 'Limburg',
+  'Vlaams-Brabant': 'Flemish Brabant', Brussel: 'Brussels', 'Waals-Brabant': 'Walloon Brabant', Henegouwen: 'Hainaut',
+  Luik: 'Liège', Namen: 'Namur', Luxemburg: 'Luxembourg', Overig: 'Other',
+};
+// Cities we already know; anything else is looked up from its coordinates.
+const STAD: Record<string, string> = {
+  Brugge: 'West-Vlaanderen', Diksmuide: 'West-Vlaanderen', Ieper: 'West-Vlaanderen', Kortemark: 'West-Vlaanderen',
+  Kortrijk: 'West-Vlaanderen', Ledegem: 'West-Vlaanderen', Middelkerke: 'West-Vlaanderen', Oostende: 'West-Vlaanderen',
+  Poperinge: 'West-Vlaanderen', Roeselare: 'West-Vlaanderen', Tielt: 'West-Vlaanderen', Esen: 'West-Vlaanderen',
+  Gent: 'Oost-Vlaanderen', Ghent: 'Oost-Vlaanderen', 'Sint-Lievens-Houtem': 'Oost-Vlaanderen',
+  Antwerpen: 'Antwerpen', Essen: 'Antwerpen', Grobbendonk: 'Antwerpen', Hamont: 'Limburg', 'Hamont-Achel': 'Limburg',
+  Grimbergen: 'Vlaams-Brabant', Brussel: 'Brussel', Bruxelles: 'Brussel', Brussels: 'Brussel',
+  Tubize: 'Waals-Brabant', 'Komen-Waasten': 'Henegouwen',
+};
+// What OpenStreetMap calls the provinces (in Dutch, French or English)
+const OSM: [RegExp, string][] = [
+  [/west.?vla|flandre.occ|west flanders/i, 'West-Vlaanderen'], [/oost.?vla|flandre.or|east flanders/i, 'Oost-Vlaanderen'],
+  [/antw|anvers/i, 'Antwerpen'], [/limb/i, 'Limburg'], [/vlaams.?brab|brabant flamand|flemish brabant/i, 'Vlaams-Brabant'],
+  [/brus|brux/i, 'Brussel'], [/waals.?brab|brabant wallon|walloon brabant/i, 'Waals-Brabant'], [/hainaut|henegouw/i, 'Henegouwen'],
+  [/li[eè]ge|luik/i, 'Luik'], [/namur|namen/i, 'Namen'], [/luxemb/i, 'Luxemburg'],
+];
+
+async function lookup(p: Place): Promise<string> {
+  try {
+    const res = await fetch(`https://photon.komoot.io/reverse?lat=${p.lat}&lon=${p.lng}`, { signal: AbortSignal.timeout(5000) });
+    const props = (await res.json()).features?.[0]?.properties ?? {};
+    const name = [props.state, props.county].filter(Boolean).join(' ');
+    return OSM.find(([re]) => re.test(name))?.[1] ?? 'Overig';
+  } catch {
+    return 'Overig';
+  }
+}
+
+/** Province for each Belgian place (by index), in Dutch. */
+export async function provincies(places: Place[]): Promise<Record<number, string>> {
+  const out: Record<number, string> = {};
+  await Promise.all(
+    places.map(async (p, i) => {
+      if (p.country !== 'België') return;
+      const stad = p.city.replace(/\s*\(.*\)$/, '');
+      const binnen = p.city.match(/\((.*)\)/)?.[1] ?? '';
+      out[i] = STAD[p.city] ?? STAD[stad] ?? STAD[binnen] ?? (await lookup(p));
+    }),
+  );
+  return out;
+}
+export const provincieIn = (prov: string, lang: 'nl' | 'en') => (lang === 'en' ? (PROVINCIE_EN[prov] ?? prov) : prov);
