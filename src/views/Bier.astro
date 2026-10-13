@@ -143,7 +143,7 @@ const ld = {
             {story.extra.length > 0 && (
               <div class="story-extra">
                 {story.extra.map((e, i) => (
-                  <Polaroid src={e.img} alt={e.alt} tilt={i % 2 ? 3 : -3} ratio="auto" width={500} />
+                  <Image src={e.img} alt={e.alt} width={500} style={`--tilt:${i % 2 ? 2 : -2}deg`} />
                 ))}
               </div>
             )}
@@ -410,6 +410,15 @@ const ld = {
     grid-template-columns: 1fr 1fr;
     gap: clamp(16px, 3vw, 28px);
     margin-top: 32px;
+    align-items: start;
+  }
+  .story-extra :global(img) {
+    width: 100%;
+    height: auto;
+    border: 3px solid var(--ink);
+    border-radius: 6px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transform: rotate(var(--tilt));
   }
   .story .lead :global(a) {
     color: inherit;
