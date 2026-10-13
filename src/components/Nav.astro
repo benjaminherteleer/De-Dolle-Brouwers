@@ -68,7 +68,7 @@ const switchTo = counterpart(path) ?? (en ? '/' : '/en');
             {en ? 'NL' : 'EN'}
           </a>
           <button type="button" class="cart-btn" data-cart-button hidden aria-label={en ? 'Open cart' : 'Mandje openen'}>
-            <Image src={kar} alt="" width={80} />
+            <Image src={kar} alt="" width={80} loading="eager" />
             <span data-cart-count>0</span>
           </button>
           <a class="btn cta" href={L('/brouwerij')}>
