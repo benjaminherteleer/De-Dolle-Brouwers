@@ -5,9 +5,7 @@ import { glob } from 'astro/loaders';
  * Oerbier Fake Nieuws: one MDX file per edition in src/content/nieuws.
  * The file name is the URL: 2026-08-reserva-oerbier.mdx → /nieuws/2026-08-reserva-oerbier
  */
-const nieuws = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/nieuws' }),
-  schema: ({ image }) =>
+const schema = ({ image }: { image: () => any }) =>
     z.object({
       /** Headline of the edition */
       titel: z.string(),
@@ -23,7 +21,10 @@ const nieuws = defineCollection({
       kleur: z.enum(['geel', 'blauw', 'rood', 'groen']).default('geel'),
       foto: image(),
       fotoAlt: z.string(),
-    }),
-});
+    });
 
-export const collections = { nieuws };
+const nieuws = defineCollection({ loader: glob({ pattern: '**/*.mdx', base: './src/content/nieuws' }), schema });
+/** English editions: same file names in src/content/nieuws-en (the masthead stays Dutch). */
+const nieuwsEn = defineCollection({ loader: glob({ pattern: '**/*.mdx', base: './src/content/nieuws-en' }), schema });
+
+export const collections = { nieuws, nieuwsEn };

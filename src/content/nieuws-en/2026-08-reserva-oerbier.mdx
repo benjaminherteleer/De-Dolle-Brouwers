@@ -1,0 +1,72 @@
+---
+titel: 2 Reservas of Oerbier.
+datum: 2026-08-01
+kicker: Esen, West Flanders ↘
+stempel: Almost sold out!
+lead: 'New vintage: Priorat and Madiran 2017, bottled with a cork. A must for your beer cellar!'
+kleur: geel
+foto: ../../assets/nieuws/2026-08/flessen-op-vat.jpg
+fotoAlt: Bottles of Oerbier Reserva on an oak barrel in the cellar
+---
+
+import Artikel from '../../components/nieuws/Artikel.astro';
+import Kader from '../../components/nieuws/Kader.astro';
+import Markeer from '../../components/nieuws/Markeer.astro';
+import Citaat from '../../components/nieuws/Citaat.astro';
+import Knop from '../../components/nieuws/Knop.astro';
+import Prijzen from '../../components/nieuws/Prijzen.astro';
+import Origineel from '../../components/nieuws/Origineel.astro';
+import vaten from '../../assets/foto/vaten-rij.jpg';
+import madiran from '../../assets/nieuws/2026-08/madiran.jpg';
+import origineel from '../../assets/nieuws/2026-08/origineel.jpg';
+
+<Artikel label="Reserva 1" titel="Priorat / Oerbier" sub="4 barrels · with cork and refermentation" foto={vaten} fotoAlt="Oak barrels in the brewery cellar">
+
+**Oerbier Reserva 2024 Ferrer-Bobet** was recently bottled, with a cork and refermentation in the bottle. Priorat, what's that, you wonder. Well, PRIORAT is a small wine region in Catalonia (northern Spain, capital Falset) that makes <Markeer>the most expensive wine in Spain</Markeer>.
+
+Why is it so expensive? Because the land is very <Markeer>steep</Markeer> and everything has to be done by hand. The soil is <Markeer>slate</Markeer>, very hard, and two grape varieties are grown for RED wine: Garnacha and Cariñena.
+
+The name PRIORAT comes from a monastery that was built there after the Muslims left: Carthusian monks from France who grew wine there.
+
+<Kader titel="In June this year we gave the wine region a thorough visit ↘">
+
+**Ferrer-Bobet is a TOP bodega**, all glass and concrete, as if it were carved out of the mountain. The tasting room is entirely made of glass. There are 5 floors of cellars underground.
+
+In Barcelona they have a café where you can taste 30 kinds of wine by the glass: **MONVINIT**, Plaza de Catalunya.
+
+<Knop href="https://www.instagram.com/ferrerbobet/">See Ferrer-Bobet on Instagram →</Knop>
+
+</Kader>
+
+</Artikel>
+
+<Artikel label="Reserva 2" titel="“New” vintage: Madiran 2017." sub="100% Tannat grape, which gave its name to “tannin”." foto={madiran} fotoAlt="Label of Special Oerbier Reserva, brewed in 2017" donker>
+
+After tasting, a unique bottling: **RESERVA oerbier** in 75 cl bottles, with a cork.
+
+<Citaat>“Beautiful balance, sharp and sour but plenty of body!”</Citaat>
+
+9 years old and perfect to drink now.
+
+<Markeer>A must for your beer cellar!</Markeer>
+
+*Santé — ddb*
+
+</Artikel>
+
+<Prijzen
+  titel="Now for sale at the brewery."
+  sub="Almost sold out, be quick ↘"
+  items={[
+    { naam: 'Oerbier Reserva', detail: 'Priorat', prijs: '€25' },
+    { naam: 'Oerbier Reserva', detail: 'Madiran 2017 · 75 cl', prijs: '€25' },
+  ]}
+/>
+
+<Origineel foto={origineel} fotoAlt="The original, handwritten Oerbier Fake Nieuws" bijschrift="The original, by hand">
+
+Handwritten by Kris.
+
+But made a little more readable for you.
+
+</Origineel>

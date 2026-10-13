@@ -16,10 +16,12 @@ const pages: Record<string, string> = {
   '/verkooppunten-kaart': '/en/where-to-drink',
   '/contact': '/en/contact',
   '/faq': '/en/faq',
+  '/nieuws': '/en/news',
 };
 const prefixes: [string, string][] = [
   ['/bieren/', '/en/beers/'],
   ['/oershop/', '/en/shop/'],
+  ['/nieuws/', '/en/news/'],
 ];
 const toNlPages = Object.fromEntries(Object.entries(pages).map(([nl, en]) => [en, nl]));
 

@@ -7,6 +7,8 @@ interface Props {
   noot?: string;
 }
 const { titel, sub, items, noot } = Astro.props;
+import { langOf } from '../../i18n';
+const en = langOf(Astro.url) === 'en';
 ---
 
 <section class="prijzen" id="tekoop">
@@ -28,7 +30,7 @@ const { titel, sub, items, noot } = Astro.props;
     </ul>
     {noot && <p class="noot" set:html={noot} />}
     <p class="open">
-      Open: <b>zaterdag &amp; zondag, 14:00 – 19:00</b><br />Roeselarestraat 12B, 8600 Esen
+      Open: <b>{en ? 'Saturday & Sunday, 2 – 7 pm' : 'zaterdag & zondag, 14:00 – 19:00'}</b><br />Roeselarestraat 12B, 8600 Esen{en && ', Belgium'}
     </p>
   </div>
 </section>

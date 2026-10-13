@@ -1,0 +1,176 @@
+---
+import { langOf, link } from '../i18n';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Krantkop from '../components/nieuws/Krantkop.astro';
+import Polaroid from '../components/Polaroid.astro';
+import { edities, maand, kleuren } from '../lib/nieuws';
+import krant1990 from '../assets/archief/krant-1990.jpg';
+
+const lang = langOf(Astro.url);
+const en = lang === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const L = (href: string) => link(lang, href);
+const lijst = (await edities(lang)).reverse();
+const base = L('/nieuws');
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Oerbier Fake Nieuws',
+  url: `https://www.dedollebrouwers.be${base}`,
+  inLanguage: en ? 'en' : 'nl-BE',
+  publisher: { '@type': 'Organization', name: 'De Dolle Brouwers' },
+  blogPost: lijst.map((e) => ({
+    '@type': 'BlogPosting',
+    headline: e.data.titel,
+    datePublished: e.data.datum.toISOString(),
+    url: `https://www.dedollebrouwers.be${base}/${e.id}`,
+  })),
+};
+---
+
+<Base
+  title={tr("Oerbier Fake Nieuws | Nieuws uit de brouwerij van De Dolle Brouwers", "Oerbier Fake Nieuws | News from the De Dolle Brouwers brewery")}
+  description={tr("Het Oerbier Fake Nieuws: elke maand nieuws uit de brouwerij van De Dolle Brouwers in Esen. Nieuwe Reserva's, nieuwe brouwsels en wat er gebeurt in de brouwerij.", "The Oerbier Fake Nieuws: news from the De Dolle Brouwers brewery in Esen, Belgium, every month. New Reservas, new brews and what's happening at the brewery.")}
+>
+  <Fragment slot="head">
+    <meta property="og:title" content="Oerbier Fake Nieuws | De Dolle Brouwers" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(ld)} />
+  </Fragment>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="krant kop">
+        <Krantkop hoofd regel={tr("Nieuws uit de brouwerij, elke maand", "News from the brewery, every month")} />
+      </div>
+
+      <div class="intro">
+        <div>
+          <p class="lead">
+            {tr("Nieuwe Reserva's, nieuwe brouwsels en wat er gebeurt in de brouwerij in Esen. Elke maand een nieuwe editie.", "New Reservas, new brews and what's happening at the brewery in Esen. A new edition every month.")}
+          </p>
+          <p>
+            {tr("Het Oerbier Nieuws is niet nieuw. Op deze krantenfoto van vrijdag 20 april 1990 hangt het al aan de muur, tussen de flessen Arabier.", "The Oerbier Nieuws isn't new. In this newspaper photo from Friday 20 April 1990 it's already hanging on the wall, between the bottles of Arabier.")}
+          </p>
+        </div>
+        <Polaroid src={krant1990} alt={tr("Krantenknipsel van 20 april 1990 met het Oerbier Nieuws aan de muur", "Newspaper clipping from 20 April 1990 with the Oerbier Nieuws on the wall")} tilt={3} ratio="4 / 5" width={420} taped />
+      </div>
+
+      <div class="edities">
+        {
+          lijst.map((e, i) => (
+            <a class:list={['editie', { eerste: i === 0 }]} href={`${base}/${e.id}`} style={`--kleur:${kleuren[e.data.kleur].bg}; --op:${kleuren[e.data.kleur].on}`}>
+              <Image src={e.data.foto} alt={e.data.fotoAlt} width={i === 0 ? 900 : 600} />
+              <span class="tekst">
+                <span class="meta">
+                  {tr('Editie', 'Edition')} {e.nummer} · {maand(e.data.datum, lang)}
+                </span>
+                <span class="titel">{e.data.titel}</span>
+                <span class="lead-kort">{e.data.lead}</span>
+                <span class="lees">{tr("Lees de editie →", "Read the edition →")}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .krant.kop {
+    max-width: 920px;
+    margin: 0 auto;
+    border: var(--line);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .intro {
+    max-width: 920px;
+    margin: clamp(30px, 5vw, 56px) auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(24px, 5vw, 56px);
+    align-items: center;
+  }
+  .edities {
+    max-width: 920px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .editie {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    background: var(--paper-light);
+    border: var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .editie:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .editie.eerste {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+  .editie :global(img) {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+  .tekst {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 22px 24px 24px;
+    background: var(--kleur) var(--grain);
+    color: var(--op);
+    border-top: var(--line);
+  }
+  .eerste .tekst {
+    border-top: 0;
+    border-left: var(--line);
+    align-content: center;
+  }
+  .meta {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .titel {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1;
+  }
+  .lead-kort {
+    font-size: 0.98rem;
+  }
+  .lees {
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  @media (max-width: 760px) {
+    .intro,
+    .edities,
+    .editie.eerste {
+      grid-template-columns: 1fr;
+    }
+    .eerste .tekst {
+      border-left: 0;
+      border-top: var(--line);
+    }
+  }
+</style>

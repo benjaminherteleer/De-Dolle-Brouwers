@@ -1,0 +1,10 @@
+---
+import NieuwsEditie from '../../../views/NieuwsEditie.astro';
+import { edities } from '../../../lib/nieuws';
+
+export async function getStaticPaths() {
+  return (await edities('en')).map((e) => ({ params: { slug: e.id } }));
+}
+---
+
+<NieuwsEditie slug={Astro.params.slug!} />

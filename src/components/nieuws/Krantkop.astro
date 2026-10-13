@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo/oerbier-fake-nieuws.png';
+import { langOf, link } from '../../i18n';
 
 /** Masthead of Oerbier Fake Nieuws: the hand-drawn logo between newspaper rules. */
 interface Props {
@@ -11,12 +12,13 @@ interface Props {
 }
 const { regel, hoofd = false } = Astro.props;
 const Tag = hoofd ? 'h1' : 'p';
+const home = link(langOf(Astro.url), '/nieuws');
 ---
 
 <header class="krantkop">
   <p class="bovenregel"><span>De Dolle Brouwers</span><span>Esen, West-Vlaanderen</span><span>Gratis</span></p>
   <Tag class="logo">
-    <a href="/nieuws" aria-label="Oerbier Fake Nieuws">
+    <a href={home} aria-label="Oerbier Fake Nieuws">
       <Image src={logo} alt="Oerbier Fake Nieuws" width={900} loading="eager" />
     </a>
   </Tag>

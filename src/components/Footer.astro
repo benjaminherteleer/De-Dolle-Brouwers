@@ -41,7 +41,7 @@ const L = (href: string) => link(lang, href);
           <li><a href={L('/verhaal')}>{en ? 'Our story' : 'Ons verhaal'}</a></li>
           <li><a href={L('/brouwproces')}>{en ? 'Brewing' : 'Brouwproces'}</a></li>
           <li><a href={L('/oershop')}>{en ? 'Shop' : 'Oershop'}</a></li>
-          <li><a href="/nieuws">Oerbier Fake Nieuws{en && ' (NL)'}</a></li>
+          <li><a href={L('/nieuws')}>Oerbier Fake Nieuws</a></li>
           <li><a href={L('/verkooppunten-kaart')}>{en ? 'Where to drink' : 'Verkooppunten'}</a></li>
           <li><a href={L('/contact')}>Contact</a></li>
           <li><a href={L('/faq')}>{en ? 'FAQ' : 'Veelgestelde vragen'}</a></li>
@@ -51,7 +51,7 @@ const L = (href: string) => link(lang, href);
 
       <div class="col">
         <h4>Keep in touch!</h4>
-        <p>{en ? 'Sign up for our ' : 'Schrijf je in voor ons '}<a href="/nieuws">Oerbier FAKE news</a>{en ? ' (in Dutch).' : '.'}</p>
+        <p>{en ? 'Sign up for our ' : 'Schrijf je in voor ons '}<a href={L('/nieuws')}>Oerbier FAKE news</a>.</p>
         <form class="news" id="news">
           <input type="email" name="email" required placeholder={en ? 'you@email.com' : 'jouw@email.be'} aria-label={en ? 'Email address' : 'E-mailadres'} />
           <input type="text" name="honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />

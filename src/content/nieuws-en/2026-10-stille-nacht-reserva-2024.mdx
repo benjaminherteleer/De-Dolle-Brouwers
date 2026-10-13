@@ -1,0 +1,43 @@
+---
+titel: Stille Nacht Reserva 2024 ❄
+datum: 2026-10-01
+kicker: A special release from our cellars ↘
+lead: 'Two years in Amarone wine barrels. Now available at the brewery, together with a limited bottling of Barrique 11.'
+kleur: blauw
+foto: ../../assets/nieuws/2026-10/stille-nacht-reserva.jpg
+fotoAlt: A 75 cl and a 33 cl bottle of Stille Nacht Reserva 2024 in the brewery
+---
+
+import Artikel from '../../components/nieuws/Artikel.astro';
+import Citaat from '../../components/nieuws/Citaat.astro';
+import Cijfers from '../../components/nieuws/Cijfers.astro';
+import Prijzen from '../../components/nieuws/Prijzen.astro';
+import barrique from '../../assets/nieuws/2026-10/barrique-11.jpg';
+
+<Artikel label="Reserva · 33 cl" titel="Stille Nacht Reserva 2024">
+
+Stille Nacht Reserva 2024 is a carefully composed blend of Stille Nacht, **aged for two years in Amarone wine barrels**. A blend of 7 barriques, with extra depth, notes of red wine, fresh touches and a lovely balance between the body of the Stille Nacht and its acidity.
+
+<Cijfers items={[[2, 'years in Amarone barrels'], [7, 'barriques in the blend'], [11, 'Barrique 11, bottled separately']]} />
+
+</Artikel>
+
+<Artikel label="Limited edition · 75 cl" titel="Barrique 11." sub="One Amarone barrel, bottled on its own." foto={barrique} fotoAlt="Bottles of Stille Nacht Reserva and Barrique 11 on the copper floor" donker>
+
+Alongside the Reserva in 33 cl we are also releasing **Barrique 11**, in a limited 75 cl bottle.
+
+<Citaat>“This Amarone barrel developed a more pronounced sourness and a character all of its own.”</Citaat>
+
+Instead of adding it to the Reserva blend, we kept it apart.
+
+</Artikel>
+
+<Prijzen
+  titel="Now available at the brewery."
+  sub="Come and pick them up in Esen ↘"
+  items={[
+    { naam: 'Stille Nacht Reserva 2024', detail: '33 cl · per crate', prijs: '€82' },
+    { naam: 'Barrique 11', detail: 'Amarone · 75 cl', prijs: '€30' },
+  ]}
+  noot="Maximum 1 crate + 2 bottles per person 💛"
+/>

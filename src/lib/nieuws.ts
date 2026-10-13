@@ -1,15 +1,15 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 
-export type Editie = CollectionEntry<'nieuws'>;
+export type Editie = CollectionEntry<'nieuws'> | CollectionEntry<'nieuwsEn'>;
 
-/** All editions, oldest first, with their running edition number. */
-export async function edities(): Promise<(Editie & { nummer: number })[]> {
-  const lijst = (await getCollection('nieuws')).sort((a, b) => a.data.datum.getTime() - b.data.datum.getTime());
+/** All editions in a language, oldest first, with their running edition number. */
+export async function edities(lang: 'nl' | 'en' = 'nl'): Promise<(Editie & { nummer: number })[]> {
+  const lijst = (await getCollection(lang === 'en' ? 'nieuwsEn' : 'nieuws')).sort((a, b) => a.data.datum.getTime() - b.data.datum.getTime());
   return lijst.map((e, i) => ({ ...e, nummer: i + 1 }));
 }
 
-export const maand = (d: Date) => {
-  const s = d.toLocaleDateString('nl-BE', { month: 'long', year: 'numeric' });
+export const maand = (d: Date, lang: 'nl' | 'en' = 'nl') => {
+  const s = d.toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-BE', { month: 'long', year: 'numeric' });
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
