@@ -232,8 +232,18 @@
     "story": {
       "image": "/images/boskeun-illustratie.jpg",
       "alt": "Illustratie van de Boskeun-konijnen in hun ondergrondse bar",
-      "title": "Het verhaal achter Boskeun",
-      "text": "Op deze tekening hebben de Boskeun-konijnen een eigen ondergronds stamcafeetje vol paasversiering. Elk voorjaar duiken ze weer op, en de oplage is meestal snel op."
+      "title": "Elk voorjaar een nieuwe Boskeun",
+      "text": "Boskeun brouwen we één keer per jaar, tegen Pasen. En elk jaar hoort er een nieuwe tekening bij: de Boskeun-konijnen in hun ondergronds stamcafeetje, aan de paastafel of rond een kampvuur in het bos, met een pot honing natuurlijk. De oplage is meestal snel op. Wil je weten wanneer het nieuwe brouwsel er is? Hou onze socials in de gaten: <a href=\"https://www.instagram.com/dedollebrouwers\" target=\"_blank\" rel=\"noopener\">@dedollebrouwers</a>.",
+      "extra": [
+        {
+          "file": "boskeun-paastafel.webp",
+          "alt": "Tekening van de Boskeun-konijnen die klinken aan de paastafel"
+        },
+        {
+          "file": "boskeun-kampvuur.webp",
+          "alt": "Tekening van de Boskeun-konijnen rond een kampvuur in het bos, met bijen en een pot honing"
+        }
+      ]
     },
     "reserva": false,
     "tagline": "Een van de eerste paasbieren, met honing."

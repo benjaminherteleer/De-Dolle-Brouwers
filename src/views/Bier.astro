@@ -23,6 +23,7 @@ const storyFile: Record<string, string> = { 'lichtervelds-blond': 'lichtervelds-
 const story = b.story && {
   ...b.story,
   img: assets[`../assets/bieren/${storyFile[b.slug] ?? b.story.image.split('/').pop()}`]?.default,
+  extra: ((b.story as { extra?: { file: string; alt: string }[] }).extra ?? []).map((e) => ({ ...e, img: assets[`../assets/bieren/${e.file}`].default })),
 };
 
 const others = bieren.filter((x) => x.slug !== b.slug && x.reserva === b.reserva).slice(0, 4);
@@ -139,6 +140,13 @@ const ld = {
           <div>
             <h2>{story.title}</h2>
             <p class="lead" set:html={story.text} />
+            {story.extra.length > 0 && (
+              <div class="story-extra">
+                {story.extra.map((e, i) => (
+                  <Polaroid src={e.img} alt={e.alt} tilt={i % 2 ? 3 : -3} ratio="auto" width={500} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div class="edge-bottom" />
@@ -396,6 +404,16 @@ const ld = {
   }
   .story :global(.polaroid img) {
     aspect-ratio: auto;
+  }
+  .story-extra {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 3vw, 28px);
+    margin-top: 32px;
+  }
+  .story .lead :global(a) {
+    color: inherit;
+    font-weight: 700;
   }
 
   .more h2 {
