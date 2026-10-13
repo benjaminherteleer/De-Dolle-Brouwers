@@ -58,11 +58,11 @@
   },
   "stille-nacht": {
     "title": "Stille Nacht | Christmas beer from De Dolle Brouwers, Esen (Belgium)",
-    "description": "Stille Nacht (12%) is the Christmas beer of De Dolle Brouwers from Esen, West Flanders. Heavy and warming, brewed for the coldest months of the year.",
+    "description": "Stille Nacht (12%) is the Christmas beer and prestige beer of De Dolle Brouwers from Esen, West Flanders. Voted best Christmas beer eleven times at the Christmas beer festival in Essen, Belgium.",
     "alt": "The Stille Nacht character",
-    "kicker": "Your favourite Christmas beer",
+    "kicker": "Our prestige beer",
     "meta": [{ "label": "Alcohol", "value": "12%" }, { "label": "Style", "value": "Christmas beer" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
-    "intro": "Our Christmas beer of 12% (\"Stille Nacht\" means Silent Night). Brewed only with whole-cone hops from Poperinge and white candi sugar, which gives it one of the highest gravities we brew: 22° Plato.",
+    "intro": "Our prestige beer, with every trump card on the table: 1,000 kg of malt for 2,500 litres of beer, pale candi sugar and whole-cone hops from Poperinge (Whitbread Golding Variety). A very long boil, long lagering and refermentation in the bottle. Good for 22° Plato and 12%. At Christmas it can be a little more!",
     "notes": [
       { "label": "Aroma", "text": "Ripe fruit and candi sugar." },
       { "label": "Taste", "text": "Full and sweetish, carried by the high gravity." },
@@ -73,6 +73,8 @@
       { "label": "Keeping", "text": "Stille Nacht ages well. The bottling date is on the crown cap." }
     ],
     "weetjes": [
+      "In 1980 there were no Christmas beers in Belgium, apart from six English ones.",
+      "The name Stille Nacht (\"Silent Night\") came out of a brainstorm with brother Ward. He is the spiritual father of the name.",
       "Boiled in a copper kettle over a direct gas flame and cooled in the copper coolship from 1921.",
       "Fermented in open copper fermenters, then matured for at least a month.",
       "Refermented in the bottle.",
@@ -87,7 +89,26 @@
         { "file": "stille-nacht-see-you.webp", "alt": "New Year drawing: three Oerbier figures riding bison in the snow with a \"See you in 2025\" flag" }
       ]
     },
-    "tagline": "Your favourite Christmas beer."
+    "tagline": "Our prestige beer, for Christmas.",
+    "prijzen": {
+      "title": "The best Christmas beer in Belgium",
+      "text": "Every year the beer tasters of OBER in Essen (near Antwerp) hold a festival with nothing but Belgian Christmas beers. Since 1994 the visitors pick their favourite there, out of more than 200 beers. No expert jury: the beers are bought and poured anonymously. Stille Nacht nearly always ends up in the top 3, and has been voted best Christmas beer eleven times. The certificates hang in the Oerbar.",
+      "persTitel": "In the press",
+      "fotos": [
+        { "file": "stille-nacht-prijs-2025.webp", "alt": "Kris Herteleer and the OBER beer tasters with the certificate in the Oerbar" },
+        { "file": "stille-nacht-prijs-oorkondes.webp", "alt": "Kris with three certificates for the best Christmas beer, among the OBER beer tasters" },
+        { "file": "stille-nacht-prijs-2024.webp", "alt": "Kris with the certificate for the best Christmas beer of 2024" },
+        { "file": "stille-nacht-prijs-kris.png", "alt": "Kris with a certificate and a table full of Stille Nacht bottles" },
+        { "file": "stille-nacht-prijs-tekening.webp", "alt": "Kris receives a framed drawing listing the years Stille Nacht won" },
+        { "file": "stille-nacht-prijs-ober.webp", "alt": "The OBER beer tasters with certificates and a drawing in the Oerbar" }
+      ],
+      "pers": [
+        { "bron": "In de Gazette", "jaar": "2025", "url": "https://www.indegazette.be/kris-herteleer-en-stille-nacht-van-de-dolle-brouwers-schrijven-biergeschiedenis-met-twaalfde-gouden-medaille/" },
+        { "bron": "Het Laatste Nieuws", "url": "https://www.hln.be/diksmuide/stille-nacht-zevende-keer-verkozen-tot-beste-kerstbier~addadc36/" },
+        { "bron": "Gazet van Antwerpen", "jaar": "2012", "url": "https://www.gva.be/regio/antwerpen/regio-antwerpen/essen/stille-nacht-is-beste-kerstbier-2012/38599659.html" },
+        { "bron": "Het Nieuwsblad", "url": "https://www.nieuwsblad.be/regio/west-vlaanderen/stille-nacht-voor-vijfde-keer-verkozen-tot-beste-kerstbier/60261384.html" }
+      ]
+    }
   },
   "boskeun": {
     "title": "Boskeun | Easter beer with honey from De Dolle Brouwers, Esen (Belgium)",
@@ -283,11 +304,11 @@
   "stille-nacht-reserva": {
     "badge": "Currently in stock, limited edition",
     "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers, Esen (Belgium)",
-    "description": "Stille Nacht Reserva (12%) is the wine-barrel-aged version of Stille Nacht, released in a limited edition by De Dolle Brouwers in Esen, West Flanders.",
+    "description": "Stille Nacht Reserva (13%) is the wine-barrel-aged version of Stille Nacht, released in limited editions by De Dolle Brouwers in Esen, West Flanders.",
     "alt": "Stille Nacht Reserva bottles",
     "kicker": "Stille Nacht, aged for years in wine barrels",
-    "meta": [{ "label": "Alcohol", "value": "12%" }, { "label": "Style", "value": "Golden, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
-    "intro": "The complex, golden Stille Nacht gets a second life here: at least two years in barrels that held wine before, into a deeper, woodier and slightly vinous beer. Not a yearly edition, but a release every few years, each with its own barrel number.",
+    "meta": [{ "label": "Alcohol", "value": "13%" }, { "label": "Style", "value": "Golden, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "The complex, golden Stille Nacht gets a second life here: about two years in barrels that used to hold wine, into a deeper, woodier and slightly vinous beer, and one degree stronger: 13%. Not a yearly edition but a release every few years, each with its own barrel number.",
     "notes": [
       { "label": "Aroma", "text": "Oak, vanilla, dried fruit, citrus peel and a hint of wild yeast." },
       { "label": "Taste", "text": "Lightly sour and fruity, with candied orange, wood and a soft vinous touch that trades the original Stille Nacht sweetness for more depth." },
@@ -307,7 +328,12 @@
     ],
     "barrel": {
       "title": "About the barrel ageing",
-      "text": "Stille Nacht Reserva was our very first Reserva, and it started with a little accident. With Stille Nacht 2000 the yeast mutated during the refermentation in the bottle. The beer hadn't finished fermenting and the bottles exploded. So we poured the beer into empty 225-litre Bordeaux barrels, where it aged for two years. Then it was refermented in 75 cl bottles. Today Stille Nacht Reserva is not a yearly release: every few years a selected batch goes into wine barrels for at least two years, before it is bottled as a numbered Reserva (per \"barrique\"). The bottles are limited and mostly sold directly at the brewery."
+      "text": "Stille Nacht Reserva was our very first Reserva, and it started with a little accident. With Stille Nacht 2000 the yeast mutated during the refermentation in the bottle. The beer hadn't finished fermenting and the bottles exploded. So we poured the beer into empty 225-litre Bordeaux barrels, where it aged for two years. Then it was refermented in 75 cl bottles. Today Stille Nacht Reserva is not a yearly release: every few years a selected batch goes into wine barrels for at least two years, before it is bottled as a numbered Reserva (per \"barrique\"). The bottles are limited and mostly sold directly at the brewery.",
+      "foto": {
+        "file": "kris-wijnvat.webp",
+        "alt": "Kris Herteleer drawing beer from a wine barrel with a pipette in the cellar",
+        "caption": "Kris tasting from the barrel"
+      }
     },
     "tagline": "Stille Nacht, years in wine barrels."
   }

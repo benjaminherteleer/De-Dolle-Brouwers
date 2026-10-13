@@ -122,9 +122,9 @@
     "slug": "stille-nacht",
     "name": "Stille Nacht",
     "title": "Stille Nacht — Kerstbier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Stille Nacht (12%) is het kerstbier van De Dolle Brouwers uit Esen, West-Vlaanderen. Zwaar en warmend, gebrouwen voor de koudste maanden van het jaar.",
+    "description": "Stille Nacht (12%) is het kerstbier en prestigebier van De Dolle Brouwers uit Esen, West-Vlaanderen. Al elf keer verkozen tot lekkerste kerstbier op het kerstbierfestival in Essen.",
     "alt": "Stille Nacht personage",
-    "kicker": "Je favoriete kerstbier",
+    "kicker": "Ons prestigebier",
     "meta": [
       {
         "label": "Alcohol",
@@ -139,7 +139,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Ons kerstbier van 12%. Gebrouwen met enkel bellenhop uit Poperinge en witte kandijsuiker, wat het een van de zwaarste densiteiten geeft die we brouwen: 22° Plato.",
+    "intro": "Ons prestigebier, met alle troeven op tafel: 1.000 kg mout voor 2.500 liter bier, bleke kandijsuiker en bellenhop uit Poperinge (Whitbread Golding Variety). Een hele lange kooking, lange lagering en hergisting op de fles. Goed voor 22° Plato en 12%. Met kerstdag mag het iets meer zijn!",
     "notes": [
       {
         "label": "Aroma",
@@ -165,6 +165,8 @@
       }
     ],
     "weetjes": [
+      "In 1980 waren er in België, buiten zes Engelse kerstbieren, nog geen kerstbieren.",
+      "De naam Stille Nacht kwam uit een brainstorm met broer Ward. Hij is de geestelijke vader van de naam.",
       "Gekookt in een koperen ketel op directe gasverwarming en afgekoeld in het koperen koelschip uit 1921.",
       "Vergist in open koperen gistkuipen en daarna minstens een maand gerijpt.",
       "Hergist op fles.",
@@ -187,7 +189,58 @@
       ]
     },
     "reserva": false,
-    "tagline": "Je favoriete kerstbier."
+    "tagline": "Ons prestigebier, voor de kerst.",
+    "prijzen": {
+      "title": "Het lekkerste kerstbier van België",
+      "text": "Elk jaar organiseren de bierproevers van OBER in Essen (bij Antwerpen) een festival met niets anders dan Belgische kerstbieren. Sinds 1994 kiezen de bezoekers er hun favoriet, uit meer dan 200 bieren. Geen vakjury: de bieren worden anoniem gekocht en geschonken. Stille Nacht eindigt bijna altijd in de top 3, en werd al elf keer verkozen tot lekkerste kerstbier. De oorkondes hangen in de Oerbar.",
+      "persTitel": "In de pers",
+      "fotos": [
+        {
+          "file": "stille-nacht-prijs-2025.webp",
+          "alt": "Kris Herteleer en de bierproevers van OBER met de oorkonde in de Oerbar"
+        },
+        {
+          "file": "stille-nacht-prijs-oorkondes.webp",
+          "alt": "Kris met drie oorkondes voor het lekkerste kerstbier, tussen de bierproevers van OBER"
+        },
+        {
+          "file": "stille-nacht-prijs-2024.webp",
+          "alt": "Kris met de oorkonde voor het lekkerste kerstbier van 2024"
+        },
+        {
+          "file": "stille-nacht-prijs-kris.png",
+          "alt": "Kris met een oorkonde en een tafel vol flessen Stille Nacht"
+        },
+        {
+          "file": "stille-nacht-prijs-tekening.webp",
+          "alt": "Kris krijgt een ingekaderde tekening met de jaren waarin Stille Nacht won"
+        },
+        {
+          "file": "stille-nacht-prijs-ober.webp",
+          "alt": "De bierproevers van OBER met oorkondes en een tekening in de Oerbar"
+        }
+      ],
+      "pers": [
+        {
+          "bron": "In de Gazette",
+          "jaar": "2025",
+          "url": "https://www.indegazette.be/kris-herteleer-en-stille-nacht-van-de-dolle-brouwers-schrijven-biergeschiedenis-met-twaalfde-gouden-medaille/"
+        },
+        {
+          "bron": "Het Laatste Nieuws",
+          "url": "https://www.hln.be/diksmuide/stille-nacht-zevende-keer-verkozen-tot-beste-kerstbier~addadc36/"
+        },
+        {
+          "bron": "Gazet van Antwerpen",
+          "jaar": "2012",
+          "url": "https://www.gva.be/regio/antwerpen/regio-antwerpen/essen/stille-nacht-is-beste-kerstbier-2012/38599659.html"
+        },
+        {
+          "bron": "Het Nieuwsblad",
+          "url": "https://www.nieuwsblad.be/regio/west-vlaanderen/stille-nacht-voor-vijfde-keer-verkozen-tot-beste-kerstbier/60261384.html"
+        }
+      ]
+    }
   },
   {
     "slug": "boskeun",
@@ -616,13 +669,13 @@
     "badge": "Momenteel voorradig, in beperkte oplage",
     "name": "Stille Nacht Reserva",
     "title": "Stille Nacht Reserva — Vatgerijpt kerstbier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Stille Nacht Reserva (12%) is de op wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
+    "description": "Stille Nacht Reserva (13%) is de op wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
     "alt": null,
     "kicker": "Stille Nacht, jarenlang gerijpt op wijnvat",
     "meta": [
       {
         "label": "Alcohol",
-        "value": "12%"
+        "value": "13%"
       },
       {
         "label": "Stijl",
@@ -633,7 +686,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "De complexe, goudkleurige Stille Nacht krijgt hier een tweede leven: minstens twee jaar op vaten die eerder wijn bevatten, tot een dieper, houtiger en licht vineus bier. Geen jaarlijkse editie, maar een release om de paar jaar, telkens met een eigen vatnummer.",
+    "intro": "De complexe, goudkleurige Stille Nacht krijgt hier een tweede leven: zo’n twee jaar op vaten die eerder wijn bevatten, tot een dieper, houtiger en licht vineus bier, en een graad sterker: 13%. Geen jaarlijkse editie, maar een release om de paar jaar, telkens met een eigen vatnummer.",
     "notes": [
       {
         "label": "Aroma",
@@ -668,7 +721,12 @@
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "Stille Nacht Reserva was onze allereerste Reserva, en dat begon met een ongelukje. Bij Stille Nacht 2000 muteerde de gist tijdens de hergisting op de fles. Het bier was nog niet uitgegist en de flesjes ontploften. Daarom goten we het bier in lege Bordeauxvaten van 225 liter, waar het twee jaar lagerde. Daarna werd het opnieuw hergist op flessen van 75 cl. Vandaag is Stille Nacht Reserva geen jaarlijkse uitgave: om de paar jaar gaat een geselecteerd brouwsel minstens twee jaar op wijnvaten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
+      "text": "Stille Nacht Reserva was onze allereerste Reserva, en dat begon met een ongelukje. Bij Stille Nacht 2000 muteerde de gist tijdens de hergisting op de fles. Het bier was nog niet uitgegist en de flesjes ontploften. Daarom goten we het bier in lege Bordeauxvaten van 225 liter, waar het twee jaar lagerde. Daarna werd het opnieuw hergist op flessen van 75 cl. Vandaag is Stille Nacht Reserva geen jaarlijkse uitgave: om de paar jaar gaat een geselecteerd brouwsel minstens twee jaar op wijnvaten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht.",
+      "foto": {
+        "file": "kris-wijnvat.webp",
+        "alt": "Kris Herteleer haalt met een pipet bier uit een wijnvat in de kelder",
+        "caption": "Kris proeft uit het vat"
+      }
     },
     "reserva": true,
     "tagline": "Stille Nacht, jaren op wijnvaten."

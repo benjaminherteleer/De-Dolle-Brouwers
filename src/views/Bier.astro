@@ -9,6 +9,7 @@ import BeerFx from '../components/BeerFx.astro';
 import Strik from '../components/Strik.astro';
 import { beers, abv, short, type Bier } from '../lib/bieren';
 import vaten from '../assets/foto/vaten-rij.jpg';
+import krisWijnvat from '../assets/foto/kris-wijnvat.webp';
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -25,6 +26,14 @@ const story = b.story && {
   img: assets[`../assets/bieren/${storyFile[b.slug] ?? b.story.image.split('/').pop()}`]?.default,
   extra: ((b.story as { extra?: { file: string; alt: string }[] }).extra ?? []).map((e) => ({ ...e, img: assets[`../assets/bieren/${e.file}`].default })),
 };
+
+type Prijzen = { title: string; text: string; persTitel: string; fotos: { file: string; alt: string }[]; pers: { bron: string; jaar?: string; url: string }[] };
+const prijzen = (b as { prijzen?: Prijzen }).prijzen;
+const prijsFotos = (prijzen?.fotos ?? []).map((f) => ({ ...f, img: assets[`../assets/bieren/${f.file}`].default }));
+
+// A barrel section can bring its own photo instead of the row of barrels
+const barrelFotos: Record<string, ImageMetadata> = { 'kris-wijnvat.webp': krisWijnvat };
+const barrelFoto = (b.barrel as { foto?: { file: string; alt: string; caption: string } } | undefined)?.foto;
 
 const others = bieren.filter((x) => x.slug !== b.slug && x.reserva === b.reserva).slice(0, 4);
 const back = L(b.reserva ? '/#reserva' : '/#bieren');
@@ -155,11 +164,42 @@ const ld = {
   }
 
   {
+    prijzen && (
+      <section class="section prijzen">
+        <div class="wrap">
+          <div class="prijzen-kop">
+            <h2>{prijzen.title}</h2>
+            <p class="lead">{prijzen.text}</p>
+            <p class="pers">
+              <strong>{prijzen.persTitel}:</strong>{' '}
+              {prijzen.pers.map((a, i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <a href={a.url} target="_blank" rel="noopener">{a.bron}{a.jaar && ` (${a.jaar})`} ↗</a>
+                </>
+              ))}
+            </p>
+          </div>
+          <div class="prijzen-fotos">
+            {prijsFotos.map((f, i) => (
+              <Image src={f.img} alt={f.alt} width={600} style={`--tilt:${[-2, 1.5, -1, 2, -1.5, 1][i % 6]}deg`} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
     b.barrel && (
       <section class="section barrel">
         <div class="edge-top" />
         <div class="wrap story-grid">
-          <Polaroid src={vaten} alt={tr("Eiken wijnvaten in de kelder", "Oak wine barrels in the cellar")} caption={tr("Minstens twaalf maanden op hout", "At least twelve months in oak")} tilt={-2} ratio="4 / 5" taped />
+          {barrelFoto ? (
+            <Polaroid src={barrelFotos[barrelFoto.file]} alt={barrelFoto.alt} caption={barrelFoto.caption} tilt={-2} ratio="4 / 5" taped />
+          ) : (
+            <Polaroid src={vaten} alt={tr("Eiken wijnvaten in de kelder", "Oak wine barrels in the cellar")} caption={tr("Minstens twaalf maanden op hout", "At least twelve months in oak")} tilt={-2} ratio="4 / 5" taped />
+          )}
           <div>
             <h2>{b.barrel.title}</h2>
             <p class="lead" set:html={b.barrel.text} />
@@ -404,6 +444,43 @@ const ld = {
   }
   .story :global(.polaroid img) {
     aspect-ratio: auto;
+  }
+  .prijzen-kop {
+    max-width: 760px;
+    margin-bottom: 40px;
+  }
+  .prijzen-kop h2 {
+    margin-bottom: 18px;
+  }
+  .pers {
+    margin-top: 18px;
+    line-height: 1.8;
+  }
+  .pers a {
+    color: inherit;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .prijzen-fotos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(18px, 3vw, 32px);
+    align-items: start;
+  }
+  .prijzen-fotos :global(img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 3px solid var(--ink);
+    border-radius: 6px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transform: rotate(var(--tilt));
+  }
+  @media (max-width: 700px) {
+    .prijzen-fotos {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   .story-extra {
     display: grid;
