@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Stamp from '../components/Stamp.astro';
+import Gesloten from '../components/Gesloten.astro';
 
 import brouwer from '../assets/foto/bp-brouwer.jpg';
 import koelschip from '../assets/foto/bp-koelschip.jpg';
@@ -80,6 +81,7 @@ const stops = [
         <div><dt>{tr("Zondag", "Sunday")}</dt><dd>{tr("Oerbar 14u – 19u · Rondleiding 14u (EN) & 15u (NL)", "Oerbar 2 – 7 pm · Tour 2 pm (English) & 3 pm (Dutch)")}</dd></div>
         <div><dt>{tr("Prijs", "Price")}</dt><dd>{tr("€10 pp, met drie proevertjes van het vat", "€10 per person, with three tastings from the cask")}</dd></div>
       </dl>
+      <Gesloten class="gesloten-hero" />
       <p class="small">{tr("Gesloten tijdens de kerstvakantie. Check vooraf onze socials.", "Closed during the Christmas holidays. Check our socials before you come.")}</p>
     </div>
     <div class="hero-photo">

@@ -1,0 +1,56 @@
+---
+/**
+ * Notice for days the brewery is closed (src/data/gesloten.json). Past days hide themselves,
+ * so a list that has not been cleaned up yet never shows old closures.
+ */
+import gesloten from '../data/gesloten.json';
+import { langOf } from '../i18n';
+
+interface Props {
+  class?: string;
+}
+const lang = langOf(Astro.url);
+const vandaag = new Date().toISOString().slice(0, 10);
+const komend = gesloten.filter((g) => g.datum >= vandaag);
+---
+
+{
+  komend.length > 0 && (
+    <div class:list={['gesloten', Astro.props.class]} role="note">
+      {komend.map((g) => (
+        <p data-datum={g.datum}>
+          <span aria-hidden="true">⚠︎</span> {g[lang]}
+        </p>
+      ))}
+    </div>
+  )
+}
+
+<script is:inline>
+  (function () {
+    var vandaag = new Date().toISOString().slice(0, 10);
+    document.querySelectorAll('.gesloten [data-datum]').forEach(function (p) {
+      if (p.getAttribute('data-datum') < vandaag) p.remove();
+    });
+    document.querySelectorAll('.gesloten').forEach(function (b) {
+      if (!b.querySelector('p')) b.remove();
+    });
+  })();
+</script>
+
+<style>
+  .gesloten {
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-left: 8px solid #d6232a;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: grid;
+    gap: 4px;
+  }
+  .gesloten p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--ink);
+  }
+</style>

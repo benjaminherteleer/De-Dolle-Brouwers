@@ -6,6 +6,7 @@ import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Shop from '../components/Shop.astro';
 import Stamp from '../components/Stamp.astro';
+import Gesloten from '../components/Gesloten.astro';
 import BeerFx from '../components/BeerFx.astro';
 import { beers, abv, uitverkocht } from '../lib/bieren';
 
@@ -268,6 +269,7 @@ const bende = [
             <a class="btn" href={L('/rondleiding-boeken')}>{tr("Boek je plaats", "Book your spot")}</a>
             <a class="ticket-link" href={L('/brouwerij#bezoek')}>{tr("Meer over je bezoek →", "More about your visit →")}</a>
           </div>
+          <Gesloten class="gesloten-ticket" />
           <div class="ticket-foot">
             <strong>Oerbar</strong> {tr("open op zaterdag en zondag van 14u tot 19u. Gesloten tijdens de kerstvakantie.", "(our taproom) open Saturday and Sunday from 2 to 7 pm. Closed during the Christmas holidays.")}
           </div>

@@ -6,6 +6,8 @@ import { tours } from '../lib/schema';
 import { storefront } from '../lib/shopify';
 import { TICKET, TICKETS_BETALEN } from '../lib/shop';
 import kris from '../assets/foto/bp-brouwer.jpg';
+import Gesloten from '../components/Gesloten.astro';
+import gesloten from '../data/gesloten.json';
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -67,7 +69,8 @@ try {
 
   <section class="section">
     <div class="wrap">
-      <form class="card boek" id="boek" data-slots={JSON.stringify(slots)} data-betalen={TICKETS_BETALEN ? '1' : ''}>
+      <form class="card boek" id="boek" data-slots={JSON.stringify(slots)} data-betalen={TICKETS_BETALEN ? '1' : ''} data-gesloten={JSON.stringify(gesloten.map((g) => g.datum))}>
+        <Gesloten />
         <fieldset>
           <legend><span class="num">1</span>{tr('Kies een zondag', 'Pick a Sunday')}</legend>
           <div class="dagen" id="dagen"></div>
@@ -138,14 +141,14 @@ try {
           <li>{tr('Geen terugbetaling bij annulering of als je niet komt.', 'No refunds for cancellations or no-shows.')}</li>
           <li>{tr('Liever niet boeken? Kom gewoon af en koop ter plaatse een ticket, zolang er plaats is.', "Rather not book? Just turn up and buy a ticket on the spot, while there's room.")}</li>
           <li>
-            {tr('Met 20 of meer? Mail naar', '20 or more of you? Email')} <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>{' '}
-            {tr('voor een aparte rondleiding, ook in de week.', 'for a separate tour, also on weekdays.')}
+            {tr('Kom je met 20 of meer? Laat het ons even weten via', 'Coming with 20 or more? Let us know at')}{' '}
+            <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>{tr(', dan regelen we het.', " and we'll sort it out.")}
           </li>
         </ul>
       </form>
       <p class="meer">
-        {tr('Nog vragen?', 'More questions?')} <a href={L('/faq')}>{tr('Bekijk de veelgestelde vragen', 'Read the FAQ')}</a>
-        {tr('of', 'or')} <a href={L('/brouwerij')}>{tr('lees alles over je bezoek', 'read all about your visit')}</a>.
+        {tr('Nog vragen?', 'More questions?')} <a href={L('/faq')}>{tr('Bekijk de veelgestelde vragen', 'Read the FAQ')}</a>{' '}
+        {tr('of', 'or')}{' '} <a href={L('/brouwerij')}>{tr('lees alles over je bezoek', 'read all about your visit')}</a>.
       </p>
     </div>
   </section>
@@ -165,7 +168,8 @@ try {
   const knop = document.getElementById('knop') as HTMLButtonElement;
   const status = document.getElementById('status')!;
   const betalen = !!form.dataset.betalen;
-  let slots: Slot[] = JSON.parse(form.dataset.slots || '[]');
+  const dicht: string[] = JSON.parse(form.dataset.gesloten || '[]');
+  let slots: Slot[] = JSON.parse(form.dataset.slots || '[]').map((s: Slot) => (dicht.includes(s.datum) ? { ...s, vrij: 0 } : s));
   let datum = '';
   let aantal = 2;
 
@@ -188,7 +192,7 @@ try {
             const vrij = slots.filter((s) => s.datum === d).reduce((n, s) => n + s.vrij, 0);
             return `<button type="button" class="dag${d === datum ? ' on' : ''}" data-datum="${d}" ${vrij ? '' : 'disabled'}>
               <small>${lokaal(d, { weekday: 'short' })}</small><b>${lokaal(d, { day: 'numeric' })}</b><small>${lokaal(d, { month: 'short' })}</small>
-              ${vrij ? '' : `<em>${EN ? 'full' : 'volzet'}</em>`}</button>`;
+              ${vrij ? '' : `<em>${dicht.includes(d) ? (EN ? 'closed' : 'gesloten') : EN ? 'full' : 'volzet'}</em>`}</button>`;
           })
           .join('')
       : `<p class="hint">${EN ? 'Online booking is not available right now. Just come by on Sunday, or email info@dedollebrouwers.be.' : 'Online boeken lukt nu even niet. Kom gewoon af op zondag, of mail naar info@dedollebrouwers.be.'}</p>`;
@@ -201,7 +205,7 @@ try {
       r.disabled = !vrij;
       if (!vrij && r.checked) r.checked = false;
       const label = form.querySelector(`[data-vrij="${r.value}"]`)!;
-      label.textContent = !s ? '' : vrij ? (EN ? `${vrij} places left` : `nog ${vrij} plaatsen`) : EN ? 'Full' : 'Volzet';
+      label.textContent = !s ? '' : vrij ? (EN ? `${vrij} places left` : `nog ${vrij} plaatsen`) : dicht.includes(datum) ? (EN ? 'Closed' : 'Gesloten') : EN ? 'Full' : 'Volzet';
     });
     const s = taal() ? slot(datum, taal()) : undefined;
     const max = Math.min(s?.vrij ?? 25, 19);
@@ -280,7 +284,7 @@ try {
     )
       .then((data) => {
         const live = new Map((data.product?.variants.nodes ?? []).map((v) => [v.id, v.availableForSale ? v.quantityAvailable ?? 25 : 0]));
-        slots = slots.map((s) => ({ ...s, vrij: live.get(s.id) ?? s.vrij }));
+        slots = slots.map((s) => ({ ...s, vrij: dicht.includes(s.datum) ? 0 : live.get(s.id) ?? s.vrij }));
         tekenDagen();
         teken();
       })
