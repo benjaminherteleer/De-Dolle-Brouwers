@@ -3,7 +3,7 @@
     "slug": "oerbier",
     "name": "Oerbier",
     "title": "Oerbier — Donker, hoog gegist bier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Oerbier (9%) is het vlaggenschipbier van De Dolle Brouwers, ambachtelijke brouwerij in Esen, West-Vlaanderen. Donker, hoog gegist bier met een lichte zurigheid door melkzuurbacteriën, gehopt met Goldings uit Poperinge.",
+    "description": "Oerbier (9%) is het eerste bier van De Dolle Brouwers, ambachtelijke brouwerij in Esen, West-Vlaanderen. Donker bier met zeven soorten mout en bloemenhop uit Poperinge, niet gefilterd en hergist op de fles.",
     "alt": "Oerbier personage",
     "kicker": "Ons eerste bier, sinds 1980",
     "meta": [
@@ -20,19 +20,19 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Het allereerste bier van de brouwerij, officieel sinds 1980. Donker door een mengeling van verschillende mouten en een urenlange kooktijd, met een lichte, frisse zurigheid door gist en melkzuurbacteriën.",
+    "intro": "Het allereerste bier van de brouwerij, officieel gebrouwen sinds 15 november 1980. Zeven soorten mout, een complexe gist en bloemenhop uit Poperinge. Niet gefilterd en hergist op de fles.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Donkere mout en een frisse, licht zure toets."
+        "text": "Rijk, gistig en donker moutig, met een lichte fruitige toets."
       },
       {
         "label": "Smaak",
-        "text": "Vol en rond, met een zurigheid die de zoetheid van de mout in evenwicht houdt."
+        "text": "Rijke, complexe smaken in evenwicht. De zoete mout heeft de bovenhand, met licht hoppige, bittere en lichtzure tonen."
       },
       {
         "label": "Afdronk",
-        "text": "Droog en licht bitter."
+        "text": "Volmondig en bloemig."
       }
     ],
     "info": [
@@ -42,29 +42,31 @@
       },
       {
         "label": "Bewaren",
-        "text": "Wettelijk een jaar houdbaar na botteling, maar Oerbier blijft evolueren en kan veel langer liggen."
+        "text": "Tenminste twee jaar houdbaar, maar Oerbier blijft evolueren en kan veel langer liggen."
       }
     ],
     "weetjes": [
-      "Het prototype werd gebrouwen door twee studenten, in een koperen wasketel.",
-      "De naam staat voor het oorspronkelijke en het pure.",
-      "Densiteit 1078 en 9% alcohol, gehopt met enkel bellenhop \"Golding\" uit Poperinge.",
+      "De Dolle Brouwers heetten eerst De Dolle Dravers, een fietstoeristenclub met vier leden.",
+      "Oerbier werd drie jaar lang op punt gesteld in een koperen wastobbe op houtvuur.",
+      "Bij een blindproeving in het Brouwershuis kwam het als beste uit de bus.",
+      "Het jaartal 1980 verwijst naar het eerste officiële brouwsel, op 15 november 1980. Het was het begin van een revival van speciale bieren in België.",
+      "Kijk eens goed naar het logo op het glas: het is geen dame, monnik of koning, maar een gepersonaliseerde gistcel.",
       "Na een paar jaar rijping krijgt Oerbier een wijnachtig karakter.",
       "De brouwerij bewaart nog stalen van het allereerste brouwsel, en die zijn nog perfect drinkbaar.",
       "\"Nat en straf\" op de glazen is een waarschuwing voor de 9%.",
       "Het Oerbier-mannetje houdt een brouwersvork vast, het werk, maar kijkt naar het glas bier, het resultaat.",
-      "Het etiket is geïnspireerd op de grotschilderingen van Altamira in Spanje, zowat het oudste bekende kunstwerk ter wereld. Je ziet ze terug op het metalen bord met de rotstekening."
+      "Op de metalen bordjes rijdt het Oerbier-mannetje op een wild beest, naar de rotstekeningen van Altamira in Spanje, van zowat 15.000 jaar voor Christus."
     ],
     "reserva": false,
-    "tagline": "Ons eerste bier. Donker, met vijf soorten mout."
+    "tagline": "Ons eerste bier. Donker, met zeven soorten mout."
   },
   {
     "slug": "arabier",
     "name": "Arabier",
-    "title": "Arabier — Amberkleurig, dry hopped bier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Arabier (8%) van De Dolle Brouwers is een amberkleurig, hoog gehopt bier uit Esen (West-Vlaanderen), droog gehopt met Nugget-hop uit Poperinge. Fris, bitter en vol karakter.",
+    "title": "Arabier — Blond, dry hopped bier van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "description": "Arabier (8%) van De Dolle Brouwers is de blonde variant van het Oerbier, uit Esen (West-Vlaanderen). Gebrouwen met bleke mout en droog gehopt met bloemenhop uit Poperinge. Fris, fruitig en bitter.",
     "alt": "Arabier personage",
-    "kicker": "De perfecte dorstlesser",
+    "kicker": "De blonde variant van het Oerbier",
     "meta": [
       {
         "label": "Alcohol",
@@ -72,22 +74,22 @@
       },
       {
         "label": "Stijl",
-        "value": "Amberkleurig, dry hopped"
+        "value": "Blond, dry hopped"
       },
       {
         "label": "Gisting",
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een zuiver moutbier van 8%, gehopt met bloemhop uit Poperinge: Nugget en WGV (Whitbread Golding Variety). Droog gehopt, fris en bitter: de perfecte dorstlesser.",
+    "intro": "Veel bierliefhebbers vonden het Oerbier lekker, maar vroegen ook om een bleek bier. Zo kwam er Arabier: gebrouwen met één soort mout, bleke mout, en een bitterheid die de smaak in evenwicht houdt.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Frisse bloemhop."
+        "text": "Fruitig, fris en bitter, van de WGV-hop (Whitbread Golding Variety)."
       },
       {
         "label": "Smaak",
-        "text": "Droog en fris, met een uitgesproken hopbitterheid."
+        "text": "Droog en fris, met een bitterheid van Nugget-hop die de bleke mout in evenwicht houdt."
       },
       {
         "label": "Afdronk",
@@ -97,7 +99,7 @@
     "info": [
       {
         "label": "Serveertip",
-        "text": "Drink Arabier koel, zoals er in het Arabisch op de fles staat."
+        "text": "Drink Arabier koel, op 10 °C, zoals er in het Arabisch op de fles staat."
       },
       {
         "label": "Bewaren",
@@ -105,13 +107,16 @@
       }
     ],
     "weetjes": [
-      "Op de fles staat in het Arabisch: \"Drink arabier koel\".",
+      "Bier blijft bier, maar het moest iets met een A worden. Arabier dan maar: ideaal om te drinken na een namiddag woestijnwandelen.",
+      "Op het etiket staat een kleurrijke papegaai, een ara.",
+      "Op de fles staat in het Arabisch: \"Drink koel, 10 °C\".",
+      "De hopbellen groeien in de streek van Poperinge. Ze worden gedroogd, geperst en zo aan het wort toegevoegd.",
       "De naam schrijf je altijd met een kleine a.",
       "Eén arabier, twee arabiers. Maar: er zijn geen twee arabieren.",
       "Een knipoog: in Arabische landen is bier eigenlijk verboden."
     ],
     "reserva": false,
-    "tagline": "De perfecte dorstlesser, dry hopped."
+    "tagline": "De blonde variant van het Oerbier, dry hopped."
   },
   {
     "slug": "stille-nacht",
@@ -195,15 +200,15 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Ons paasbier van 9%, de opvolger van Stille Nacht in het jaar. Een krachtig bier met een eigen smaak en aroma, gebrouwen met honing.",
+    "intro": "Ons paasbier van 9%, de opvolger van Stille Nacht in het jaar. Het unieke ingrediënt is honing, een van de oudste zoetmakers voor dranken. Zacht van smaak, met een fruitig aroma.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Zachte mout met een toets van honing."
+        "text": "Fruitig, met een toets van honing."
       },
       {
         "label": "Smaak",
-        "text": "Krachtig, met de ronde zoetheid van de honing."
+        "text": "Zacht, met de ronde zoetheid van de honing."
       },
       {
         "label": "Afdronk",
@@ -217,8 +222,10 @@
       }
     ],
     "weetjes": [
-      "\"Boskeun\" is West-Vlaams voor boskonijn.",
+      "Paasbier is in België een nieuw begrip sinds 1982. Daarvoor was er enkel het paasbier van Slaghmuylder, een zwaardere pils.",
+      "\"Boskeun\" is West-Vlaams voor boskonijn. Een konijn is aaibaar, lief en zacht, en soms de bijnaam van een lieve dame.",
       "Gebrouwen met bleke mout, Poperingse Goldinghop, biologische rietsuiker, honing en zuiver bronwater.",
+      "Honing is een van de oudste zoetmakers voor dranken.",
       "Ongefilterd, niet gepasteuriseerd en hergist op fles.",
       "\"Keun\" was de bijnaam van Jo, een van de broers Herteleer. Na een broederlijke vechtpartij hield hij een wonde aan zijn bovenlip over, een hazenlip. Zo werd het Boskeun."
     ],
