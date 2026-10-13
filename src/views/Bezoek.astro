@@ -32,9 +32,9 @@ const stops = [
   },
   {
     img: koelschip,
-    alt: tr('Het koperen koelschip onder het dak', 'The copper coolship under the roof'),
+    alt: tr('Het koelschip onder het dak', 'The coolship under the roof'),
     title: tr('Het koelschip', 'The coolship'),
-    text: tr('Het koelschip dateert van rond 1900 en wordt nog altijd gebruikt: elk brouwsel koelt hier af. Er zijn niet veel brouwerijen meer waar je dat nog ziet.', 'The coolship dates from around 1900 and is still in use: every brew cools down here. There aren\'t many breweries left where you can still see that.'),
+    text: tr('Het koelschip dateert van 1921, uit de heropbouw na de Eerste Wereldoorlog, en wordt nog altijd gebruikt: elk brouwsel koelt hier af. Er zijn niet veel brouwerijen meer waar je dat nog ziet.', 'The coolship dates from 1921, when the brewery was rebuilt after the First World War, and is still in use: every brew cools down here. There aren\'t many breweries left where you can still see that.'),
     tilt: 2,
   },
   {
@@ -71,7 +71,7 @@ const stops = [
       <p class="hand">Roeselarestraat 12B, Esen</p>
       <h1><Fragment set:html={tr("Kom eens<br />langs.", "Come and<br />visit.")} /></h1>
       <p class="lead">
-        {tr("Een brouwerij uit 1835, installaties van rond 1900 die nog elke brouwdag draaien, en een bar vol bier dat hier gebrouwen is. Elke zondag geven we een rondleiding, en in het weekend is de Oerbar open.", "A brewery from 1835, equipment from around 1900 that still runs on every brew day, and a bar full of beer brewed right here. Every Sunday we give a brewery tour, and on weekends the Oerbar, our taproom, is open.")}
+        {tr("Een brouwerij uit 1835, installaties van meer dan honderd jaar oud die nog elke brouwdag draaien, en een bar vol bier dat hier gebrouwen is. Elke zondag geven we een rondleiding, en in het weekend is de Oerbar open.", "A brewery from 1835, equipment more than a hundred years old that still runs on every brew day, and a bar full of beer brewed right here. Every Sunday we give a brewery tour, and on weekends the Oerbar, our taproom, is open.")}
       </p>
       <div class="hero-actions">
         <a class="btn" href={L('/rondleiding-boeken')}>{tr("Boek een rondleiding", "Book a tour")}</a>
@@ -92,7 +92,7 @@ const stops = [
         class="hero-img"
         loading="eager"
       />
-      <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, daterend rond 1900", "The coolship, from around 1900")} tilt={-4} ratio="4 / 3" width={500} class="hero-pol" />
+      <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, uit 1921", "The coolship, from 1921")} tilt={-4} ratio="4 / 3" width={500} class="hero-pol" />
     </div>
     <div class="edge-bottom"></div>
   </section>

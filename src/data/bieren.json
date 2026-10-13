@@ -165,7 +165,7 @@
       }
     ],
     "weetjes": [
-      "Gekookt in een koperen ketel op directe gasverwarming en afgekoeld in het koperen koelschip.",
+      "Gekookt in een koperen ketel op directe gasverwarming en afgekoeld in het koelschip uit 1921.",
       "Vergist in open koperen gistkuipen en daarna minstens een maand gerijpt.",
       "Hergist op fles.",
       "We brouwen één brouwsel per dag."
@@ -302,12 +302,17 @@
       {
         "label": "Wanneer",
         "text": "Bijna het hele jaar verkrijgbaar."
+      },
+      {
+        "label": "Bewaren",
+        "text": "Best in een frisse kelder."
       }
     ],
     "weetjes": [
       "\"Dulle teve\" is streektaal voor een lastige vrouw.",
       "De cafébaas die belde, zocht een eigen bier en proefde in de Oerbar twee bieren tegelijk.",
-      "\"Nu nog een bier maken, de naam hebben we al.\""
+      "\"Nu nog een bier maken, de naam hebben we al.\"",
+      "Een zwaar, zacht degustatiebier, te vergelijken met de Westmalle Tripel van 1936."
     ],
     "reserva": false,
     "tagline": "Onze tripel."
@@ -535,11 +540,12 @@
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
       "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
       "Bewaar de flessen rechtop en koel.",
-      "Altijd in een kleine oplage."
+      "Altijd in een kleine oplage.",
+      "De namen Reserva en Gran Reserva komen uit de wijnwereld, voor wijn die op vaten lagert. Dat is iets anders dan het Franse Grand Cru."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "In 1998 legde Kris zijn allereerste Oerbier te slapen in oude sherryvaten. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Sindsdien gaat af en toe een geselecteerd brouwsel Oerbier minstens een jaar op wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
+      "text": "Al sinds 1996 lageren we bier op wijnvaten, en sinds 2000 zijn er drie Reserva's: Oerbier, Dulle Teve en Stille Nacht. Daarmee behoort De Dolle Brouwers tot de pioniers van vatgerijpt bier in België. Af en toe gaat een geselecteerd brouwsel Oerbier minstens een jaar op wijnvaten, waar het verder ontwikkelt en tonen van hout, wijn en tannine opneemt, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
     "tagline": "Oerbier, minstens een jaar op wijnvaten."
@@ -595,11 +601,12 @@
       "We gebruiken wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
       "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
-      "Bewaar de flessen rechtop en koel."
+      "Bewaar de flessen rechtop en koel.",
+      "De namen Reserva en Gran Reserva komen uit de wijnwereld, voor wijn die op vaten lagert. Dat is iets anders dan het Franse Grand Cru."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, gaat af en toe ook een geselecteerd brouwsel Dulle Teve minstens een jaar op wijnvaten. De tannines en houttonen geven het bier een extra laag complexiteit, telkens in een beperkte, genummerde oplage."
+      "text": "Sinds 2000 gaat af en toe ook een geselecteerd brouwsel Dulle Teve minstens een jaar op wijnvaten. De tannines en houttonen geven het bier een extra laag complexiteit, telkens in een beperkte, genummerde oplage."
     },
     "reserva": true,
     "tagline": "Onze tripel, minstens een jaar op wijnvaten."
@@ -655,11 +662,13 @@
       "We gebruiken wijnvaten uit Frankrijk, Spanje en Italië, en elk vat maar één keer.",
       "Elke maand vullen we de vaten bij, zodat er geen lucht bij het bier komt.",
       "Op het etiket staat van welk vat het bier komt, bijvoorbeeld \"barrique 11\".",
-      "Bewaar de flessen rechtop en koel."
+      "Bewaar de flessen rechtop en koel.",
+      "Het jaartal van een Reserva verwijst naar het jaar waarin het bier gebrouwen werd, niet naar de botteldatum.",
+      "De namen Reserva en Gran Reserva komen uit de wijnwereld, voor wijn die op vaten lagert. Dat is iets anders dan het Franse Grand Cru."
     ],
     "barrel": {
       "title": "Over de vatrijping",
-      "text": "Sinds Kris in 1998 het eerste Oerbier in sherryvaten legde, is vatrijping de basis van onze hele Reserva-lijn gebleven. Stille Nacht Reserva is geen jaarlijkse uitgave: om de paar jaar zet de brouwerij een geselecteerd brouwsel minstens twee jaar op vaten die eerder wijn bevatten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De rijpingsduur varieert bewust — soms twee jaar, soms langer — tot het bier de gewenste complexiteit heeft. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
+      "text": "Stille Nacht Reserva was onze allereerste Reserva, en dat begon met een ongelukje. Bij Stille Nacht 2000 muteerde de gist tijdens de hergisting op de fles. Het bier was nog niet uitgegist en de flesjes ontploften. Daarom goten we het bier in lege Bordeauxvaten van 225 liter, waar het twee jaar lagerde. Daarna werd het opnieuw hergist op flessen van 75 cl. Vandaag is Stille Nacht Reserva geen jaarlijkse uitgave: om de paar jaar gaat een geselecteerd brouwsel minstens twee jaar op wijnvaten, voor het als genummerde Reserva (per \"barrique\") in de fles gaat. De flesjes zijn beperkt en worden vooral rechtstreeks aan de brouwerij verkocht."
     },
     "reserva": true,
     "tagline": "Stille Nacht, jaren op wijnvaten."

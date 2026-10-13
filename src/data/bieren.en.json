@@ -73,7 +73,7 @@
       { "label": "Keeping", "text": "Stille Nacht ages well. The bottling date is on the crown cap." }
     ],
     "weetjes": [
-      "Boiled in a copper kettle over a direct gas flame and cooled in the copper coolship.",
+      "Boiled in a copper kettle over a direct gas flame and cooled in the coolship from 1921.",
       "Fermented in open copper fermenters, then matured for at least a month.",
       "Refermented in the bottle.",
       "We brew one batch a day."
@@ -133,11 +133,16 @@
       { "label": "Taste", "text": "Full, with the sweetness of the white candi sugar." },
       { "label": "Finish", "text": "Long and dry, with the 10% well hidden." }
     ],
-    "info": [{ "label": "Serving tip", "text": "Pour at 10°C into the Oerbier glass or a tulip glass." }, { "label": "When", "text": "Available almost all year round." }],
+    "info": [
+      { "label": "Serving tip", "text": "Pour at 10°C into the Oerbier glass or a tulip glass." },
+      { "label": "When", "text": "Available almost all year round." },
+      { "label": "Keeping", "text": "Best in a cool cellar." }
+    ],
     "weetjes": [
       "\"Dulle teve\" is dialect for a difficult woman.",
       "The café owner who phoned was looking for a beer of his own and was tasting two beers at once in the Oerbar.",
-      "\"Now we just need to make a beer, we already have the name.\""
+      "\"Now we just need to make a beer, we already have the name.\"",
+      "A strong, smooth sipping beer, comparable to the Westmalle Tripel of 1936."
     ],
     "tagline": "Our tripel."
   },
@@ -236,11 +241,12 @@
       "Every month we top up the barrels, so no air gets to the beer.",
       "The label says which barrel the beer comes from, for example \"barrique 11\".",
       "Store the bottles upright and cool.",
-      "Always a small edition."
+      "Always a small edition.",
+      "The names Reserva and Gran Reserva come from the wine world, for wine aged in barrels. That's something different from the French Grand Cru."
     ],
     "barrel": {
       "title": "About the barrel ageing",
-      "text": "In 1998 Kris laid his very first Oerbier to rest in old sherry casks. That makes De Dolle Brouwers one of the pioneers of barrel-aged beer in Belgium. Since then, now and then a selected batch of Oerbier goes into wine barrels for at least a year, where it develops further and takes on notes of wood, wine and tannin, each time in a limited, numbered edition."
+      "text": "We have been ageing beer in wine barrels since 1996, and since 2000 there have been three Reservas: Oerbier, Dulle Teve and Stille Nacht. That makes De Dolle Brouwers one of the pioneers of barrel-aged beer in Belgium. Now and then a selected batch of Oerbier goes into wine barrels for at least a year, where it develops further and takes on notes of wood, wine and tannin, each time in a limited, numbered edition."
     },
     "tagline": "Oerbier, at least a year in wine barrels."
   },
@@ -265,11 +271,12 @@
       "We use wine barrels from France, Spain and Italy, and each barrel only once.",
       "Every month we top up the barrels, so no air gets to the beer.",
       "The label says which barrel the beer comes from, for example \"barrique 11\".",
-      "Store the bottles upright and cool."
+      "Store the bottles upright and cool.",
+      "The names Reserva and Gran Reserva come from the wine world, for wine aged in barrels. That's something different from the French Grand Cru."
     ],
     "barrel": {
       "title": "About the barrel ageing",
-      "text": "Ever since Kris put the first Oerbier into sherry casks in 1998, now and then a selected batch of Dulle Teve also goes into wine barrels for at least a year. The tannins and wood notes give the beer an extra layer of complexity, each time in a limited, numbered edition."
+      "text": "Since 2000, now and then a selected batch of Dulle Teve also goes into wine barrels for at least a year. The tannins and wood notes give the beer an extra layer of complexity, each time in a limited, numbered edition."
     },
     "tagline": "Our tripel, at least a year in wine barrels."
   },
@@ -294,11 +301,13 @@
       "We use wine barrels from France, Spain and Italy, and each barrel only once.",
       "Every month we top up the barrels, so no air gets to the beer.",
       "The label says which barrel the beer comes from, for example \"barrique 11\".",
-      "Store the bottles upright and cool."
+      "Store the bottles upright and cool.",
+      "The year on a Reserva refers to the year the beer was brewed, not the bottling date.",
+      "The names Reserva and Gran Reserva come from the wine world, for wine aged in barrels. That's something different from the French Grand Cru."
     ],
     "barrel": {
       "title": "About the barrel ageing",
-      "text": "Ever since Kris put the first Oerbier into sherry casks in 1998, barrel ageing has been the base of our whole Reserva line. Stille Nacht Reserva is not a yearly release: every few years the brewery puts a selected batch into barrels that held wine for at least two years, before it is bottled as a numbered Reserva (per \"barrique\"). The ageing time varies on purpose — sometimes two years, sometimes longer — until the beer has the complexity we want. The bottles are limited and mostly sold directly at the brewery."
+      "text": "Stille Nacht Reserva was our very first Reserva, and it started with a little accident. With Stille Nacht 2000 the yeast mutated during the refermentation in the bottle. The beer hadn't finished fermenting and the bottles exploded. So we poured the beer into empty 225-litre Bordeaux barrels, where it aged for two years. Then it was refermented in 75 cl bottles. Today Stille Nacht Reserva is not a yearly release: every few years a selected batch goes into wine barrels for at least two years, before it is bottled as a numbered Reserva (per \"barrique\"). The bottles are limited and mostly sold directly at the brewery."
     },
     "tagline": "Stille Nacht, years in wine barrels."
   }

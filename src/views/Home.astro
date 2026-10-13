@@ -55,14 +55,14 @@ const bende = [
 
 <Base
   title={tr("De Dolle Brouwers | Brouwerij in Esen, Diksmuide · Oerbier sinds 1980", "De Dolle Brouwers | Craft brewery in Esen, Belgium · Oerbier since 1980")}
-  description={tr("Familiebrouwerij in Esen, Diksmuide (West-Vlaanderen), sinds 1980. Oerbier, Arabier, Boskeun, Dulle Teve en Stille Nacht, nog altijd gebrouwen met een koperen koelschip en open gistkuipen van rond 1900. Rondleiding elke zondag, Oerbar open in het weekend.", "Family brewery in Esen near Diksmuide (West Flanders, Belgium) since 1980. Oerbier, Arabier, Boskeun, Dulle Teve and Stille Nacht, still brewed with a copper coolship and open fermenters from around 1900. Brewery tour every Sunday, taproom open on weekends.")}
+  description={tr("Familiebrouwerij in Esen, Diksmuide (West-Vlaanderen), sinds 1980. Oerbier, Arabier, Boskeun, Dulle Teve en Stille Nacht, nog altijd gebrouwen met een koelschip uit 1921 en open gistkuipen. Rondleiding elke zondag, Oerbar open in het weekend.", "Family brewery in Esen near Diksmuide (West Flanders, Belgium) since 1980. Oerbier, Arabier, Boskeun, Dulle Teve and Stille Nacht, still brewed with a coolship from 1921 and open fermenters. Brewery tour every Sunday, taproom open on weekends.")}
 >
   <Fragment slot="head">
     <meta property="og:type" content="website" />
     <meta property="og:title" content={tr("De Dolle Brouwers | Oerbier uit Esen, sinds 1980", "De Dolle Brouwers | Oerbier from Esen, since 1980")} />
     <meta
       property="og:description"
-      content={tr("Familiebrouwerij sinds 1980, nog altijd met het koperen koelschip en de open gistkuipen van rond 1900. Kom proeven in de Oerbar of volg een rondleiding op zondag.", "Family brewery since 1980, still brewing with a copper coolship and open fermenters from around 1900. Come and taste in the Oerbar or join a brewery tour on Sunday.")}
+      content={tr("Familiebrouwerij sinds 1980, nog altijd met het koelschip uit 1921 en de open gistkuipen. Kom proeven in de Oerbar of volg een rondleiding op zondag.", "Family brewery since 1980, still brewing with a coolship from 1921 and open fermenters. Come and taste in the Oerbar or join a brewery tour on Sunday.")}
     />
     <meta name="robots" content="index, follow" />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(brewery(lang))} />
@@ -78,7 +78,7 @@ const bende = [
         <p class="hand hero-note">{tr("Esen, West-Vlaanderen ↘", "Esen, West Flanders ↘")}</p>
         <h1>Nat<br />en straf.</h1>
         <p class="lead">
-          {tr("Op 11 november 1980 brouwde een bende vrienden hun eerste Oerbier in een leegstaande brouwerij in Esen. We doen het vandaag nog altijd op dezelfde koppige manier: ongefilterd, met een koelschip van rond 1900, open vergisting en zonder haast.", "On 11 November 1980 a gang of friends brewed their first Oerbier in an empty brewery in Esen, Belgium. We still do it the same stubborn way today: unfiltered, with a coolship from around 1900, open fermentation and never in a hurry.")}
+          {tr("Op 15 november 1980 brouwde een bende vrienden hun eerste Oerbier in een leegstaande brouwerij in Esen. We doen het vandaag nog altijd op dezelfde koppige manier: ongefilterd, met een koelschip uit 1921, open vergisting en zonder haast.", "On 15 November 1980 a gang of friends brewed their first Oerbier in an empty brewery in Esen, Belgium. We still do it the same stubborn way today: unfiltered, with a coolship from 1921, open fermentation and never in a hurry.")}
         </p>
         <div class="hero-actions">
           <a class="btn dark" href={L('/brouwerij')}>{tr("Kom langs in Esen", "Visit us in Esen")}</a>
@@ -143,19 +143,19 @@ const bende = [
   <section class="section tradition">
     <div class="wrap trad-grid">
       <div class="trad-photos">
-        <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, daterend rond 1900", "The coolship, from around 1900")} tilt={-2} ratio="3 / 4" class="t1" />
+        <Polaroid src={koelschip} alt={tr("Het koelschip onder het dak", "The coolship under the roof")} caption={tr("Het koelschip, uit 1921", "The coolship, from 1921")} tilt={-2} ratio="3 / 4" class="t1" />
         <Polaroid src={vergisting} alt={tr("Schuimende gist in een open gistkuip", "Foaming yeast in an open fermenter")} caption={tr("Open gisting", "Open fermentation")} tilt={2} ratio="4 / 3" class="t2" />
         <Polaroid src={molen} alt={tr("Roerkuip nr. 1 in het brouwhuis", "Mash tun no. 1 in the brewhouse")} caption={tr("Roerkuip nr. 1, allicht nog ouder", "Mash tun no. 1, probably even older")} tilt={-1.5} ratio="4 / 3" class="t3" />
       </div>
       <div class="trad-copy">
         <h2>{tr("Toen we begonnen, had niemand het over craft.", "When we started, nobody talked about craft.")}</h2>
         <p class="lead">
-          {tr("Wij noemden het gewoon bier brouwen zoals het hoort. Met een koelschip, open koperen gistkuipen, hop uit Poperinge en gist die zijn tijd krijgt. Het koelschip en de roerkuip dateren van rond 1900 en zijn nog altijd in gebruik. Gesloten tanks, filters en snelle recepten? Niet bij ons.", "We just called it brewing beer the way it should be. With a coolship, open copper fermenters, hops from Poperinge and yeast that gets its time. The coolship and the mash tun date from around 1900 and are still in use. Closed tanks, filters and quick recipes? Not here.")}
+          {tr("Wij noemden het gewoon bier brouwen zoals het hoort. Met een koelschip, open koperen gistkuipen, hop uit Poperinge en gist die zijn tijd krijgt. Het koelschip uit 1921 en de roerkuip zijn meer dan honderd jaar oud en nog altijd in gebruik. Gesloten tanks, filters en snelle recepten? Niet bij ons.", "We just called it brewing beer the way it should be. With a coolship, open copper fermenters, hops from Poperinge and yeast that gets its time. The coolship from 1921 and the mash tun are more than a hundred years old and still in use. Closed tanks, filters and quick recipes? Not here.")}
         </p>
         <ol class="years">
           <li><span class="pill">1835</span> {tr("Dokter Nevejan start een brouwerij in Esen.", "Doctor Nevejan starts a brewery in Esen.")}</li>
-          <li><span class="pill">1980</span> {tr("De Dolle Brouwers nemen ze over. Eerste Oerbier op 11 november.", "De Dolle Brouwers take it over. First Oerbier on 11 November.")}</li>
-          <li><span class="pill">1998</span> {tr("Het eerste Oerbier gaat in oude sherryvaten. De Reserva is geboren.", "The first Oerbier goes into old sherry casks. The Reserva is born.")}</li>
+          <li><span class="pill">1980</span> {tr("De Dolle Brouwers nemen ze over. Eerste Oerbier op 15 november.", "De Dolle Brouwers take it over. First Oerbier on 15 November.")}</li>
+          <li><span class="pill">2000</span> {tr("Stille Nacht Reserva 2000, de eerste Reserva, rijpt op Bordeauxvaten.", "Stille Nacht Reserva 2000, the first Reserva, matures in Bordeaux barrels.")}</li>
           <li><span class="pill">{tr("Nu", "Now")}</span> {tr("Zelfde gebouw, zelfde koelschip, zelfde koppigheid.", "Same building, same coolship, same stubbornness.")}</li>
         </ol>
         <a class="btn" href={L('/verhaal')}>{tr("Lees ons verhaal", "Read our story")}</a>
@@ -200,7 +200,7 @@ const bende = [
         <Image src={reservaLogo} alt={tr("Het Oerbier-mannetje op een wijnvat", "The Oerbier figure on a wine barrel")} width={120} class="res-logo" />
         <h2>Reserva.<br />{tr("Geduld op vat.", "Patience in the barrel.")}</h2>
         <p class="lead">
-          {tr("In 1998 legde Kris het eerste Oerbier te slapen in oude sherryvaten. Vanaf dan is de Reserva geboren. Nu nog gaat af en toe een brouwsel voor minstens een jaar op wijnvaten. Beperkte, genummerde oplage. Op is op.", "In 1998 Kris laid the first Oerbier to rest in old sherry casks. That was the birth of the Reserva. Now and then a batch still goes into wine barrels for at least a year. Limited, numbered editions. When it's gone, it's gone.")}
+          {tr("Al sinds 1996 lageren we bier op wijnvaten. De eerste Reserva was Stille Nacht Reserva 2000, op rode Bordeauxvaten. Nu nog gaat af en toe een brouwsel voor minstens een jaar op wijnvaten. Beperkte, genummerde oplage. Op is op.", "We have been ageing beer in wine barrels since 1996. The first Reserva was Stille Nacht Reserva 2000, in red Bordeaux barrels. Now and then a batch still goes into wine barrels for at least a year. Limited, numbered editions. When it's gone, it's gone.")}
         </p>
         <ul class="res-list">
           {
