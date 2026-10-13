@@ -88,43 +88,105 @@ const countries = new Set(places.map((p) => p.country)).size;
   const status = document.getElementById('status') as HTMLParagraphElement;
   const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
 
-  type Place = { name: string; label: string; city: string; country: string; lat: number; lng: number };
+  type Place = { id?: string; name: string; label: string; city: string; country: string; lat: number; lng: number };
   let timer: number | undefined;
   let results: Place[] = [];
 
-  const pick = (p: Place) => {
+  // Google Places when a key is set (finds far more bars), otherwise Photon (OpenStreetMap).
+  // Both lean towards results near the brewery.
+  const GOOGLE_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY as string | undefined;
+  const ESEN = { latitude: 51.028, longitude: 2.903 };
+  let session = crypto.randomUUID();
+
+  const google = async (q: string): Promise<Place[]> => {
+    const res = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Goog-Api-Key': GOOGLE_KEY! },
+      body: JSON.stringify({
+        input: q,
+        sessionToken: session,
+        languageCode: EN ? 'en' : 'nl',
+        locationBias: { circle: { center: ESEN, radius: 50000 } },
+      }),
+    });
+    if (!res.ok) throw new Error(String(res.status));
+    const data = await res.json();
+    return (data.suggestions ?? [])
+      .filter((s: any) => s.placePrediction)
+      .slice(0, 6)
+      .map((s: any) => {
+        const p = s.placePrediction;
+        return { id: p.placeId, name: p.structuredFormat?.mainText?.text ?? p.text.text, label: p.text.text, city: '', country: '', lat: 0, lng: 0 };
+      });
+  };
+
+  // Coordinates, city and country for a Google suggestion (closes the autocomplete session)
+  const details = async (p: Place): Promise<Place> => {
+    const res = await fetch(`https://places.googleapis.com/v1/places/${p.id}?sessionToken=${session}&languageCode=${EN ? 'en' : 'nl'}`, {
+      headers: { 'X-Goog-Api-Key': GOOGLE_KEY!, 'X-Goog-FieldMask': 'location,addressComponents' },
+    });
+    session = crypto.randomUUID();
+    const d = await res.json();
+    const part = (...types: string[]) => {
+      for (const t of types) {
+        const c = (d.addressComponents ?? []).find((c: any) => c.types.includes(t));
+        if (c) return c.longText as string;
+      }
+      return '';
+    };
+    return {
+      ...p,
+      city: part('locality', 'postal_town', 'administrative_area_level_3', 'administrative_area_level_2'),
+      country: part('country'),
+      lat: d.location.latitude,
+      lng: d.location.longitude,
+    };
+  };
+
+  // Photon (OpenStreetMap data) forgives typos, e.g. "Golem" finds "Gollem"
+  const photon = async (q: string): Promise<Place[]> => {
+    const url = `https://photon.komoot.io/api/?limit=6&lat=${ESEN.latitude}&lon=${ESEN.longitude}&q=${encodeURIComponent(q)}`;
+    const data = await (await fetch(url)).json();
+    return data.features
+      .filter((f: any) => f.properties.name)
+      .map((f: any) => {
+        const p = f.properties;
+        const city = p.city || p.town || p.village || p.county || '';
+        const street = [p.street, p.housenumber].filter(Boolean).join(' ');
+        return {
+          name: p.name,
+          label: [p.name, street, city, p.country].filter(Boolean).join(', '),
+          city,
+          country: p.country || '',
+          lat: f.geometry.coordinates[1],
+          lng: f.geometry.coordinates[0],
+        };
+      });
+  };
+
+  const pick = async (p: Place) => {
+    lijst.hidden = true;
+    zoek.value = p.name;
+    if (p.id) {
+      try {
+        p = await details(p);
+      } catch {
+        // keep the name; the city can be filled in by hand
+      }
+    }
     field('naam').value = p.name;
     field('plaats').value = [p.city, p.country].filter(Boolean).join(', ');
-    field('lat').value = p.lat.toFixed(5);
-    field('lng').value = p.lng.toFixed(5);
+    field('lat').value = p.lat ? p.lat.toFixed(5) : '';
+    field('lng').value = p.lng ? p.lng.toFixed(5) : '';
     field('stad').value = p.city;
     field('land').value = p.country;
     gekozen.hidden = false;
     gekozen.textContent = `${EN ? 'Chosen' : 'Gekozen'}: ${p.label}`;
-    lijst.hidden = true;
-    zoek.value = p.name;
   };
 
-  // Photon (OpenStreetMap data) forgives typos, e.g. "Golem" finds "Gollem"
   const search = async (q: string) => {
-    const url = `https://photon.komoot.io/api/?limit=6&q=${encodeURIComponent(q)}`;
     try {
-      const data = await (await fetch(url)).json();
-      results = data.features
-        .filter((f: any) => f.properties.name)
-        .map((f: any) => {
-          const p = f.properties;
-          const city = p.city || p.town || p.village || p.county || '';
-          const street = [p.street, p.housenumber].filter(Boolean).join(' ');
-          return {
-            name: p.name,
-            label: [p.name, street, city, p.country].filter(Boolean).join(', '),
-            city,
-            country: p.country || '',
-            lat: f.geometry.coordinates[1],
-            lng: f.geometry.coordinates[0],
-          };
-        });
+      results = GOOGLE_KEY ? await google(q).catch(() => photon(q)) : await photon(q);
     } catch {
       results = [];
     }
