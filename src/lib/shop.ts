@@ -6,9 +6,17 @@ import { euro, type Product } from './shopify';
 export const CUSTOM = 'oerbier-mannetje-op-maat';
 const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord', 'oerbier-glas-charente', 'oeral-glas', 'oerbier-glas-klein'];
 
+/** Tour tickets are a Shopify product too, but they are sold on the booking page, not in the shop. */
+export const TICKET = 'rondleiding';
+/**
+ * Pay for tour tickets online. Keep false until Shopify Payments is active:
+ * until then the booking page reserves by email and people pay on the spot.
+ */
+export const TICKETS_BETALEN = false;
+
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
-  return [...list].sort((a, b) => rank(a.handle) - rank(b.handle));
+  return [...list].filter((p) => p.handle !== TICKET).sort((a, b) => rank(a.handle) - rank(b.handle));
 };
 
 // Our own photos per product: src/assets/shop/<handle>-<n>.jpg. Products without them use Shopify's images.
