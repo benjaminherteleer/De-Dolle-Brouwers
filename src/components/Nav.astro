@@ -203,8 +203,11 @@ const switchTo = counterpart(path) ?? (en ? '/' : '/en');
     display: none;
   }
   .cart-btn :global(img) {
+    display: block;
+    flex-shrink: 0;
     height: 46px;
-    width: auto;
+    width: 38px;
+    max-width: none;
     transition: transform 0.2s ease;
   }
   .cart-btn:hover :global(img) {
