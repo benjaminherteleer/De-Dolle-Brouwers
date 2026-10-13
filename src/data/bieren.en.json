@@ -202,22 +202,29 @@
   },
   "export-stout": {
     "title": "Export Stout | Stout from De Dolle Brouwers, Esen (Belgium)",
-    "description": "Export Stout (9%) from De Dolle Brouwers in Esen (West Flanders), created at the request of our American importer and brewed only a few times a year.",
+    "description": "Export Stout (8%) from De Dolle Brouwers in Esen (West Flanders). Born when Guinness refused to brew a stout for our American importer, and every batch has a different recipe.",
     "alt": null,
     "kicker": "Full-bodied, dark and roasted",
-    "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Stout" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
-    "intro": "A stout of 9%, created at the request of our American importer. It gets the same fermentation as Oerbier; the malt decides the colour and the bitterness.",
+    "meta": [{ "label": "Alcohol", "value": "8%" }, { "label": "Style", "value": "Stout" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "Our American importer B. United asked Guinness to brew a stout for them. Guinness refused, and Matthias of B. United asked whether we were interested. That's how we started brewing stout. The first stouts were a variation on Oerbier, with more roasted malt and candi sugar, at 9%. Today it is drier, without candi sugar, and 8%.",
     "notes": [{ "label": "Aroma", "text": "Roasted malt." }, { "label": "Taste", "text": "Full and bitter, with dark malt." }, { "label": "Finish", "text": "Dry and bitter." }],
-    "info": [{ "label": "When", "text": "We brew it only a few times a year. Be quick." }, { "label": "Serving tip", "text": "Pour at 10-12°C into the Oerbier glass or a tulip glass." }],
+    "info": [
+      { "label": "When", "text": "We brew it only a few times a year. Be quick." },
+      { "label": "Serving tip", "text": "Pour at 10-12°C into the Oerbier glass or a tulip glass." },
+      { "label": "Keeping", "text": "Keeps for two years." }
+    ],
     "weetjes": [
-      "Created at the request of our American importer.",
+      "Stout used to be a beer the doctor prescribed, for instance when brother Ward had broken his leg.",
+      "Old stout labels said \"recommended for invalids\": for people getting back on their feet.",
+      "Every batch of stout gets a different recipe. We have a folder full of all the recipes.",
+      "The first labels and posters still say 9%. Today it is 8%.",
       "The same fermentation as Oerbier.",
-      "The strength varies between 8 and 9% from batch to batch."
+      "It no longer goes to America. Every brewery there now makes its own stout, IPA, bourbon stout, vanilla stout, whiskey stout, and so on, and so on…"
     ],
     "story": {
       "alt": "Original label stamp of Export Stout, De Dolle Brouwers, Esen Belgium, 9%",
       "title": "The label",
-      "text": "The round stamp on every bottle of Export Stout shows the brewery in Esen, with the brewer's signature and the strength. A classic, handmade design — fitting for a beer with just as few frills."
+      "text": "The round stamp on every bottle of Export Stout shows the brewery in Esen, with the brewer's signature. It still says 9%, as strong as the very first stouts. A classic, handmade design, fitting for a beer with just as few frills."
     },
     "tagline": "Full-bodied: chocolate, coffee and liquorice."
   },

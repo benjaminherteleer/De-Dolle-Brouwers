@@ -453,13 +453,13 @@
     "slug": "export-stout",
     "name": "Export Stout",
     "title": "Export Stout — Stout van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Export Stout (9%) van De Dolle Brouwers uit Esen (West-Vlaanderen), ontworpen op vraag van de Amerikaanse invoerder en maar enkele keren per jaar gebrouwen.",
+    "description": "Export Stout (8%) van De Dolle Brouwers uit Esen (West-Vlaanderen). Ontstaan toen Guinness weigerde een stout te brouwen voor onze Amerikaanse invoerder, en elk brouwsel met een ander recept.",
     "alt": null,
     "kicker": "Veel body, donker en geroosterd",
     "meta": [
       {
         "label": "Alcohol",
-        "value": "9%"
+        "value": "8%"
       },
       {
         "label": "Stijl",
@@ -470,7 +470,7 @@
         "value": "Hergist op fles"
       }
     ],
-    "intro": "Een stout van 9%, ontworpen op vraag van onze Amerikaanse invoerder. Het krijgt dezelfde gisting als het Oerbier; de mout bepaalt de kleur en de bitterheid.",
+    "intro": "Onze Amerikaanse invoerder B. United vroeg Guinness om een stout voor hen te brouwen. Guinness weigerde, en Matthias van B. United vroeg of wij interesse hadden. Zo begonnen we stout te brouwen. De eerste stouts waren een variant op het Oerbier, met meer geroosterde mout en kandijsuiker, en 9%. Vandaag is hij droger, zonder kandijsuiker, en 8%.",
     "notes": [
       {
         "label": "Aroma",
@@ -493,18 +493,25 @@
       {
         "label": "Serveertip",
         "text": "Schenk op 10-12°C in het Oerbier-glas of een tulpglas."
+      },
+      {
+        "label": "Bewaren",
+        "text": "Twee jaar houdbaar."
       }
     ],
     "weetjes": [
-      "Ontworpen op vraag van onze Amerikaanse invoerder.",
+      "Stout was vroeger een bier dat de dokter voorschreef, bijvoorbeeld toen broer Ward zijn been gebroken had.",
+      "Op oude stout-etiketten stond \"recommended for invalids\": voor herstellenden.",
+      "Elk brouwsel stout krijgt een ander recept. We hebben een farde vol met al de recepten.",
+      "Op de eerste etiketten en affiches staat nog 9%. Vandaag is hij 8%.",
       "Dezelfde gisting als het Oerbier.",
-      "Het alcoholpercentage schommelt per brouwsel tussen 8 en 9%."
+      "Naar Amerika gaat hij niet meer. Daar brouwt elke brouwerij intussen zelf stout, IPA, bourbon stout, vanillestout, whiskeystout, enzovoort, enzovoort…"
     ],
     "story": {
       "image": "/images/stout-logo.png",
       "alt": "Origineel etiketstempel van Export Stout, De Dolle Brouwers, Esen Belgium, 9%",
       "title": "Het etiket",
-      "text": "De ronde stempel op elke fles Export Stout toont de brouwerij in Esen, met de handtekening van de brouwer en het alcoholpercentage. Een klassiek, ambachtelijk ontwerp — passend bij een bier dat al even weinig franjes kent."
+      "text": "De ronde stempel op elke fles Export Stout toont de brouwerij in Esen, met de handtekening van de brouwer. Er staat nog 9% op, zo sterk als de allereerste stouts. Een klassiek, ambachtelijk ontwerp, passend bij een bier dat al even weinig franjes kent."
     },
     "reserva": false,
     "tagline": "Veel body: chocolade, koffie en zoethout."
