@@ -24,6 +24,7 @@ const toeslag = {
   strepen: extras['Strepen']?.price ?? 10,
   vlag: extras['Vlag']?.price ?? 10,
   camo: extras['Camo']?.price ?? 20,
+  logo: extras['Logo']?.price ?? 15,
 };
 
 const lang = langOf(Astro.url);
@@ -293,7 +294,7 @@ const flagArt: Record<string, string> = {
             {tr("Grootte", "Size")}
             <input type="range" id="logo-size" min="30" max="120" value="62" />
           </label>
-          <p class="hint">{tr("Sleep je logo op het mannetje naar de plek waar je het wilt. We bewaren het bij je bestelling.", "Drag your logo on the figure to where you want it. We keep it with your order.")}</p>
+          <p class="hint">{tr(`Een logo kost +€${toeslag.logo}. Sleep het op het mannetje naar de plek waar je het wilt. Heel gedetailleerde logo's vereenvoudigt Kris een beetje, zodat ze met de hand mooi blijven. We bewaren je logo bij je bestelling.`, `A logo is +€${toeslag.logo}. Drag it on the figure to where you want it. Very detailed logos are simplified a little by Kris, so they still look good painted by hand. We keep your logo with your order.`)}</p>
         </fieldset>
 
         <fieldset>
@@ -465,13 +466,14 @@ const flagArt: Record<string, string> = {
       : [
           ...(extraKleuren ? [{ naam: 'Extra kleur', aantal: extraKleuren, prijs: toeslag.kleur }] : []),
           ...(patroonExtra ? [{ naam: patroonExtra, aantal: 1, prijs: toeslag[patroonExtra === 'Strepen' ? 'strepen' : patroonExtra === 'Camo' ? 'camo' : 'vlag'] }] : []),
+          ...(logo ? [{ naam: 'Logo', aantal: 1, prijs: toeslag.logo }] : []),
         ];
     const totaal = (plain ? 60 : 90) + toeslagen.reduce((s, t) => s + t.aantal * t.prijs, 0);
     isPlain = plain;
     price.textContent = `€${totaal}`;
     priceNote.textContent = plain ? (EN ? 'the regular yellow one' : 'het gewone gele') : EN ? 'personalised' : 'gepersonaliseerd';
     const uitleg = document.getElementById('price-extra');
-    const woord = { 'Extra kleur': EN ? 'extra colour' : 'extra kleur', Strepen: EN ? 'stripes' : 'strepen', Camo: 'camo', Vlag: EN ? 'flag' : 'vlag' };
+    const woord = { 'Extra kleur': EN ? 'extra colour' : 'extra kleur', Strepen: EN ? 'stripes' : 'strepen', Camo: 'camo', Vlag: EN ? 'flag' : 'vlag', Logo: 'logo' };
     uitleg.hidden = !toeslagen.length;
     uitleg.textContent = `€90 + ` + toeslagen.map((t) => `${t.aantal > 1 ? t.aantal + ' × ' : ''}${woord[t.naam]}${t.aantal > 1 && !EN ? 'en' : t.aantal > 1 ? 's' : ''} €${t.aantal * t.prijs}`).join(' + ');
   };
