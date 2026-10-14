@@ -3,7 +3,7 @@ import { langOf, link } from '../i18n';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { getProducts, type Product } from '../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, variantPhotos, productText, optionLabel, valueLabel } from '../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, inStock, shopifyImage, variantPhotos, productText, optionLabel, valueLabel } from '../lib/shop';
 import maten from '../data/maten.json';
 
 const { product: p, all } = Astro.props as { product: Product; all: Product[] };
@@ -73,7 +73,7 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
                 <label>
                   {optionLabel(o.name, lang)}
                   <select data-option={o.name}>
-                    {o.optionValues.map((v) => (
+                    {inStock(p, o.name).map((v) => (
                       <option value={v.name} data-label={valueLabel(v.name, lang)}>{valueLabel(v.name, lang)}</option>
                     ))}
                   </select>

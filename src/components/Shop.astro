@@ -3,7 +3,7 @@ import { langOf, link } from '../i18n';
 import { Image } from 'astro:assets';
 import MannetjeSvg from './MannetjeSvg.astro';
 import { getProducts, type Product } from '../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, productText, optionLabel, valueLabel } from '../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, inStock, shopifyImage, productText, optionLabel, valueLabel } from '../lib/shop';
 
 interface Props {
   /** On the shop page itself the heading is the page title. */
@@ -76,7 +76,7 @@ const text = (p: Product) => productText(p, lang);
                   <span class="buy">
                     {realOptions(p).map((o) => (
                       <select data-option={o.name} aria-label={optionLabel(o.name, lang)} class:list={{ maat: o.name === 'Maat' }}>
-                        {o.optionValues.map((v) => (
+                        {inStock(p, o.name).map((v) => (
                           <option value={v.name} data-label={valueLabel(v.name, lang)}>{valueLabel(v.name, lang)}</option>
                         ))}
                       </select>
