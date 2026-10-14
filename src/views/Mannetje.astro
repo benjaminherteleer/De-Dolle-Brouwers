@@ -8,11 +8,23 @@ import { getProducts } from '../lib/shopify';
 // Variant ids for the cart: the plain yellow figurine and the personalised one.
 let plainId = '';
 let customId = '';
+// Surcharges for extra work, as variants of the hidden product 'mannetje-extra' (prices are set in Shopify)
+const extras: Record<string, { id: string; price: number }> = {};
 try {
   const products = await getProducts();
   plainId = products.find((p) => p.handle === 'oerbier-mannetje')?.variants.nodes[0]?.id ?? '';
   customId = products.find((p) => p.handle === 'oerbier-mannetje-op-maat')?.variants.nodes[0]?.id ?? '';
+  for (const v of products.find((p) => p.handle === 'mannetje-extra')?.variants.nodes ?? []) {
+    extras[v.title] = { id: v.id, price: Math.round(+v.price.amount) };
+  }
 } catch {}
+// Prices shown when the surcharge product is missing (ordering those options is then blocked)
+const toeslag = {
+  kleur: extras['Extra kleur']?.price ?? 5,
+  strepen: extras['Strepen']?.price ?? 10,
+  vlag: extras['Vlag']?.price ?? 10,
+  camo: extras['Camo']?.price ?? 20,
+};
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -217,12 +229,14 @@ const flagArt: Record<string, string> = {
           </g>
         </svg>
         <p class="price-tag"><span id="price">€60</span> <small id="price-note">{tr("het gewone gele", "the regular yellow one")}</small></p>
+        <p class="price-extra" id="price-extra" hidden></p>
       </div>
 
-      <form class="controls" id="maker" data-plain={plainId} data-custom={customId}>
+      <form class="controls" id="maker" data-plain={plainId} data-custom={customId} data-extras={JSON.stringify(extras)}>
         <fieldset>
           <legend>{tr("1. Kleuren", "1. Colours")}</legend>
-          <p class="hint">{tr("Kies eerst wat je kleurt, daarna de kleur.", "First pick what to colour, then the colour.")}</p>
+          <p class="hint">{tr(`Kies eerst wat je kleurt, daarna de kleur. Twee eigen kleuren zitten in de prijs, elke kleur meer kost €${toeslag.kleur} (we kopen die verf apart). Maximum vijf eigen kleuren.`, `First pick what to colour, then the colour. Two colours of your own are included, every extra colour is €${toeslag.kleur} (we buy that paint separately). Five colours of your own at most.`)}</p>
+          <p class="hint warn" id="kleur-max" hidden>{tr("Dat is het maximum van vijf eigen kleuren. Meer nodig? Beschrijf het bij je idee onderaan, dan bekijken we het samen.", "That's the maximum of five colours of your own. Need more? Describe it in your idea at the bottom and we'll look at it together.")}</p>
           <div class="pills parts">
             {
               parts.map((p, i) => (
@@ -247,6 +261,7 @@ const flagArt: Record<string, string> = {
 
         <fieldset>
           <legend>{tr("2. Op het lijf", "2. On the body")}</legend>
+          <p class="hint">{tr(`Effen zit in de prijs. Strepen +€${toeslag.strepen}, een vlag +€${toeslag.vlag}, camo +€${toeslag.camo}: daar kruipt veel schilderwerk in.`, `Plain is included. Stripes +€${toeslag.strepen}, a flag +€${toeslag.vlag}, camo +€${toeslag.camo}: those take a lot of painting.`)}</p>
           <div class="pills">
             <label><input type="radio" name="patroon" value="effen" checked /><span>{tr("Effen", "Plain")}</span></label>
             <label><input type="radio" name="patroon" value="strepen" /><span>{tr("Strepen", "Stripes")}</span></label>
@@ -326,7 +341,7 @@ const flagArt: Record<string, string> = {
   </section>
 </Base>
 
-<script define:vars={{ palette }}>
+<script define:vars={{ palette, toeslag }}>
   const EN = document.documentElement.lang === 'en';
   const form = document.getElementById('maker');
   const svg = document.getElementById('man');
@@ -398,10 +413,20 @@ const flagArt: Record<string, string> = {
   const value = (name) => form.elements.namedItem(name).value;
   const on = (name) => form.elements.namedItem(name).checked;
 
+  // Colours of your own: every part that isn't its standard colour, counted once per colour
+  const MAX_KLEUREN = 5;
+  const INBEGREPEN = 2;
+  const eigenKleuren = (c) => new Set(Object.keys(DEFAULTS).filter((k) => c[k] !== DEFAULTS[k]).map((k) => c[k])).size;
+  const kleurMax = document.getElementById('kleur-max');
   const paint = (hex) => {
     const deel = value('deel');
     const targets = deel === 'alles' ? ['hoofd', 'lichaam', 'armen', 'voeten'] : [deel];
-    targets.forEach((t) => (colors[t] = hex));
+    const next = { ...colors };
+    targets.forEach((t) => (next[t] = hex));
+    const teVeel = eigenKleuren(next) > MAX_KLEUREN;
+    kleurMax.hidden = !teVeel;
+    if (teVeel) return;
+    Object.assign(colors, next);
     render();
   };
 
@@ -432,9 +457,26 @@ const flagArt: Record<string, string> = {
       !logo &&
       tekst.toLowerCase() === 'oerbier' &&
       !idee;
-    price.textContent = plain ? '€60' : '€90';
+    // Surcharges for extra colours and patterns
+    const extraKleuren = Math.max(0, eigenKleuren(colors) - INBEGREPEN);
+    const patroonExtra = patroon === 'effen' ? null : patroon === 'strepen' ? 'Strepen' : patroon === 'camo' ? 'Camo' : 'Vlag';
+    toeslagen = plain
+      ? []
+      : [
+          ...(extraKleuren ? [{ naam: 'Extra kleur', aantal: extraKleuren, prijs: toeslag.kleur }] : []),
+          ...(patroonExtra ? [{ naam: patroonExtra, aantal: 1, prijs: toeslag[patroonExtra === 'Strepen' ? 'strepen' : patroonExtra === 'Camo' ? 'camo' : 'vlag'] }] : []),
+        ];
+    const totaal = (plain ? 60 : 90) + toeslagen.reduce((s, t) => s + t.aantal * t.prijs, 0);
+    isPlain = plain;
+    price.textContent = `€${totaal}`;
     priceNote.textContent = plain ? (EN ? 'the regular yellow one' : 'het gewone gele') : EN ? 'personalised' : 'gepersonaliseerd';
+    const uitleg = document.getElementById('price-extra');
+    const woord = { 'Extra kleur': EN ? 'extra colour' : 'extra kleur', Strepen: EN ? 'stripes' : 'strepen', Camo: 'camo', Vlag: EN ? 'flag' : 'vlag' };
+    uitleg.hidden = !toeslagen.length;
+    uitleg.textContent = `€90 + ` + toeslagen.map((t) => `${t.aantal > 1 ? t.aantal + ' × ' : ''}${woord[t.naam]}${t.aantal > 1 && !EN ? 'en' : t.aantal > 1 ? 's' : ''} €${t.aantal * t.prijs}`).join(' + ');
   };
+  let toeslagen = [];
+  let isPlain = true;
 
   form.querySelectorAll('.sw[data-hex]').forEach((b) => b.addEventListener('click', () => paint(b.dataset.hex)));
   document.getElementById('eigen').addEventListener('input', (e) => paint(e.target.value));
@@ -485,7 +527,7 @@ const flagArt: Record<string, string> = {
       ...(logo ? [['Logo plaats', logoPlek()]] : []),
     ].map(([key, value]) => ({ key, value }));
     // Picked up by the cart script below
-    window.dispatchEvent(new CustomEvent('mannetje:bestel', { detail: { plain: price.textContent === '€60', attributes, logoName: logo } }));
+    window.dispatchEvent(new CustomEvent('mannetje:bestel', { detail: { plain: isPlain, attributes, logoName: logo, toeslagen } }));
   });
 
   render();
@@ -515,11 +557,17 @@ const flagArt: Record<string, string> = {
     });
 
   window.addEventListener('mannetje:bestel', async (e) => {
-    const { plain, attributes, logoName } = (e as CustomEvent).detail as {
+    const { plain, attributes, logoName, toeslagen } = (e as CustomEvent).detail as {
       plain: boolean;
       attributes: { key: string; value: string }[];
       logoName: string | null;
+      toeslagen: { naam: string; aantal: number }[];
     };
+    const extras = JSON.parse(form.dataset.extras || '{}') as Record<string, { id: string }>;
+    if (toeslagen.some((t) => !extras[t.naam])) {
+      alert(EN ? 'This design can’t be ordered online yet. Please email it to boniface@dedollebrouwers.be.' : 'Dit ontwerp kan je nog niet online bestellen. Mail het naar boniface@dedollebrouwers.be.');
+      return;
+    }
     const variant = plain ? form.dataset.plain : form.dataset.custom;
     if (!variant) {
       alert(EN ? 'The shop is unavailable right now. Please email your order to boniface@dedollebrouwers.be.' : 'De webshop is even niet bereikbaar. Mail je bestelling naar boniface@dedollebrouwers.be.');
@@ -541,6 +589,7 @@ const flagArt: Record<string, string> = {
         lines.push({ key: 'Logo', value: url });
       }
       await addToCart(variant, 1, lines);
+      for (const t of toeslagen) await addToCart(extras[t.naam].id, t.aantal, [{ key: 'Voor', value: 'Oerbier-mannetje op maat' }]);
       openCart();
     } catch {
       alert(EN ? "That didn't work. Please try again later, or email boniface@dedollebrouwers.be." : 'Dat lukte niet. Probeer het straks nog eens, of mail naar boniface@dedollebrouwers.be.');
@@ -814,6 +863,15 @@ const flagArt: Record<string, string> = {
   .controls > .btn {
     justify-self: start;
     font-size: 1.1rem;
+  }
+  .price-extra {
+    margin: -6px 0 0;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .hint.warn {
+    color: #b3261e;
+    font-weight: 600;
   }
   .kris {
     max-width: 620px;

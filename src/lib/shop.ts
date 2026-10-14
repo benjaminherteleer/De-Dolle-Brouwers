@@ -14,8 +14,8 @@ export const TICKET = 'rondleiding';
  */
 export const TICKETS_BETALEN = false;
 
-/** Products that stay in Shopify but are not sold on the site (the small glass breaks too easily in the post). */
-const VERBORGEN = ['oerbier-glas-klein'];
+/** Products not sold as such in the shop: the small glass breaks too easily in the post, the figurine surcharges go with the maker. */
+const VERBORGEN = ['oerbier-glas-klein', 'mannetje-extra'];
 
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
