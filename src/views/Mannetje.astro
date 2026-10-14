@@ -128,6 +128,9 @@ const flagArt: Record<string, string> = {
       <p class="lead">
         {tr("Elk mannetje wordt met de hand beschilderd. Geef elk stukje een eigen kleur, zet er een vlag of je logo op en kies wat er op de sjaal staat. Of verzin zelf iets: we hebben al voetbalshirts, namen, trouwdata en clublogo's gedaan.", "Every figure is painted by hand. Give each part its own colour, add a flag or your logo and choose what goes on the scarf. Or come up with something yourself: we've done football shirts, names, wedding dates and club logos.")}
       </p>
+      <p class="kris">
+        {tr("Kris maakt elk mannetje zelf, met de hand. Hij volgt je ontwerp, maar schildert het zoals hij het ziet. Zo wordt elk ventje een beetje anders, en net daardoor uniek.", "Kris makes every figure himself, by hand. He follows your design, but paints it the way he sees it. So every figure turns out a little different, and that's exactly what makes it unique.")}
+      </p>
       <ul class="prices">
         <li><strong>€60</strong> {tr("het gewone gele", "the regular yellow one")}</li>
         <li><strong>€90</strong> {tr("gepersonaliseerd", "personalised")}</li>
@@ -271,7 +274,11 @@ const flagArt: Record<string, string> = {
             <em id="logo-name">{tr("Nog geen logo", "No logo yet")}</em>
           </label>
           <button type="button" class="link" id="logo-weg" hidden>{tr("Logo weghalen", "Remove logo")}</button>
-          <p class="hint">{tr("Je logo komt op de buik. We bewaren het bij je bestelling.", "Your logo goes on the belly. We keep it with your order.")}</p>
+          <label class="field logo-size" id="logo-size-wrap" hidden>
+            {tr("Grootte", "Size")}
+            <input type="range" id="logo-size" min="30" max="120" value="62" />
+          </label>
+          <p class="hint">{tr("Sleep je logo op het mannetje naar de plek waar je het wilt. We bewaren het bij je bestelling.", "Drag your logo on the figure to where you want it. We keep it with your order.")}</p>
         </fieldset>
 
         <fieldset>
@@ -300,7 +307,7 @@ const flagArt: Record<string, string> = {
         </fieldset>
 
         <button class="btn dark" type="submit" id="bestel">{tr("In mijn mandje →", "Add to my cart →")}</button>
-        <p class="note">{tr("Elk mannetje wordt met de hand beschilderd. We laten je weten wanneer het klaar is om te verzenden of af te halen in de Oerbar.", "Every figure is painted by hand. We'll let you know when it's ready to ship or to pick up in the Oerbar.")}</p>
+        <p class="note">{tr("Kris beschildert elk mannetje met de hand, op zijn manier: het kan dus altijd wat afwijken van het voorbeeld, en geen twee zijn hetzelfde. We laten je weten wanneer het klaar is om te verzenden of af te halen in de Oerbar.", "Kris paints every figure by hand, his way: it can always differ a little from the preview, and no two are the same. We'll let you know when it's ready to ship or to pick up in the Oerbar.")}</p>
       </form>
     </div>
   </section>
@@ -330,6 +337,52 @@ const flagArt: Record<string, string> = {
   const logoInput = document.getElementById('logo');
   const logoName = document.getElementById('logo-name');
   const logoWeg = document.getElementById('logo-weg');
+  const logoSize = document.getElementById('logo-size');
+  const logoSizeWrap = document.getElementById('logo-size-wrap');
+
+  // The logo can be dragged over the body and resized; its centre stays on the body
+  const logoPos = { x: 127, y: 245, size: 62 };
+  const placeLogo = () => {
+    const h = logoPos.size / 2;
+    logoImg.setAttribute('x', String(logoPos.x - h));
+    logoImg.setAttribute('y', String(logoPos.y - h));
+    logoImg.setAttribute('width', String(logoPos.size));
+    logoImg.setAttribute('height', String(logoPos.size));
+  };
+  const toSvg = (e) => {
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  };
+  let drag = null;
+  logoImg.addEventListener('pointerdown', (e) => {
+    if (!logo) return;
+    const p = toSvg(e);
+    drag = { dx: logoPos.x - p.x, dy: logoPos.y - p.y };
+    logoImg.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  logoImg.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const p = toSvg(e);
+    logoPos.x = Math.min(240, Math.max(80, p.x + drag.dx));
+    logoPos.y = Math.min(290, Math.max(150, p.y + drag.dy));
+    placeLogo();
+  });
+  const stopDrag = () => (drag = null);
+  logoImg.addEventListener('pointerup', stopDrag);
+  logoImg.addEventListener('pointercancel', stopDrag);
+  logoSize.addEventListener('input', () => {
+    logoPos.size = +logoSize.value;
+    placeLogo();
+  });
+  // In words for Kris: where on the belly and how big
+  const logoPlek = () => {
+    const hor = logoPos.x < 135 ? 'links' : logoPos.x > 185 ? 'rechts' : 'midden';
+    const ver = logoPos.y < 200 ? 'boven' : logoPos.y > 250 ? 'onder' : 'midden';
+    return `${ver === hor ? 'midden' : `${ver} ${hor}`} op het lijf (vooraanzicht), grootte ${Math.round((logoPos.size / 62) * 100)}%`;
+  };
 
   const DEFAULTS = { hoofd: '#f6bf1c', lichaam: '#f6bf1c', armen: '#f6bf1c', voeten: '#f6bf1c', glas: '#c8241c', sjaal: '#fbfaf5' };
   const colors = { ...DEFAULTS };
@@ -398,6 +451,8 @@ const flagArt: Record<string, string> = {
       logoImg.setAttribute('href', reader.result);
       logoName.textContent = file.name;
       logoWeg.hidden = false;
+      logoSizeWrap.hidden = false;
+      placeLogo();
       render();
     };
     reader.readAsDataURL(file);
@@ -409,6 +464,7 @@ const flagArt: Record<string, string> = {
     logoImg.removeAttribute('href');
     logoName.textContent = EN ? 'No logo yet' : 'Nog geen logo';
     logoWeg.hidden = true;
+    logoSizeWrap.hidden = true;
     render();
   });
 
@@ -426,6 +482,7 @@ const flagArt: Record<string, string> = {
       ['Op het lijf', patroon],
       ['Extra', extra],
       ['Idee', form.elements.namedItem('idee').value || '-'],
+      ...(logo ? [['Logo plaats', logoPlek()]] : []),
     ].map(([key, value]) => ({ key, value }));
     // Picked up by the cart script below
     window.dispatchEvent(new CustomEvent('mannetje:bestel', { detail: { plain: price.textContent === '€60', attributes, logoName: logo } }));
@@ -757,6 +814,22 @@ const flagArt: Record<string, string> = {
   .controls > .btn {
     justify-self: start;
     font-size: 1.1rem;
+  }
+  .kris {
+    max-width: 620px;
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .preview :global(.logo) {
+    cursor: grab;
+    touch-action: none;
+  }
+  .preview :global(.logo:active) {
+    cursor: grabbing;
+  }
+  .logo-size input {
+    width: 100%;
+    accent-color: var(--ink);
   }
   .note {
     font-size: 0.9rem;
