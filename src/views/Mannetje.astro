@@ -82,18 +82,18 @@ const flags = [
   { id: 'jp', label: tr("Japan", "Japan") },
 ];
 
-// Flag artwork in a 256 x 208 box that covers the body and arms
-const W = 256;
-const H = 208;
+// Flag artwork in a 200 x 165 box over the visible part of the body (below the head)
+const W = 200;
+const H = 165;
 const v3 = (a: string, b: string, c: string) =>
   `<rect width="${W / 3 + 1}" height="${H}" fill="${a}"/><rect x="${W / 3}" width="${W / 3 + 1}" height="${H}" fill="${b}"/><rect x="${(2 * W) / 3}" width="${W / 3}" height="${H}" fill="${c}"/>`;
 const h3 = (a: string, b: string, c: string) =>
   `<rect width="${W}" height="${H / 3 + 1}" fill="${a}"/><rect y="${H / 3}" width="${W}" height="${H / 3 + 1}" fill="${b}"/><rect y="${(2 * H) / 3}" width="${W}" height="${H / 3}" fill="${c}"/>`;
 const nordic = (bg: string, cross: string, inner?: string) =>
-  `<rect width="${W}" height="${H}" fill="${bg}"/><rect x="74" width="44" height="${H}" fill="${cross}"/><rect y="82" width="${W}" height="44" fill="${cross}"/>` +
-  (inner ? `<rect x="85" width="22" height="${H}" fill="${inner}"/><rect y="93" width="${W}" height="22" fill="${inner}"/>` : '');
-const usStripes = Array.from({ length: 13 }, (_, i) => `<rect y="${i * 16}" width="${W}" height="16" fill="${i % 2 ? '#fff' : '#b22234'}"/>`).join('');
-const usStars = Array.from({ length: 30 }, (_, i) => `<circle cx="${12 + (i % 6) * 18 + (Math.floor(i / 6) % 2) * 9}" cy="${12 + Math.floor(i / 6) * 20}" r="3.2" fill="#fff"/>`).join('');
+  `<rect width="${W}" height="${H}" fill="${bg}"/><rect x="58" width="32" height="${H}" fill="${cross}"/><rect y="66" width="${W}" height="32" fill="${cross}"/>` +
+  (inner ? `<rect x="66" width="16" height="${H}" fill="${inner}"/><rect y="74" width="${W}" height="16" fill="${inner}"/>` : '');
+const usStripes = Array.from({ length: 13 }, (_, i) => `<rect y="${(i * H) / 13}" width="${W}" height="${H / 13 + 0.5}" fill="${i % 2 ? '#fff' : '#b22234'}"/>`).join('');
+const usStars = Array.from({ length: 30 }, (_, i) => `<circle cx="${8 + (i % 6) * 13 + (Math.floor(i / 6) % 2) * 6}" cy="${9 + Math.floor(i / 6) * 17}" r="2.6" fill="#fff"/>`).join('');
 const flagArt: Record<string, string> = {
   be: v3('#1f1b17', '#f7cf1c', '#d93a2b'),
   fr: v3('#1f4ea3', '#ffffff', '#d93a2b'),
@@ -102,14 +102,14 @@ const flagArt: Record<string, string> = {
   nl: h3('#ae1c28', '#ffffff', '#21468b'),
   de: h3('#1f1b17', '#d93a2b', '#f7cf1c'),
   at: h3('#d93a2b', '#ffffff', '#d93a2b'),
-  es: `<rect width="${W}" height="${H}" fill="#c60b1e"/><rect y="52" width="${W}" height="104" fill="#ffc400"/>`,
-  pt: `<rect width="${W}" height="${H}" fill="#d93a2b"/><rect width="102" height="${H}" fill="#1d6b2e"/><circle cx="102" cy="104" r="30" fill="#f7cf1c"/>`,
+  es: `<rect width="${W}" height="${H}" fill="#c60b1e"/><rect y="${H / 4}" width="${W}" height="${H / 2}" fill="#ffc400"/>`,
+  pt: `<rect width="${W}" height="${H}" fill="#d93a2b"/><rect width="80" height="${H}" fill="#1d6b2e"/><circle cx="80" cy="${H / 2}" r="26" fill="#f7cf1c"/>`,
   se: nordic('#1f5fa8', '#f7cf1c'),
   dk: nordic('#c8102e', '#ffffff'),
   no: nordic('#ba0c2f', '#ffffff', '#00205b'),
-  jp: `<rect width="${W}" height="${H}" fill="#ffffff"/><circle cx="140" cy="200" r="52" fill="#bc002d"/>`,
-  us: `${usStripes}<rect width="118" height="112" fill="#3c3b6e"/>${usStars}`,
-  gb: `<rect width="${W}" height="${H}" fill="#012169"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#fff" stroke-width="40"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#c8102e" stroke-width="13"/><rect x="104" width="48" height="${H}" fill="#fff"/><rect y="80" width="${W}" height="48" fill="#fff"/><rect x="113" width="30" height="${H}" fill="#c8102e"/><rect y="89" width="${W}" height="30" fill="#c8102e"/>`,
+  jp: `<rect width="${W}" height="${H}" fill="#ffffff"/><circle cx="${W / 2}" cy="${H / 2}" r="42" fill="#bc002d"/>`,
+  us: `${usStripes}<rect width="86" height="${(7 * H) / 13}" fill="#3c3b6e"/>${usStars}`,
+  gb: `<rect width="${W}" height="${H}" fill="#012169"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#fff" stroke-width="32"/><path d="M0 0L${W} ${H}M${W} 0L0 ${H}" stroke="#c8102e" stroke-width="10"/><rect x="${W / 2 - 18}" width="36" height="${H}" fill="#fff"/><rect y="${H / 2 - 18}" width="${W}" height="36" fill="#fff"/><rect x="${W / 2 - 11}" width="22" height="${H}" fill="#c8102e"/><rect y="${H / 2 - 11}" width="${W}" height="22" fill="#c8102e"/>`,
 };
 ---
 
@@ -160,7 +160,7 @@ const flagArt: Record<string, string> = {
             </pattern>
             {
               flags.map((f) => (
-                <pattern id={`pat-${f.id}`} x="18" y="96" width={W} height={H} patternUnits="userSpaceOnUse"><Fragment set:html={flagArt[f.id]} /></pattern>
+                <pattern id={`pat-${f.id}`} x="60" y="140" width={W} height={H} patternUnits="userSpaceOnUse"><Fragment set:html={flagArt[f.id]} /></pattern>
               ))
             }
             <path id="sash-line" d="M92 150 L244 274"></path>
