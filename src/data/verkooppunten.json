@@ -313,5 +313,26 @@
     "country": "Nederland",
     "lat": 52.37025,
     "lng": 4.88872
+  },
+  {
+    "name": "B. United International",
+    "city": "Oxford (Connecticut)",
+    "country": "VS",
+    "lat": 41.47022,
+    "lng": -73.12087
+  },
+  {
+    "name": "Gleemer Imports",
+    "city": "Toronto",
+    "country": "Canada",
+    "lat": 43.65483,
+    "lng": -79.38845
+  },
+  {
+    "name": "Beer Trading Company",
+    "city": "Rotterdam",
+    "country": "Nederland",
+    "lat": 51.91726,
+    "lng": 4.43038
   }
 ]
