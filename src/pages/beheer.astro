@@ -37,6 +37,8 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <script>
+  import { zoekBreed, GOOGLE_KEY } from '../lib/plaatsen';
+
   type Tip = {
     id: string; name: string; city: string; country: string; lat: number | null; lng: number | null;
     note: string; from: string; email: string; at: string; dubbel?: string;
@@ -75,11 +77,13 @@ import Base from '../layouts/Base.astro';
         <label>Lengte<input name="lng" value="${esc(t.lng ?? '')}" inputmode="decimal" /></label>
       </div>
       <p class="meta">
-        ${t.lat ? `<a href="${osm(t)}" target="_blank" rel="noopener">Bekijk op de kaart ↗</a> · ` : '<b>Geen locatie: vul breedte en lengte in.</b> · '}
+        ${t.lat ? `<a href="${osm(t)}" target="_blank" rel="noopener">Bekijk op de kaart ↗</a> · ` : '<b>Geen locatie.</b> · '}
         ${date(t.at)}${t.from ? ` · van ${esc(t.from)}` : ''}${t.email ? ` (<a href="mailto:${esc(t.email)}">${esc(t.email)}</a>)` : ''}
       </p>
       ${t.note ? `<p class="note">“${esc(t.note)}”</p>` : ''}
+      <div class="gevonden" hidden></div>
       <div class="actions">
+        ${GOOGLE_KEY ? '<button class="btn light" data-action="zoek">Zoek locatie op Google</button>' : ''}
         <button class="btn" data-action="ok">Goedkeuren</button>
         <button class="btn light" data-action="nee">Weigeren</button>
       </div>
@@ -132,11 +136,45 @@ import Base from '../layouts/Base.astro';
     load();
   };
 
+  // Look a tip up on Google and show the hits; "Neem deze" fills in name, city, country and coordinates
+  const zoekLocatie = async (tip: HTMLElement, q: string) => {
+    const box = tip.querySelector('.gevonden') as HTMLElement;
+    box.hidden = false;
+    box.textContent = 'Even zoeken…';
+    try {
+      const hits = await zoekBreed(q, 'nl');
+      box.innerHTML = hits.length
+        ? hits
+            .slice(0, 5)
+            .map((g) => `<p><span>${esc(g.label)}</span><button class="link" data-action="neem" data-plek="${esc(JSON.stringify(g))}">Neem deze</button></p>`)
+            .join('')
+        : 'Niets gevonden. Zoek het op Google Maps en kopieer de coördinaten.';
+    } catch {
+      box.textContent = 'Zoeken lukte niet.';
+    }
+  };
+
   pendingEl.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest('button');
     if (!btn) return;
     const tip = btn.closest('.tip') as HTMLElement;
     const val = (n: string) => (tip.querySelector(`[name=${n}]`) as HTMLInputElement).value.trim();
+    if (btn.dataset.action === 'zoek') {
+      zoekLocatie(tip, [val('name'), val('city'), val('country')].filter(Boolean).join(' '));
+      return;
+    }
+    if (btn.dataset.action === 'neem') {
+      const set = (n: string, v: string | number) => ((tip.querySelector(`[name=${n}]`) as HTMLInputElement).value = String(v));
+      const g = JSON.parse(btn.dataset.plek!);
+      set('name', g.name);
+      set('city', g.city);
+      set('country', g.country);
+      set('lat', g.lat.toFixed(5));
+      set('lng', g.lng.toFixed(5));
+      (tip.querySelector('.gevonden') as HTMLElement).hidden = true;
+      msg.textContent = 'Locatie ingevuld. Kijk na en keur goed.';
+      return;
+    }
     const place = { name: val('name'), city: val('city'), country: val('country'), lat: parseFloat(val('lat').replace(',', '.')), lng: parseFloat(val('lng').replace(',', '.')) };
     if (btn.dataset.action === 'ok' && (!Number.isFinite(place.lat) || !Number.isFinite(place.lng))) {
       msg.textContent = 'Vul eerst breedte en lengte in (bv. van Google Maps).';
@@ -215,6 +253,18 @@ import Base from '../layouts/Base.astro';
   .tips {
     display: grid;
     gap: 18px;
+  }
+  .tips :global(.gevonden) {
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+  }
+  .tips :global(.gevonden p) {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(33, 23, 12, 0.12);
   }
   .tips :global(.dubbel) {
     background: var(--yellow);

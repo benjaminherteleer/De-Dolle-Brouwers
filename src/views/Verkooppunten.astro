@@ -80,6 +80,8 @@ const countries = new Set(places.map((p) => p.country)).size;
 </Base>
 
 <script>
+  import { zoekBreed } from '../lib/plaatsen';
+
   const EN = document.documentElement.lang === 'en';
   const form = document.getElementById('suggest') as HTMLFormElement;
   const zoek = document.getElementById('zoek') as HTMLInputElement;
@@ -185,19 +187,16 @@ const countries = new Set(places.map((p) => p.country)).size;
     gekozen.textContent = `${EN ? 'Chosen' : 'Gekozen'}: ${p.label}`;
   };
 
-  const search = async (q: string) => {
-    try {
-      results = GOOGLE_KEY ? await google(q).catch(() => photon(q)) : await photon(q);
-    } catch {
-      results = [];
-    }
+  // Show a list of places; when Google is on, end with a way to search the whole world
+  const render = (list: Place[], q: string, breed: boolean) => {
+    results = list;
     lijst.innerHTML = '';
-    if (!results.length) {
+    if (!list.length) {
       lijst.innerHTML = EN
         ? '<li class="empty">Nothing found. Fill in the name and city below yourself.</li>'
         : '<li class="empty">Niets gevonden. Vul de naam en stad hieronder zelf in.</li>';
     }
-    results.forEach((p, i) => {
+    list.forEach((p, i) => {
       const li = document.createElement('li');
       li.setAttribute('role', 'option');
       li.tabIndex = 0;
@@ -208,7 +207,36 @@ const countries = new Set(places.map((p) => p.country)).size;
       li.addEventListener('keydown', (e) => e.key === 'Enter' && (e.preventDefault(), pick(results[i])));
       lijst.appendChild(li);
     });
+    if (GOOGLE_KEY && !breed) {
+      const li = document.createElement('li');
+      li.className = 'more';
+      li.tabIndex = 0;
+      li.textContent = EN ? 'Not in the list? Search the whole world →' : 'Staat het er niet bij? Zoek over de hele wereld →';
+      li.addEventListener('click', () => searchWide(q));
+      li.addEventListener('keydown', (e) => e.key === 'Enter' && (e.preventDefault(), searchWide(q)));
+      lijst.appendChild(li);
+    }
     lijst.hidden = false;
+  };
+
+  const search = async (q: string) => {
+    let list: Place[] = [];
+    try {
+      list = GOOGLE_KEY ? await google(q).catch(() => photon(q)) : await photon(q);
+    } catch {}
+    render(list, q, false);
+  };
+
+  // Google text search: up to 10 bars, shops and importers anywhere, without leaning towards Esen
+  const searchWide = async (q: string) => {
+    clearTimeout(timer);
+    lijst.innerHTML = `<li class="empty">${EN ? 'Searching…' : 'Even zoeken…'}</li>`;
+    lijst.hidden = false;
+    let list: Place[] = [];
+    try {
+      list = await zoekBreed(q, EN ? 'en' : 'nl');
+    } catch {}
+    render(list, q, true);
   };
 
   zoek.addEventListener('input', () => {
@@ -221,7 +249,10 @@ const countries = new Set(places.map((p) => p.country)).size;
     timer = window.setTimeout(() => search(q), 450);
   });
   zoek.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') e.preventDefault();
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const q = zoek.value.trim();
+    if (q.length >= 3 && GOOGLE_KEY) searchWide(q);
   });
   document.addEventListener('click', (e) => {
     if (!(e.target as HTMLElement).closest('.search')) lijst.hidden = true;
@@ -406,6 +437,10 @@ const countries = new Set(places.map((p) => p.country)).size;
   .results :global(small) {
     color: var(--ink-soft);
     font-size: 0.8rem;
+  }
+  .results :global(.more) {
+    font-weight: 700;
+    border-top: 1px dashed rgba(33, 23, 12, 0.25);
   }
   .results :global(.empty) {
     cursor: default;
