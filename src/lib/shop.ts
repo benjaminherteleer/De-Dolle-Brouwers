@@ -4,7 +4,7 @@ import { euro, type Product } from './shopify';
 
 /** The personalised figurine is ordered through the maker page, not a product page. */
 export const CUSTOM = 'oerbier-mannetje-op-maat';
-const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord', 'oerbier-glas-charente', 'oeral-glas', 'oerbier-glas-klein'];
+const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'metalen-bord', 'oerbier-glas-charente', 'oeral-glas'];
 
 /** Tour tickets are a Shopify product too, but they are sold on the booking page, not in the shop. */
 export const TICKET = 'rondleiding';
@@ -14,9 +14,12 @@ export const TICKET = 'rondleiding';
  */
 export const TICKETS_BETALEN = false;
 
+/** Products that stay in Shopify but are not sold on the site (the small glass breaks too easily in the post). */
+const VERBORGEN = ['oerbier-glas-klein'];
+
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
-  return [...list].filter((p) => p.handle !== TICKET).sort((a, b) => rank(a.handle) - rank(b.handle));
+  return [...list].filter((p) => p.handle !== TICKET && !VERBORGEN.includes(p.handle)).sort((a, b) => rank(a.handle) - rank(b.handle));
 };
 
 // Our own photos per product: src/assets/shop/<handle>-<n>.jpg. Products without them use Shopify's images.
