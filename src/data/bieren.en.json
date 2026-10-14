@@ -219,7 +219,7 @@
       "Every batch of stout gets a different recipe. We have a folder full of all the recipes.",
       "The first labels and posters still say 9%. Today it is 8%.",
       "The same fermentation as Oerbier.",
-      "It no longer goes to America. Every brewery there now makes its own stout, IPA, bourbon stout, vanilla stout, pastry stout with marshmallows, peanut butter stout, maple bacon stout, and so on, and so on…"
+      "It no longer goes to America. Every brewery there now makes its own stout, IPA, bourbon stout, vanilla stout, pastry stout with marshmallows, milkshake stout, and so on, and so on…"
     ],
     "story": {
       "alt": "Original label stamp of Export Stout, De Dolle Brouwers, Esen Belgium, 9%",
@@ -229,26 +229,27 @@
     "tagline": "Full-bodied: chocolate, coffee and liquorice."
   },
   "oeral": {
-    "title": "Oeral | Pale ale from De Dolle Brouwers, on draught only, Esen (Belgium)",
-    "description": "Oeral (6%) is the hoppy, floral pale ale of De Dolle Brouwers from Esen, West Flanders — only on draught in the Oerbar, never bottled.",
+    "title": "Oeral | Blond and bitter beer from De Dolle Brouwers, on draught only, Esen (Belgium)",
+    "description": "Oeral (6%) is the lighter version of Arabier: blond and bitter. From De Dolle Brouwers in Esen, West Flanders, only on draught in the Oerbar.",
     "alt": null,
     "kicker": "Only from the tap",
-    "meta": [{ "label": "Alcohol", "value": "6%" }, { "label": "Style", "value": "Belgian pale ale" }],
-    "intro": "The most sessionable pale ale in our range: fresh, hoppy and floral, with a dry finish. Never bottled — we only pour Oeral from the keg.",
+    "meta": [{ "label": "Alcohol", "value": "6%" }, { "label": "Style", "value": "Blond and bitter" }],
+    "intro": "Oeral is a lighter version of Arabier, so blond and bitter. The name comes from \"oer\", pure, and \"al\", for everyone (\"alleman\"). We only pour it from the keg.",
     "notes": [
-      { "label": "Aroma", "text": "Citrus and floral hops, with rose petals, lavender and a spicy yeast undertone of hay and white pepper." },
-      { "label": "Taste", "text": "A light, honey-like sweetness at first, which soon gives way to a dry, grassy bitterness with a hint of lemongrass." },
-      { "label": "Finish", "text": "Dry and refreshing, with a long, spicy and hoppy aftertaste." }
+      { "label": "Aroma", "text": "Fresh whole-cone hops, just like Arabier." },
+      { "label": "Taste", "text": "Blond and bitter, but lighter than Arabier." },
+      { "label": "Finish", "text": "Dry and refreshing." }
     ],
-    "info": [
-      { "label": "Serving tip", "text": "Only available on draught in the Oerbar — served fresh at 6-8°C." },
-      { "label": "Goes with", "text": "Light summer dishes, fresh cheese, or simply as a thirst quencher on the terrace." }
-    ],
+    "info": [{ "label": "Serving tip", "text": "Only available on draught in the Oerbar. Served fresh." }],
     "weetjes": [
-      "Oeral is the only beer in our range that we don't bottle: it's purely for the Oerbar and the tap."
+      "Oeral has a long and murky history.",
+      "It was first brewed for the first Arabier festival. Because drinking Arabier and water separately is fiction, and Arabier as a main course is a daring undertaking, even for trained beer lovers.",
+      "The label went from a little yellow plane to the Oeral building with hammer and sickle: Oeral as the far edge of Europe (the Urals), and the far edge of the art of beer…",
+      "Oeral doesn't keep long. Alcohol isn't just a cleaning product but also a preservative, and Oeral has less of it.",
+      "It's the only beer in our range that we don't bottle: it's purely for the Oerbar and the tap."
     ],
     "badge": "On draught only, not bottled",
-    "tagline": "Pale ale, only from the tap."
+    "tagline": "The lighter Arabier, only from the tap."
   },
   "oerbier-reserva": {
     "badge": "Currently in stock, limited edition",

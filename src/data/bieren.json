@@ -505,7 +505,7 @@
       "Elk brouwsel stout krijgt een ander recept. We hebben een farde vol met al de recepten.",
       "Op de eerste etiketten en affiches staat nog 9%. Vandaag is hij 8%.",
       "Dezelfde gisting als het Oerbier.",
-      "Naar Amerika gaat hij niet meer. Daar brouwt elke brouwerij intussen zelf stout, IPA, bourbon stout, vanillestout, pastry stout met marshmallows, pindakaasstout, maple-bacon-stout, enzovoort, enzovoort…"
+      "Naar Amerika gaat hij niet meer. Daar brouwt elke brouwerij intussen zelf stout, IPA, bourbon stout, vanillestout, pastry stout met marshmallows, milkshake stout, enzovoort, enzovoort…"
     ],
     "story": {
       "image": "/images/stout-logo.png",
@@ -519,8 +519,8 @@
   {
     "slug": "oeral",
     "name": "Oeral",
-    "title": "Oeral — Pale ale van De Dolle Brouwers, enkel op vat | Esen, West-Vlaanderen",
-    "description": "Oeral (6%) is de hoppige, bloemige pale ale van De Dolle Brouwers uit Esen, West-Vlaanderen — enkel op vat verkrijgbaar in de Oerbar, niet op fles.",
+    "title": "Oeral — Blond en bitter bier van De Dolle Brouwers, enkel op vat | Esen, West-Vlaanderen",
+    "description": "Oeral (6%) is de lichtere versie van Arabier: blond en bitter. Van De Dolle Brouwers uit Esen, West-Vlaanderen, enkel op vat verkrijgbaar in de Oerbar.",
     "alt": null,
     "kicker": "Enkel van het vat",
     "meta": [
@@ -530,40 +530,40 @@
       },
       {
         "label": "Stijl",
-        "value": "Belgische pale ale"
+        "value": "Blond en bitter"
       }
     ],
-    "intro": "De meest sessionable pale ale van ons gamma: fris, hoppig en bloemig, met een droge afwerking. Geen jaargebonden brouwsel voor de fles — Oeral schenken we uitsluitend van het vat.",
+    "intro": "Oeral is een lichtere versie van Arabier, dus blond en bitter. De naam komt van \"oer\", zuiver, en \"al\", voor alleman. We schenken het enkel van het vat.",
     "notes": [
       {
         "label": "Aroma",
-        "text": "Citrus en bloemige hop, met rozenblaadjes, lavendel en een kruidige gist-ondertoon van hooi en witte peper."
+        "text": "Frisse bloemenhop, net als bij Arabier."
       },
       {
         "label": "Smaak",
-        "text": "Een lichte, honingachtige zoetheid bij het begin, die al snel plaatsmaakt voor een droge, grazige bitterheid met een vleugje citroengras."
+        "text": "Blond en bitter, maar lichter dan Arabier."
       },
       {
         "label": "Afdronk",
-        "text": "Droog en verfrissend, met een lange, kruidig-hoppige nasmaak."
+        "text": "Droog en verfrissend."
       }
     ],
     "info": [
       {
         "label": "Serveertip",
-        "text": "Enkel verkrijgbaar van het vat in de Oerbar — serveer fris op 6-8°C."
-      },
-      {
-        "label": "Past bij",
-        "text": "Lichte zomerse gerechten, verse kaas, of gewoon als dorstlesser op het terras."
+        "text": "Enkel verkrijgbaar van het vat in de Oerbar. Fris geschonken."
       }
     ],
     "weetjes": [
-      "Oeral is het enige bier in ons gamma dat we niet bottelen: het is puur voor de Oerbar en de tap."
+      "Oeral heeft een lange en duistere historie.",
+      "Het werd voor het eerst gebrouwen voor de eerste Arabierfeesten. Want Arabier en water apart drinken is fictie, en Arabier als hoofdgerecht is zelfs voor getrainde bierliefhebbers een gewaagde onderneming.",
+      "Het etiket ging van een geel vliegertje tot het Oeral-gebouwtje met hamer en sikkel: Oeral als uiterste grens van Europa, en uiterste grens van de bierkunst…",
+      "Oeral is maar kort houdbaar. Alcohol is niet alleen een kuisproduct, maar ook een bewaarproduct, en Oeral heeft er minder van.",
+      "Het is het enige bier in ons gamma dat we niet bottelen: het is puur voor de Oerbar en de tap."
     ],
     "badge": "Enkel op vat, niet op fles",
     "reserva": false,
-    "tagline": "Pale ale, enkel van het vat te verkrijgen."
+    "tagline": "De lichtere Arabier, enkel van het vat."
   },
   {
     "slug": "oerbier-reserva",
