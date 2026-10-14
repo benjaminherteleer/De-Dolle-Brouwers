@@ -32,14 +32,14 @@ const text = (p: Product) => productText(p, lang);
         {page ? <h1>{tr('Oershop.', 'Shop.')}</h1> : <h2>{tr('Oershop.', 'Shop.')}</h2>}
         <p class="lead">
           {tr("Truien, T-shirts, een pet, het Oerbier-mannetje, glazen en metalen borden met de bende erop. We versturen tot ver over de grens, of je haalt het gratis af in de Oerbar. Staat jouw land er bij het afrekenen niet tussen?", "Hoodies, T-shirts, a cap, the Oerbier figure, glasses and metal signs with the gang on them. We ship far beyond Belgium, or pick it up for free in the Oerbar. Is your country not listed at checkout?")}
-          <a href="mailto:info@dedollebrouwers.be">{tr("Mail ons even", "Send us an email")}</a>.
+          {tr("Mail ons even op", "Send us an email at")} <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>.
         </p>
       </div>
       {
         products.length === 0 && (
           <p class="lead">
             {tr('De webshop is even niet bereikbaar. Bestellen kan via', 'The shop is unavailable right now. You can order via')}{' '}
-            <a href="mailto:boniface@dedollebrouwers.be">boniface@dedollebrouwers.be</a>.
+            <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>.
           </p>
         )
       }

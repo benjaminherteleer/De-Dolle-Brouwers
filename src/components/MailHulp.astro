@@ -1,0 +1,42 @@
+---
+/**
+ * Mail links open the visitor's mail app, but many people have none set up and then nothing happens.
+ * So a click also copies the address and shows it in a small note.
+ */
+---
+
+<p class="mail-hulp" role="status" hidden></p>
+
+<script>
+  const note = document.querySelector<HTMLElement>('.mail-hulp')!;
+  const EN = document.documentElement.lang === 'en';
+  let timer: number | undefined;
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="mailto:"]');
+    if (!a) return;
+    const adres = decodeURIComponent(a.href.slice(7).split('?')[0]);
+    navigator.clipboard?.writeText(adres).catch(() => {});
+    note.textContent = EN ? `Opening your mail… The address ${adres} is also copied.` : `Je mail opent… Het adres ${adres} is ook gekopieerd.`;
+    note.hidden = false;
+    clearTimeout(timer);
+    timer = window.setTimeout(() => (note.hidden = true), 5000);
+  });
+</script>
+
+<style>
+  .mail-hulp {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    z-index: 60;
+    margin: 0;
+    max-width: calc(100vw - 32px);
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--yellow);
+    font-size: 0.95rem;
+  }
+</style>

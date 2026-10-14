@@ -567,12 +567,12 @@ const flagArt: Record<string, string> = {
     };
     const extras = JSON.parse(form.dataset.extras || '{}') as Record<string, { id: string }>;
     if (toeslagen.some((t) => !extras[t.naam])) {
-      alert(EN ? 'This design can’t be ordered online yet. Please email it to boniface@dedollebrouwers.be.' : 'Dit ontwerp kan je nog niet online bestellen. Mail het naar boniface@dedollebrouwers.be.');
+      alert(EN ? 'This design can’t be ordered online yet. Please email it to info@dedollebrouwers.be.' : 'Dit ontwerp kan je nog niet online bestellen. Mail het naar info@dedollebrouwers.be.');
       return;
     }
     const variant = plain ? form.dataset.plain : form.dataset.custom;
     if (!variant) {
-      alert(EN ? 'The shop is unavailable right now. Please email your order to boniface@dedollebrouwers.be.' : 'De webshop is even niet bereikbaar. Mail je bestelling naar boniface@dedollebrouwers.be.');
+      alert(EN ? 'The shop is unavailable right now. Please email your order to info@dedollebrouwers.be.' : 'De webshop is even niet bereikbaar. Mail je bestelling naar info@dedollebrouwers.be.');
       return;
     }
     button.disabled = true;
@@ -596,7 +596,7 @@ const flagArt: Record<string, string> = {
       for (const t of toeslagen) await addToCart(extras[t.naam].id, t.aantal, [{ key: 'Ontwerp', value: ontwerp }]);
       openCart();
     } catch {
-      alert(EN ? "That didn't work. Please try again later, or email boniface@dedollebrouwers.be." : 'Dat lukte niet. Probeer het straks nog eens, of mail naar boniface@dedollebrouwers.be.');
+      alert(EN ? "That didn't work. Please try again later, or email info@dedollebrouwers.be." : 'Dat lukte niet. Probeer het straks nog eens, of mail naar info@dedollebrouwers.be.');
     } finally {
       button.disabled = false;
       button.textContent = label;
