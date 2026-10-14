@@ -579,7 +579,9 @@ const flagArt: Record<string, string> = {
     const label = button.textContent;
     button.textContent = EN ? 'One moment…' : 'Even…';
     try {
-      const lines = plain ? [] : [...attributes];
+      // One id per design ties the surcharge lines to this figure in the cart
+      const ontwerp = Date.now().toString(36).toUpperCase();
+      const lines = plain ? [] : [...attributes, ...(toeslagen.length ? [{ key: 'Ontwerp', value: ontwerp }] : [])];
       if (!plain && form.dataset.logo) {
         const res = await fetch('/api/logo', {
           method: 'POST',
@@ -591,7 +593,7 @@ const flagArt: Record<string, string> = {
         lines.push({ key: 'Logo', value: url });
       }
       await addToCart(variant, 1, lines);
-      for (const t of toeslagen) await addToCart(extras[t.naam].id, t.aantal, [{ key: 'Voor', value: 'Oerbier-mannetje op maat' }]);
+      for (const t of toeslagen) await addToCart(extras[t.naam].id, t.aantal, [{ key: 'Ontwerp', value: ontwerp }]);
       openCart();
     } catch {
       alert(EN ? "That didn't work. Please try again later, or email boniface@dedollebrouwers.be." : 'Dat lukte niet. Probeer het straks nog eens, of mail naar boniface@dedollebrouwers.be.');

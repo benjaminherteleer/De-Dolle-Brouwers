@@ -27,7 +27,9 @@ const en = langOf(Astro.url) === 'en';
 </aside>
 
 <script>
-  import { loadCart, setQuantity, getCart, type Cart } from '../lib/cart';
+  import { loadCart, setQuantity, getCart, type Cart, type CartLine } from '../lib/cart';
+
+  const TOESLAG = 'mannetje-extra';
   import { euro } from '../lib/shopify';
 
   const panel = document.getElementById('cart')!;
@@ -67,9 +69,23 @@ const en = langOf(Astro.url) === 'en';
     total.textContent = euro(cart.cost.subtotalAmount);
     // Shopify shows its checkout in English with locale=en
     checkout.href = en ? cart.checkoutUrl + (cart.checkoutUrl.includes('?') ? '&' : '?') + 'locale=en' : cart.checkoutUrl;
-    list.innerHTML = lines
+    const ontwerpVan = (l: CartLine) => l.attributes.find((a) => a.key === 'Ontwerp')?.value;
+    // Each figure followed by its own surcharges
+    const isToeslag = (l: CartLine) => l.merchandise.product.handle === TOESLAG;
+    const geordend = lines.filter((l) => !isToeslag(l)).flatMap((l) => [l, ...lines.filter((x) => isToeslag(x) && ontwerpVan(l) && ontwerpVan(x) === ontwerpVan(l))]);
+    geordend.push(...lines.filter((x) => !geordend.includes(x)));
+    list.innerHTML = geordend
       .map((l) => {
         const m = l.merchandise;
+        // Surcharges for a personalised figure: a fixed sub-line under the figure, no own controls
+        if (m.product.handle === TOESLAG) {
+          return `<li class="toeslag" data-line="${esc(l.id)}">
+            <span class="ph plus">+</span>
+            <div class="info"><b>${esc(m.title)}${l.quantity > 1 ? ` × ${l.quantity}` : ''}</b><small>${en ? 'for your figure' : 'voor je mannetje'}</small></div>
+            <span class="price">${euro(l.cost.totalAmount)}</span>
+          </li>`;
+        }
+        const heeftToeslag = ontwerpVan(l) && lines.some((x) => x.merchandise.product.handle === TOESLAG && ontwerpVan(x) === ontwerpVan(l));
         const variant = m.title === 'Default Title' ? '' : `<small>${esc(m.title)}</small>`;
         const extra = l.attributes.length
           ? `<details><summary>${en ? 'Your choices' : 'Jouw keuzes'}</summary><dl>${l.attributes
@@ -79,11 +95,15 @@ const en = langOf(Astro.url) === 'en';
         return `<li data-line="${esc(l.id)}">
           ${m.image ? `<img src="${esc(m.image.url + (m.image.url.includes('?') ? '&' : '?') + 'width=160')}" alt="" width="64" height="64" />` : '<span class="ph"></span>'}
           <div class="info"><b>${esc(m.product.title)}</b>${variant}${extra}</div>
-          <div class="qty">
+          ${
+            heeftToeslag
+              ? `<div class="qty"><button type="button" class="weg" data-remove aria-label="${en ? 'Remove' : 'Verwijderen'}">×</button></div>`
+              : `<div class="qty">
             <button type="button" data-step="-1" aria-label="${en ? 'One less' : 'Eén minder'}">−</button>
             <span>${l.quantity}</span>
             <button type="button" data-step="1" aria-label="${en ? 'One more' : 'Eén meer'}">+</button>
-          </div>
+          </div>`
+          }
           <span class="price">${euro(l.cost.totalAmount)}</span>
         </li>`;
       })
@@ -91,6 +111,25 @@ const en = langOf(Astro.url) === 'en';
   };
 
   list.addEventListener('click', async (e) => {
+    // Removing a personalised figure also removes its surcharges
+    const weg = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-remove]');
+    if (weg) {
+      const li = weg.closest<HTMLElement>('li')!;
+      const all = getCart()?.lines.nodes ?? [];
+      const line = all.find((l) => l.id === li.dataset.line);
+      if (!line) return;
+      const id = line.attributes.find((a) => a.key === 'Ontwerp')?.value;
+      li.classList.add('busy');
+      try {
+        for (const x of all.filter((x) => x.merchandise.product.handle === TOESLAG && x.attributes.some((a) => a.key === 'Ontwerp' && a.value === id))) {
+          await setQuantity(x.id, 0);
+        }
+        await setQuantity(line.id, 0);
+      } catch {
+        li.classList.remove('busy');
+      }
+      return;
+    }
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-step]');
     if (!btn) return;
     const li = btn.closest<HTMLElement>('li')!;
@@ -181,6 +220,21 @@ const en = langOf(Astro.url) === 'en';
     gap: 6px 12px;
     padding: 14px 0;
     border-bottom: 1px solid rgba(33, 23, 12, 0.15);
+  }
+  .cart-lines :global(li.toeslag) {
+    padding: 6px 0;
+    grid-template-areas: 'img info price';
+  }
+  .cart-lines :global(.ph.plus) {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    justify-self: center;
+    font-weight: 700;
+  }
+  .cart-lines :global(.weg) {
+    font-size: 1.2rem;
   }
   .cart-lines :global(li.busy) {
     opacity: 0.5;
