@@ -39,16 +39,6 @@ export const priceLabel = (p: Product, lang: 'nl' | 'en' = 'nl') =>
 /** Options worth showing (Shopify adds a dummy "Title" option to single-variant products). */
 export const realOptions = (p: Product) => p.options.filter((o) => !(o.name === 'Title' && o.optionValues.length === 1));
 
-/** Option values that still have stock in at least one variant; sold-out sizes are left out (all values if the whole product is sold out). */
-export const inStock = (p: Product, option: string) => {
-  const opt = p.options.find((o) => o.name === option);
-  if (!opt) return [];
-  const left = opt.optionValues.filter((v) =>
-    p.variants.nodes.some((n) => n.availableForSale && n.selectedOptions.some((s) => s.name === option && s.value === v.name)),
-  );
-  return left.length ? left : opt.optionValues;
-};
-
 export const shopifyImage = (url: string, width: number) => `${url}${url.includes('?') ? '&' : '?'}width=${width}`;
 
 /** Which gallery photo (0-based) belongs to an option value, so picking a design shows that design. */
