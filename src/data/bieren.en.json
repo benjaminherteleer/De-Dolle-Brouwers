@@ -315,11 +315,11 @@
   "stille-nacht-reserva": {
     "badge": "Currently in stock, limited edition",
     "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers, Esen (Belgium)",
-    "description": "Stille Nacht Reserva (13%) is the wine-barrel-aged version of Stille Nacht, released in limited editions by De Dolle Brouwers in Esen, West Flanders.",
+    "description": "Stille Nacht Reserva (12%) is the wine-barrel-aged version of Stille Nacht, released in limited editions by De Dolle Brouwers in Esen, West Flanders.",
     "alt": "Stille Nacht Reserva bottles",
     "kicker": "Stille Nacht, aged for years in wine barrels",
-    "meta": [{ "label": "Alcohol", "value": "13%" }, { "label": "Style", "value": "Golden, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
-    "intro": "The complex, golden Stille Nacht gets a second life here: about two years in barrels that used to hold wine, into a deeper, woodier and slightly vinous beer, and one degree stronger: 13%. Not a yearly edition but a release every few years, each with its own barrel number.",
+    "meta": [{ "label": "Alcohol", "value": "12%" }, { "label": "Style", "value": "Golden, barrel-aged" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
+    "intro": "The complex, golden Stille Nacht gets a second life here: about two years in barrels that used to hold wine, into a deeper, woodier and slightly vinous beer of 12%. Not a yearly edition but a release every few years, each with its own barrel number.",
     "notes": [
       { "label": "Aroma", "text": "Oak, vanilla, dried fruit, citrus peel and a hint of wild yeast." },
       { "label": "Taste", "text": "Lightly sour and fruity, with candied orange, wood and a soft vinous touch that trades the original Stille Nacht sweetness for more depth." },
