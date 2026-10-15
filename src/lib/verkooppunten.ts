@@ -15,7 +15,15 @@ const COUNTRIES: Record<string, string> = {
   spain: 'Spanje', españa: 'Spanje', luxembourg: 'Luxemburg', switzerland: 'Zwitserland',
   austria: 'Oostenrijk', poland: 'Polen', japan: 'Japan', canada: 'Canada',
 };
-const dutch = (c: string) => COUNTRIES[c.trim().toLowerCase()] ?? c;
+// Some lookups give every official name at once ("België / Belgique / Belgien"): take the first one we know.
+const dutch = (c: string) => {
+  const parts = c.split('/').map((p) => p.trim());
+  for (const p of parts) {
+    const hit = COUNTRIES[p.toLowerCase()] ?? Object.values(COUNTRIES).find((v) => v === p);
+    if (hit) return hit;
+  }
+  return parts[0] || c;
+};
 
 /** Approved cafés: straight from Redis, or (in a build without Redis credentials) from the live site. */
 async function approved(): Promise<Place[]> {
