@@ -87,6 +87,7 @@ import Base from '../layouts/Base.astro';
         <button class="btn" data-action="ok">Goedkeuren</button>
         <button class="btn light" data-action="nee">Weigeren</button>
       </div>
+      <p class="tip-msg" role="status"></p>
     </article>`;
 
   const load = async () => {
@@ -123,12 +124,17 @@ import Base from '../layouts/Base.astro';
       : '<li class="empty">Nog niets.</li>';
   };
 
-  const act = async (id: string, action: string, place?: object) => {
-    msg.textContent = 'Even bezig…';
+  const act = async (id: string, action: string, place?: object, where?: HTMLElement) => {
+    // Feedback goes next to the button that was clicked, not only at the bottom of the page
+    const say = (t: string) => {
+      msg.textContent = t;
+      if (where) where.textContent = t;
+    };
+    say('Even bezig…');
     const res = await api({ method: 'POST', body: JSON.stringify({ id, action, place }) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      msg.textContent = data.error || 'Dat lukte niet.';
+      say(data.error || 'Dat lukte niet.');
       return;
     }
     msg.textContent =
@@ -176,11 +182,15 @@ import Base from '../layouts/Base.astro';
       return;
     }
     const place = { name: val('name'), city: val('city'), country: val('country'), lat: parseFloat(val('lat').replace(',', '.')), lng: parseFloat(val('lng').replace(',', '.')) };
+    const tipMsg = tip.querySelector('.tip-msg') as HTMLElement;
     if (btn.dataset.action === 'ok' && (!Number.isFinite(place.lat) || !Number.isFinite(place.lng))) {
-      msg.textContent = 'Vul eerst breedte en lengte in (bv. van Google Maps).';
+      tipMsg.textContent = GOOGLE_KEY
+        ? 'Deze tip heeft nog geen locatie. Klik eerst op “Zoek locatie op Google”, of vul breedte en lengte in (bv. van Google Maps).'
+        : 'Deze tip heeft nog geen locatie. Vul eerst breedte en lengte in (bv. van Google Maps).';
+      (tip.querySelector('[name=lat]') as HTMLInputElement).focus();
       return;
     }
-    act(tip.dataset.id!, btn.dataset.action!, place);
+    act(tip.dataset.id!, btn.dataset.action!, place, tipMsg);
   });
   approvedEl.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement).closest('button');
@@ -291,6 +301,14 @@ import Base from '../layouts/Base.astro';
   .tips :global(.note) {
     font-style: italic;
     color: var(--ink);
+  }
+  .tips :global(.tip-msg) {
+    margin: 10px 0 0;
+    font-weight: 600;
+    color: var(--rust);
+  }
+  .tips :global(.tip-msg:empty) {
+    display: none;
   }
   .tips :global(.actions) {
     display: flex;
