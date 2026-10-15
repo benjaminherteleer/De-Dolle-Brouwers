@@ -41,6 +41,9 @@ const shareImage = new URL(
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Light design only: stops phones (Samsung, Chrome dark mode) from darkening yellow into brown -->
+    <meta name="color-scheme" content="only light" />
+    <meta name="theme-color" content="#f7b500" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {canonical && <link rel="canonical" href={canonical} />}

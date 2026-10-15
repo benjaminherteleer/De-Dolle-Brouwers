@@ -3,6 +3,7 @@
    thick ink outlines, hard offset shadows, things stuck on at an angle. */
 
 :root {
+  color-scheme: only light;
   --paper: #f4e9d7;
   --paper-deep: #eadabf;
   --paper-light: #fbf5ea;
