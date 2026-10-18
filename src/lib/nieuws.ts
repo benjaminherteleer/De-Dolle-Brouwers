@@ -10,7 +10,8 @@ export async function edities(lang: 'nl' | 'en' = 'nl'): Promise<(Editie & { num
 
 export const maand = (d: Date, lang: 'nl' | 'en' = 'nl') => {
   const s = d.toLocaleDateString(lang === 'en' ? 'en-GB' : 'nl-BE', { month: 'long', year: 'numeric' });
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  // English months take a capital, Dutch ones don't ("Editie 1 · augustus 2026")
+  return lang === 'en' ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 };
 
 /** Colours per front page, matching the beer the edition is about. */
