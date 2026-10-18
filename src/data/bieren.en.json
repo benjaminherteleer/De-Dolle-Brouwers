@@ -110,6 +110,10 @@
         { "bron": "Gazet van Antwerpen", "jaar": "2012", "url": "https://www.gva.be/regio/antwerpen/regio-antwerpen/essen/stille-nacht-is-beste-kerstbier-2012/38599659.html" },
         { "bron": "Het Nieuwsblad", "jaar": "2012", "url": "https://www.nieuwsblad.be/regio/west-vlaanderen/stille-nacht-voor-vijfde-keer-verkozen-tot-beste-kerstbier/60261384.html" },
         { "bron": "Biernet", "jaar": "2012", "url": "https://www.biernet.nl/nieuws/stille-nacht-voor-de-vijfde-keer-beste-kerstbier" }
+      ],
+      "uitgelicht": [
+        { "file": "stille-nacht-prijs-muur.webp", "alt": "The wall in the Oerbar full of certificates for Stille Nacht, best Christmas beer from 2005 to 2025" },
+        { "file": "stille-nacht-prijs-overzicht.webp", "alt": "Drawing of Kris with the certificates, and the years Stille Nacht was voted best Christmas beer: 2005, 2007, 2010 to 2015, 2017, 2023 and 2024" }
       ]
     }
   },
