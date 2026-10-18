@@ -9,7 +9,7 @@ const COUNTRIES: Record<string, string> = {
   france: 'Frankrijk', frankreich: 'Frankrijk',
   italy: 'Italië', italia: 'Italië', italie: 'Italië', italien: 'Italië',
   'united kingdom': 'Verenigd Koninkrijk', 'royaume-uni': 'Verenigd Koninkrijk',
-  'united states': 'VS', 'united states of america': 'VS', usa: 'VS', 'états-unis': 'VS',
+  'united states': 'VS', 'united states of america': 'VS', usa: 'VS', 'états-unis': 'VS', 'verenigde staten': 'VS',
   lithuania: 'Litouwen', lietuva: 'Litouwen', norway: 'Noorwegen', norge: 'Noorwegen',
   sweden: 'Zweden', sverige: 'Zweden', denmark: 'Denemarken', danmark: 'Denemarken',
   spain: 'Spanje', españa: 'Spanje', luxembourg: 'Luxemburg', switzerland: 'Zwitserland',
@@ -25,6 +25,17 @@ const dutch = (c: string) => {
   return parts[0] || c;
 };
 
+// City names also arrive in the visitor's language; the map uses the Dutch ones (English for /en via EN_NAMES).
+const CITIES: Record<string, string> = {
+  napoli: 'Napels', naples: 'Napels', ghent: 'Gent', gand: 'Gent', brussels: 'Brussel', bruxelles: 'Brussel',
+  antwerp: 'Antwerpen', anvers: 'Antwerpen', bruges: 'Brugge', ostend: 'Oostende', ostende: 'Oostende', ypres: 'Ieper',
+  courtrai: 'Kortrijk', louvain: 'Leuven', malines: 'Mechelen', 'the hague': 'Den Haag', london: 'Londen', roma: 'Rome',
+  milano: 'Milaan', milan: 'Milaan', firenze: 'Florence', venezia: 'Venetië', köln: 'Keulen', cologne: 'Keulen',
+  aachen: 'Aken', paris: 'Parijs', lille: 'Rijsel', dunkerque: 'Duinkerke', copenhagen: 'Kopenhagen', københavn: 'Kopenhagen',
+  tokyo: 'Tokio', 'minato city': 'Tokio', minato: 'Tokio', 'shibuya city': 'Tokio', 'shinjuku city': 'Tokio',
+};
+const dutchCity = (c: string) => CITIES[c.trim().toLowerCase()] ?? c;
+
 /** Approved cafés: straight from Redis, or (in a build without Redis credentials) from the live site. */
 async function approved(): Promise<Place[]> {
   if (hasRedis) return readHash<Place>(APPROVED);
@@ -38,14 +49,17 @@ export async function getPlaces(): Promise<Place[]> {
   try {
     const extra = (await approved()).map(({ name, city, country, lat, lng }) => ({
       name,
-      city,
+      city: dutchCity(city),
       country: dutch(country),
       lat,
       lng,
     }));
-    // Skip approved cafés already in the fixed list (within ~100 m).
+    // Skip approved cafés already in the fixed list (within ~100 m), and the same café approved twice (within ~30 m)
     const near = (a: Place, b: Place) => Math.abs(a.lat - b.lat) < 0.001 && Math.abs(a.lng - b.lng) < 0.0015;
-    return [...base, ...extra.filter((p) => !base.some((b) => near(b, p)))];
+    const same = (a: Place, b: Place) => Math.abs(a.lat - b.lat) < 0.0003 && Math.abs(a.lng - b.lng) < 0.0004;
+    const out: Place[] = [...base];
+    for (const p of extra) if (!base.some((b) => near(b, p)) && !out.some((o) => same(o, p))) out.push(p);
+    return out;
   } catch {
     return base;
   }
@@ -57,7 +71,8 @@ const EN_NAMES: Record<string, string> = {
   'Verenigd Koninkrijk': 'United Kingdom', VS: 'USA', Litouwen: 'Lithuania', Noorwegen: 'Norway', Zweden: 'Sweden',
   Denemarken: 'Denmark', Spanje: 'Spain', Luxemburg: 'Luxembourg', Zwitserland: 'Switzerland', Oostenrijk: 'Austria', Polen: 'Poland',
   Antwerpen: 'Antwerp', Berlijn: 'Berlin', Brugge: 'Bruges', Brussel: 'Brussels', 'Brussel (Vorst)': 'Brussels (Forest)',
-  'Den Haag': 'The Hague', Gent: 'Ghent', Londen: 'London', Napels: 'Naples', 'Oostakker (Gent)': 'Oostakker (Ghent)', Oostende: 'Ostend',
+  'Den Haag': 'The Hague', Gent: 'Ghent', Napels: 'Naples', Tokio: 'Tokyo', Milaan: 'Milan', Keulen: 'Cologne', Aken: 'Aachen',
+  Parijs: 'Paris', Rijsel: 'Lille', Duinkerke: 'Dunkirk', Kopenhagen: 'Copenhagen', Venetië: 'Venice', Londen: 'London', Napels: 'Naples', 'Oostakker (Gent)': 'Oostakker (Ghent)', Oostende: 'Ostend',
 };
 export const placesIn = (places: Place[], lang: 'nl' | 'en'): Place[] =>
   lang === 'en' ? places.map((p) => ({ ...p, city: EN_NAMES[p.city] ?? p.city, country: EN_NAMES[p.country] ?? p.country })) : places;
