@@ -292,6 +292,12 @@ const switchTo = counterpart(path) ?? (en ? '/' : '/en');
       display: none;
     }
   }
+  /* Phones with something in the cart: logo, EN, cart, button and menu don't all fit, so the button gives way */
+  @media (max-width: 480px) {
+    .bar:has(.cart-btn:not([hidden])) .cta {
+      display: none;
+    }
+  }
   @media (max-width: 400px) {
     .bar {
       gap: 6px;
