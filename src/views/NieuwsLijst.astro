@@ -172,5 +172,10 @@ const ld = {
       border-left: 0;
       border-top: var(--line);
     }
+    /* Phones: a squarer photo, so upright bottles aren't cut off at the top */
+    .editie :global(img) {
+      aspect-ratio: 1 / 1;
+      object-position: 50% 30%;
+    }
   }
 </style>
