@@ -1,7 +1,8 @@
 <script>
   // Give headings, text, photos and cards a gentle entrance while scrolling.
   // Things already on screen at load (and the hero) are left alone, so nothing flickers.
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Not on phones: scrolling quickly would show empty blocks while things fade in.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce), (max-width: 760px)').matches;
   if (!reduce && 'IntersectionObserver' in window) {
     const BLOCKS = [
       'main section .lead',
@@ -30,7 +31,8 @@
           if (el.classList.contains('rv'))
             el.addEventListener('transitionend', () => el.classList.remove('rv', 'in'), { once: true });
         }),
-      { rootMargin: '0px 0px -8% 0px' },
+      // Start a little before things scroll into view, so fast scrolling never shows a gap
+      { rootMargin: '0px 0px 10% 0px' },
     );
 
     // Section headings: words rise one after the other
