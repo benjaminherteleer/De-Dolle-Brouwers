@@ -342,11 +342,17 @@ const stops = [
   .prac-photos {
     position: relative;
   }
+  /* Top right of the gate photo, so its caption 'Hier moet je zijn' stays readable */
   .prac-photos :global(.small-pol) {
     position: absolute;
-    width: 46%;
-    left: -12%;
-    bottom: -8%;
+    width: 42%;
+    right: -6%;
+    top: -8%;
+  }
+  @media (max-width: 560px) {
+    .prac-photos :global(.small-pol) {
+      right: -2%;
+    }
   }
 
   /* CTA */

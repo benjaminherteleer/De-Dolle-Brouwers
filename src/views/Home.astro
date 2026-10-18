@@ -872,6 +872,18 @@ const bende = [
     }
   }
   @media (max-width: 560px) {
+    /* Phones: the second photo sits under the first one, so the caption 'Begin jaren '80' stays readable */
+    .hero-collage {
+      aspect-ratio: auto;
+      height: calc(112vw + 106px);
+    }
+    .hero-collage :global(.c-toast) {
+      width: 82%;
+    }
+    .hero-collage :global(.c-proost) {
+      width: 80%;
+      top: calc(58vw + 56px);
+    }
     .beer-grid {
       gap: 20px 14px;
     }
