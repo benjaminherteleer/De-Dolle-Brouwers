@@ -3,7 +3,7 @@ import { langOf, link } from '../i18n';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { getProducts, type Product } from '../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, variantPhotos, productText, optionLabel, valueLabel } from '../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, photoAlt, shopifyImage, variantPhotos, productText, optionLabel, valueLabel } from '../lib/shop';
 import maten from '../data/maten.json';
 
 const { product: p, all } = Astro.props as { product: Product; all: Product[] };
@@ -39,7 +39,7 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
           <div class="main">
             {
               photos.map((src, i) => (
-                <Image src={src} alt={tr(`${t.title}, foto ${i + 1}`, `${t.title}, photo ${i + 1}`)} width={1000} class:list={['shot', { active: i === 0 }]} data-shot={i} loading={i === 0 ? 'eager' : 'lazy'} />
+                <Image src={src} alt={photoAlt(p.handle, i, t.title, lang)} width={1000} class:list={['shot', { active: i === 0 }]} data-shot={i} loading={i === 0 ? 'eager' : 'lazy'} />
               ))
             }
             {shopifyPhotos.map((img) => <img src={shopifyImage(img.url, 1000)} alt={t.title} class="shot active" width="1000" height="1250" />)}
@@ -141,9 +141,9 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
             {others.map((o) => (
               <a class="card more-card" href={L(`/oershop/${o.handle}`)}>
                 {gallery(o.handle)[0] ? (
-                  <Image src={gallery(o.handle)[0]} alt="" width={500} />
+                  <Image src={gallery(o.handle)[0]} alt={photoAlt(o.handle, 0, o.title, lang)} width={500} />
                 ) : (
-                  o.featuredImage && <img src={shopifyImage(o.featuredImage.url, 500)} alt="" width="500" height="625" loading="lazy" />
+                  o.featuredImage && <img src={shopifyImage(o.featuredImage.url, 500)} alt={o.title} width="500" height="625" loading="lazy" />
                 )}
                 <span>
                   <b>{text(o).title}</b>

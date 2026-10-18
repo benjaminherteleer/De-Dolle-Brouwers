@@ -31,7 +31,7 @@ const alternates = other
     : { nl: new URL(other, Astro.site).href, en: canonical! }
   : undefined;
 const shareImage = new URL(
-  typeof image === 'string' ? image : (await getImage({ src: image, width: 1200, format: 'jpg' })).src,
+  typeof image === 'string' ? image : (await getImage({ src: image, width: 1200, format: image.format === 'png' ? 'png' : 'jpg' })).src,
   Astro.site,
 ).href;
 ---

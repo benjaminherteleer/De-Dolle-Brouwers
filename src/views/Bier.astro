@@ -49,7 +49,7 @@ const ld = {
 };
 ---
 
-<Base title={b.title} description={b.description} image={b.foto ?? b.poster ?? b.fles}>
+<Base title={b.title} description={b.description} image={b.foto ?? b.poster ?? b.fles ?? b.art}>
   <Fragment slot="head">
     <meta property="og:type" content="product" />
     <meta property="og:title" content={`${b.name} | De Dolle Brouwers`} />
@@ -219,7 +219,7 @@ const ld = {
             <li style={`--c:${o.color}; --tilt:${[-2, 1.5, -1, 2][i]}deg`}>
               <a href={L(`/bieren/${o.slug}`)}>
                 <span class:list={['more-art', { foto: o.foto }]}>
-                  <Image src={o.foto ?? o.art} alt="" width={300} />
+                  <Image src={o.foto ?? o.art} alt={o.foto ? tr(`Fles ${o.name}`, `Bottle of ${o.name}`) : tr(`Het ${o.name}-personage`, `The ${o.name} character`)} width={300} />
                 </span>
                 <span class="more-name">{o.name}</span>
                 <span class="more-abv">{abv(o)}</span>

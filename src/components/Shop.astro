@@ -3,7 +3,7 @@ import { langOf, link } from '../i18n';
 import { Image } from 'astro:assets';
 import MannetjeSvg from './MannetjeSvg.astro';
 import { getProducts, type Product } from '../lib/shopify';
-import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, shopifyImage, productText, optionLabel, valueLabel } from '../lib/shop';
+import { CUSTOM, sortProducts, gallery, priceLabel, realOptions, photoAlt, shopifyImage, productText, optionLabel, valueLabel } from '../lib/shop';
 
 interface Props {
   /** On the shop page itself the heading is the page title. */
@@ -62,7 +62,7 @@ const text = (p: Product) => productText(p, lang);
               <figure class="shop-item" data-product={p.handle} data-variants={JSON.stringify(p.variants.nodes)}>
                 <a class="photo" href={L(`/oershop/${p.handle}`)} aria-label={`${text(p).title}: ${tr("meer foto's en info", 'more photos and info')}`}>
                   {gallery(p.handle)[0] ? (
-                    <Image src={gallery(p.handle)[0]} alt={text(p).title} width={700} />
+                    <Image src={gallery(p.handle)[0]} alt={photoAlt(p.handle, 0, text(p).title, lang)} width={700} />
                   ) : p.featuredImage ? (
                     <img src={shopifyImage(p.featuredImage.url, 700)} alt={text(p).title} width="700" height="875" loading="lazy" />
                   ) : null}

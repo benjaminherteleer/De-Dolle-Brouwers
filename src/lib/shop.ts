@@ -31,6 +31,19 @@ export const gallery = (handle: string): ImageMetadata[] =>
     .sort((a, b) => Number(a.m![2]) - Number(b.m![2]))
     .map((x) => x.img);
 
+import fotoAlt from '../data/foto-alt.json';
+
+/** Description of each shop photo for screen readers and Google (src/data/foto-alt.json), by position in the gallery. */
+export const photoAlt = (handle: string, i: number, title: string, lang: 'nl' | 'en') => {
+  const names = Object.keys(files)
+    .map((path) => path.match(/\/([a-z0-9-]+)-(\d+)\.jpg$/))
+    .filter((m) => m?.[1] === handle)
+    .sort((a, b) => Number(a![2]) - Number(b![2]))
+    .map((m) => `${m![1]}-${m![2]}`);
+  const d = (fotoAlt as Record<string, [string, string]>)[names[i]];
+  return d ? d[lang === 'en' ? 1 : 0] : title;
+};
+
 export const priceLabel = (p: Product, lang: 'nl' | 'en' = 'nl') =>
   p.priceRange.minVariantPrice.amount === p.priceRange.maxVariantPrice.amount
     ? euro(p.priceRange.minVariantPrice)

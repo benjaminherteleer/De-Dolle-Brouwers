@@ -178,7 +178,7 @@ const bende = [
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
-                  <Image src={b.art} alt="" width={420} />
+                  <Image src={b.art} alt={tr(`Het ${b.name}-personage`, `The ${b.name} character`)} width={420} />
                 </span>
                 <span class="beer-name">{b.name}</span>
                 <span class="beer-meta">
