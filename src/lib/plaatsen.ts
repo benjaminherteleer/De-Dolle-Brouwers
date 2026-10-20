@@ -9,7 +9,8 @@ export type Gevonden = { name: string; label: string; city: string; country: str
 
 const part = (components: any[] = [], ...types: string[]) => {
   for (const t of types) {
-    const c = components.find((c) => c.types.includes(t));
+    // Some address parts (e.g. "Next to Journey" in the UK) come without types
+    const c = components.find((c) => c.types?.includes(t));
     if (c) return c.longText as string;
   }
   return '';
