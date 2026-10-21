@@ -32,16 +32,31 @@ const update = (card: HTMLElement) => {
   return variant;
 };
 
-cards.forEach((card) => {
-  // Start on the first size that is still in stock
+/**
+ * If the chosen combination is sold out, move the other selects to the first combination that is
+ * still in stock. `keep` is the option the visitor just changed (e.g. "Met rits"), which stays as chosen.
+ */
+const inStock = (card: HTMLElement, keep?: string) => {
   const variants: Variant[] = JSON.parse(card.dataset.variants!);
-  const first = variants.find((v) => v.availableForSale);
-  first?.selectedOptions.forEach((o) => {
-    const sel = card.querySelector<HTMLSelectElement>(`select[data-option="${o.name}"]`);
+  const selects = [...card.querySelectorAll<HTMLSelectElement>('select[data-option]')];
+  const chosen = Object.fromEntries(selects.map((s) => [s.dataset.option, s.value]));
+  const matches = (v: Variant, names: string[]) => v.selectedOptions.every((o) => !names.includes(o.name) || chosen[o.name] === o.value);
+  if (variants.find((v) => matches(v, Object.keys(chosen)))?.availableForSale) return;
+  const next = variants.find((v) => v.availableForSale && matches(v, keep ? [keep] : []));
+  next?.selectedOptions.forEach((o) => {
+    const sel = selects.find((s) => s.dataset.option === o.name);
     if (sel) sel.value = o.value;
   });
+};
+
+cards.forEach((card) => {
+  // Start on the first size that is still in stock
+  inStock(card);
   update(card);
-  card.addEventListener('change', () => update(card));
+  card.addEventListener('change', (e) => {
+    inStock(card, (e.target as HTMLElement).closest('select')?.dataset.option);
+    update(card);
+  });
   card.querySelector('[data-add]')!.addEventListener('click', async (e) => {
     const button = e.currentTarget as HTMLButtonElement;
     const variant = update(card);
@@ -70,6 +85,7 @@ if (cards.length) {
         const card = cards.find((c) => c.dataset.product === p.handle);
         if (!card) return;
         card.dataset.variants = JSON.stringify(p.variants.nodes);
+        inStock(card);
         update(card);
       });
     })
