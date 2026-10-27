@@ -21,7 +21,7 @@ const en = langOf(Astro.url) === 'en';
     <p class="cart-total"><span>{en ? 'Subtotal' : 'Subtotaal'}</span><b id="cart-total"></b></p>
     <p class="cart-note">
       {en ? 'Shipping is calculated at the next step. Pick-up at the brewery taproom is free.' : 'Verzending reken je af bij de volgende stap. Afhalen in de Oerbar kan gratis.'}
-      <br />{en ? "Shipping isn't cheap, we know: these are the lowest rates we can get as a micro brewery. Order together with friends or family, split the shipping and spread the love." : 'Verzenden is niet goedkoop, dat weten we: dit zijn de laagste prijzen die we als microbrouwerij kunnen krijgen. Bestel samen met vrienden of familie, deel de verzendkost en spread the love.'}
+      <br />{en ? 'Tip: order together with friends or family and split the shipping. Spread De Dolle love!' : 'Tip: bestel samen met vrienden of familie en deel de verzendkost. Spread De Dolle love!'}
     </p>
     <a class="btn dark cart-checkout" id="cart-checkout" href="#">{en ? 'Checkout →' : 'Afrekenen →'}</a>
   </footer>
