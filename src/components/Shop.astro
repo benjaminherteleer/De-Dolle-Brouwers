@@ -34,6 +34,13 @@ const text = (p: Product) => productText(p, lang);
           {tr("Truien, T-shirts, een pet, het Oerbier-mannetje, glazen en metalen borden met de bende erop. We versturen tot ver over de grens, of je haalt het gratis af in de Oerbar. Staat jouw land er bij het afrekenen niet tussen?", "Hoodies, T-shirts, a cap, the Oerbier figure, glasses and metal signs with our characters on them. We ship far beyond Belgium, or pick it up for free in the Oerbar. Is your country not listed at checkout?")}{' '}
           {tr("Mail ons even op", "Send us an email at")} <a href="mailto:info@dedollebrouwers.be">info@dedollebrouwers.be</a>.
         </p>
+        {
+          en && (
+            <p class="us-note">
+              <b>Shipping to the USA</b> is possible until 15 January 2027. After that, new US customs rules come in and we'll have to look at it again.
+            </p>
+          )
+        }
       </div>
       {
         products.length === 0 && (
@@ -112,6 +119,15 @@ const text = (p: Product) => productText(p, lang);
   }
   .shop-head .lead {
     margin: 0;
+  }
+  .us-note {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 12px 18px;
+    background: var(--yellow-soft);
+    border: var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
   }
   .shop-grid {
     display: grid;
