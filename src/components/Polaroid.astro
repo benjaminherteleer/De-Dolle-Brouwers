@@ -18,6 +18,13 @@ const { src, alt, caption, tilt = -2, ratio = '4 / 5', taped = false, width = 70
 ---
 
 <figure class:list={['polaroid', { taped }, cls]} style={`--tilt:${tilt}deg; --ratio:${ratio};`}>
-  <Image src={src} alt={alt} width={width} loading={loading} />
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    widths={[360, 540, width].filter((w, i, a) => w <= width && a.indexOf(w) === i)}
+    sizes={`(max-width: 760px) 86vw, ${width}px`}
+    loading={loading}
+  />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>

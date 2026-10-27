@@ -121,7 +121,7 @@ const bende = [
                   <path d="M33 34 Q35 4 60 2 Q50 10 46 31 Z M87 34 Q85 4 60 2 Q70 10 74 31 Z" fill="#f7b500" />
                   <path d="M6 34 Q8 2 60 2 Q112 2 114 34 Q101 25 87 34 Q74 25 60 34 Q46 25 33 34 Q19 25 6 34 Z" fill="none" stroke="#21170c" stroke-width="3" stroke-linejoin="round" />
                 </svg>
-                <Image src={b.src} alt="" height={240} loading="eager" />
+                <Image src={b.src} alt="" height={100} densities={[1, 2]} loading="eager" />
                 </span>
               </span>
             ))
@@ -178,7 +178,7 @@ const bende = [
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
-                  <Image src={b.art} alt={tr(`Het ${b.name}-personage`, `The ${b.name} character`)} width={420} />
+                  <Image src={b.art} alt={tr(`Het ${b.name}-personage`, `The ${b.name} character`)} width={420} widths={[240, 420]} sizes="(max-width: 980px) 46vw, 280px" />
                 </span>
                 <span class="beer-name">{b.name}</span>
                 <span class="beer-meta">
