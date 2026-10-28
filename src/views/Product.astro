@@ -19,6 +19,27 @@ const shopifyPhotos = photos.length ? [] : p.featuredImage ? [p.featuredImage] :
 const guide = (maten as unknown as Record<string, { kolommen: string[]; maten: Record<string, (number | null)[]> }>)[p.handle];
 const guideFilled = guide && Object.values(guide.maten).some((row) => row.some((v) => v !== null));
 const hasSizes = p.options.some((o) => o.name === 'Maat');
+const pageUrl = `https://www.dedollebrouwers.be${Astro.url.pathname.replace(/\.html$/, '')}`;
+const prices = p.variants.nodes.map((v) => Number(v.price.amount));
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: t.title,
+  description: t.description,
+  url: pageUrl,
+  ...(p.featuredImage ? { image: shopifyImage(p.featuredImage.url, 1200) } : {}),
+  brand: { '@type': 'Brand', name: 'De Dolle Brouwers' },
+  offers: {
+    '@type': 'AggregateOffer',
+    url: pageUrl,
+    priceCurrency: p.priceRange.minVariantPrice.currencyCode,
+    lowPrice: Math.min(...prices),
+    highPrice: Math.max(...prices),
+    offerCount: prices.length,
+    availability: p.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    seller: { '@type': 'Organization', name: 'De Dolle Brouwers' },
+  },
+};
 const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
 ---
 
@@ -29,6 +50,7 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
 >
   <Fragment slot="head">
     <meta property="og:title" content={`${t.title} | De Dolle Brouwers`} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(ld)} />
   </Fragment>
 
   <section class="section product">
