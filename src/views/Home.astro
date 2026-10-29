@@ -80,6 +80,7 @@ const bende = [
         <p class="lead">
           {tr("Op 15 november 1980 brouwde een bende vrienden hun eerste Oerbier in een leegstaande brouwerij in Esen. We doen het vandaag nog altijd op dezelfde koppige manier: ongefilterd, met een koperen koelschip uit 1921, open vergisting en zonder haast.", "On 15 November 1980 a few friends brewed their first Oerbier in an empty brewery in Esen, Belgium. We still do it the same stubborn way today: unfiltered, with a copper coolship from 1921, open fermentation and never in a hurry.")}
         </p>
+        <Gesloten class="gesloten-hero" />
         <div class="hero-actions">
           <a class="btn dark" href={L('/brouwerij')}>{tr("Kom langs in Esen", "Visit us in Esen")}</a>
           <a class="btn light" href="#bieren">{tr("Ontdek onze bieren", "Discover our beers")}</a>
@@ -394,6 +395,9 @@ const bende = [
   }
   .hero .lead {
     max-width: 30em;
+  }
+  .hero-copy :global(.gesloten-hero) {
+    margin: 0 0 18px;
   }
   .hero-actions {
     display: flex;
