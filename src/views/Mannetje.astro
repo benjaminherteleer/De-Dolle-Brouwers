@@ -558,6 +558,44 @@ const flagArt: Record<string, string> = {
       img.src = dataUrl;
     });
 
+  // Draws the live preview (#man) as a PNG so the order carries a picture of the design
+  const snapshot = () =>
+    new Promise<string>((resolve) => {
+      try {
+        const src = document.getElementById('man') as unknown as SVGSVGElement;
+        const clone = src.cloneNode(true) as SVGSVGElement;
+        const from = src.querySelectorAll('*');
+        const to = clone.querySelectorAll('*');
+        const props = ['fill', 'stroke', 'stroke-width', 'opacity', 'font-size', 'font-weight', 'font-family', 'letter-spacing', 'display', 'visibility'];
+        from.forEach((el, i) => {
+          const cs = getComputedStyle(el);
+          props.forEach((p) => (to[i] as SVGElement).style.setProperty(p, cs.getPropertyValue(p)));
+        });
+        clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        clone.setAttribute('width', '640');
+        clone.setAttribute('height', '680');
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 640;
+            canvas.height = 680;
+            const ctx = canvas.getContext('2d')!;
+            ctx.fillStyle = '#fbf6e6';
+            ctx.fillRect(0, 0, 640, 680);
+            ctx.drawImage(img, 0, 0, 640, 680);
+            resolve(canvas.toDataURL('image/png'));
+          } catch {
+            resolve('');
+          }
+        };
+        img.onerror = () => resolve('');
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+      } catch {
+        resolve('');
+      }
+    });
+
   window.addEventListener('mannetje:bestel', async (e) => {
     const { plain, attributes, logoName, toeslagen } = (e as CustomEvent).detail as {
       plain: boolean;
@@ -591,6 +629,15 @@ const flagArt: Record<string, string> = {
         if (!res.ok) throw new Error('logo');
         const { url } = await res.json();
         lines.push({ key: 'Logo', value: url });
+      }
+      if (!plain) {
+        try {
+          const data = await snapshot();
+          if (data) {
+            const res = await fetch('/api/logo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data, name: 'voorbeeld' }) });
+            if (res.ok) lines.push({ key: 'Voorbeeld', value: (await res.json()).url });
+          }
+        } catch {}
       }
       await addToCart(variant, 1, lines);
       for (const t of toeslagen) await addToCart(extras[t.naam].id, t.aantal, [{ key: 'Ontwerp', value: ontwerp }]);
