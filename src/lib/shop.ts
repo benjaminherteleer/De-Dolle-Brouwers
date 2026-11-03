@@ -4,7 +4,7 @@ import { euro, type Product } from './shopify';
 
 /** The personalised figurine is ordered through the maker page, not a product page. */
 export const CUSTOM = 'oerbier-mannetje-op-maat';
-const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'pet', 'oerbier-mannetje', CUSTOM, 'cadeaubon-50', 'metalen-bord', 'affiches-set', 'oerbier-glas-charente', 'oeral-glas', 'hidden-beers-of-belgium', 'garbage-pail-kids-taste-buds'];
+const ORDER = ['trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'rompertje', 'pet', 'oerbier-mannetje', CUSTOM, 'cadeaubon-50', 'metalen-bord', 'affiches-set', 'oerbier-glas-charente', 'oeral-glas', 'hidden-beers-of-belgium', 'garbage-pail-kids-taste-buds'];
 
 /** Tour tickets are a Shopify product too, but they are sold on the booking page, not in the shop. */
 export const TICKET = 'rondleiding';
