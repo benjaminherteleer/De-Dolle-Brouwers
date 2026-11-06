@@ -32,13 +32,12 @@ const en = lang === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
 const L = (href: string) => link(lang, href);
 const examples = import.meta.glob<{ default: ImageMetadata }>('../assets/mannetjes/*.jpg', { eager: true });
+// The latest figure ordered on the site goes first, with a caption
+const NIEUWSTE = 'ierland';
 const gallery = Object.entries(examples)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([file, mod], i) => ({
-    src: mod.default,
-    name: file.split('/').pop()!.replace('.jpg', ''),
-    tilt: [-2.5, 2, -1, 3, -3, 1.5][i % 6],
-  }));
+  .map(([file, mod]) => ({ src: mod.default, name: file.split('/').pop()!.replace('.jpg', '') }))
+  .sort((a, b) => Number(b.name === NIEUWSTE) - Number(a.name === NIEUWSTE) || a.name.localeCompare(b.name))
+  .map((g, i) => ({ ...g, tilt: [-2.5, 2, -1, 3, -3, 1.5][i % 6] }));
 
 const palette = [
   ['Oerbier-geel', '#f6bf1c'],
@@ -335,7 +334,7 @@ const flagArt: Record<string, string> = {
       <div class="inspo-grid">
         {
           gallery.map((g) => (
-            <Polaroid src={g.src} alt={tr(`Gepersonaliseerd Oerbier-mannetje: ${g.name.replace(/-/g, ' ')}`, `Personalised Oerbier figure: ${g.name.replace(/-/g, ' ')}`)} tilt={g.tilt} ratio="1 / 1" width={420} />
+            <Polaroid src={g.src} alt={tr(`Gepersonaliseerd Oerbier-mannetje: ${g.name.replace(/-/g, ' ')}`, `Personalised Oerbier figure: ${g.name.replace(/-/g, ' ')}`)} tilt={g.tilt} ratio="1 / 1" width={420} caption={g.name === NIEUWSTE ? tr("Laatst gemaakt via de site", "Latest one made on the site") : undefined} />
           ))
         }
       </div>
