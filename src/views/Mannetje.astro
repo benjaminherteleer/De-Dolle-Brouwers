@@ -238,6 +238,7 @@ const flagArt: Record<string, string> = {
           <legend>{tr("1. Kleuren", "1. Colours")}</legend>
           <p class="hint">{tr(`Kies eerst wat je kleurt, daarna de kleur. Twee eigen kleuren zitten in de prijs, elke kleur meer kost €${toeslag.kleur} (we kopen die verf apart). Maximum vijf eigen kleuren.`, `First pick what to colour, then the colour. Two colours of your own are included, every extra colour is €${toeslag.kleur} (we buy that paint separately). Five colours of your own at most.`)}</p>
           <p class="hint warn" id="kleur-max" hidden>{tr("Dat is het maximum van vijf eigen kleuren. Meer nodig? Beschrijf het bij je idee onderaan, dan bekijken we het samen.", "That's the maximum of five colours of your own. Need more? Describe it in your idea at the bottom and we'll look at it together.")}</p>
+          <p class="hint warn" id="sjaal-donker" hidden>{tr("Een zwarte of heel donkere sjaal kan niet: de letters op de sjaal zijn al zwart, dan zie je ze niet meer.", "A black or very dark scarf isn't possible: the lettering on the scarf is black, so you wouldn't see it.")}</p>
           <div class="pills parts">
             {
               parts.map((p, i) => (
@@ -311,7 +312,7 @@ const flagArt: Record<string, string> = {
             {tr("Wat staat erop?", "What does it say?")}
             <input type="text" name="tekst" value="oerbier" maxlength="16" autocomplete="off" />
           </label>
-          <p class="hint">{tr("De kleur van de sjaal kies je bij 1. Kleuren.", "You pick the scarf colour under 1. Colours.")}</p>
+          <p class="hint">{tr("De kleur van de sjaal kies je bij 1. Kleuren. Zwart kan niet, want de letters zijn zwart.", "You pick the scarf colour under 1. Colours. Black isn't possible, because the lettering is black.")}</p>
         </fieldset>
 
         <fieldset>
@@ -419,8 +420,16 @@ const flagArt: Record<string, string> = {
   const INBEGREPEN = 2;
   const eigenKleuren = (c) => new Set(Object.keys(DEFAULTS).filter((k) => c[k] !== DEFAULTS[k]).map((k) => c[k])).size;
   const kleurMax = document.getElementById('kleur-max');
+  // The scarf lettering is painted black, so a black or very dark scarf would hide it
+  const sjaalDonker = document.getElementById('sjaal-donker');
+  const teDonker = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 70;
+  };
   const paint = (hex) => {
     const deel = value('deel');
+    sjaalDonker.hidden = !(deel === 'sjaal' && teDonker(hex));
+    if (!sjaalDonker.hidden) return;
     const targets = deel === 'alles' ? ['hoofd', 'lichaam', 'armen', 'voeten'] : [deel];
     const next = { ...colors };
     targets.forEach((t) => (next[t] = hex));
@@ -481,6 +490,13 @@ const flagArt: Record<string, string> = {
   let isPlain = true;
 
   form.querySelectorAll('.sw[data-hex]').forEach((b) => b.addEventListener('click', () => paint(b.dataset.hex)));
+  // Grey out the dark swatches while the scarf is selected
+  const markDonker = () => {
+    const sjaal = value('deel') === 'sjaal';
+    form.querySelectorAll('.sw[data-hex]').forEach((b) => (b.disabled = sjaal && teDonker(b.dataset.hex)));
+    if (!sjaal) sjaalDonker.hidden = true;
+  };
+  form.querySelectorAll('input[name="deel"]').forEach((r) => r.addEventListener('change', markDonker));
   document.getElementById('eigen').addEventListener('input', (e) => paint(e.target.value));
   form.addEventListener('input', render);
   form.addEventListener('change', render);
@@ -821,6 +837,10 @@ const flagArt: Record<string, string> = {
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 14px;
+  }
+  .sw:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
   }
   .sw {
     width: 34px;
