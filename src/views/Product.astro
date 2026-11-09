@@ -147,7 +147,13 @@ const others = all.filter((o) => o.handle !== p.handle).slice(0, 3);
 
           <ul class="facts">
             <li><b>{tr("Verzenden", "Shipping")}</b> {tr("naar heel wat landen; de kost zie je bij het afrekenen", "to many countries; you'll see the cost at checkout")}</li>
-            <li><b>{tr("VS", "USA")}</b> {tr("ook naar de Verenigde Staten; de invoerrechten betaal je meteen bij het afrekenen, dus bij levering betaal je niets extra", "we ship to the United States too; you pay the import duties at checkout, so there's nothing extra to pay on delivery")}</li>
+            {
+              p.handle.startsWith('oerbier-mannetje') ? (
+                <li><b>{tr("Alleen binnen de EU", "EU only")}</b> {tr("het mannetje zit in een grote doos en dat maakt verzenden buiten de EU (VK, VS, Canada, Zwitserland, Noorwegen) onbetaalbaar; afhalen in de Oerbar kan altijd", "the figure travels in a big box, which makes shipping outside the EU (UK, USA, Canada, Switzerland, Norway) far too expensive; you can always pick it up in the Oerbar")}</li>
+              ) : (
+                <li><b>{tr("VS", "USA")}</b> {tr("ook naar de Verenigde Staten; de invoerrechten betaal je meteen bij het afrekenen, dus bij levering betaal je niets extra", "we ship to the United States too; you pay the import duties at checkout, so there's nothing extra to pay on delivery")}</li>
+              )
+            }
             <li><b>{tr("Afhalen", "Pick-up")}</b> {tr("gratis in de Oerbar in Esen", "free in the Oerbar in Esen")}</li>
           </ul>
         </div>
