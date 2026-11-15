@@ -3,6 +3,7 @@ import { getImage } from 'astro:assets';
 import { getPlaces, placesIn, provincies, provincieIn } from '../lib/verkooppunten';
 import { langOf } from '../i18n';
 import mascot from '../assets/logo/logo-full.png';
+import webwinkels from '../data/webwinkels.json';
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -86,6 +87,23 @@ const data = {
         </details>
       ))
     }
+    <details>
+      <summary>
+        {tr('Ook online', 'Also online')} <span>{webwinkels.length}</span>
+      </summary>
+      <ul>
+        {
+          webwinkels.map((w) => (
+            <li>
+              <a class="shop" href={w.url} target="_blank" rel="noopener">
+                <b>{w.name} ↗</b>
+                <small>{en ? w.en : w.nl}</small>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
   </aside>
 </div>
 
@@ -334,8 +352,11 @@ const data = {
     margin: 0 0 10px;
     padding: 0;
   }
-  details button {
+  details button,
+  details a.shop {
     width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
     text-align: left;
     border: 0;
     background: none;
@@ -346,16 +367,19 @@ const data = {
     display: grid;
     color: var(--ink);
   }
-  details button b {
+  details button b,
+  details a.shop b {
     font-weight: 600;
     font-size: 0.95rem;
     line-height: 1.25;
   }
-  details button small {
+  details button small,
+  details a.shop small {
     color: var(--ink-soft);
     font-size: 0.82rem;
   }
   details button:hover,
+  details a.shop:hover,
   details button.on {
     background: var(--yellow-soft);
   }
