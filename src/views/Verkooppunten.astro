@@ -5,6 +5,7 @@ import VerkoopKaart from '../components/VerkoopKaart.astro';
 import Polaroid from '../components/Polaroid.astro';
 import { getPlaces } from '../lib/verkooppunten';
 import flesHop from '../assets/foto/fles-hop.jpg';
+import webwinkels from '../data/webwinkels.json';
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -45,6 +46,23 @@ const countries = new Set(places.map((p) => p.country)).size;
     <div class="wrap">
       <VerkoopKaart />
       <p class="note">{tr("Locaties bij benadering. Check openingsuren en assortiment vooraf bij de zaak zelf.", "Locations are approximate. Check opening hours and what's on offer with the place itself.")}</p>
+    </div>
+  </section>
+
+  <section class="section online">
+    <div class="wrap">
+      <h2>{tr("Liever thuis bestellen?", "Rather order at home?")}</h2>
+      <p>{tr("Deze webshops verkopen onze bieren. Check het assortiment en de levering bij de shop zelf.", "These web shops sell our beers. Check what's in stock and where they deliver on the shop's own site.")}</p>
+      <ul class="webshops">
+        {
+          webwinkels.map((w) => (
+            <li>
+              <a href={w.url} target="_blank" rel="noopener">{w.name} ↗</a>
+              <span>{en ? w.en : w.nl}</span>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -308,6 +326,38 @@ const countries = new Set(places.map((p) => p.country)).size;
 </script>
 
 <style>
+  .online h2 {
+    margin: 0 0 8px;
+  }
+  .online p {
+    margin: 0 0 16px;
+    max-width: 40em;
+  }
+  .webshops {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .webshops li {
+    display: grid;
+    gap: 4px;
+    padding: 14px 16px;
+    background: var(--paper-light);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .webshops a {
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .webshops span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
   .intro {
     padding: clamp(40px, 6vw, 80px) 0 50px;
   }
