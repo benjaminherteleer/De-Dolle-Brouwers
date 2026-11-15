@@ -1,7 +1,38 @@
 [
-  { "name": "Etre Gourmet", "url": "https://www.bieresgourmet.be/nl/39_de-dolle-brouwers", "nl": "België en Europa", "en": "Belgium and Europe" },
-  { "name": "Belgian Beer Heaven", "url": "https://www.belgianbeerheaven.com/en/oerbier-33cl.html", "nl": "Europa", "en": "Europe" },
-  { "name": "De Bier Salon", "url": "https://debiersalon.nl/products/de-dolle-brouwers-oerbier", "nl": "Nederland, België en Duitsland", "en": "Netherlands, Belgium and Germany" },
-  { "name": "Cave Direct", "url": "https://north.cavedirect.com/de-dolle-oerbier-reserva-2023-20x33cl-12-abv-nrbddoere201533i.html", "nl": "Verenigd Koninkrijk", "en": "United Kingdom" },
-  { "name": "Beer Shop HQ", "url": "https://www.beershophq.uk/products/de-dolle-brouwers-oerbier", "nl": "Verenigd Koninkrijk", "en": "United Kingdom" }
+  {
+    "name": "Etre Gourmet",
+    "url": "https://www.bieresgourmet.be/nl/39_de-dolle-brouwers",
+    "nl": "België en Europa",
+    "en": "Belgium and Europe"
+  },
+  {
+    "name": "Struise Beershop",
+    "url": "https://www.struisebeershop.com/nl/product/oerbier/",
+    "nl": "Benelux, gratis levering vanaf €100",
+    "en": "Benelux, free delivery from €100"
+  },
+  {
+    "name": "Belgian Beer Heaven",
+    "url": "https://www.belgianbeerheaven.com/en/oerbier-33cl.html",
+    "nl": "Europa",
+    "en": "Europe"
+  },
+  {
+    "name": "De Bier Salon",
+    "url": "https://debiersalon.nl/products/de-dolle-brouwers-oerbier",
+    "nl": "Nederland, België en Duitsland",
+    "en": "Netherlands, Belgium and Germany"
+  },
+  {
+    "name": "Cave Direct",
+    "url": "https://north.cavedirect.com/de-dolle-oerbier-reserva-2023-20x33cl-12-abv-nrbddoere201533i.html",
+    "nl": "Verenigd Koninkrijk",
+    "en": "United Kingdom"
+  },
+  {
+    "name": "Beer Shop HQ",
+    "url": "https://www.beershophq.uk/products/de-dolle-brouwers-oerbier",
+    "nl": "Verenigd Koninkrijk",
+    "en": "United Kingdom"
+  }
 ]
