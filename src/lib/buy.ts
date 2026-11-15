@@ -18,12 +18,10 @@ const update = (card: HTMLElement) => {
   button.disabled = !variant?.availableForSale;
   button.textContent = variant?.availableForSale ? (en ? 'Add to cart' : 'In mandje') : en ? 'Sold out' : 'Uitverkocht';
   if (variant && card.querySelector('select')) card.querySelector('[data-price]')!.textContent = euro(variant.price);
-  // Mark sold-out values in single-option lists (sizes, designs)
+  // Mark a value sold out only when no variant with that value is in stock, whatever the other options are set to
   card.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((sel) => {
     [...sel.options].forEach((opt) => {
-      const match = variants.filter((v) =>
-        v.selectedOptions.every((o) => (o.name === sel.dataset.option ? o.value === opt.value : o.name === 'Title' || chosen[o.name] === o.value)),
-      );
+      const match = variants.filter((v) => v.selectedOptions.some((o) => o.name === sel.dataset.option && o.value === opt.value));
       const out = match.length > 0 && match.every((v) => !v.availableForSale);
       const label = opt.dataset.label ?? opt.value;
       opt.textContent = out ? `${label} (${en ? 'sold out' : 'uitverkocht'})` : label;
