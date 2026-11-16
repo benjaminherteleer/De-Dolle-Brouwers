@@ -255,7 +255,7 @@
     "tagline": "The lighter Arabier, only from the tap."
   },
   "oerbier-reserva": {
-    "badge": "Currently in stock, limited edition",
+    "badge": "Currently out of stock",
     "title": "Oerbier Reserva | Barrel-aged dark beer from De Dolle Brouwers, Esen (Belgium)",
     "description": "Oerbier Reserva (9%) is the wine-barrel-aged version of Oerbier, from De Dolle Brouwers in Esen, West Flanders. Limited, numbered edition.",
     "alt": "Oerbier Reserva bottles",
@@ -316,7 +316,7 @@
     "tagline": "Our tripel, at least a year in wine barrels."
   },
   "stille-nacht-reserva": {
-    "badge": "Currently in stock, limited edition",
+    "badge": "75 cl sold out, 33 cl still available",
     "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers, Esen (Belgium)",
     "description": "Stille Nacht Reserva (12%) is the wine-barrel-aged version of Stille Nacht, released in limited editions by De Dolle Brouwers in Esen, West Flanders.",
     "alt": "Stille Nacht Reserva bottles",
