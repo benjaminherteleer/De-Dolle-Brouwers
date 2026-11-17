@@ -16,6 +16,7 @@ const pages: Record<string, string> = {
   '/verkooppunten-kaart': '/en/where-to-drink',
   '/contact': '/en/contact',
   '/faq': '/en/faq',
+  '/privacy': '/en/privacy',
   '/nieuws': '/en/news',
 };
 const prefixes: [string, string][] = [

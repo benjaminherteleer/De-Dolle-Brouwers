@@ -1,0 +1,69 @@
+---
+import { langOf } from '../i18n';
+import Base from '../layouts/Base.astro';
+const en = langOf(Astro.url) === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const mail = 'info@dedollebrouwers.be';
+const delen = [
+  {
+    h: tr('Wie zijn wij?', 'Who are we?'),
+    p: tr(
+      `De Dolle Brouwers, Roeselarestraat 12B, 8600 Esen (Diksmuide), België, is verantwoordelijk voor de gegevens die je op deze site achterlaat. Vragen of een verzoek? Mail naar ${mail}.`,
+      `De Dolle Brouwers, Roeselarestraat 12B, 8600 Esen (Diksmuide), Belgium, is responsible for the data you leave on this site. Questions or a request? Email ${mail}.`,
+    ),
+  },
+  {
+    h: tr('Bestellen in de Oershop en rondleiding boeken', 'Ordering in the Oershop and booking a tour'),
+    p: tr(
+      'Bij een bestelling of boeking vragen we naam, adres, e-mailadres en eventueel telefoonnummer. Dat is nodig om je bestelling te versturen en je ticket te bevestigen. De betaling verloopt via Shopify; wij zien je kaartgegevens nooit. Bestelgegevens bewaren we zolang de boekhouding dat verplicht (7 jaar). Bij een Oerbier-mannetje op maat bewaren we de afbeelding of het logo dat je uploadt tot 2 jaar, om het beeldje te maken.',
+      'When you order or book, we ask for your name, address, email address and possibly phone number. We need this to ship your order and confirm your ticket. Payment runs through Shopify; we never see your card details. We keep order data for as long as accounting law requires (7 years). For a personalised Oerbier figure we keep the image or logo you upload for up to 2 years, to make the figure.',
+    ),
+  },
+  {
+    h: tr('Nieuwsbrief', 'Newsletter'),
+    p: tr(
+      'Als je je inschrijft voor Oerbier Fake Nieuws bewaren we enkel je e-mailadres en de datum van inschrijving. Mail ons om je uit te schrijven, dan verwijderen we het.',
+      'If you sign up for Oerbier Fake News we only store your email address and the sign-up date. Email us to unsubscribe and we will delete it.',
+    ),
+  },
+  {
+    h: tr('Tips voor de kaart', 'Tips for the map'),
+    p: tr(
+      'Tip je een café of winkel voor de kaart met verkooppunten, dan bewaren we alleen wat je invult over die plek. We vragen daarbij geen e-mailadres.',
+      'If you suggest a bar or shop for the where-to-drink map, we only store what you fill in about that place. We do not ask for an email address.',
+    ),
+  },
+  {
+    h: tr('Cookies en statistieken', 'Cookies and statistics'),
+    p: tr(
+      'We gebruiken geen advertentie- of trackingcookies. Je winkelmandje wordt in je eigen browser bewaard. Cloudflare, waar de site draait, meet anoniem bezoekersaantallen zonder je te volgen. De kaart laadt kaartjes van OpenStreetMap.',
+      'We use no advertising or tracking cookies. Your cart is stored in your own browser. Cloudflare, which hosts the site, counts visitors anonymously without tracking you. The map loads tiles from OpenStreetMap.',
+    ),
+  },
+  {
+    h: tr('Jouw rechten', 'Your rights'),
+    p: tr(
+      `Je mag je gegevens inkijken, laten verbeteren of laten wissen. Mail ons op ${mail}. Kom je er met ons niet uit, dan kan je klacht indienen bij de Gegevensbeschermingsautoriteit (gegevensbeschermingsautoriteit.be).`,
+      `You may ask to see, correct or delete your data. Email us at ${mail}. If we cannot work it out, you can complain to the Belgian Data Protection Authority (gegevensbeschermingsautoriteit.be).`,
+    ),
+  },
+];
+---
+
+<Base
+  title={tr('Privacy | De Dolle Brouwers, Esen', 'Privacy | De Dolle Brouwers, Esen, Belgium')}
+  description={tr('Welke gegevens we bewaren als je bestelt, een rondleiding boekt of je inschrijft, en wat je rechten zijn.', 'Which data we keep when you order, book a tour or sign up, and what your rights are.')}
+>
+  <header class="page-hero">
+    <div class="wrap">
+      <span class="kicker-hand">Privacy</span>
+      <h1>{tr('Wat we met je gegevens doen.', 'What we do with your data.')}</h1>
+      <p>{tr('Kort en eerlijk: we bewaren enkel wat nodig is.', 'Short and honest: we only keep what we need.')}</p>
+    </div>
+  </header>
+  <section class="section">
+    <div class="wrap" style="max-width:760px;">
+      {delen.map((d) => <><h2 style="font-size:1.5rem;margin-top:1.6em;">{d.h}</h2><p>{d.p}</p></>)}
+    </div>
+  </section>
+</Base>

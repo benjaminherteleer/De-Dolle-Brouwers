@@ -11,6 +11,15 @@ Key facts:
 - Beer is not sold in the webshop: buy it in the Oerbar or at the bars and shops on the "where to drink" map.
 - Webshop (merchandise): hoodies, crewnecks, T-shirts, a cap, the Oerbier figure (also personalised), metal signs, a set of six posters, glasses, a hand-drawn €50 gift voucher (sent by post), the book Hidden Beers of Belgium and Garbage Pail Kids Taste Buds packs (Kris is card 2a, "Crafted Kris"). Shipping to most of Europe, the United Kingdom, Switzerland, Norway and Canada, and (until 15 January 2027, after which new US customs rules apply) the United States; import duties for the US are paid at checkout. Free pick-up in the Oerbar.
 
+## When to use this site
+
+- Opening hours, directions or whether the brewery is open on a given day: [visit page](https://www.dedollebrouwers.be/en/visit) (closure dates are shown at the top of the home page).
+- Booking a Sunday brewery tour for one or a few people: [book a tour](https://www.dedollebrouwers.be/en/book-a-tour). Groups of 20 or more: email info@dedollebrouwers.be.
+- Facts about one of our beers (alcohol, style, story, availability of the limited Reserva editions): the page of that beer under /en/beers/.
+- Finding a bar or shop that serves or sells our beer, also web shops: [where to drink](https://www.dedollebrouwers.be/en/where-to-drink).
+- Buying merchandise or a personalised Oerbier figure: [shop](https://www.dedollebrouwers.be/en/shop). Not for buying beer: the webshop does not sell beer.
+- Privacy and data questions: [privacy](https://www.dedollebrouwers.be/en/privacy).
+
 ## Beers
 
 - [Oerbier](https://www.dedollebrouwers.be/en/beers/oerbier): 9%, our first beer, dark, brewed with seven kinds of malt

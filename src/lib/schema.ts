@@ -19,6 +19,12 @@ export const brewery = (lang: 'nl' | 'en' = 'nl') => ({
       : 'Ambachtelijke specialiteitsbrouwerij in Esen (Diksmuide), West-Vlaanderen, sinds 1980. Bekend van Oerbier, Arabier, Boskeun, Dulle Teve, Stille Nacht, Export Stout en Oeral. Rondleiding elke zondag, Oerbar open in het weekend.',
   foundingDate: '1980',
   email: 'info@dedollebrouwers.be',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    email: 'info@dedollebrouwers.be',
+    availableLanguage: ['nl', 'en'],
+  },
   image: `${site}/apple-touch-icon.png`,
   address: {
     '@type': 'PostalAddress',
