@@ -4,7 +4,7 @@ import { euro, type Product } from './shopify';
 
 /** The personalised figurine is ordered through the maker page, not a product page. */
 export const CUSTOM = 'oerbier-mannetje-op-maat';
-const ORDER = ['rompertje', 'trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'oerbier-mannetje', CUSTOM, 'cadeaubon-50', 'metalen-bord', 'affiches-set', 'oerbier-glas-charente', 'oeral-glas', 'hidden-beers-of-belgium', 'garbage-pail-kids-taste-buds', 'pet'];
+const ORDER = ['rompertje', 'trui-zwart', 'crewneck-grijs', 't-shirt-de-bende', 'oerbier-mannetje', CUSTOM, 'cadeaubon-50', 'metalen-bord', 'affiches-set', 'oerbier-glas-charente', 'oerbier-glas-klein', 'oeral-glas', 'hidden-beers-of-belgium', 'garbage-pail-kids-taste-buds', 'pet'];
 
 /** Tour tickets are a Shopify product too, but they are sold on the booking page, not in the shop. */
 export const TICKET = 'rondleiding';
@@ -14,8 +14,8 @@ export const TICKET = 'rondleiding';
  */
 export const TICKETS_BETALEN = true;
 
-/** Products not sold as such in the shop: the small glass breaks too easily in the post, the figurine surcharges go with the maker. */
-const VERBORGEN = ['oerbier-glas-klein', 'mannetje-extra'];
+/** Products not sold as such in the shop: the figurine surcharges go with the maker. */
+const VERBORGEN = ['mannetje-extra'];
 
 export const sortProducts = (list: Product[]) => {
   const rank = (h: string) => (ORDER.includes(h) ? ORDER.indexOf(h) : ORDER.length);
