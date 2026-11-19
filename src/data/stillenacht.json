@@ -1,0 +1,10 @@
+{
+  "start": "2026-11-28",
+  "einde": "2026-12-20",
+  "weekends": [
+    { "nl": "28 en 29 november", "en": "28 and 29 November" },
+    { "nl": "5 en 6 december", "en": "5 and 6 December" },
+    { "nl": "12 en 13 december", "en": "12 and 13 December" },
+    { "nl": "19 en 20 december", "en": "19 and 20 December" }
+  ]
+}

@@ -1,0 +1,112 @@
+---
+/**
+ * Temporary Christmas banner for the Stille Nacht weekends (dates in src/data/stillenacht.json).
+ * Hides itself after the last day, also on a build that has not been refreshed.
+ */
+import { Image } from 'astro:assets';
+import data from '../data/stillenacht.json';
+import { langOf } from '../i18n';
+import logo from '../assets/bieren/stille-nacht.png';
+
+const en = langOf(Astro.url) === 'en';
+const tr = (nl: string, enText: string) => (en ? enText : nl);
+const vandaag = new Date().toISOString().slice(0, 10);
+const actief = vandaag <= data.einde;
+---
+
+{
+  actief && (
+    <section class="sn" id="stille-nacht" data-einde={data.einde}>
+      <div class="wrap sn-grid">
+        <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={260} class="sn-logo" />
+        <div>
+          <p class="hand">{tr('Stille Nacht-weekends', 'Stille Nacht weekends')}</p>
+          <h2>{tr('Kom je Stille Nacht halen.', 'Come and get your Stille Nacht.')}</h2>
+          <p class="sn-lead">
+            {tr(
+              'Vier weekends lang kan je ons kerstbier gewoon bij de brouwerij in Esen komen halen. Je hoeft niet te bestellen of te reserveren: kom langs en neem mee, zolang de voorraad strekt.',
+              'For four weekends you can simply come and pick up our Christmas beer at the brewery in Esen. No need to order or reserve: drop by and take it home, while stocks last.',
+            )}
+          </p>
+          <ul class="sn-data">
+            {data.weekends.map((w) => <li>{en ? w.en : w.nl}</li>)}
+          </ul>
+          <p class="sn-small">
+            {tr('Zaterdag en zondag, 14u tot 19u, in de Oerbar. Geen webbestelling voor Stille Nacht.', 'Saturday and Sunday, 2 pm to 7 pm, at the Oerbar. Stille Nacht is not sold in the webshop.')}
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<script is:inline>
+  (function () {
+    var s = document.getElementById('stille-nacht');
+    if (s && new Date().toISOString().slice(0, 10) > s.getAttribute('data-einde')) s.remove();
+  })();
+</script>
+
+<style>
+  .sn {
+    background: #2a62c9;
+    color: #fbf5ea;
+    padding: clamp(28px, 5vw, 56px) 0;
+    border-block: 2.5px solid var(--ink);
+  }
+  .sn-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+  }
+  .sn-grid :global(.sn-logo) {
+    width: clamp(120px, 20vw, 220px);
+    height: auto;
+    transform: rotate(-3deg);
+    filter: drop-shadow(4px 4px 0 rgba(21, 33, 63, 0.5));
+  }
+  .hand {
+    margin: 0;
+    color: var(--yellow-soft);
+    font-weight: 700;
+  }
+  h2 {
+    margin: 4px 0 10px;
+    color: #fbf5ea;
+  }
+  .sn-lead {
+    margin: 0 0 14px;
+    max-width: 52ch;
+  }
+  .sn-data {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sn-data li {
+    background: #fbf5ea;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-weight: 700;
+  }
+  .sn-small {
+    margin: 0;
+    font-size: 0.95em;
+    opacity: 0.9;
+  }
+  @media (max-width: 640px) {
+    .sn-grid {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+    .sn-grid :global(.sn-logo) {
+      width: 110px;
+    }
+  }
+</style>
