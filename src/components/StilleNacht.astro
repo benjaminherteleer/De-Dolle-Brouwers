@@ -171,6 +171,7 @@ const actief = vandaag <= data.einde;
   @media (prefers-reduced-motion: reduce) {
     .sn-man, .ster, .gloed, .fonkel { animation: none; }
     .ster { opacity: 0.7; }
+    .gloed { opacity: 0.6; }
   }
   .hand {
     margin: 0;
@@ -219,6 +220,11 @@ const actief = vandaag <= data.einde;
     }
     .sn-man {
       width: 110px;
+    }
+    .gloed {
+      left: 42%;
+      top: -28%;
+      width: 92%;
     }
     .lichtjes i:nth-child(n + 19) {
       display: none;
