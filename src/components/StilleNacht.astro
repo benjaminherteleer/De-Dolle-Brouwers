@@ -21,6 +21,7 @@ const actief = vandaag <= data.einde;
       <div class="wrap sn-grid">
         <div class="sn-man">
           <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={300} class="sn-logo" />
+          <i class="gloed" aria-hidden="true"></i>
           <i class="ster" aria-hidden="true"></i>
           <i class="fonkel f1" aria-hidden="true"></i>
           <i class="fonkel f2" aria-hidden="true"></i>
@@ -131,12 +132,16 @@ const actief = vandaag <= data.einde;
     opacity: 0;
     animation: opkleuren 3.6s ease-in-out infinite;
   }
-  .ster::after {
-    content: '';
+  .gloed {
     position: absolute;
-    inset: -60%;
-    background: radial-gradient(circle, rgba(255, 226, 120, 0.9) 0%, rgba(255, 226, 120, 0) 60%);
-    mix-blend-mode: normal;
+    left: 56%;
+    top: -10%;
+    width: 57%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(255, 232, 130, 0.95) 0%, rgba(255, 220, 90, 0.55) 35%, rgba(255, 220, 90, 0) 68%);
+    pointer-events: none;
+    opacity: 0;
+    animation: opkleuren 3.6s ease-in-out infinite;
   }
   .fonkel {
     position: absolute;
@@ -164,7 +169,7 @@ const actief = vandaag <= data.einde;
     50% { transform: rotate(0.5deg); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sn-man, .ster, .fonkel { animation: none; }
+    .sn-man, .ster, .gloed, .fonkel { animation: none; }
     .ster { opacity: 0.7; }
   }
   .hand {
