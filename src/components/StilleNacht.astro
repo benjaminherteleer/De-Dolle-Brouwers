@@ -19,7 +19,12 @@ const actief = vandaag <= data.einde;
     <section class="sn" id="stille-nacht" data-einde={data.einde}>
       <div class="lichtjes" aria-hidden="true">{Array.from({ length: 36 }).map((_, i) => <i style={`--i:${i}`} />)}</div>
       <div class="wrap sn-grid">
-        <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={300} class="sn-logo" />
+        <div class="sn-man">
+          <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={300} class="sn-logo" />
+          <i class="ster" aria-hidden="true"></i>
+          <i class="fonkel f1" aria-hidden="true"></i>
+          <i class="fonkel f2" aria-hidden="true"></i>
+        </div>
         <div class="sn-tekst">
           <p class="hand">{tr('Stille Nacht-weekends', 'Stille Nacht weekends')}</p>
           <h2>{tr('Kom je Stille Nacht halen.', 'Come and get your Stille Nacht.')}</h2>
@@ -100,11 +105,67 @@ const actief = vandaag <= data.einde;
     gap: clamp(24px, 4vw, 56px);
     align-items: center;
   }
-  .sn-grid :global(.sn-logo) {
+  .sn-man {
+    position: relative;
     width: clamp(130px, 20vw, 230px);
-    height: auto;
     transform: rotate(-3deg);
+    transform-origin: 50% 100%;
+    animation: wiegel 5s ease-in-out infinite;
+  }
+  .sn-grid :global(.sn-logo) {
+    display: block;
+    width: 100%;
+    height: auto;
     filter: drop-shadow(4px 4px 0 rgba(21, 33, 63, 0.5));
+  }
+  /* The star on the staff lights up yellow and glows, with two sparkles beside it */
+  .ster {
+    position: absolute;
+    left: 69%;
+    top: 3%;
+    width: 31%;
+    aspect-ratio: 1;
+    background: #ffd84a;
+    clip-path: polygon(50% 0, 62% 36%, 100% 38%, 70% 60%, 81% 100%, 50% 76%, 19% 100%, 30% 60%, 0 38%, 38% 36%);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    animation: opkleuren 3.6s ease-in-out infinite;
+  }
+  .ster::after {
+    content: '';
+    position: absolute;
+    inset: -60%;
+    background: radial-gradient(circle, rgba(255, 226, 120, 0.9) 0%, rgba(255, 226, 120, 0) 60%);
+    mix-blend-mode: normal;
+  }
+  .fonkel {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fffbe0;
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+    opacity: 0;
+    animation: fonkel 3.6s ease-in-out infinite;
+  }
+  .f1 { left: 66%; top: 0; }
+  .f2 { left: 97%; top: 24%; animation-delay: 0.5s; width: 9px; height: 9px; }
+  @keyframes opkleuren {
+    0%, 15% { opacity: 0; }
+    45%, 65% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  @keyframes fonkel {
+    0%, 30% { opacity: 0; transform: scale(0.3) rotate(0); }
+    55% { opacity: 1; transform: scale(1.3) rotate(45deg); }
+    80%, 100% { opacity: 0; transform: scale(0.3) rotate(90deg); }
+  }
+  @keyframes wiegel {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(0.5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sn-man, .ster, .fonkel { animation: none; }
+    .ster { opacity: 0.7; }
   }
   .hand {
     margin: 0;
@@ -151,7 +212,7 @@ const actief = vandaag <= data.einde;
     .sn-grid {
       grid-template-columns: 1fr;
     }
-    .sn-grid :global(.sn-logo) {
+    .sn-man {
       width: 110px;
     }
     .lichtjes i:nth-child(n + 19) {
