@@ -7,7 +7,6 @@ import { Image } from 'astro:assets';
 import data from '../data/stillenacht.json';
 import { langOf } from '../i18n';
 import logo from '../assets/bieren/stille-nacht.png';
-import tekening from '../assets/bieren/stille-nacht-kerstman.webp';
 
 const en = langOf(Astro.url) === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
@@ -20,6 +19,7 @@ const actief = vandaag <= data.einde;
     <section class="sn" id="stille-nacht" data-einde={data.einde}>
       <div class="lichtjes" aria-hidden="true">{Array.from({ length: 40 }).map((_, i) => <i style={`--i:${i}`} />)}</div>
       <div class="wrap sn-grid">
+        <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={300} class="sn-logo" />
         <div class="sn-tekst">
           <p class="hand">{tr('Stille Nacht-weekends', 'Stille Nacht weekends')}</p>
           <h2>{tr('Kom je Stille Nacht halen.', 'Come and get your Stille Nacht.')}</h2>
@@ -42,10 +42,6 @@ const actief = vandaag <= data.einde;
             {tr('Zaterdag en zondag, 14u tot 19u, in de Oerbar. Geen webbestelling voor Stille Nacht.', 'Saturday and Sunday, 2 pm to 7 pm, at the Oerbar. Stille Nacht is not sold in the webshop.')}
           </p>
         </div>
-        <figure class="sn-prent">
-          <Image src={tekening} alt={tr('Tekening van Benjamin Herteleer: de kerstman en de kerstboom in de Oerbar met de bende', 'Drawing by Benjamin Herteleer: Santa and the Christmas tree in the Oerbar with the gang')} width={640} />
-          <Image src={logo} alt="" width={180} class="sn-logo" />
-        </figure>
       </div>
     </section>
   )
@@ -61,7 +57,7 @@ const actief = vandaag <= data.einde;
 <style>
   .sn {
     position: relative;
-    background: radial-gradient(ellipse at 70% 0%, #1f6b46 0%, #14452f 60%, #0e3322 100%);
+    background: #2a62c9;
     color: #fbf5ea;
     padding: clamp(52px, 7vw, 84px) 0 clamp(32px, 5vw, 60px);
     border-block: 2.5px solid var(--ink);
@@ -81,7 +77,7 @@ const actief = vandaag <= data.einde;
     left: 0;
     right: 0;
     top: 6px;
-    border-top: 2px solid #0a2418;
+    border-top: 2px solid #15213f;
     border-radius: 50%;
   }
   .lichtjes i {
@@ -104,30 +100,15 @@ const actief = vandaag <= data.einde;
   }
   .sn-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: auto 1fr;
     gap: clamp(24px, 4vw, 56px);
     align-items: center;
   }
-  .sn-prent {
-    position: relative;
-    margin: 0;
-    transform: rotate(2deg);
-  }
-  .sn-prent :global(img:first-child) {
-    width: 100%;
+  .sn-grid :global(.sn-logo) {
+    width: clamp(130px, 20vw, 230px);
     height: auto;
-    border: 5px solid #fbf5ea;
-    border-radius: 6px;
-    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.35);
-  }
-  .sn-prent :global(.sn-logo) {
-    position: absolute;
-    width: clamp(80px, 12vw, 130px);
-    height: auto;
-    left: -28px;
-    bottom: -22px;
-    transform: rotate(-6deg);
-    filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.4));
+    transform: rotate(-3deg);
+    filter: drop-shadow(4px 4px 0 rgba(21, 33, 63, 0.5));
   }
   .hand {
     margin: 0;
@@ -169,8 +150,8 @@ const actief = vandaag <= data.einde;
     .sn-grid {
       grid-template-columns: 1fr;
     }
-    .sn-prent {
-      margin: 0 12px 20px;
+    .sn-grid :global(.sn-logo) {
+      width: 120px;
     }
     .lichtjes i:nth-child(n + 21) {
       display: none;
