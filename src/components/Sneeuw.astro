@@ -24,8 +24,8 @@ import data from '../data/stillenacht.json';
     }
     maat();
     addEventListener('resize', maat);
-    var n = w < 700 ? 22 : 40;
-    for (var i = 0; i < n; i++) vlokken.push({ x: Math.random() * w, y: Math.random() * h, r: 1.5 + Math.random() * 2.5, v: 0.4 + Math.random() * 0.8, f: Math.random() * 6.3 });
+    var n = w < 700 ? 45 : 90;
+    for (var i = 0; i < n; i++) vlokken.push({ x: Math.random() * w, y: Math.random() * h, r: 2 + Math.random() * 4, v: 0.6 + Math.random() * 1.2, f: Math.random() * 6.3 });
     function teken() {
       x.clearRect(0, 0, w, h);
       x.fillStyle = 'rgba(255,255,255,0.9)';
