@@ -7,6 +7,7 @@ import { Image } from 'astro:assets';
 import data from '../data/stillenacht.json';
 import { langOf } from '../i18n';
 import logo from '../assets/bieren/stille-nacht.png';
+import figuren from '../assets/bieren/kerstman-boom.png';
 
 const en = langOf(Astro.url) === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
@@ -17,7 +18,7 @@ const actief = vandaag <= data.einde;
 {
   actief && (
     <section class="sn" id="stille-nacht" data-einde={data.einde}>
-      <div class="lichtjes" aria-hidden="true">{Array.from({ length: 40 }).map((_, i) => <i style={`--i:${i}`} />)}</div>
+      <div class="lichtjes" aria-hidden="true">{Array.from({ length: 36 }).map((_, i) => <i style={`--i:${i}`} />)}</div>
       <div class="wrap sn-grid">
         <Image src={logo} alt={tr('Het mannetje van Stille Nacht', 'The Stille Nacht character')} width={300} class="sn-logo" />
         <div class="sn-tekst">
@@ -42,6 +43,7 @@ const actief = vandaag <= data.einde;
             {tr('Zaterdag en zondag, 14u tot 19u, in de Oerbar. Geen webbestelling voor Stille Nacht.', 'Saturday and Sunday, 2 pm to 7 pm, at the Oerbar. Stille Nacht is not sold in the webshop.')}
           </p>
         </div>
+        <Image src={figuren} alt={tr('De kerstman en de kerstboom uit de Stille Nacht-tekening', 'Santa and the Christmas tree from the Stille Nacht drawing')} width={420} class="sn-figuren" />
       </div>
     </section>
   )
@@ -59,48 +61,44 @@ const actief = vandaag <= data.einde;
     position: relative;
     background: #2a62c9;
     color: #fbf5ea;
-    padding: clamp(52px, 7vw, 84px) 0 clamp(32px, 5vw, 60px);
+    padding: clamp(60px, 7vw, 90px) 0 0;
     border-block: 2.5px solid var(--ink);
     overflow: hidden;
   }
   .lichtjes {
     position: absolute;
     inset: 0 0 auto 0;
-    height: 34px;
+    height: 44px;
     display: flex;
     justify-content: space-around;
-    border-top: 0;
+    pointer-events: none;
   }
   .lichtjes::before {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 6px;
-    border-top: 2px solid #15213f;
-    border-radius: 50%;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='24' viewBox='0 0 100 24'%3E%3Cpath d='M0 3 Q50 21 100 3' fill='none' stroke='%2315213f' stroke-width='1.5'/%3E%3C/svg%3E") repeat-x 0 0 / calc(100% / 9) 24px;
   }
   .lichtjes i {
     position: relative;
-    top: 8px;
-    width: 12px;
-    height: 18px;
+    width: 9px;
+    height: 14px;
     border-radius: 50% 50% 55% 55%;
-    background: var(--c);
-    box-shadow: 0 0 10px 2px var(--c);
-    animation: gloei 2.4s ease-in-out infinite;
-    animation-delay: calc(var(--i) * -0.37s);
+    background: #ffe7a3;
+    box-shadow: 0 0 12px 4px rgba(255, 220, 130, 0.55);
+    animation: gloei 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.53s);
   }
-  .lichtjes i:nth-child(4n + 1) { --c: #ff4b3e; }
-  .lichtjes i:nth-child(4n + 2) { --c: #ffc83d; }
-  .lichtjes i:nth-child(4n + 3) { --c: #5ec8ff; }
-  .lichtjes i:nth-child(4n) { --c: #8be36b; }
+  .lichtjes i:nth-child(4n + 1) { top: 6px; }
+  .lichtjes i:nth-child(4n + 2) { top: 14px; }
+  .lichtjes i:nth-child(4n + 3) { top: 16px; }
+  .lichtjes i:nth-child(4n) { top: 10px; }
   @keyframes gloei {
-    50% { opacity: 0.45; }
+    50% { opacity: 0.7; }
   }
   .sn-grid {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr minmax(0, 340px);
     gap: clamp(24px, 4vw, 56px);
     align-items: center;
   }
@@ -109,6 +107,15 @@ const actief = vandaag <= data.einde;
     height: auto;
     transform: rotate(-3deg);
     filter: drop-shadow(4px 4px 0 rgba(21, 33, 63, 0.5));
+  }
+  .sn-grid :global(.sn-figuren) {
+    align-self: end;
+    width: 100%;
+    height: auto;
+    margin-bottom: -2px;
+  }
+  .sn-tekst {
+    padding-bottom: clamp(32px, 5vw, 60px);
   }
   .hand {
     margin: 0;
@@ -146,14 +153,24 @@ const actief = vandaag <= data.einde;
     font-size: 0.95em;
     opacity: 0.9;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 900px) {
+    .sn-grid {
+      grid-template-columns: auto 1fr;
+    }
+    .sn-grid :global(.sn-figuren) {
+      grid-column: 1 / -1;
+      width: min(300px, 80%);
+      justify-self: center;
+    }
+  }
+  @media (max-width: 640px) {
     .sn-grid {
       grid-template-columns: 1fr;
     }
     .sn-grid :global(.sn-logo) {
-      width: 120px;
+      width: 110px;
     }
-    .lichtjes i:nth-child(n + 21) {
+    .lichtjes i:nth-child(n + 19) {
       display: none;
     }
   }
