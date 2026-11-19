@@ -7,7 +7,6 @@ import { Image } from 'astro:assets';
 import data from '../data/stillenacht.json';
 import { langOf } from '../i18n';
 import logo from '../assets/bieren/stille-nacht.png';
-import figuren from '../assets/bieren/kerstman-boom.png';
 
 const en = langOf(Astro.url) === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
@@ -43,7 +42,6 @@ const actief = vandaag <= data.einde;
             {tr('Zaterdag en zondag, 14u tot 19u, in de Oerbar. Geen webbestelling voor Stille Nacht.', 'Saturday and Sunday, 2 pm to 7 pm, at the Oerbar. Stille Nacht is not sold in the webshop.')}
           </p>
         </div>
-        <Image src={figuren} alt={tr('De kerstman en de kerstboom uit de Stille Nacht-tekening', 'Santa and the Christmas tree from the Stille Nacht drawing')} width={420} class="sn-figuren" />
       </div>
     </section>
   )
@@ -61,7 +59,7 @@ const actief = vandaag <= data.einde;
     position: relative;
     background: #2a62c9;
     color: #fbf5ea;
-    padding: clamp(60px, 7vw, 90px) 0 0;
+    padding: clamp(60px, 7vw, 90px) 0 clamp(32px, 5vw, 60px);
     border-block: 2.5px solid var(--ink);
     overflow: hidden;
   }
@@ -98,7 +96,7 @@ const actief = vandaag <= data.einde;
   }
   .sn-grid {
     display: grid;
-    grid-template-columns: auto 1fr minmax(0, 340px);
+    grid-template-columns: auto 1fr;
     gap: clamp(24px, 4vw, 56px);
     align-items: center;
   }
@@ -107,15 +105,6 @@ const actief = vandaag <= data.einde;
     height: auto;
     transform: rotate(-3deg);
     filter: drop-shadow(4px 4px 0 rgba(21, 33, 63, 0.5));
-  }
-  .sn-grid :global(.sn-figuren) {
-    align-self: end;
-    width: 100%;
-    height: auto;
-    margin-bottom: -2px;
-  }
-  .sn-tekst {
-    padding-bottom: clamp(32px, 5vw, 60px);
   }
   .hand {
     margin: 0;
@@ -156,11 +145,6 @@ const actief = vandaag <= data.einde;
   @media (max-width: 900px) {
     .sn-grid {
       grid-template-columns: auto 1fr;
-    }
-    .sn-grid :global(.sn-figuren) {
-      grid-column: 1 / -1;
-      width: min(300px, 80%);
-      justify-self: center;
     }
   }
   @media (max-width: 640px) {
