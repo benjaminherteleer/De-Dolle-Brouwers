@@ -39,14 +39,21 @@ const barrelFoto = (b.barrel as { foto?: { file: string; alt: string; caption: s
 const others = bieren.filter((x) => x.slug !== b.slug && x.reserva === b.reserva).slice(0, 4);
 const back = L(b.reserva ? '/#reserva' : '/#bieren');
 
+// Beers are not sold through the site, so no "Product" markup (Google wants offers or reviews for that).
+// A page about the beer, with the beer as its subject, keeps the meaning without the Search Console errors.
 const ld = {
   '@context': 'https://schema.org',
-  '@type': 'Product',
+  '@type': 'WebPage',
   name: b.name,
   description: b.description,
-  brand: { '@type': 'Brand', name: 'De Dolle Brouwers' },
-  additionalProperty: { '@type': 'PropertyValue', name: tr('Alcoholpercentage', 'Alcohol'), value: abv(b) },
-  category: short(b),
+  publisher: { '@type': 'Organization', name: 'De Dolle Brouwers' },
+  about: {
+    '@type': 'Thing',
+    name: b.name,
+    description: b.description,
+    additionalType: 'https://www.wikidata.org/wiki/Q44',
+    disambiguatingDescription: `${short(b)}, ${abv(b)}`,
+  },
 };
 ---
 
