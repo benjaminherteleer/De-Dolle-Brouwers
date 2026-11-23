@@ -45,6 +45,7 @@ export const brewery = (lang: 'nl' | 'en' = 'nl') => ({
     'https://www.instagram.com/dedollebrouwers',
     'https://www.facebook.com/dedollebrouwers',
     'https://www.tiktok.com/@dedollebrouwers',
+    'https://untappd.com/DeDolleBrouwers',
     'https://en.wikipedia.org/wiki/De_Dolle_Brouwers',
   ],
   event: tours(lang),

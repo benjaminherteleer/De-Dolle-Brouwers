@@ -1,7 +1,7 @@
 {
   "oerbier": {
-    "title": "Oerbier | Dark, top-fermented beer from De Dolle Brouwers, Esen (Belgium)",
-    "description": "Oerbier (9%) is the first beer of De Dolle Brouwers, a craft brewery in Esen, West Flanders. A dark beer with seven kinds of malt and whole-cone hops from Poperinge, unfiltered and refermented in the bottle.",
+    "title": "Oerbier | Dark, top-fermented beer from De Dolle Brouwers",
+    "description": "Oerbier (9%) is the first beer of De Dolle Brouwers in Esen: dark, with seven malts and hops from Poperinge, unfiltered and refermented in the bottle.",
     "alt": "The Oerbier character",
     "kicker": "Our first beer, since 1980",
     "meta": [{ "label": "Alcohol", "value": "9%" }, { "label": "Style", "value": "Dark, top-fermented" }, { "label": "Fermentation", "value": "Refermented in the bottle" }],
@@ -30,7 +30,7 @@
     "tagline": "Our first beer. Dark, with seven kinds of malt."
   },
   "arabier": {
-    "title": "Arabier | Blond, dry-hopped beer from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Arabier | Blond, dry-hopped beer from De Dolle Brouwers",
     "description": "Arabier (8%) from De Dolle Brouwers is the blond sister of Oerbier, from Esen (West Flanders). Brewed with pale malt and dry-hopped with whole-cone hops from Poperinge. Fresh, fruity and bitter.",
     "alt": "The Arabier character",
     "kicker": "The blond sister of Oerbier",
@@ -117,7 +117,7 @@
     }
   },
   "boskeun": {
-    "title": "Boskeun | Easter beer with honey from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Boskeun | Easter beer with honey from De Dolle Brouwers",
     "description": "Boskeun (9%) is the Easter beer of De Dolle Brouwers from Esen (West Flanders), brewed with honey and Golding hops from Poperinge.",
     "alt": "The Boskeun character",
     "kicker": "One of the first Easter beers",
@@ -174,7 +174,7 @@
     "tagline": "Our tripel."
   },
   "lichtervelds-blond": {
-    "title": "Lichtervelds Blond | Golden blond beer from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Lichtervelds Blond | Golden blond beer from De Dolle Brouwers",
     "description": "Lichtervelds Blond (8%) from De Dolle Brouwers is a golden blond beer, brewed in Esen, West Flanders.",
     "alt": null,
     "kicker": "Golden blond, once every two years",
@@ -232,7 +232,7 @@
     "tagline": "Full-bodied: chocolate, coffee and liquorice."
   },
   "oeral": {
-    "title": "Oeral | Blond and bitter beer from De Dolle Brouwers, on draught only, Esen (Belgium)",
+    "title": "Oeral | Blond and bitter beer from De Dolle Brouwers, on draught only",
     "description": "Oeral (6%) is the lighter version of Arabier: blond and bitter. From De Dolle Brouwers in Esen, West Flanders, only on draught in the Oerbar.",
     "alt": null,
     "kicker": "Only from the tap",
@@ -256,7 +256,7 @@
   },
   "oerbier-reserva": {
     "badge": "Currently out of stock",
-    "title": "Oerbier Reserva | Barrel-aged dark beer from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Oerbier Reserva | Barrel-aged dark beer from De Dolle Brouwers",
     "description": "Oerbier Reserva (9%) is the wine-barrel-aged version of Oerbier, from De Dolle Brouwers in Esen, West Flanders. Limited, numbered edition.",
     "alt": "Oerbier Reserva bottles",
     "kicker": "Oerbier, aged in wine barrels",
@@ -287,7 +287,7 @@
   },
   "dulle-teve-reserva": {
     "badge": "Currently out of stock",
-    "title": "Dulle Teve Reserva | Barrel-aged tripel from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Dulle Teve Reserva | Barrel-aged tripel from De Dolle Brouwers",
     "description": "Dulle Teve Reserva (10%) is the wine-barrel-aged version of Dulle Teve, the tripel of De Dolle Brouwers from Esen, West Flanders.",
     "alt": "Dulle Teve Reserva bottles",
     "kicker": "Dulle Teve, aged in wine barrels",
@@ -317,7 +317,7 @@
   },
   "stille-nacht-reserva": {
     "badge": "75 cl sold out, 33 cl still available",
-    "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers, Esen (Belgium)",
+    "title": "Stille Nacht Reserva | Barrel-aged Christmas beer from De Dolle Brouwers",
     "description": "Stille Nacht Reserva (12%) is the wine-barrel-aged version of Stille Nacht, released in limited editions by De Dolle Brouwers in Esen, West Flanders.",
     "alt": "Stille Nacht Reserva bottles",
     "kicker": "Stille Nacht, aged for years in wine barrels",

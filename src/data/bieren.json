@@ -2,8 +2,8 @@
   {
     "slug": "oerbier",
     "name": "Oerbier",
-    "title": "Oerbier — Donker, hoog gegist bier van De Dolle Brouwers | Esen, West-Vlaanderen",
-    "description": "Oerbier (9%) is het eerste bier van De Dolle Brouwers, ambachtelijke brouwerij in Esen, West-Vlaanderen. Donker bier met zeven soorten mout en bloemenhop uit Poperinge, niet gefilterd en hergist op de fles.",
+    "title": "Oerbier — Donker, hoog gegist bier van De Dolle Brouwers",
+    "description": "Oerbier (9%) is het eerste bier van De Dolle Brouwers in Esen: donker, met zeven soorten mout en bloemenhop uit Poperinge, niet gefilterd en hergist op de fles.",
     "alt": "Oerbier personage",
     "kicker": "Ons eerste bier, sinds 1980",
     "meta": [
@@ -63,7 +63,7 @@
   {
     "slug": "arabier",
     "name": "Arabier",
-    "title": "Arabier — Blond, dry hopped bier van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Arabier — Blond, dry hopped bier van De Dolle Brouwers",
     "description": "Arabier (8%) van De Dolle Brouwers is de blonde variant van het Oerbier, uit Esen (West-Vlaanderen). Gebrouwen met bleke mout en droog gehopt met bloemenhop uit Poperinge. Fris, fruitig en bitter.",
     "alt": "Arabier personage",
     "kicker": "De blonde variant van het Oerbier",
@@ -271,7 +271,7 @@
   {
     "slug": "boskeun",
     "name": "Boskeun",
-    "title": "Boskeun — Paasbier met honing van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Boskeun — Paasbier met honing van De Dolle Brouwers",
     "description": "Boskeun (9%) is het paasbier van De Dolle Brouwers uit Esen (West-Vlaanderen), gebrouwen met honing en Goldinghop uit Poperinge.",
     "alt": "Boskeun personage",
     "kicker": "Een van de eerste paasbieren",
@@ -399,7 +399,7 @@
   {
     "slug": "lichtervelds-blond",
     "name": "Lichtervelds Blond",
-    "title": "Lichtervelds Blond — Goudblond bier van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Lichtervelds Blond — Goudblond bier van De Dolle Brouwers",
     "description": "Lichtervelds Blond (8%) van De Dolle Brouwers is een goudblond bier , gebrouwen in Esen, West-Vlaanderen.",
     "alt": null,
     "kicker": "Goudblond bier, eens per twee jaar",
@@ -528,7 +528,7 @@
   {
     "slug": "oeral",
     "name": "Oeral",
-    "title": "Oeral — Blond en bitter bier van De Dolle Brouwers, enkel op vat | Esen, West-Vlaanderen",
+    "title": "Oeral — Blond en bitter bier van De Dolle Brouwers, enkel op vat",
     "description": "Oeral (6%) is de lichtere versie van Arabier: blond en bitter. Van De Dolle Brouwers uit Esen, West-Vlaanderen, enkel op vat verkrijgbaar in de Oerbar.",
     "alt": null,
     "kicker": "Enkel van het vat",
@@ -578,7 +578,7 @@
     "slug": "oerbier-reserva",
     "badge": "Momenteel niet voorradig",
     "name": "Oerbier Reserva",
-    "title": "Oerbier Reserva — Donker, vatgerijpt bier van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Oerbier Reserva — Donker, vatgerijpt bier van De Dolle Brouwers",
     "description": "Oerbier Reserva (9%) is de op wijnvat gerijpte versie van Oerbier, van De Dolle Brouwers in Esen, West-Vlaanderen. Beperkte, genummerde oplage.",
     "alt": "Oerbier Reserva personage",
     "kicker": "Oerbier, gerijpt op wijnvat",
@@ -640,7 +640,7 @@
     "slug": "dulle-teve-reserva",
     "badge": "Momenteel niet voorradig",
     "name": "Dulle Teve Reserva",
-    "title": "Dulle Teve Reserva — Vatgerijpte tripel van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Dulle Teve Reserva — Vatgerijpte tripel van De Dolle Brouwers",
     "description": "Dulle Teve Reserva (10%) is de op wijnvat gerijpte versie van Dulle Teve, het tripelbier van De Dolle Brouwers uit Esen, West-Vlaanderen.",
     "alt": "Dulle Teve Reserva personage",
     "kicker": "Dulle Teve, gerijpt op wijnvat",
@@ -701,7 +701,7 @@
     "slug": "stille-nacht-reserva",
     "badge": "75 cl uitverkocht, 33 cl nog beschikbaar",
     "name": "Stille Nacht Reserva",
-    "title": "Stille Nacht Reserva — Vatgerijpt kerstbier van De Dolle Brouwers | Esen, West-Vlaanderen",
+    "title": "Stille Nacht Reserva — Vatgerijpt kerstbier van De Dolle Brouwers",
     "description": "Stille Nacht Reserva (12%) is de op wijnvat gerijpte versie van Stille Nacht, uitgebracht in beperkte oplage door De Dolle Brouwers in Esen, West-Vlaanderen.",
     "alt": null,
     "kicker": "Stille Nacht, jarenlang gerijpt op wijnvat",
