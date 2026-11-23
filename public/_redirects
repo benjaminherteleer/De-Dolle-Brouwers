@@ -65,3 +65,15 @@
 /fr/* / 301
 # Other old English pages go to the English home page (real /en pages are served as they are)
 /en/speciality-beer-brewery-in-esen-for-beers-with-character----de-dolle-brouwers /en 301
+
+# Old addresses Google still tries (seen in Search Console, 404 report)
+/en/home.htm /en 301
+/home.htm / 301
+/page.asp / 301
+/en/stille-nacht /en/beers/stille-nacht 301
+/en/oerbier /en/beers/oerbier 301
+/en/arabier /en/beers/arabier 301
+/en/boskeun /en/beers/boskeun 301
+/en/export-stout /en/beers/export-stout 301
+/en/oeral /en/beers/oeral 301
+/en/lichtervelds-blond /en/beers/lichtervelds-blond 301
