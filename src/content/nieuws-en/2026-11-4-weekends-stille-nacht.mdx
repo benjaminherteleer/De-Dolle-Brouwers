@@ -3,10 +3,10 @@ titel: 4 weekends available!!!
 datum: 2026-11-01
 kicker: Esen, West Flanders ↘
 stempel: Limited offer!
-lead: 'After months of preparation, our mad Christmas beer is for sale at the brewery. 11 brews were made this year and the first one dates from 8 May.'
+lead: 'After months of preparation, our mad Christmas beer is for sale at the brewery. This year we made 11 brews, the first one on 8 May.'
 kleur: blauw
-foto: ../../assets/nieuws/2026-11/etiket-2026.jpg
-fotoAlt: The Stille Nacht 2026 label with snowman, holly wreath and barcode
+foto: ../../assets/nieuws/2026-11/poster-hero.jpg
+fotoAlt: Poster of Stille Nacht 12° with the snowman wearing a little crown, holding a glass of beer and a star
 ---
 
 import Artikel from '../../components/nieuws/Artikel.astro';
@@ -15,36 +15,32 @@ import Markeer from '../../components/nieuws/Markeer.astro';
 import Cijfers from '../../components/nieuws/Cijfers.astro';
 import Prijzen from '../../components/nieuws/Prijzen.astro';
 import Origineel from '../../components/nieuws/Origineel.astro';
-import etiket5 from '../../assets/nieuws/2026-11/etiket-5e-botteling.jpg';
+import kerst from '../../assets/nieuws/2026-11/kerstman-kerstboom.jpg';
 import origineel from '../../assets/nieuws/2026-11/origineel.jpg';
 
-<Artikel label="Stille Nacht 2026" titel="4 weekends available!!!">
-
-After months of preparation, our mad Christmas beer is for sale at the brewery. 11 brews were made this year and the first one dates from 8 May (!).
+<Artikel label="Stille Nacht 2026" titel="The mad Christmas beer is here." sub="For sale at the brewery, for four weekends.">
 
 <Cijfers items={[[11, 'brews this year'], ['8 May', 'first brew'], ['12%', 'alcohol']]} />
 
+After months of preparation it is finally here. We made 11 brews this year, and the first one dates back to 8 May (!).
+
+These brews don't go into the bottle one by one. We always blend two consecutive brews and bottle them together. That way you can tell which bottling you are holding: the cap has one star for the first bottling, two stars for the second, and so on.
+
+Stille Nacht is 12% and evolves over time. <Markeer>The bitterness decreases</Markeer>, so it can be worth keeping a bottle.
+
 </Artikel>
 
-<Artikel label="The label" titel="What is special this year?" foto={etiket5} fotoAlt="The label of the 5th bottling of Stille Nacht 2026, without barcode" donker rechts>
+<Artikel label="From 5 December" titel="Santa and the Christmas tree come to visit." sub="Every weekend, until the last day." foto={kerst} fotoAlt="Santa and a man dressed as a Christmas tree with a glass of beer in the Oerbar" donker rechts>
 
-<Markeer>The label shows the year 2026 and a barcode.</Markeer> The first 4 bottlings at least; the 5th bottling has the label shown on the right.
+From 5 December Santa and the Christmas tree come to the brewery every weekend.
 
-The consecutive brews are blended and bottled two at a time. The <Markeer>first bottling</Markeer> is marked * on the cap, the second bottling **, and so on.
-
-Stille Nacht is 12% abv and its flavour evolves over time. Bitterness decreases. For special occasions Stille Nacht is available on draught (with refermentation), also at the Christmas Beer Festival in Essen (12-13 Dec).
+For special occasions Stille Nacht is also available on draught, with refermentation. Also at the Christmas Beer Festival in Essen (12-13 Dec).
 
 <Kader>
 
-<Markeer>There is also a limited offer at the brewery: 2026 STILLE NACHT 75 cl for sale.</Markeer>
+<Markeer>At the brewery there is a limited offer of 2026 Stille Nacht 75 cl for sale.</Markeer>
 
-Stille Nacht Reserva 2024 in limited supply.
-
-</Kader>
-
-<Kader titel="From 5 December ↘">
-
-From 5 December Santa and the Christmas tree come to the brewery every weekend.
+Stille Nacht Reserva 2024 is available in limited supply.
 
 </Kader>
 

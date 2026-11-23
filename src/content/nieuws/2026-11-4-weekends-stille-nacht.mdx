@@ -3,10 +3,10 @@ titel: 4 week-ends beschikbaar!!!
 datum: 2026-11-01
 kicker: Esen, West-Vlaanderen ↘
 stempel: Beperkt aanbod!
-lead: 'Na maanden voorbereiding is het dolle kerstbier te koop in de brouwerij. Er zijn dit jaar 11 brouwsels gemaakt en het eerste dateert van 8 mei.'
+lead: 'Na maanden voorbereiding is het dolle kerstbier te koop in de brouwerij. Dit jaar maakten we 11 brouwsels, het eerste op 8 mei.'
 kleur: blauw
-foto: ../../assets/nieuws/2026-11/etiket-2026.jpg
-fotoAlt: Het etiket van Stille Nacht 2026 met sneeuwpop, kerstkrans en barcode
+foto: ../../assets/nieuws/2026-11/poster-hero.jpg
+fotoAlt: Affiche van Stille Nacht 12° met de sneeuwman met kroontje, bierglas en ster
 ---
 
 import Artikel from '../../components/nieuws/Artikel.astro';
@@ -15,36 +15,32 @@ import Markeer from '../../components/nieuws/Markeer.astro';
 import Cijfers from '../../components/nieuws/Cijfers.astro';
 import Prijzen from '../../components/nieuws/Prijzen.astro';
 import Origineel from '../../components/nieuws/Origineel.astro';
-import etiket5 from '../../assets/nieuws/2026-11/etiket-5e-botteling.jpg';
+import kerst from '../../assets/nieuws/2026-11/kerstman-kerstboom.jpg';
 import origineel from '../../assets/nieuws/2026-11/origineel.jpg';
 
-<Artikel label="Stille Nacht 2026" titel="4 week-ends beschikbaar!!!">
-
-Na maanden voorbereiding is het dolle kerstbier te koop in de brouwerij. Er zijn dit jaar 11 brouwsels gemaakt en het eerste dateert van 8 mei (!).
+<Artikel label="Stille Nacht 2026" titel="Het dolle kerstbier is er." sub="Te koop in de brouwerij, vier week-ends lang.">
 
 <Cijfers items={[[11, 'brouwsels dit jaar'], ['8 mei', 'eerste brouwsel'], ['12%', 'alcohol']]} />
 
+Na maanden voorbereiding is het zover. We maakten dit jaar 11 brouwsels, en het eerste dateert al van 8 mei (!).
+
+Die brouwsels gaan niet apart de fles in. We mengen telkens twee opeenvolgende brouwsels en bottelen ze samen. Zo weet je welke botteling je in handen hebt: op de capsule staat een sterretje voor de eerste botteling, twee sterretjes voor de tweede, enzovoort.
+
+Stille Nacht is 12% en evolueert met de tijd. <Markeer>De bitterheid vermindert</Markeer>, dus het kan de moeite zijn om een fles te bewaren.
+
 </Artikel>
 
-<Artikel label="Het etiket" titel="Wat is er speciaal dit jaar?" foto={etiket5} fotoAlt="Het etiket van de 5e botteling Stille Nacht 2026, zonder barcode" donker rechts>
+<Artikel label="Vanaf 5 december" titel="De kerstman en de kerstboom komen langs." sub="Elk weekend, tot de laatste dag." foto={kerst} fotoAlt="De kerstman en een als kerstboom verklede man met een glas bier in de Oerbar" donker rechts>
 
-<Markeer>Het etiket vermeldt het jaartal 2026 en een barcode.</Markeer> De eerste 4 bottelingen althans, de 5e botteling is het etiket rechts afgebeeld.
+Vanaf 5 december komen de kerstman en de kerstboom elk weekend naar de brouwerij.
 
-MEN mengelt de opeenvolgende brouwsels om ze per 2 te bottelen. De <Markeer>eerste botteling</Markeer> vermeldt op de capsule * de tweede botteling is **, enzovoort.
-
-De Stille Nacht is 12% alc en er is met de tijd een smaakevolutie. Bitterheid vermindert. Stille Nacht is voor speciale gelegenheden verkrijgbaar op vat (met nagisting) zo ook op het Kerstbierfestival in Essen (12-13 dec).
+Stille Nacht is voor speciale gelegenheden ook verkrijgbaar op vat, met nagisting. Zo ook op het Kerstbierfestival in Essen (12-13 dec).
 
 <Kader>
 
-<Markeer>Er is ook in de brouwerij een beperkt aanbod 2026 STILLE NACHT 75 cl te koop.</Markeer>
+<Markeer>In de brouwerij is er een beperkt aanbod 2026 Stille Nacht 75 cl te koop.</Markeer>
 
-Stille Nacht Reserva 2024 beperkt beschikbaar.
-
-</Kader>
-
-<Kader titel="Vanaf 5 december ↘">
-
-Vanaf 5 december komen de kerstman en de kerstboom elk weekend naar de brouwerij.
+Stille Nacht Reserva 2024 is beperkt beschikbaar.
 
 </Kader>
 
