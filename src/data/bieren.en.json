@@ -70,7 +70,11 @@
     ],
     "info": [
       { "label": "Serving tip", "text": "Pour it slowly into the Oerbier glass or a wine glass, and take your time." },
-      { "label": "Keeping", "text": "Stille Nacht ages well. The bottling date is on the crown cap." }
+      { "label": "Keeping", "text": "Stille Nacht ages well. The bottling date is on the crown cap." },
+      {
+        "label": "Where to buy",
+        "text": "At the brewery, during Oerbar opening hours (Saturday and Sunday, 2 pm to 7 pm). Also at our points of sale: see the map."
+      }
     ],
     "weetjes": [
       "In 1980 there were no Christmas beers in Belgium, apart from six English ones.",
