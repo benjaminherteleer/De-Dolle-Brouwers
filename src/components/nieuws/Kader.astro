@@ -18,7 +18,12 @@ const { titel } = Astro.props;
     border: var(--line);
     border-radius: 16px;
     background: var(--paper-light);
+    color: var(--ink);
     box-shadow: var(--shadow);
+  }
+  /* readable on a dark article too */
+  .kader :global(p) {
+    color: var(--ink);
   }
   .kader-titel {
     font-family: var(--font-display);

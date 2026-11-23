@@ -1,0 +1,71 @@
+---
+titel: 4 week-ends beschikbaar!!!
+datum: 2026-11-01
+kicker: Esen, West-Vlaanderen ↘
+stempel: Beperkt aanbod!
+lead: 'Na maanden voorbereiding is het dolle kerstbier te koop in de brouwerij. Er zijn dit jaar 11 brouwsels gemaakt en het eerste dateert van 8 mei.'
+kleur: blauw
+foto: ../../assets/nieuws/2026-11/etiket-2026.jpg
+fotoAlt: Het etiket van Stille Nacht 2026 met sneeuwpop, kerstkrans en barcode
+---
+
+import Artikel from '../../components/nieuws/Artikel.astro';
+import Kader from '../../components/nieuws/Kader.astro';
+import Markeer from '../../components/nieuws/Markeer.astro';
+import Cijfers from '../../components/nieuws/Cijfers.astro';
+import Prijzen from '../../components/nieuws/Prijzen.astro';
+import Origineel from '../../components/nieuws/Origineel.astro';
+import etiket5 from '../../assets/nieuws/2026-11/etiket-5e-botteling.jpg';
+import origineel from '../../assets/nieuws/2026-11/origineel.jpg';
+
+<Artikel label="Stille Nacht 2026" titel="4 week-ends beschikbaar!!!">
+
+Na maanden voorbereiding is het dolle kerstbier te koop in de brouwerij. Er zijn dit jaar 11 brouwsels gemaakt en het eerste dateert van 8 mei (!).
+
+<Cijfers items={[[11, 'brouwsels dit jaar'], ['8 mei', 'eerste brouwsel'], ['12%', 'alcohol']]} />
+
+</Artikel>
+
+<Artikel label="Het etiket" titel="Wat is er speciaal dit jaar?" foto={etiket5} fotoAlt="Het etiket van de 5e botteling Stille Nacht 2026, zonder barcode" donker rechts>
+
+<Markeer>Het etiket vermeldt het jaartal 2026 en een barcode.</Markeer> De eerste 4 bottelingen althans, de 5e botteling is het etiket rechts afgebeeld.
+
+MEN mengelt de opeenvolgende brouwsels om ze per 2 te bottelen. De <Markeer>eerste botteling</Markeer> vermeldt op de capsule * de tweede botteling is **, enzovoort.
+
+De Stille Nacht is 12% alc en er is met de tijd een smaakevolutie. Bitterheid vermindert. Stille Nacht is voor speciale gelegenheden verkrijgbaar op vat (met nagisting) zo ook op het Kerstbierfestival in Essen (12-13 dec).
+
+<Kader>
+
+<Markeer>Er is ook in de brouwerij een beperkt aanbod 2026 STILLE NACHT 75 cl te koop.</Markeer>
+
+Stille Nacht Reserva 2024 beperkt beschikbaar.
+
+</Kader>
+
+<Kader titel="Vanaf 5 december ↘">
+
+Vanaf 5 december komen de kerstman en de kerstboom elk weekend naar de brouwerij.
+
+</Kader>
+
+</Artikel>
+
+<Prijzen
+  titel="4 week-ends beschikbaar."
+  sub="Kom ze halen in Esen ↘ (28-29 nov, 5-6, 12-13 en 19-20 dec)"
+  items={[
+    { naam: 'Stille Nacht 2026', detail: '75 cl', prijs: '€15' },
+    { naam: 'Stille Nacht 2026', detail: 'per bak, plus leeggoed', prijs: '€49' },
+    { naam: 'Stille Nacht', detail: 'sixpack', prijs: '€18' },
+    { naam: 'Stille Nacht Reserva', detail: 'sixpack', prijs: '€29' },
+  ]}
+  noot="Wie eerst komt, eerst maalt 💛"
+/>
+
+<Origineel foto={origineel} fotoAlt="Het originele, handgeschreven Oerbier Fake Nieuws van november 2026" bijschrift="Het origineel, met de hand">
+
+Met de hand geschreven door Kris.
+
+Maar iets leesbaarder gemaakt voor jullie.
+
+</Origineel>
