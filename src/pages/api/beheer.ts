@@ -6,14 +6,37 @@ import { redis, hasRedis, readHash, PENDING, APPROVED, NIEUWSBRIEF, type Tip, ty
 export const prerender = false;
 
 const password = process.env.BEHEER_WACHTWOORD;
-const allowed = (request: Request) => Boolean(password) && request.headers.get('authorization') === `Bearer ${password}`;
+/** Compare without stopping at the first wrong character, so the time taken gives nothing away. */
+const sameText = (a: string, b: string) => {
+  const x = new TextEncoder().encode(a);
+  const y = new TextEncoder().encode(b);
+  let diff = x.length ^ y.length;
+  for (let i = 0; i < Math.max(x.length, y.length); i++) diff |= (x[i] ?? 0) ^ (y[i] ?? 0);
+  return diff === 0;
+};
+const allowed = (request: Request) => Boolean(password) && sameText(request.headers.get('authorization') ?? '', `Bearer ${password}`);
+
+/** Block an address for a quarter of an hour after 10 wrong passwords. Returns a response when blocked. */
+const MAX_FOUT = 10;
+const fouten = (request: Request) => `beheer:fout:${request.headers.get('cf-connecting-ip') ?? 'onbekend'}`;
+async function checkAccess(request: Request) {
+  if (!hasRedis || !password) return json({ error: 'Nog niet ingesteld' }, 503);
+  const key = fouten(request);
+  if (Number((await redis<string | null>('GET', key)) ?? 0) >= MAX_FOUT) return json({ error: 'Te veel pogingen, probeer het over een kwartier opnieuw' }, 429);
+  if (!allowed(request)) {
+    await redis('INCR', key);
+    await redis('EXPIRE', key, 900);
+    return json({ error: 'Fout wachtwoord' }, 401);
+  }
+  return null;
+}
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 
 /** List the waiting tips and the cafés approved so far. */
 export const GET: APIRoute = async ({ request }) => {
-  if (!hasRedis || !password) return json({ error: 'Nog niet ingesteld' }, 503);
-  if (!allowed(request)) return json({ error: 'Fout wachtwoord' }, 401);
+  const blocked = await checkAccess(request);
+  if (blocked) return blocked;
   const byDate = (a: Tip, b: Tip) => (a.at < b.at ? 1 : -1);
   // Mark tips that are already on the map, so they aren't approved twice
   const places = await getPlaces();
@@ -30,8 +53,8 @@ export const GET: APIRoute = async ({ request }) => {
 
 /** Approve (with corrections), reject, or take an approved café off the map again. */
 export const POST: APIRoute = async ({ request }) => {
-  if (!hasRedis || !password) return json({ error: 'Nog niet ingesteld' }, 503);
-  if (!allowed(request)) return json({ error: 'Fout wachtwoord' }, 401);
+  const blocked = await checkAccess(request);
+  if (blocked) return blocked;
   const { id, action, place } = await request.json();
   if (action === 'uitschrijven') {
     await redis('HDEL', NIEUWSBRIEF, String(id));

@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 const lang = langOf(Astro.url);
 const en = lang === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
-const L = (href: string) => link(lang, href);
 const vragen = [
   { q: tr("Moet ik op voorhand reserveren voor een rondleiding?", "Do I need to book a tour in advance?"), a: tr("Dat hoeft niet. Voor de zondagse rondleiding (14u Engels, 15u Nederlands) kan je <a href=\"/rondleiding-boeken\" style=\"font-weight:700; border-bottom:1px solid var(--ink);\">hier op de site boeken</a>, of je komt gewoon af en koopt ter plaatse een ticket. Kom je met een grote groep op zondag, laat het ons dan liefst even weten.", "No need. For the Sunday tour (2 pm English, 3 pm Dutch) you can <a href=\"/en/book-a-tour\" style=\"font-weight:700; border-bottom:1px solid var(--ink);\">book here on the site</a>, or just turn up and buy a ticket on the spot. Coming with a big group on a Sunday? Please let us know beforehand.") },
   { q: tr("Mogen honden mee?", "Can I bring my dog?"), a: tr("Honden zijn hier altijd welkom, in de Oerbar en op het terras. Er lopen hier eigenlijk altijd wel een paar hondjes rond. Alleen tijdens de rondleiding door de brouwerij mogen ze niet mee.", "Dogs are always welcome here, in the Oerbar and on the terrace. There are pretty much always a few dogs around. Only during the brewery tour they can't come along.") },

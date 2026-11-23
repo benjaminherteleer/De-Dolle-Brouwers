@@ -72,7 +72,7 @@ const EN_NAMES: Record<string, string> = {
   Denemarken: 'Denmark', Spanje: 'Spain', Luxemburg: 'Luxembourg', Zwitserland: 'Switzerland', Oostenrijk: 'Austria', Polen: 'Poland',
   Antwerpen: 'Antwerp', Berlijn: 'Berlin', Brugge: 'Bruges', Brussel: 'Brussels', 'Brussel (Vorst)': 'Brussels (Forest)',
   'Den Haag': 'The Hague', Gent: 'Ghent', Napels: 'Naples', Tokio: 'Tokyo', Milaan: 'Milan', Keulen: 'Cologne', Aken: 'Aachen',
-  Parijs: 'Paris', Rijsel: 'Lille', Duinkerke: 'Dunkirk', Kopenhagen: 'Copenhagen', Venetië: 'Venice', Londen: 'London', Napels: 'Naples', 'Oostakker (Gent)': 'Oostakker (Ghent)', Oostende: 'Ostend',
+  Parijs: 'Paris', Rijsel: 'Lille', Duinkerke: 'Dunkirk', Kopenhagen: 'Copenhagen', Venetië: 'Venice', Londen: 'London', 'Oostakker (Gent)': 'Oostakker (Ghent)', Oostende: 'Ostend',
 };
 export const placesIn = (places: Place[], lang: 'nl' | 'en'): Place[] =>
   lang === 'en' ? places.map((p) => ({ ...p, city: EN_NAMES[p.city] ?? p.city, country: EN_NAMES[p.country] ?? p.country })) : places;

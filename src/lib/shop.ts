@@ -40,7 +40,7 @@ export const photoAlt = (handle: string, i: number, title: string, lang: 'nl' | 
     .filter((m) => m?.[1] === handle)
     .sort((a, b) => Number(a![2]) - Number(b![2]))
     .map((m) => `${m![1]}-${m![2]}`);
-  const d = (fotoAlt as Record<string, [string, string]>)[names[i]];
+  const d = (fotoAlt as unknown as Record<string, [string, string]>)[names[i]];
   return d ? d[lang === 'en' ? 1 : 0] : title;
 };
 
@@ -63,7 +63,9 @@ export const variantPhotos: Record<string, Record<string, number>> = {
 const optionNames: Record<string, string> = { Maat: 'Size', Model: 'Style', Ontwerp: 'Design' };
 const optionValues: Record<string, string> = { 'Zonder rits': 'Without zip', 'Met rits': 'With zip', 'Oerbier rotstekening': 'Oerbier cave drawing' };
 export const productText = (p: Product, lang: 'nl' | 'en') =>
-  lang === 'en' ? { title: p.title, description: p.description, ...(productenEn as Record<string, { title: string; description: string }>)[p.handle] } : { title: p.title, description: p.description };
+  lang === 'en'
+    ? { ...{ title: p.title, description: p.description }, ...(productenEn as Record<string, { title?: string; description?: string }>)[p.handle] }
+    : { title: p.title, description: p.description };
 /** Label to show for an option name or value; the value sent to Shopify stays Dutch. */
 export const optionLabel = (name: string, lang: 'nl' | 'en') => (lang === 'en' ? optionNames[name] ?? name : name);
 export const valueLabel = (value: string, lang: 'nl' | 'en') => (lang === 'en' ? optionValues[value] ?? value : value);

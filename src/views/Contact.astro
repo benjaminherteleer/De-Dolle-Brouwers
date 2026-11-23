@@ -4,7 +4,6 @@ import Base from '../layouts/Base.astro';
 const lang = langOf(Astro.url);
 const en = lang === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
-const L = (href: string) => link(lang, href);
 ---
 
 <Base title={tr("Contact | De Dolle Brouwers, Esen, Diksmuide", "Contact | De Dolle Brouwers, Esen, Belgium")} description={tr("Contactgegevens van De Dolle Brouwers in Esen (Diksmuide), West-Vlaanderen: adres, openingsuren en e-mail.", "Contact details of De Dolle Brouwers in Esen (Diksmuide), West Flanders, Belgium: address, opening hours and email.")}>

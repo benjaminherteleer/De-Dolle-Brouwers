@@ -9,7 +9,6 @@ import flesHop from '../assets/foto/fles-hop.jpg';
 const lang = langOf(Astro.url);
 const en = lang === 'en';
 const tr = (nl: string, enText: string) => (en ? enText : nl);
-const L = (href: string) => link(lang, href);
 const places = await getPlaces();
 const countries = new Set(places.map((p) => p.country)).size;
 ---
