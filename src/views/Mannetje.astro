@@ -320,6 +320,8 @@ const flagArt: Record<string, string> = {
             {tr("Een ander land, een clubshirt, een datum… Beschrijf het hier.", "Another country, a club shirt, a date… Describe it here.")}
             <textarea name="idee" rows="3" placeholder={tr("Bv. in de kleuren van mijn voetbalclub, met 'Proficiat Jan' op de sjaal", "E.g. in the colours of my football club, with 'Happy birthday Jan' on the scarf")}></textarea>
           </label>
+          <p class="hint">{tr("Een pet of hoed kunnen we niet maken.", "We can't make a cap or hat.")}</p>
+          <p class="hint warn" id="geen-pet" hidden>{tr("Een pet of hoed op het mannetje kan Kris niet schilderen. Haal die uit je idee, dan kan je bestellen.", "Kris can't paint a cap or hat on the figure. Take it out of your idea and you can order.")}</p>
         </fieldset>
 
         <button class="btn dark" type="submit" id="bestel">{tr("In mijn mandje →", "Add to my cart →")}</button>
@@ -422,6 +424,9 @@ const flagArt: Record<string, string> = {
   const kleurMax = document.getElementById('kleur-max');
   // The scarf lettering is painted black, so a black or very dark scarf would hide it
   const sjaalDonker = document.getElementById('sjaal-donker');
+  // Caps and hats take Kris too long to paint, so an idea asking for one can't be ordered
+  const geenPet = document.getElementById('geen-pet');
+  const PET = /\b(pet|petje|petten|hoed|hoedje|muts|mutsje|cap|caps|hat|hats|beanie)\b/i;
   const teDonker = (hex) => {
     const n = parseInt(hex.slice(1), 16);
     return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 70;
@@ -459,6 +464,7 @@ const flagArt: Record<string, string> = {
     sashText.textContent = tekst || ' ';
 
     const idee = form.elements.namedItem('idee').value.trim();
+    geenPet.hidden = !PET.test(idee);
     const plain =
       Object.keys(DEFAULTS).every((k) => colors[k] === DEFAULTS[k]) &&
       patroon === 'effen' &&
@@ -530,6 +536,10 @@ const flagArt: Record<string, string> = {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!geenPet.hidden) {
+      geenPet.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
     const patroon = form.querySelector('input[name="patroon"]:checked').closest('label').textContent.trim();
     const extra = [on('bril') && 'zonnebril', on('strik') && 'strikje'].filter(Boolean).join(', ') || 'geen';
     const attributes = [
