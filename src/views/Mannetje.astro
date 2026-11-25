@@ -192,8 +192,8 @@ const flagArt: Record<string, string> = {
           </g>
           <rect x="0" y="0" width="320" height="340" clip-path="url(#clip-body)" class="pattern" fill="none"></rect>
           <image class="logo" x="96" y="214" width="62" height="62" preserveAspectRatio="xMidYMid meet" clip-path="url(#clip-body)"></image>
-          <text class="nat-en-straf" x="199" y="168" text-anchor="middle">
-            <tspan x="199">NAT</tspan><tspan x="199" dy="9">EN</tspan><tspan x="199" dy="9">STRAF</tspan>
+          <text class="nat-en-straf" x="207" y="178" text-anchor="middle">
+            <tspan x="207">NAT</tspan><tspan x="207" dy="7.5">EN</tspan><tspan x="207" dy="7.5">STRAF</tspan>
           </text>
           <circle cx="160" cy="110" r="58" stroke="#21170c" stroke-width="3" data-part="hoofd"></circle>
           <ellipse cx="138" cy="76" rx="18" ry="10" fill="rgba(255,255,255,.4)" transform="rotate(-30 138 76)"></ellipse>
@@ -305,7 +305,10 @@ const flagArt: Record<string, string> = {
           <div class="pills">
             <label><input type="checkbox" name="bril" /><span>{tr("Zonnebril", "Sunglasses")}</span></label>
             <label><input type="checkbox" name="strik" /><span>{tr("Strikje", "Bow tie")}</span></label>
+            <label><input type="checkbox" name="natenstraf" checked /><span>Nat en straf</span></label>
           </div>
+          <p class="hint">{tr("\"Nat en straf\" op het lijf is gratis, zet het uit als je het niet wilt.", "\"Nat en straf\" on the body is free, switch it off if you don't want it.")}</p>
+          <p class="hint warn" id="nat-donker" hidden>{tr("Op een zwart of heel donker lijf kan \"Nat en straf\" niet, want de letters zijn zwart.", "\"Nat en straf\" isn't possible on a black or very dark body, because the letters are black.")}</p>
         </fieldset>
 
         <fieldset>
@@ -429,6 +432,8 @@ const flagArt: Record<string, string> = {
   const sjaalDonker = document.getElementById('sjaal-donker');
   // Caps and hats take Kris too long to paint, so an idea asking for one can't be ordered
   const geenPet = document.getElementById('geen-pet');
+  const natDonker = document.getElementById('nat-donker');
+  let natTonen = true;
   const PET = /\b(pet|petje|petten|hoed|hoedje|muts|mutsje|cap|caps|hat|hats|beanie)\b/i;
   const teDonker = (hex) => {
     const n = parseInt(hex.slice(1), 16);
@@ -462,6 +467,12 @@ const flagArt: Record<string, string> = {
 
     svg.querySelector('.extra-bril').classList.toggle('on', on('bril'));
     svg.querySelector('.extra-strik').classList.toggle('on', on('strik'));
+    // The motto is painted black, so it only goes on a body that isn't (nearly) black
+    const natKan = !teDonker(colors.lichaam);
+    form.elements.namedItem('natenstraf').disabled = !natKan;
+    natDonker.hidden = natKan;
+    natTonen = natKan && on('natenstraf');
+    svg.querySelector('.nat-en-straf').style.display = natTonen ? '' : 'none';
 
     const tekst = form.elements.namedItem('tekst').value.trim();
     sashText.textContent = tekst || ' ';
@@ -545,6 +556,7 @@ const flagArt: Record<string, string> = {
     }
     const patroon = form.querySelector('input[name="patroon"]:checked').closest('label').textContent.trim();
     const extra = [on('bril') && 'zonnebril', on('strik') && 'strikje'].filter(Boolean).join(', ') || 'geen';
+    const natEnStraf = natTonen ? 'ja' : 'nee';
     const attributes = [
       ['Hoofd', nameOf(colors.hoofd)],
       ['Lichaam', nameOf(colors.lichaam)],
@@ -554,6 +566,7 @@ const flagArt: Record<string, string> = {
       ['Sjaal', `${nameOf(colors.sjaal)}, tekst "${form.elements.namedItem('tekst').value}"`],
       ['Op het lijf', patroon],
       ['Extra', extra],
+      ['Nat en straf', natEnStraf],
       ['Idee', form.elements.namedItem('idee').value || '-'],
       ...(logo ? [['Logo plaats', logoPlek()]] : []),
     ].map(([key, value]) => ({ key, value }));
@@ -648,7 +661,10 @@ const flagArt: Record<string, string> = {
     try {
       // One id per design ties the surcharge lines to this figure in the cart
       const ontwerp = Date.now().toString(36).toUpperCase();
-      const lines = plain ? [] : [...attributes, ...(toeslagen.length ? [{ key: 'Ontwerp', value: ontwerp }] : [])];
+      // A regular figure only carries a note when the free "Nat en straf" was switched off
+      const lines = plain
+        ? attributes.filter((a) => a.key === 'Nat en straf' && a.value === 'nee')
+        : [...attributes, ...(toeslagen.length ? [{ key: 'Ontwerp', value: ontwerp }] : [])];
       if (!plain && form.dataset.logo) {
         const res = await fetch('/api/logo', {
           method: 'POST',
@@ -750,8 +766,8 @@ const flagArt: Record<string, string> = {
   }
   .nat-en-straf {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 8.5px;
-    letter-spacing: 0.06em;
+    font-size: 7px;
+    letter-spacing: 0.08em;
     fill: #21170c;
   }
   .extra {
