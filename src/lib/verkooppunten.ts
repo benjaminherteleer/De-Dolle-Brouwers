@@ -70,6 +70,7 @@ const EN_NAMES: Record<string, string> = {
   België: 'Belgium', Nederland: 'Netherlands', Duitsland: 'Germany', Frankrijk: 'France', Italië: 'Italy',
   'Verenigd Koninkrijk': 'United Kingdom', VS: 'USA', Litouwen: 'Lithuania', Noorwegen: 'Norway', Zweden: 'Sweden',
   Denemarken: 'Denmark', Spanje: 'Spain', Luxemburg: 'Luxembourg', Zwitserland: 'Switzerland', Oostenrijk: 'Austria', Polen: 'Poland',
+  Roemenië: 'Romania', Australië: 'Australia', Georgië: 'Georgia', Triëst: 'Trieste', Batoemi: 'Batumi',
   Antwerpen: 'Antwerp', Berlijn: 'Berlin', Brugge: 'Bruges', Brussel: 'Brussels', 'Brussel (Vorst)': 'Brussels (Forest)',
   'Den Haag': 'The Hague', Gent: 'Ghent', Napels: 'Naples', Tokio: 'Tokyo', Milaan: 'Milan', Keulen: 'Cologne', Aken: 'Aachen',
   Parijs: 'Paris', Rijsel: 'Lille', Duinkerke: 'Dunkirk', Kopenhagen: 'Copenhagen', Venetië: 'Venice', Londen: 'London', 'Oostakker (Gent)': 'Oostakker (Ghent)', Oostende: 'Ostend',
@@ -92,6 +93,19 @@ const STAD: Record<string, string> = {
   Antwerpen: 'Antwerpen', Essen: 'Antwerpen', Grobbendonk: 'Antwerpen', Hamont: 'Limburg', 'Hamont-Achel': 'Limburg',
   Grimbergen: 'Vlaams-Brabant', Brussel: 'Brussel', Bruxelles: 'Brussel', Brussels: 'Brussel',
   Tubize: 'Waals-Brabant', 'Komen-Waasten': 'Henegouwen',
+  Heuvelland: 'West-Vlaanderen', Houthulst: 'West-Vlaanderen', Ichtegem: 'West-Vlaanderen', Menen: 'West-Vlaanderen',
+  Oudenburg: 'West-Vlaanderen', Veurne: 'West-Vlaanderen', Vleteren: 'West-Vlaanderen', Zedelgem: 'West-Vlaanderen',
+  Wevelgem: 'West-Vlaanderen', Waregem: 'West-Vlaanderen', Torhout: 'West-Vlaanderen', Knokke: 'West-Vlaanderen',
+  'Knokke-Heist': 'West-Vlaanderen', 'De Panne': 'West-Vlaanderen', Koksijde: 'West-Vlaanderen', Nieuwpoort: 'West-Vlaanderen',
+  Lievegem: 'Oost-Vlaanderen', Oostakker: 'Oost-Vlaanderen', Aalst: 'Oost-Vlaanderen', Deinze: 'Oost-Vlaanderen',
+  Oudenaarde: 'Oost-Vlaanderen', 'Sint-Niklaas': 'Oost-Vlaanderen', Dendermonde: 'Oost-Vlaanderen', Lokeren: 'Oost-Vlaanderen',
+  Eeklo: 'Oost-Vlaanderen', Ninove: 'Oost-Vlaanderen', Geraardsbergen: 'Oost-Vlaanderen',
+  Mechelen: 'Antwerpen', Lier: 'Antwerpen', Turnhout: 'Antwerpen', Mol: 'Antwerpen', Geel: 'Antwerpen', Herentals: 'Antwerpen',
+  'Sint-Truiden': 'Limburg', Zonhoven: 'Limburg', Maasmechelen: 'Limburg', Hasselt: 'Limburg', Genk: 'Limburg', Tongeren: 'Limburg',
+  Halle: 'Vlaams-Brabant', Leuven: 'Vlaams-Brabant', Vilvoorde: 'Vlaams-Brabant', Aarschot: 'Vlaams-Brabant', Tienen: 'Vlaams-Brabant',
+  Vorst: 'Brussel', Elsene: 'Brussel', Schaarbeek: 'Brussel', Anderlecht: 'Brussel', 'Sint-Gillis': 'Brussel',
+  Mons: 'Henegouwen', Bergen: 'Henegouwen', Tournai: 'Henegouwen', Doornik: 'Henegouwen', Charleroi: 'Henegouwen', Moeskroen: 'Henegouwen',
+  Liège: 'Luik', Luik: 'Luik', Namur: 'Namen', Namen: 'Namen', 'Waver': 'Waals-Brabant', Wavre: 'Waals-Brabant', 'Louvain-la-Neuve': 'Waals-Brabant',
 };
 // What OpenStreetMap calls the provinces (in Dutch, French or English)
 const OSM: [RegExp, string][] = [

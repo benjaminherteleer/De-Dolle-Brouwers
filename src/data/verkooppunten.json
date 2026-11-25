@@ -313,5 +313,271 @@
     "country": "Nederland",
     "lat": 51.91726,
     "lng": 4.43038
+  },
+  {
+    "name": "Gast",
+    "city": "Poperinge",
+    "country": "België",
+    "lat": 50.8549,
+    "lng": 2.7262
+  },
+  {
+    "name": "De Garre",
+    "city": "Brugge",
+    "country": "België",
+    "lat": 51.2083273,
+    "lng": 3.2258713
+  },
+  {
+    "name": "Spéciale Belge Taproom",
+    "city": "Antwerpen",
+    "country": "België",
+    "lat": 51.2023687,
+    "lng": 4.4219054
+  },
+  {
+    "name": "Den Stillen Genieter",
+    "city": "Mechelen",
+    "country": "België",
+    "lat": 51.0262588,
+    "lng": 4.4771916
+  },
+  {
+    "name": "Prik & Tik JMC Drinks",
+    "city": "Maasmechelen",
+    "country": "België",
+    "lat": 50.940069,
+    "lng": 5.6910475
+  },
+  {
+    "name": "House of Beers",
+    "city": "Uden",
+    "country": "Nederland",
+    "lat": 51.6570368,
+    "lng": 5.6185851
+  },
+  {
+    "name": "Rijsel",
+    "city": "Amsterdam",
+    "country": "Nederland",
+    "lat": 52.3515956,
+    "lng": 4.9128486
+  },
+  {
+    "name": "Drankenhandel Leiden",
+    "city": "Leiden",
+    "country": "Nederland",
+    "lat": 52.1499775,
+    "lng": 4.4961435
+  },
+  {
+    "name": "Man in the Moon",
+    "city": "Stockholm",
+    "country": "Zweden",
+    "lat": 59.3407514,
+    "lng": 18.0639313
+  },
+  {
+    "name": "Belgobaren",
+    "city": "Stockholm",
+    "country": "Zweden",
+    "lat": 59.3327653,
+    "lng": 18.0581755
+  },
+  {
+    "name": "Broken Dreams",
+    "city": "Borlänge",
+    "country": "Zweden",
+    "lat": 60.4822474,
+    "lng": 15.4285853
+  },
+  {
+    "name": "Vinmonopolet Strømsø",
+    "city": "Drammen",
+    "country": "Noorwegen",
+    "lat": 59.7428142,
+    "lng": 10.1942548
+  },
+  {
+    "name": "Vinmonopolet Trondheim Torg",
+    "city": "Trondheim",
+    "country": "Noorwegen",
+    "lat": 63.430214,
+    "lng": 10.393286
+  },
+  {
+    "name": "Den Gode Nabo",
+    "city": "Trondheim",
+    "country": "Noorwegen",
+    "lat": 63.427941,
+    "lng": 10.402358
+  },
+  {
+    "name": "Den Gyldne Hest",
+    "city": "Horsens",
+    "country": "Denemarken",
+    "lat": 55.8625158,
+    "lng": 9.846135
+  },
+  {
+    "name": "Jacobi Craft Brew",
+    "city": "Varde",
+    "country": "Denemarken",
+    "lat": 55.619507,
+    "lng": 8.483699
+  },
+  {
+    "name": "CASK Pub & Kitchen",
+    "city": "Londen",
+    "country": "Verenigd Koninkrijk",
+    "lat": 51.491093,
+    "lng": -0.1373223
+  },
+  {
+    "name": "The Dovetail",
+    "city": "Londen",
+    "country": "Verenigd Koninkrijk",
+    "lat": 51.523214,
+    "lng": -0.1039607
+  },
+  {
+    "name": "Beers of Europe",
+    "city": "King's Lynn",
+    "country": "Verenigd Koninkrijk",
+    "lat": 52.6994653,
+    "lng": 0.4168447
+  },
+  {
+    "name": "Be Hoppy",
+    "city": "Madrid",
+    "country": "Spanje",
+    "lat": 40.412408,
+    "lng": -3.6955672
+  },
+  {
+    "name": "Cervecería Polar",
+    "city": "Madrid",
+    "country": "Spanje",
+    "lat": 40.4523418,
+    "lng": -3.7070392
+  },
+  {
+    "name": "Be.Re.",
+    "city": "Rome",
+    "country": "Italië",
+    "lat": 41.9067043,
+    "lng": 12.456555
+  },
+  {
+    "name": "Taverna ai Mastri d'Arme",
+    "city": "Triëst",
+    "country": "Italië",
+    "lat": 45.6498056,
+    "lng": 13.7706367
+  },
+  {
+    "name": "Jessop's Tavern",
+    "city": "New Castle",
+    "country": "VS",
+    "lat": 39.6588935,
+    "lng": -75.5633109
+  },
+  {
+    "name": "Henlopen City Oyster House",
+    "city": "Rehoboth Beach",
+    "country": "VS",
+    "lat": 38.717,
+    "lng": -75.0775
+  },
+  {
+    "name": "Teresa's Next Door",
+    "city": "Wayne",
+    "country": "VS",
+    "lat": 40.0450827,
+    "lng": -75.3879904
+  },
+  {
+    "name": "The Beer Trappe",
+    "city": "Covington",
+    "country": "VS",
+    "lat": 39.0785,
+    "lng": -84.509
+  },
+  {
+    "name": "Broken Brix",
+    "city": "St. Charles",
+    "country": "VS",
+    "lat": 41.9142,
+    "lng": -88.3087
+  },
+  {
+    "name": "Winking Lizard Tavern",
+    "city": "Lakewood",
+    "country": "VS",
+    "lat": 41.4858761,
+    "lng": -81.7902569
+  },
+  {
+    "name": "Winking Lizard Tavern",
+    "city": "Mentor",
+    "country": "VS",
+    "lat": 41.6813644,
+    "lng": -81.2964734
+  },
+  {
+    "name": "The Barrel House",
+    "city": "Dayton",
+    "country": "VS",
+    "lat": 39.7607304,
+    "lng": -84.1858533
+  },
+  {
+    "name": "Holy Water",
+    "city": "San Francisco",
+    "country": "VS",
+    "lat": 37.7393191,
+    "lng": -122.4182831
+  },
+  {
+    "name": "Cook Street Liquor",
+    "city": "Victoria",
+    "country": "Canada",
+    "lat": 48.4147743,
+    "lng": -123.3567659
+  },
+  {
+    "name": "Mixtape Brewing and Bar",
+    "city": "Marrickville (Sydney)",
+    "country": "Australië",
+    "lat": -33.9072201,
+    "lng": 151.164551
+  },
+  {
+    "name": "HopHut",
+    "city": "Batoemi",
+    "country": "Georgië",
+    "lat": 41.6463472,
+    "lng": 41.635329
+  },
+  {
+    "name": "ShareFun Bar",
+    "city": "Guangzhou",
+    "country": "China",
+    "lat": 23.129,
+    "lng": 113.264
+  },
+  {
+    "name": "Darkriver",
+    "city": "Shenzhen",
+    "country": "China",
+    "lat": 22.543,
+    "lng": 114.058
+  },
+  {
+    "name": "Backdoor",
+    "city": "Gent",
+    "country": "België",
+    "lat": 51.0434453,
+    "lng": 3.7244725
   }
 ]
