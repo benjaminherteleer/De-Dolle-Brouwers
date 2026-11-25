@@ -579,5 +579,12 @@
     "country": "België",
     "lat": 51.0434453,
     "lng": 3.7244725
+  },
+  {
+    "name": "Off/flavour",
+    "city": "Milaan",
+    "country": "Italië",
+    "lat": 45.4428203,
+    "lng": 9.212445
   }
 ]
