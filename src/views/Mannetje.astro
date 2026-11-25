@@ -192,6 +192,9 @@ const flagArt: Record<string, string> = {
           </g>
           <rect x="0" y="0" width="320" height="340" clip-path="url(#clip-body)" class="pattern" fill="none"></rect>
           <image class="logo" x="96" y="214" width="62" height="62" preserveAspectRatio="xMidYMid meet" clip-path="url(#clip-body)"></image>
+          <text class="nat-en-straf" x="199" y="168" text-anchor="middle">
+            <tspan x="199">NAT</tspan><tspan x="199" dy="9">EN</tspan><tspan x="199" dy="9">STRAF</tspan>
+          </text>
           <circle cx="160" cy="110" r="58" stroke="#21170c" stroke-width="3" data-part="hoofd"></circle>
           <ellipse cx="138" cy="76" rx="18" ry="10" fill="rgba(255,255,255,.4)" transform="rotate(-30 138 76)"></ellipse>
 
@@ -744,6 +747,12 @@ const flagArt: Record<string, string> = {
     font-style: italic;
     font-weight: 700;
     letter-spacing: 0.02em;
+  }
+  .nat-en-straf {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 8.5px;
+    letter-spacing: 0.06em;
+    fill: #21170c;
   }
   .extra {
     display: none;
