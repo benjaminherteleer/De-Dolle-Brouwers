@@ -218,7 +218,9 @@ const text = (p: Product) => productText(p, lang);
   /* Size is short: a small box next to the button, under the model/design choice */
   .shop-item select.maat {
     flex: 0 0 auto;
-    width: 5.5em;
+    width: auto;
+    min-width: 7.5em;
+    padding-right: 2em;
   }
   .shop-item .add {
     font-size: 0.9rem;
