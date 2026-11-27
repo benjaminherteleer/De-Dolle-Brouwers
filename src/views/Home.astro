@@ -3,6 +3,7 @@ import { langOf, link } from '../i18n';
 import { brewery } from '../lib/schema';
 import { Image } from 'astro:assets';
 import oerbierRots from '../assets/bieren/oerbier-rots-bg.jpg';
+import arabierPoster from '../assets/bieren/arabier-poster-bg.jpg';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Shop from '../components/Shop.astro';
@@ -179,7 +180,7 @@ const bende = [
       <ul class="beer-grid">
         {
           vast.map((b, i) => (
-            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : ''}`}>
+            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : b.slug === 'arabier' ? `; --bg:url(${arabierPoster.src})` : ''}`}>
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
