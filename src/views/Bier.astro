@@ -10,6 +10,12 @@ import Strik from '../components/Strik.astro';
 import { beers, abv, short, type Bier } from '../lib/bieren';
 import vaten from '../assets/foto/vaten-rij.jpg';
 import krisWijnvat from '../assets/foto/kris-wijnvat.webp';
+import oerbierRots from '../assets/bieren/oerbier-rots-bg.jpg';
+import arabierPoster from '../assets/bieren/arabier-poster-bg.jpg';
+import boskeunPoster from '../assets/bieren/boskeun-poster-bg.jpg';
+import tevePoster from '../assets/bieren/dulle-teve-poster-bg.jpg';
+import snPoster from '../assets/bieren/stille-nacht-poster-bg.jpg';
+import snStruik from '../assets/bieren/stille-nacht-struik.png';
 
 const lang = langOf(Astro.url);
 const en = lang === 'en';
@@ -18,6 +24,15 @@ const L = (href: string) => link(lang, href);
 const { slug } = Astro.props as { slug: string };
 const bieren = beers(lang);
 const b = bieren.find((x) => x.slug === slug) as Bier;
+// Poster-style backgrounds, the same as on the home page cards.
+const posterBg: Record<string, ImageMetadata> = {
+  oerbier: oerbierRots,
+  arabier: arabierPoster,
+  boskeun: boskeunPoster,
+  'dulle-teve': tevePoster,
+  'stille-nacht': snPoster,
+};
+const bgPoster = posterBg[b.slug];
 
 const assets = import.meta.glob<{ default: ImageMetadata }>('../assets/bieren/*', { eager: true });
 const storyFile: Record<string, string> = { 'lichtervelds-blond': 'lichtervelds-label.png' };
@@ -76,9 +91,10 @@ const ld = {
                 <Image src={b.foto} alt={tr(`Flessen ${b.name}`, `Bottles of ${b.name}`)} width={900} loading="eager" />
               </div>
             ) : (
-              <div class="art-frame" style={`background:${b.reserva ? 'var(--paper-light)' : b.color}`}>
+              <div class:list={['art-frame', { poster: !!bgPoster }]} style={bgPoster ? `background:url(${bgPoster.src}) center / cover ${b.color}` : `background:${b.reserva ? 'var(--paper-light)' : b.color}`}>
                 {!b.reserva && <BeerFx slug={b.slug} live />}
                 <Image src={b.art} alt={b.alt ?? tr(`${b.name} personage`, `The ${b.name} character`)} width={640} loading="eager" />
+                {b.slug === 'stille-nacht' && <img class="struik" src={snStruik.src} alt="" width={snStruik.width} height={snStruik.height} aria-hidden="true" />}
               </div>
             )
           }
@@ -310,6 +326,22 @@ const ld = {
     50% {
       transform: translateY(-6px) rotate(-2deg);
     }
+  }
+  .art-frame.poster {
+    border-radius: 26px;
+  }
+  .art-frame.poster :global(img) {
+    inset: 7.2%;
+    width: 85.6%;
+    height: 85.6%;
+  }
+  .art-frame :global(img.struik) {
+    inset: auto -1.4% -0.8% auto;
+    width: 50%;
+    height: auto;
+    z-index: 2;
+    object-fit: fill;
+    animation: none;
   }
   .art-frame.foto {
     border-radius: 18px;
