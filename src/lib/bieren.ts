@@ -30,7 +30,7 @@ const look: Record<string, { art: string; poster?: string; color: string; onColo
   'stille-nacht': { art: 'stille-nacht', poster: 'stille-nacht', color: '#2a62c9', onColor: '#fbf5ea', strik: '#2a62c9' },
   boskeun: { art: 'boskeun', poster: 'boskeun', color: '#3fae49', onColor: '#fbf5ea', strik: '#3fae49' },
   'dulle-teve': { art: 'dulle-teve', poster: 'dulle-teve', color: '#6a3aa8', onColor: '#fbf5ea', strik: '#6a3aa8' },
-  'lichtervelds-blond': { art: 'dehoop-logo', color: '#f5c518', strik: '#f5c518' },
+  'lichtervelds-blond': { art: 'dehoop-logo', color: '#1889c2', onColor: '#fbf5ea', strik: '#1889c2' },
   'export-stout': { art: 'stout-logo', color: '#1c1813', onColor: '#fbf5ea' },
   oeral: { art: 'oeral', color: '#ffe17a' },
   'oerbier-reserva': { art: 'oerbier', color: '#1d1812', onColor: '#fbf5ea', foto: 'oerbier-reserva.webp', foto2: 'oerbier-reserva-kurken.jpg' },
