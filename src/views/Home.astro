@@ -6,6 +6,8 @@ import oerbierRots from '../assets/bieren/oerbier-rots-bg.jpg';
 import arabierPoster from '../assets/bieren/arabier-poster-bg.jpg';
 import boskeunPoster from '../assets/bieren/boskeun-poster-bg.jpg';
 import tevePoster from '../assets/bieren/dulle-teve-poster-bg.jpg';
+import snPoster from '../assets/bieren/stille-nacht-poster-bg.jpg';
+import snStruik from '../assets/bieren/stille-nacht-struik.png';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Shop from '../components/Shop.astro';
@@ -182,11 +184,12 @@ const bende = [
       <ul class="beer-grid">
         {
           vast.map((b, i) => (
-            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : b.slug === 'arabier' ? `; --bg:url(${arabierPoster.src})` : b.slug === 'boskeun' ? `; --bg:url(${boskeunPoster.src})` : b.slug === 'dulle-teve' ? `; --bg:url(${tevePoster.src})` : ''}`}>
+            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : b.slug === 'arabier' ? `; --bg:url(${arabierPoster.src})` : b.slug === 'boskeun' ? `; --bg:url(${boskeunPoster.src})` : b.slug === 'dulle-teve' ? `; --bg:url(${tevePoster.src})` : b.slug === 'stille-nacht' ? `; --bg:url(${snPoster.src})` : ''}`}>
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
                   <Image src={b.art} alt={tr(`Het ${b.name}-personage`, `The ${b.name} character`)} width={420} widths={[240, 420]} sizes="(max-width: 980px) 46vw, 280px" />
+                  {b.slug === 'stille-nacht' && <img class="struik" src={snStruik.src} alt="" width={snStruik.width} height={snStruik.height} loading="lazy" aria-hidden="true" />}
                 </span>
                 <span class="beer-name">{b.name}</span>
                 <span class="beer-meta">
@@ -605,6 +608,16 @@ const bende = [
     object-fit: contain;
     z-index: 1;
     transition: transform 0.25s ease;
+  }
+  .beer-art :global(img.struik) {
+    inset: auto -1.4% -0.8% auto;
+    width: 50%;
+    height: auto;
+    z-index: 2;
+    object-fit: fill;
+  }
+  .beer:hover .beer-art :global(img.struik) {
+    transform: none;
   }
   .beer:hover .beer-art :global(img) {
     transform: scale(1.06) rotate(-4deg);
