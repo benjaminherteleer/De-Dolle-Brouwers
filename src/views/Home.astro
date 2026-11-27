@@ -2,6 +2,7 @@
 import { langOf, link } from '../i18n';
 import { brewery } from '../lib/schema';
 import { Image } from 'astro:assets';
+import oerbierRots from '../assets/bieren/oerbier-rots-bg.jpg';
 import Base from '../layouts/Base.astro';
 import Polaroid from '../components/Polaroid.astro';
 import Shop from '../components/Shop.astro';
@@ -178,7 +179,7 @@ const bende = [
       <ul class="beer-grid">
         {
           vast.map((b, i) => (
-            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg`}>
+            <li style={`--c:${b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : ''}`}>
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
@@ -583,7 +584,7 @@ const bende = [
     box-shadow: 10px 12px 0 var(--ink);
   }
   .beer-art {
-    background: var(--c);
+    background: var(--bg, none) center / cover var(--c);
     border-bottom: var(--line);
     aspect-ratio: 1;
     padding: 18px;
