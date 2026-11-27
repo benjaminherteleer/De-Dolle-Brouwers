@@ -57,14 +57,17 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
 
   {
     kind === 'boskeun' &&
-      many(5).map((i) => (
+      many(3).map((i) => (
         <svg
-          class="honey"
-          viewBox="0 0 20 28"
-          style={`--x:${[14, 34, 52, 70, 86][i]}%; --delay:-${(rnd(i) * 6).toFixed(2)}s; --d:${(5 + rnd(i, 2) * 3).toFixed(1)}s; --s:${(11 + rnd(i, 3) * 5).toFixed(0)}px`}
+          class="bee"
+          viewBox="0 0 40 30"
+          style={`--x:${[16, 66, 78][i]}%; --y:${[20, 12, 56][i]}%; --d:${[7, 9, 8][i]}s; --delay:-${[0, 3, 5][i]}s; --s:${[22, 18, 20][i]}px; --f:${[1, -1, 1][i]}`}
         >
-          <path d="M10 1.5 C10 1.5 2.5 12 2.5 18 a7.5 7.5 0 0 0 15 0 C17.5 12 10 1.5 10 1.5 Z" fill="#f2b233" stroke="#21170c" stroke-width="1.8" stroke-linejoin="round" />
-          <ellipse cx="7.2" cy="17" rx="1.6" ry="3" fill="#fff6d6" opacity="0.8" />
+          <ellipse cx="14" cy="9" rx="7" ry="5" fill="#fffdf7" stroke="#21170c" stroke-width="1.4" opacity="0.9" transform="rotate(-25 14 9)" />
+          <ellipse cx="22" cy="8" rx="7" ry="5" fill="#fffdf7" stroke="#21170c" stroke-width="1.4" opacity="0.9" transform="rotate(10 22 8)" />
+          <ellipse cx="19" cy="19" rx="13" ry="8.5" fill="#f7b500" stroke="#21170c" stroke-width="2" />
+          <path d="M15 11.5 V26.5 M22 11.5 V26.5" stroke="#21170c" stroke-width="3" stroke-linecap="round" />
+          <circle cx="31" cy="17" r="2.4" fill="#21170c" />
         </svg>
       ))
   }
@@ -237,33 +240,31 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
     }
   }
 
-  /* Boskeun: a few slow honey drops */
+  /* Boskeun: a few bees drifting around */
   .fx-boskeun {
     z-index: 2;
   }
-  .honey {
+  .bee {
     position: absolute;
-    top: -12%;
     left: var(--x);
+    top: var(--y);
     width: var(--s);
-    opacity: 0;
-    animation: drip 6s ease-in infinite var(--delay);
-    animation-duration: var(--d);
+    scale: var(--f) 1;
+    animation: buzz var(--d) ease-in-out infinite var(--delay);
   }
-  @keyframes drip {
-    0% {
-      transform: translateY(0);
-      opacity: 0;
-    }
-    15% {
-      opacity: 1;
-    }
-    80% {
-      opacity: 1;
-    }
+  @keyframes buzz {
+    0%,
     100% {
-      transform: translateY(115cqh);
-      opacity: 0;
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(18px, -10px) rotate(-8deg);
+    }
+    50% {
+      transform: translate(30px, 6px) rotate(6deg);
+    }
+    75% {
+      transform: translate(10px, 14px) rotate(-4deg);
     }
   }
 
