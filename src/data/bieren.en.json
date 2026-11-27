@@ -238,10 +238,10 @@
   },
   "oeral": {
     "title": "Oeral | Blond and bitter beer from De Dolle Brouwers, on draught only",
-    "description": "Oeral (6%) is the lighter version of Arabier: blond and bitter. From De Dolle Brouwers in Esen, West Flanders, only on draught in the Oerbar.",
+    "description": "Oeral (5.3%) is the lighter version of Arabier: blond and bitter. From De Dolle Brouwers in Esen, West Flanders, only on draught in the Oerbar.",
     "alt": null,
     "kicker": "Only from the tap",
-    "meta": [{ "label": "Alcohol", "value": "6%" }, { "label": "Style", "value": "Blond and bitter" }],
+    "meta": [{ "label": "Alcohol", "value": "5.3%" }, { "label": "Style", "value": "Blond and bitter" }],
     "intro": "Oeral is a lighter version of Arabier, so blond and bitter. The name comes from \"oer\", pure, and \"al\", for everyone (\"alleman\"). We only pour it from the keg.",
     "notes": [
       { "label": "Aroma", "text": "Fresh whole-cone hops, just like Arabier." },
