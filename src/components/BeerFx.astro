@@ -154,7 +154,7 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
     kind === 'export-stout' &&
       many(5).map((i) => (
         <svg class="steam" viewBox="0 0 20 80" style={`--x:${14 + i * 18}%; --delay:-${(i * 0.7).toFixed(1)}s`}>
-          <path d="M10 78 C 0 64, 20 52, 10 40 S 0 16, 10 2" fill="none" stroke="#fffdf7" stroke-width="4" stroke-linecap="round" />
+          <path d="M10 78 C 0 64, 20 52, 10 40 S 0 16, 10 2" fill="none" style="stroke: var(--steam, #fffdf7)" stroke-width="4" stroke-linecap="round" />
         </svg>
       ))
   }
@@ -239,6 +239,9 @@ const eggColors = ['#f6b1c3', '#a8d8f0', '#f9e27d', '#b9e4a6', '#d7b8f2', '#ffc5
   }
 
   /* Boskeun: easter eggs hopping up */
+  .fx-boskeun {
+    z-index: 2;
+  }
   .egg {
     position: absolute;
     bottom: -40px;

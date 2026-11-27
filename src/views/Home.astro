@@ -184,7 +184,7 @@ const bende = [
       <ul class="beer-grid">
         {
           vast.map((b, i) => (
-            <li style={`--c:${b.slug === 'export-stout' ? '#f8f8f8' : b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : b.slug === 'arabier' ? `; --bg:url(${arabierPoster.src})` : b.slug === 'boskeun' ? `; --bg:url(${boskeunPoster.src})` : b.slug === 'dulle-teve' ? `; --bg:url(${tevePoster.src})` : b.slug === 'stille-nacht' ? `; --bg:url(${snPoster.src})` : ''}`}>
+            <li style={`--c:${b.slug === 'export-stout' ? '#f8f8f8; --steam:#1c1813' : b.color}; --on:${b.onColor}; --tilt:${[-2, 1.5, -1, 2.5][i % 4]}deg${b.slug === 'oerbier' ? `; --bg:url(${oerbierRots.src})` : b.slug === 'arabier' ? `; --bg:url(${arabierPoster.src})` : b.slug === 'boskeun' ? `; --bg:url(${boskeunPoster.src})` : b.slug === 'dulle-teve' ? `; --bg:url(${tevePoster.src})` : b.slug === 'stille-nacht' ? `; --bg:url(${snPoster.src})` : ''}`}>
               <a href={L(`/bieren/${b.slug}`)} class="beer fx-host">
                 <span class="beer-art">
                   <BeerFx slug={b.slug} />
